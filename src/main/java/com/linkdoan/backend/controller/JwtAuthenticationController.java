@@ -41,12 +41,12 @@ public class JwtAuthenticationController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        //CustomUserDetails customUserDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        CustomUserDetails customUserDetails=(CustomUserDetails) authentication.getPrincipal();
 
         final String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtTokenUtil.AUTHORIZATION_HEADER, "Bearer " + token);
-        return new ResponseEntity<>(new JwtResponse(token),httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new JwtResponse(token,customUserDetails.getUser()),httpHeaders, HttpStatus.OK);
     }
     private void authenticate(String username, String password) throws Exception {
         try {
