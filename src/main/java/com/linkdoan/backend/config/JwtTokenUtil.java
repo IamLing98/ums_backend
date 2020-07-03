@@ -15,6 +15,7 @@ import java.util.function.Function;
 
 @Component // declare a class as a bean
 public class JwtTokenUtil implements Serializable { //convert from object to byte called Serializable
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     private  static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY =  5 * 60 * 60;
     @Value("${jwt.secret}") //declare default value for method or variable
