@@ -1,12 +1,6 @@
 package com.linkdoan.backend.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
 import com.linkdoan.backend.base.dto.CustomUserDetails;
-import com.linkdoan.backend.dto.UserDTO;
-import com.linkdoan.backend.util.MessageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,13 +10,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import com.linkdoan.backend.service.JwtUserDetailsService;
 import com.linkdoan.backend.config.JwtTokenUtil;
 import com.linkdoan.backend.model.JwtRequest;
 import com.linkdoan.backend.model.JwtResponse;
