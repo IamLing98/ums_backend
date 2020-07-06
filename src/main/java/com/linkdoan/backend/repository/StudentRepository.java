@@ -1,37 +1,25 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.base.dto.SearchDTO;
-import com.linkdoan.backend.dto.StudentsDTO;
-import com.linkdoan.backend.dto.UserDTO;
-import com.linkdoan.backend.model.StudentsModel;
+import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.User;
-import com.linkdoan.backend.repository.common.HibernateRepository;
-import com.linkdoan.backend.util.ValidateUtils;
-import org.hibernate.query.NativeQuery;
-import org.hibernate.transform.Transformers;
-import org.hibernate.type.DateType;
-import org.hibernate.type.LongType;
-import org.hibernate.type.StringType;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
-import org.apache.commons.lang3.StringUtils;
-import java.math.BigInteger;
+
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.rmi.StubNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class StudentRepository extends HibernateRepository<User,Long> {
-    @SuppressWarnings("unchecked")
-    public List<StudentsDTO> doSearch(SearchDTO obj){
-        StringBuilder sql = new StringBuilder("SELECT * from student"
-                +"WHERE 1=1 ");
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
-        NativeQuery query= currentSession().createNativeQuery(sql.toString());
-        query.setResultTransformer(Transformers.aliasToBean(UserDTO.class));
 
-        query.setFirstResult((obj.getPage().intValue()-1)*obj.getPageSize().intValue());
-        query.setMaxResults(obj.getPageSize().intValue());
-
-        return query.list();
-    }
 }

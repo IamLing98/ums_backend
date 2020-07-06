@@ -1,6 +1,6 @@
 package com.linkdoan.backend.model;
 
-import com.linkdoan.backend.dto.StudentsDTO;
+import com.linkdoan.backend.dto.StudentDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "student")
 @Data
-public class StudentsModel {
+public class Student {
     @Id
     @Column(name = "student_id")
     private String studentId;
@@ -26,7 +26,7 @@ public class StudentsModel {
 
 
     @Column(name = "sex")
-    private int sex;
+    private Integer sex;
 
     @Column(name = "nation")
     private String nation;
@@ -85,9 +85,31 @@ public class StudentsModel {
     @Column(name = "department_id")
     private String departmentId;
 
-    public StudentsDTO toDTO(){
-        StudentsDTO studentsDTO = new StudentsDTO();
-
-        return studentsDTO;
+    public com.linkdoan.backend.dto.StudentDTO toDTO(){
+        StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setAvatar(this.avatar);
+        studentDTO.setClassId(this.classId);
+        studentDTO.setCurrentAddress(this.currentAddress);
+        studentDTO.setDateBirth(this.dateBirth);
+        studentDTO.setDepartmentId(this.departmentId);
+        studentDTO.setEmail(this.email);
+        studentDTO.setFatherDatebirth(this.fatherDateBirth);
+        studentDTO.setFatherPhoneNumber(this.fatherPhoneNumber);
+        studentDTO.setFatherWorkWhere(this.fatherWorkWhere);
+        studentDTO.setFirstName(this.firstName);
+        studentDTO.setHomeAddress(this.fatherName);
+        studentDTO.setHomeNumber(this.homeNumber);
+        studentDTO.setLastName(this.lastName);
+        studentDTO.setMotherDatebirth(this.motherDateBirth);
+        studentDTO.setMotherName(this.motherName);
+        studentDTO.setMotherPhoneNumber(this.motherPhoneNumber);
+        studentDTO.setMotherWorkWhere(this.motherWorkWhere);
+        studentDTO.setNation(this.nation);
+        studentDTO.setPhoneNumber(this.phoneNumber);
+        studentDTO.setReligion(this.religion);
+        studentDTO.setSex(this.sex);
+        studentDTO.setStartSchool(this.startSchool);
+        studentDTO.setStudentId(this.studentId);
+        return studentDTO;
     }
 }

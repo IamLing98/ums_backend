@@ -1,6 +1,8 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.base.dto.CustomUserDetails;
+import com.linkdoan.backend.model.User;
+import com.linkdoan.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ public class JwtAuthenticationController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private UserRepository userRepository;
     //@Autowired
     //private JwtUserDetailsService userDetailsService;
     private UserDetailsService userDetailsService;
@@ -38,7 +42,7 @@ public class JwtAuthenticationController {
                         authenticationRequest.getPassword()
                 )
         );
-
+        User userDetails = userRepository.findByUsername(authenticationRequest.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         CustomUserDetails customUserDetails=(CustomUserDetails) authentication.getPrincipal();
@@ -46,7 +50,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtTokenUtil.AUTHORIZATION_HEADER, "Bearer " + token);
-        return new ResponseEntity<>(new JwtResponse(token,customUserDetails.getUser()),httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new JwtResponse(token,userDetails),httpHeaders, HttpStatus.OK);
     }
     private void authenticate(String username, String password) throws Exception {
         try {

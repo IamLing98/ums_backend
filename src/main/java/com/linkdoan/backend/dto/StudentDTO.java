@@ -1,18 +1,18 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.base.anotation.AdjHistory;
-import com.linkdoan.backend.model.StudentsModel;
+import com.linkdoan.backend.base.dto.SystemDTO;
+import com.linkdoan.backend.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentsDTO    {
+public class StudentDTO  extends SystemDTO {
     private String studentId;
 
     @AdjHistory(field = "firstName")
@@ -44,6 +44,9 @@ public class StudentsDTO    {
 
     @AdjHistory(field = "phoneNumber")
     private String phoneNumber;
+
+    @AdjHistory(field = "fatherName")
+    private String fatherName;
 
     @AdjHistory(field = "fatherDatebirth")
     private Date fatherDatebirth;
@@ -84,10 +87,32 @@ public class StudentsDTO    {
 
 
 
-    public StudentsModel toModel(){
-        StudentsModel studentModel = new StudentsModel();
+    public Student toModel(){
+        Student student = new Student();
+        student.setFirstName(this.firstName) ;
+        student.setLastName(this.lastName);
+        student.setDateBirth(this.dateBirth);
+        student.setSex(this.sex);
+        student.setNation(this.nation);
+        student.setHomeAddress(this.homeAddress);
+        student.setCurrentAddress(this.currentAddress);
+        student.setEmail(this.email);
+        student.setHomeNumber(this.homeNumber);
+        student.setPhoneNumber(this.phoneNumber);
+        student.setFatherDateBirth(this.fatherDatebirth);
+        student.setFatherPhoneNumber(this.fatherPhoneNumber);
+        student.setFatherWorkWhere(this.fatherWorkWhere);
+        student.setMotherName(this.motherName);
+        student.setMotherDateBirth(this.motherDatebirth);
+        student.setMotherPhoneNumber(this.motherPhoneNumber);
+        student.setMotherWorkWhere(this.motherWorkWhere);
+        student.setStartSchool(this.startSchool);
+        student.setReligion(this.religion);
+        student.setAvatar(this.avatar);
+        student.setClassId(this.classId);
+        student.setDepartmentId(this.departmentId);
 
-        return studentModel;
+        return student;
 
     }
 }
