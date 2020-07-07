@@ -3,7 +3,6 @@ package com.linkdoan.backend.controller;
 import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.model.JwtRequest;
 import com.linkdoan.backend.model.Student;
-import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -18,8 +17,6 @@ import javax.validation.Valid;
 
 
 public class StudentsController {
-    @Autowired
-    private StudentRepository studentRepository;
 
     @Autowired
     private StudentServiceImpl studentService;
@@ -32,9 +29,29 @@ public class StudentsController {
         return new ResponseEntity<>( studentService.getListStudent( pageable),HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/student/findBy", method = RequestMethod.POST)
+    public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+        Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
+        return new ResponseEntity<>( studentService.findBy( pageable,studentDTO),HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/student/insert", method = RequestMethod.POST)
     public ResponseEntity<?> insertStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
 
         return new ResponseEntity<>( studentService.insertStudent(studentDTO),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/student/update", method = RequestMethod.POST)
+    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+
+        return new ResponseEntity<>( studentService.updateStudent(studentDTO),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/student/delete", method = RequestMethod.POST)
+    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+            if(studentService.deleteStudent(studentDTO) == 0 )
+                 return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            else
+                return new ResponseEntity<>( HttpStatus.OK);
     }
 }

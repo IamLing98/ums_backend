@@ -89,6 +89,7 @@ public class StudentDTO  extends SystemDTO {
 
     public Student toModel(){
         Student student = new Student();
+        student.setStudentId(this.studentId);
         student.setFirstName(this.firstName) ;
         student.setLastName(this.lastName);
         student.setDateBirth(this.dateBirth);

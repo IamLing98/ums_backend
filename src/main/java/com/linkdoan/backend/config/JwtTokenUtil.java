@@ -17,7 +17,7 @@ import java.util.function.Function;
 public class JwtTokenUtil implements Serializable { //convert from object to byte called Serializable
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private  static final long serialVersionUID = -2550185165626007488L;
-    public static final long JWT_TOKEN_VALIDITY =  5 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY =  500 * 60 * 60; //modify time for life of token
     @Value("${jwt.secret}") //declare default value for method or variable
     private String secret;
     public String getUsernameFromToken(String token){ //get user name from token

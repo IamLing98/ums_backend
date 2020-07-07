@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class Student {
     @Id
-    @Column(name = "student_id")
+    @Column(name = "student_id",unique = true)
     private String studentId;
 
     @Column(name = "first_name")

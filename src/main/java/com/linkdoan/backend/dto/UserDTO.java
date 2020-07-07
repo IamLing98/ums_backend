@@ -16,8 +16,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO  {
     @NotNull
-    @AdjHistory(field =  "user_id")
+    @AdjHistory(field =  "userId")
     private Long userId;
+
     @NotNull
     @AdjHistory(field = "username")
     private String username;
@@ -25,28 +26,28 @@ public class UserDTO  {
     @AdjHistory(field = "password")
     private String password;
 
-    @AdjHistory(field = "first_name")
+    @AdjHistory(field = "firstName")
     private String firstName;
 
-    @AdjHistory(field = "last_name")
+    @AdjHistory(field = "lastName")
     private String lastName;
 
-    @AdjHistory(field = "created_at")
+    @AdjHistory(field = "createdAt")
     private Date createdAt;
 
-    @AdjHistory(field = "updated_at")
+    @AdjHistory(field = "updatedAt")
     private Date updatedAt;
 
     @AdjHistory(field = "email")
     private String email;
 
-    @AdjHistory(field = "is_active")
+    @AdjHistory(field = "isActive")
     private int isActive;
 
-    @AdjHistory(field = "is_email_verified")
+    @AdjHistory(field = "isEmailVerified")
     private int isEmailVerified;
 
-    @AdjHistory(field = "owner_id")
+    @AdjHistory(field = "ownerId")
     private String ownerId;
 
 
