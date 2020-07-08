@@ -2,8 +2,7 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.ClassDTO;
  import com.linkdoan.backend.model.Class;
-import com.linkdoan.backend.model.Student;
-import com.linkdoan.backend.repository.ClassRepository;
+ import com.linkdoan.backend.repository.ClassRepository;
 import com.linkdoan.backend.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     ClassRepository classRepository;
 
-    private static final String STUDENT = "Student";
+    private static final String CLASS = "Class";
 
 
 

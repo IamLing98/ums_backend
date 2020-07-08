@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 
 public class ClassController {
-    @Autowired
-    private ClassRepository classRepository;
 
     @Autowired
     private ClassService classService;
