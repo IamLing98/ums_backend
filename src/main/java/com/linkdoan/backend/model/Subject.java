@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="subject")
 public class Subject {
     @Id
-    @Column(name="subject_id")
+    @Column(name="subject_id",unique = true)
     private String subjectId;
 
     @Column(name="subject_name")
@@ -22,7 +22,7 @@ public class Subject {
     @Column(name="section_id")
     private String sectionId;
 
-    @Column(name="type")
+    @Column(name="type")//subject_type
     private String type;
 
     @Column(name="credit_number")

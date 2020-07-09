@@ -24,25 +24,25 @@ public class SubjectController {
 
 
     @RequestMapping(value = "/subject/findBy", method = RequestMethod.POST)
-    public ResponseEntity<?> findBy(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> findBy(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
         Pageable pageable = PageRequest.of(subjectDTO.getPage(), subjectDTO.getPageSize());
         return new ResponseEntity<>( subjectService.findBy( pageable,subjectDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/insert", method = RequestMethod.POST)
-    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
 
         return new ResponseEntity<>( subjectService.createSubject(subjectDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
 
         return new ResponseEntity<>( subjectService.updateSubject(subjectDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
         if(subjectService.deleteSubject(subjectDTO) == 0 )
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         else

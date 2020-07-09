@@ -22,7 +22,7 @@ public class StudentsController {
     private StudentServiceImpl studentService;
 
     @RequestMapping(value = "/student/getListStudent", method = RequestMethod.GET)
-    public ResponseEntity<?> getListStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> getListStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
 
         Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
         Example<Student> searchTerm = Example.of(new Student());
@@ -30,25 +30,25 @@ public class StudentsController {
     }
 
     @RequestMapping(value = "/student/findBy", method = RequestMethod.POST)
-    public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
         Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
         return new ResponseEntity<>( studentService.findBy( pageable,studentDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/insert", method = RequestMethod.POST)
-    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
 
         return new ResponseEntity<>( studentService.insertStudent(studentDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
 
         return new ResponseEntity<>( studentService.updateStudent(studentDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
             if(studentService.deleteStudent(studentDTO) == 0 )
                  return new ResponseEntity<>( HttpStatus.NOT_FOUND);
             else

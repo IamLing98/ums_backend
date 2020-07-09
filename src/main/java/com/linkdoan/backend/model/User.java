@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "user")
-@Data // lombok
+@Data
 public class User {
     @Id
     @SequenceGenerator(name="pk_sequence",sequenceName="user_SEQ")
