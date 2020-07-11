@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 @RestController
@@ -18,14 +20,21 @@ import javax.validation.Valid;
 
 public class StudentsController {
 
-    @Autowired
+    @Resource(name = "studentService")
     private StudentServiceImpl studentService;
 
-    @RequestMapping(value = "/student/getListStudent", method = RequestMethod.GET)
+    public StudentServiceImpl getStudentService(StudentServiceImpl studentService){
+        return studentService;
+    }
+    @Autowired
+    public void setStudentService(StudentServiceImpl studentService){
+        this.studentService = studentService;
+    }
+    @RequestMapping(value = "/student/getListStudent", method = RequestMethod.POST)
     public ResponseEntity<?> getListStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
 
         Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
-        Example<Student> searchTerm = Example.of(new Student());
+//        Example<Student> searchTerm = Example.of(new Student());
         return new ResponseEntity<>( studentService.getListStudent( pageable),HttpStatus.OK);
     }
 

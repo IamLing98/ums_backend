@@ -2,7 +2,9 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.ClassDTO;
  import com.linkdoan.backend.model.Class;
- import com.linkdoan.backend.repository.ClassRepository;
+import com.linkdoan.backend.model.Department;
+import com.linkdoan.backend.repository.ClassRepository;
+import com.linkdoan.backend.repository.DepartmentRepository;
 import com.linkdoan.backend.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +16,9 @@ import javax.persistence.EntityExistsException;
 @Service
 public class ClassServiceImpl implements ClassService {
     @Autowired
-    ClassRepository classRepository;
-
+    private ClassRepository classRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
     private static final String CLASS = "Class";
 
 
@@ -23,7 +26,7 @@ public class ClassServiceImpl implements ClassService {
     private int checkExist(ClassDTO classDTO) {
         int result = 0 ;
         if (null != classDTO.getClassId() && ""!= classDTO.getClassId()) {
-            Class classModel = classRepository.findClassByClassId(classDTO.getClassId());
+            Class classModel = this.classRepository.findClassByClassId(classDTO.getClassId());
             if (null == classModel) {
                 result = 0;
             }else{
@@ -35,27 +38,29 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public Page findBy(Pageable pageable, ClassDTO classDTO) {
-        return null;
+        return classRepository.findAll(pageable);
     }
     @Override
     public Class createClass(ClassDTO classDTO){
         if(checkExist( classDTO) == 1 ) throw  new EntityExistsException("Lớp học này đã tồn tại");
         else{
-            return classRepository.save(classDTO.toModel());
+            Department department = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
+            return this.classRepository.save(classDTO.toModel(department));
         }
     }
 
     @Override
     public Class updateClass(ClassDTO classDTO) {
         if(checkExist( classDTO) == 0 ) throw  new EntityExistsException("Lớp học này không tồn tại");
-        Class classModel = classRepository.save(classDTO.toModel());
-        return classModel;
-    }
+        Department department = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
+        return this.classRepository.save(classDTO.toModel(department));
+     }
 
     @Override
     public int deleteClass(ClassDTO classDTO) {
         if(checkExist(classDTO) == 0)  return 0;
-        classRepository.delete(classDTO.toModel());
+        Department department = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
+         classRepository.delete(classDTO.toModel(department));
         return 1;
     }
 

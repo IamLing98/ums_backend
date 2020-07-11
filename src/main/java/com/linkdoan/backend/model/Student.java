@@ -4,6 +4,7 @@ import com.linkdoan.backend.dto.StudentDTO;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -11,7 +12,8 @@ import java.util.Date;
 @Data
 public class Student {
     @Id
-    @Column(name = "student_id",unique = true)
+    @Size(min=9, max=9)
+    @Column(name = "student_id",unique = true,length = 9)
     private String studentId;
 
     @Column(name = "first_name")
@@ -20,6 +22,9 @@ public class Student {
     @Column(name = "last_name")
     private String lastName;
 
+
+    @Column(name = "full_name")
+    private String fullName;
 
     @Column(name = "date_birth")
     private Date dateBirth;
@@ -110,6 +115,7 @@ public class Student {
         studentDTO.setSex(this.sex);
         studentDTO.setStartSchool(this.startSchool);
         studentDTO.setStudentId(this.studentId);
+        studentDTO.setFullName(this.fullName);
         return studentDTO;
     }
 }

@@ -45,7 +45,7 @@ public class JwtAuthenticationController {
         User userDetails = userRepository.findByUsername(authenticationRequest.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        CustomUserDetails customUserDetails=(CustomUserDetails) authentication.getPrincipal();
+        //CustomUserDetails customUserDetails=(CustomUserDetails) authentication.getPrincipal();
 
         final String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
         HttpHeaders httpHeaders = new HttpHeaders();

@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class RoleDTO {
     private Long roleId;
 
-    @AdjHistory(field = "ROLE_NAME")
+    @AdjHistory(field = "roleName")
     private String roleName;
 
-    @AdjHistory(field = "DESCRIPTION")
+    @AdjHistory(field = "description")
     private String description;
     public Role toModel(){
         Role role = new Role();

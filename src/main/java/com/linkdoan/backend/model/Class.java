@@ -1,18 +1,18 @@
 package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.ClassDTO;
+import com.linkdoan.backend.repository.DepartmentRepository;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "class")
 @Data
 public class Class {
+
     @Id
     @Column(name = "class_id",unique = true)
     private String classId;
@@ -26,8 +26,9 @@ public class Class {
     @Column(name = "year_start" )
     private Date yearStart;
 
-    @Column(name = "department_id" )
-    private String departmentId;
+    @ManyToOne
+    @JoinColumn(name="department_id", nullable=false)
+    private Department department;
 
     @Column(name = "adviser_id" )
     private String adviserId;
@@ -38,7 +39,7 @@ public class Class {
         classDTO.setClassName(className);
         classDTO.setTotalMember(totalMember);
         classDTO.setYearStart(yearStart);
-        classDTO.setDepartmentId(departmentId);
+        classDTO.setDepartmentId(department.getDepartmentId());
         classDTO.setAdviserId(adviserId);
         return classDTO;
     }

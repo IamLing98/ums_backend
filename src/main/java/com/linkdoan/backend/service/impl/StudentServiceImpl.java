@@ -13,15 +13,17 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import java.io.IOException;
 
-@Service
-public class StudentServiceImpl implements StudentService, SystemConstants {
-    @Autowired
-    StudentRepository studentRepository;
+@Service("studentService")
+public class StudentServiceImpl implements StudentService  {
 
+
+    private StudentRepository studentRepository;
+    @Autowired
+    public void setStudentRepository(StudentRepository studentRepository){
+        this.studentRepository = studentRepository;
+    }
 
     private static final String STUDENT = "Student";
-
-
 
     private int checkExist(StudentDTO studentDTO) {
         int result = 0 ;
@@ -38,12 +40,12 @@ public class StudentServiceImpl implements StudentService, SystemConstants {
 
 
     @Override
-    public Page<Student> getListStudent( Pageable pageable) {
+    public Page<Student> getListStudent( Pageable pageable)throws IOException {
           return studentRepository.findAll( pageable);
     }
 
     @Override
-    public Student insertStudent(StudentDTO studentDTO) {
+    public Student insertStudent(StudentDTO studentDTO)throws IOException {
         if(checkExist(studentDTO) == 1) throw  new EntityExistsException("Sinh viên này đã tồn tại");
         return studentRepository.save(studentDTO.toModel());
     }
@@ -55,14 +57,14 @@ public class StudentServiceImpl implements StudentService, SystemConstants {
         return student;
     }
     @Override
-    public int deleteStudent(StudentDTO studentDTO){
+    public int deleteStudent(StudentDTO studentDTO)throws IOException{
         if(checkExist(studentDTO) == 0)  return 0;
         studentRepository.delete(studentDTO.toModel());
         return 1;
     }
 
     @Override
-    public Page findBy(Pageable pageable, StudentDTO studentDTO) {
+    public Page findBy(Pageable pageable, StudentDTO studentDTO) throws IOException{
         return studentRepository.findAllByStudentId((org.springframework.data.domain.Pageable) pageable,studentDTO.getStudentId());
     }
 

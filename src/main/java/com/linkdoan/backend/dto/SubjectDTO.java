@@ -14,22 +14,22 @@ public class SubjectDTO extends SystemDTO {
 
     private String subjectId;
 
-    @AdjHistory(field = "subject_name")
+    @AdjHistory(field = "subjectName")
     private String subjectName;
 
-    @AdjHistory(field = "section_id")
+    @AdjHistory(field = "sectionId")
     private String sectionId;
 
     @AdjHistory(field = "type")
     private String type;
 
-    @AdjHistory(field = "credit_number")
+    @AdjHistory(field = "creditNumber")
     private String creditNumber;
 
-    @AdjHistory(field = "theory_number")
+    @AdjHistory(field = "theoryNumber")
     private String theoryNumber;
 
-    @AdjHistory(field = "practice_number")
+    @AdjHistory(field = "practiceNumber")
     private String practiceNumber;
     public Subject toModel(){
         Subject subject = new Subject();

@@ -21,6 +21,9 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "lastName")
     private String lastName;
 
+    @AdjHistory(field = "fullName")
+    private String fullName;
+
     @AdjHistory(field = "dateBirth")
     private Date dateBirth;
 
@@ -92,6 +95,7 @@ public class StudentDTO  extends SystemDTO {
         student.setStudentId(this.studentId);
         student.setFirstName(this.firstName) ;
         student.setLastName(this.lastName);
+        student.setFullName(this.fullName);
         student.setDateBirth(this.dateBirth);
         student.setSex(this.sex);
         student.setNation(this.nation);

@@ -24,20 +24,20 @@ public class ClassController {
     @Autowired
     private ClassService classService;
 
-    @RequestMapping(value="/class/findBy")
+    @RequestMapping(value="/class/findBy",method = RequestMethod.GET)
     public ResponseEntity<?> findBy(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
-        return new ResponseEntity<>(classService.findBy(pageable,classDTO), HttpStatus.OK);
+        return new ResponseEntity<>(this.classService.findBy(pageable,classDTO), HttpStatus.OK);
     }
-    @RequestMapping(value="/class/create")
+    @RequestMapping(value="/class/create",method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.createClass(classDTO), HttpStatus.OK);
     }
-    @RequestMapping(value="/class/update")
+    @RequestMapping(value="/class/update",method = RequestMethod.POST)
     public ResponseEntity<?> update(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.updateClass(classDTO), HttpStatus.OK);
     }
-    @RequestMapping(value="/class/delete")
+    @RequestMapping(value="/class/delete",method = RequestMethod.POST)
     public ResponseEntity<?> delete(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.deleteClass(classDTO), HttpStatus.OK);
     }

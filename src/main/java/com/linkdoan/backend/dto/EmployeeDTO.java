@@ -13,25 +13,25 @@ import java.sql.Date;
 @AllArgsConstructor
 @Data
 public class EmployeeDTO extends SystemDTO {
-    @AdjHistory(field = "employee_id")
+    @AdjHistory(field = "employeeId")
     private String employeeId;
 
-    @AdjHistory(field = "first_name")
+    @AdjHistory(field = "firstName")
     private String firstName;
 
-    @AdjHistory(field = "last_name")
+    @AdjHistory(field = "lastName")
     private String lastName;
 
     @AdjHistory(field = "sex")
     private int sex;
 
-    @AdjHistory(field = "date_birth")
+    @AdjHistory(field = "dateBirth")
     private Date dateBirth;
 
-    @AdjHistory(field = "home_address")
+    @AdjHistory(field = "homeAddress")
     private String homeAddress;
 
-    @AdjHistory(field = "current_address")
+    @AdjHistory(field = "currentAddress")
     private String currentAddress;
 
     @AdjHistory(field = "degree")
@@ -40,20 +40,19 @@ public class EmployeeDTO extends SystemDTO {
     @AdjHistory(field = "phone")
     private String phone;
 
-    @AdjHistory(field = "home_phone")
+    @AdjHistory(field = "homePhone")
     private String homePhone;
 
     @AdjHistory(field = "email")
     private String email;
 
-    @AdjHistory(field = "start_work")
+    @AdjHistory(field = "startWork")
     private Date startWork;
 
     @AdjHistory(field = "avatar")
     private String avatar;
     public Employee toModel(){
         Employee employee = new Employee();
-
         employee.setEmployeeId(this.employeeId);
         employee.setFirstName(this.firstName);
         employee.setLastName(this.lastName);

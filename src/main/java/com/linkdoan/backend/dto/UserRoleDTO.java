@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class UserRoleDTO {
     private Long roleId;
 
-    @AdjHistory(field = "USER_ID")
+    @AdjHistory(field = "userId")
     private Long userId;
     private String roleName;
     private String description;
