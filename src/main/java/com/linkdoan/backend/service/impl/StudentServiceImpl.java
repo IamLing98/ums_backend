@@ -1,7 +1,11 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.StudentDTO;
+import com.linkdoan.backend.model.Class;
+import com.linkdoan.backend.model.Department;
 import com.linkdoan.backend.model.Student;
+import com.linkdoan.backend.repository.ClassRepository;
+import com.linkdoan.backend.repository.DepartmentRepository;
 import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.util.SystemConstants;
@@ -16,10 +20,14 @@ import java.io.IOException;
 @Service("studentService")
 public class StudentServiceImpl implements StudentService  {
 
-
-    private StudentRepository studentRepository;
     @Autowired
-    public void setStudentRepository(StudentRepository studentRepository){
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private ClassRepository classRepository;
+     public void setStudentRepository(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
     }
 
@@ -47,25 +55,30 @@ public class StudentServiceImpl implements StudentService  {
     @Override
     public Student insertStudent(StudentDTO studentDTO)throws IOException {
         if(checkExist(studentDTO) == 1) throw  new EntityExistsException("Sinh viên này đã tồn tại");
-        return studentRepository.save(studentDTO.toModel());
+        Class classModel = classRepository.findClassByClassId(studentDTO.getClassId());
+        Department department = departmentRepository.findFirstByDepartmentId(studentDTO.getDepartmentId());
+        return studentRepository.save(studentDTO.toModel( ));
     }
 
     @Override
     public Student updateStudent(StudentDTO studentDTO) throws IOException {
         if(checkExist(studentDTO) == 0)  throw  new EntityExistsException("Sinh viên này chưa có trên hệ thống");
-        Student student = studentRepository.save(studentDTO.toModel());
-        return student;
+        Class classModel = classRepository.findClassByClassId(studentDTO.getClassId());
+        Department department = departmentRepository.findFirstByDepartmentId(studentDTO.getDepartmentId());
+        return studentRepository.save(studentDTO.toModel( ));
     }
     @Override
     public int deleteStudent(StudentDTO studentDTO)throws IOException{
         if(checkExist(studentDTO) == 0)  return 0;
-        studentRepository.delete(studentDTO.toModel());
+        Class classModel = classRepository.findClassByClassId(studentDTO.getClassId());
+        Department department = departmentRepository.findFirstByDepartmentId(studentDTO.getDepartmentId());
+        studentRepository.delete(studentDTO.toModel(  ));
         return 1;
     }
 
     @Override
     public Page findBy(Pageable pageable, StudentDTO studentDTO) throws IOException{
-        return studentRepository.findAllByStudentId((org.springframework.data.domain.Pageable) pageable,studentDTO.getStudentId());
+        return studentRepository.findByLastName(studentDTO.getKeySearch1(), studentDTO.getKeySearch2(),studentDTO.getKeySearch3(),studentDTO.getKeySearch4(),studentDTO.getKeySearch5() ,pageable);
     }
 
 

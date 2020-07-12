@@ -38,7 +38,7 @@ public class StudentsController {
         return new ResponseEntity<>( studentService.getListStudent( pageable),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/student/findBy", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/getAll", method = RequestMethod.POST)
     public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
         Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
         return new ResponseEntity<>( studentService.findBy( pageable,studentDTO),HttpStatus.OK);

@@ -1,8 +1,10 @@
 package com.linkdoan.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linkdoan.backend.dto.StudentDTO;
 import lombok.Data;
-
+import com.linkdoan.backend.model.Department;
+import com.linkdoan.backend.model.Class;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -13,7 +15,7 @@ import java.util.Date;
 public class Student {
     @Id
     @Size(min=9, max=9)
-    @Column(name = "student_id",unique = true,length = 9)
+    @Column(name = "student_id",unique = true,columnDefinition="CHAR(9)")
     private String studentId;
 
     @Column(name = "first_name")
@@ -84,10 +86,10 @@ public class Student {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "class_id")
+    @Column(name = "class_id",columnDefinition="CHAR(10)")
     private String classId;
 
-    @Column(name = "department_id")
+    @Column(name = "department_id",columnDefinition="CHAR(10)")
     private String departmentId;
 
     public com.linkdoan.backend.dto.StudentDTO toDTO(){

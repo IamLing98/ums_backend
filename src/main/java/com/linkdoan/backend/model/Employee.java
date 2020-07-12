@@ -24,7 +24,7 @@ public class Employee  {
     private String lastName;
 
     @Column(name="sex")
-    private int sex;
+    private Integer sex;
 
     @Column(name="date_birth")
     private Date dateBirth;

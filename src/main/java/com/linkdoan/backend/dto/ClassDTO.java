@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import com.linkdoan.backend.model.Class;
 
+import javax.persistence.Column;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,10 @@ public class ClassDTO extends SystemDTO {
     private String totalMember;
 
     @AdjHistory(field = "yearStart" )
-    private Date yearStart;
+    private Integer yearStart; //date type
+
+    @AdjHistory(field = "course_number" )
+    private Integer courseNumber;
 
     @AdjHistory(field = "departmentId" )
     private String departmentId;
@@ -39,6 +44,7 @@ public class ClassDTO extends SystemDTO {
         classModel.setTotalMember(this.totalMember);
         classModel.setYearStart(this.yearStart);
         classModel.setDepartment(department);
+        classModel.setCourseNumber(this.courseNumber);
         return classModel;
     }
 }

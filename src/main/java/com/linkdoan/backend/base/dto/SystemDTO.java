@@ -61,10 +61,13 @@ public abstract class SystemDTO {
     }
 
     private Integer pageSize;
-    private String keySearch;
+    private String keySearch1;
     private String keySearchAction;
     // thêm keysearch2
     private String keySearch2;
+    private String keySearch3;
+    private String keySearch4;
+    private Integer keySearch5;
 
     public String getKeySearchAction() {
         return keySearchAction;
@@ -74,12 +77,12 @@ public abstract class SystemDTO {
         this.keySearchAction = keySearchAction;
     }
 
-    public String getKeySearch() {
-        return keySearch;
+    public String getKeySearch1() {
+        return keySearch1;
     }
 
-    public void setKeySearch(String keySearch) {
-        this.keySearch = keySearch;
+    public void setKeySearch1(String keySearch1) {
+        this.keySearch1 = keySearch1;
     }
 
     public String getKeySearch2() {
@@ -89,8 +92,31 @@ public abstract class SystemDTO {
     public void setKeySearch2(String keySearch2) {
         this.keySearch2 = keySearch2;
     }
+    public String getKeySearch3() {
+        return keySearch3;
+    }
 
-    private java.lang.Integer totalRecord;
+    public void setKeySearch3(String keySearch3) {
+        this.keySearch3 = keySearch3;
+    }
+
+    public String getKeySearch4() {
+        return keySearch4;
+    }
+
+    public void setKeySearch4(String keySearch4) {
+        this.keySearch4 = keySearch4;
+    }
+
+    public Integer getKeySearch5() {
+        return keySearch5;
+    }
+
+    public void setKeySearch5(Integer keySearch5) {
+        this.keySearch5 = keySearch5;
+    }
+
+    private Integer totalRecord;
 
     public java.lang.Integer getTotalRecord() {
         return totalRecord;

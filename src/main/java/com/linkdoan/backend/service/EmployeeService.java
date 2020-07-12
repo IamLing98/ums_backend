@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 
 public interface EmployeeService {
-     Employee createEmployee(EmployeeDTO employeeDTO);
+     Employee createEmployee(EmployeeDTO employeeDTO)throws IOException;
     Employee updateEmployee(EmployeeDTO employeeDTO) throws IOException;
-    int deleteEmployee(EmployeeDTO employeeDTO);
-    Page findBy(org.springframework.data.domain.Pageable pageable, EmployeeDTO employeeDTO);
+    int deleteEmployee(EmployeeDTO employeeDTO)throws IOException;
+    Page findBy(org.springframework.data.domain.Pageable pageable, EmployeeDTO employeeDTO)throws IOException;
 }
