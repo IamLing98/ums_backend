@@ -5,8 +5,8 @@ import com.linkdoan.backend.model.Student;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import java.io.IOException;
+
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface StudentService {
     Page getListStudent( Pageable  pageable) throws IOException;

@@ -4,6 +4,7 @@ import com.linkdoan.backend.base.dto.CustomUserDetails;
 import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class JwtAuthenticationController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
     //@Autowired

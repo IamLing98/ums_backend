@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import java.io.IOException;
 
-@Service
+@Service("employeeService")
 public class EmployeeServiceImpl  implements EmployeeService {
     EmployeeRepository employeeRepository;
     private int checkExist(EmployeeDTO employeeDTO) {

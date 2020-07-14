@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-@Service
+@Service("fileService")
 public class FileStorageService   {
     private final Path fileStorageLocation;
 

@@ -7,21 +7,25 @@ import com.linkdoan.backend.repository.ClassRepository;
 import com.linkdoan.backend.repository.DepartmentRepository;
 import com.linkdoan.backend.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 
-@Service
+@Service("classService")
 public class ClassServiceImpl implements ClassService {
-    @Autowired
-    private ClassRepository classRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
+
     private static final String CLASS = "Class";
 
+    @Qualifier("classRepository")
+    @Autowired
+    private ClassRepository classRepository;
 
+    @Qualifier("departmentRepository")
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     private int checkExist(ClassDTO classDTO) {
         int result = 0 ;

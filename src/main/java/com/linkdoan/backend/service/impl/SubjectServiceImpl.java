@@ -6,14 +6,16 @@ import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.repository.SubjectRepository;
 import com.linkdoan.backend.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 
-@Service
+@Service("subjectService")
 public class SubjectServiceImpl implements SubjectService {
+    @Qualifier("subjectRepository")
     @Autowired
     private SubjectRepository subjectRepository;
     private static final String SUBJECT = "Subject";

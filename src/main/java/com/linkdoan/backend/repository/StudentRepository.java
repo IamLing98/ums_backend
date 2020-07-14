@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 
-@Repository("student")
+@Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, String> {
     Student findByStudentId(String studentId);
     Page findAllByStudentId(Pageable pageable,String studentId);

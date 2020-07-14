@@ -92,6 +92,9 @@ public class Student {
     @Column(name = "department_id",columnDefinition="CHAR(10)")
     private String departmentId;
 
+    @Column(name = "status", columnDefinition="Int")
+    private Integer status;
+
     public com.linkdoan.backend.dto.StudentDTO toDTO(){
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setAvatar(this.avatar);
@@ -118,6 +121,7 @@ public class Student {
         studentDTO.setStartSchool(this.startSchool);
         studentDTO.setStudentId(this.studentId);
         studentDTO.setFullName(this.fullName);
+        studentDTO.setStatus(this.status);
         return studentDTO;
     }
 }

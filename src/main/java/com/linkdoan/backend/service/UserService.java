@@ -4,14 +4,16 @@ import com.linkdoan.backend.base.dto.CustomUserDetails;
 import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("userService")
 public class UserService implements UserDetailsService {
 
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 

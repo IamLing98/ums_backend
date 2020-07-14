@@ -90,6 +90,8 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "departmentId")
     private String departmentId;
 
+    @AdjHistory(field = "status")
+    private Integer status;
 
     public Student toModel(){
         Student student = new Student();
@@ -117,7 +119,7 @@ public class StudentDTO  extends SystemDTO {
         student.setAvatar(this.avatar);
         student.setClassId(this.classId);
         student.setDepartmentId(this.departmentId);
-
+        student.setStatus(this.status);
         return student;
 
     }

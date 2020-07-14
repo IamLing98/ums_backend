@@ -40,6 +40,7 @@ public class Class {
     @JsonIgnore
     private Department department;
 
+
     @Column(name = "adviser_id" )
     private String adviserId;
 

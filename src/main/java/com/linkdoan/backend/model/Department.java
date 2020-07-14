@@ -19,7 +19,7 @@ import java.util.Set;
 @Table(name="department")
 public class Department {
     @Id
-    @Column(name="department_id",unique = true,columnDefinition="CHAR(10)")
+    @Column(name="department_id",unique = true,columnDefinition="CHAR(7)")
     private String departmentId;
 
     @Column(name="department_name")

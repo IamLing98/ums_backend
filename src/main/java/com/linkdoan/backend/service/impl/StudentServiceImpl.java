@@ -10,28 +10,36 @@ import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.util.SystemConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityExistsException;
 import java.io.IOException;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService  {
 
+    private static final String STUDENT = "Student";
+
+    @Qualifier("studentRepository")
     @Autowired
     private StudentRepository studentRepository;
 
+    @Qualifier("departmentRepository")
     @Autowired
     private DepartmentRepository departmentRepository;
-    @Autowired
+
     private ClassRepository classRepository;
+    public ClassRepository getClassRepository(){
+        return this.classRepository;
+    }
      public void setStudentRepository(StudentRepository studentRepository){
         this.studentRepository = studentRepository;
     }
 
-    private static final String STUDENT = "Student";
 
     private int checkExist(StudentDTO studentDTO) {
         int result = 0 ;
