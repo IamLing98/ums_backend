@@ -6,7 +6,7 @@ public abstract class SystemDTO {
      */
     private static final long serialVersionUID = 1L;
     private Integer page;
-    private Long id;
+    private String id;
     private java.lang.String pathFile;
 
     public java.lang.String getPathFile() {
@@ -17,11 +17,11 @@ public abstract class SystemDTO {
         this.pathFile = pathFile;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

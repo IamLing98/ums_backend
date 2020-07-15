@@ -2,6 +2,7 @@ package com.linkdoan.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.linkdoan.backend.dto.CommonDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -31,4 +32,10 @@ public class Country implements Serializable {
     @Column(name="timezones", columnDefinition = "char(15)")
     private  String timezones;
 
+    public CommonDTO toDTO(){
+        CommonDTO commonDTO = new CommonDTO();
+        commonDTO.setId(this.countryId);
+        commonDTO.setLabel(this.countryName);
+        return commonDTO;
+    }
 }

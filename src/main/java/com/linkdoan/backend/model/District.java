@@ -2,6 +2,7 @@ package com.linkdoan.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.linkdoan.backend.dto.CommonDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,5 +24,10 @@ public class District {
 
     @Column(name="province_city_id", columnDefinition = "VARCHAR(5)")
     private String provinceCityId;
-
+    public CommonDTO toDTO(){
+        CommonDTO commonDTO = new CommonDTO();
+        commonDTO.setId(this.districtId);
+        commonDTO.setLabel(this.name);
+        return commonDTO;
+    }
 }

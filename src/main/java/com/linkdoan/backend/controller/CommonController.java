@@ -39,4 +39,14 @@ public class CommonController {
     public ResponseEntity getCommuneByDistrictId(@RequestParam(name="keySearch") String keySearch){
         return new ResponseEntity(commonService.getCommuneByDistrictId(keySearch), HttpStatus.OK);
     }
+
+    @GetMapping("/ethnic/findByCountryId")
+    public ResponseEntity getEthnicByCountryId(@RequestParam(name="keySearch") String keySearch){
+        return new ResponseEntity(commonService.getEthnicByCountryId(keySearch), HttpStatus.OK);
+    }
+
+    @GetMapping("/nationality/findAll")
+    public ResponseEntity getAllNationality(){
+        return new ResponseEntity(commonService.getAllNationality(), HttpStatus.OK);
+    }
 }

@@ -11,8 +11,10 @@ import java.util.List;
 
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface CommonService {
-    List<Country> getAllCountry();
-    List<ProvinceCity> getProvinceByCountryId(String keySearch);
-    List<District> getDistrictByProvinceCityId(String keySearch);
-    List<Commune> getCommuneByDistrictId(String keySearch);
+    List<CommonDTO> getAllCountry();
+    List<CommonDTO> getProvinceByCountryId(String keySearch);
+    List<CommonDTO> getDistrictByProvinceCityId(String keySearch);
+    List<CommonDTO> getCommuneByDistrictId(String keySearch);
+    List<CommonDTO> getAllNationality();
+    List<CommonDTO> getEthnicByCountryId(String keySearch);
 }
