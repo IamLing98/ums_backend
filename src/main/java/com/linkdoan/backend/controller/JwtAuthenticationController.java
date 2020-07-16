@@ -66,7 +66,7 @@ public class JwtAuthenticationController {
 
 
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
         return "home";
     }
