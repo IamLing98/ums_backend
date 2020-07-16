@@ -9,7 +9,6 @@ import java.io.IOException;
 
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface StudentService {
-    Page getListStudent( Pageable  pageable) throws IOException;
     Student insertStudent(StudentDTO studentDTO) throws IOException;
     Student updateStudent(StudentDTO studentDTO) throws IOException;
     int deleteStudent(StudentDTO studentDTO) throws IOException;

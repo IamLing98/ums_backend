@@ -42,7 +42,7 @@ public class CommonController {
 
     @GetMapping("/ethnic/findByCountryId")
     public ResponseEntity getEthnicByCountryId(@RequestParam(name="keySearch") String keySearch){
-        return new ResponseEntity(commonService.getEthnicByCountryId(keySearch), HttpStatus.OK);
+        return new ResponseEntity(commonService.getEthnicByNationalityId(keySearch), HttpStatus.OK);
     }
 
     @GetMapping("/nationality/findAll")

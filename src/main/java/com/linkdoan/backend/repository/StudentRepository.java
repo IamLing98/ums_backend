@@ -10,8 +10,7 @@ import org.springframework.data.domain.Pageable;
 @Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, String> {
     Student findByStudentId(String studentId);
-    Page findAllByStudentId(Pageable pageable,String studentId);
-    @Query( value = "SELECT student.*, class.course_number FROM Student,Class  WHERE (:student_id is null or :student_id =''  or student.student_id = :student_id)"
+     @Query( value = "SELECT student.*, class.course_number FROM Student,Class  WHERE (:student_id is null or :student_id =''  or student.student_id = :student_id)"
             + "and (:full_name is null or :full_name ='' or student.full_name like %:full_name%)"
             + "and (:class_id is null or :class_id ='' or student.class_id = :class_id)"
             + "and (student.class_id = class.class_id)"

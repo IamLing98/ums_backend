@@ -19,8 +19,8 @@ public class Ethnic {
     @Column(name="ethnic_name",  columnDefinition = "varchar(45)")
     private String ethnicName;
 
-    @Column(name="country_id",  columnDefinition = "char(10)")
-    private String countryId;
+    @Column(name="nationality_id",  columnDefinition = "int")
+    private String nationalityId;
 
     public CommonDTO toDTO(){
         CommonDTO commonDTO = new CommonDTO();

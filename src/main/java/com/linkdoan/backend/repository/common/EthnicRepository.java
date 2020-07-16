@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository("ethnicRepository")
 public interface EthnicRepository extends JpaRepository<Ethnic, Integer> {
-    List<Ethnic> findAllByCountryId(String countryId);
+    List<Ethnic> findAllByNationalityId(String nationalityId);
 }

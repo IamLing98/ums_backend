@@ -26,21 +26,16 @@ public class StudentsController {
     public StudentServiceImpl getStudentService(StudentServiceImpl studentService){
         return studentService;
     }
+
     @Autowired
     public void setStudentService(StudentServiceImpl studentService){
         this.studentService = studentService;
-    }
-    @RequestMapping(value = "/student/getListStudent", method = RequestMethod.POST)
-    public ResponseEntity<?> getListStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
-
-        Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
-//        Example<Student> searchTerm = Example.of(new Student());
-        return new ResponseEntity<>( studentService.getListStudent( pageable),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/getAll", method = RequestMethod.POST)
     public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
         Pageable pageable = PageRequest.of(studentDTO.getPage(), studentDTO.getPageSize());
+        //        Example<Student> searchTerm = Example.of(new Student());
         return new ResponseEntity<>( studentService.findBy( pageable,studentDTO),HttpStatus.OK);
     }
 

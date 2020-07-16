@@ -40,7 +40,6 @@ public class StudentServiceImpl implements StudentService  {
         this.studentRepository = studentRepository;
     }
 
-
     private int checkExist(StudentDTO studentDTO) {
         int result = 0 ;
         if (null != studentDTO.getStudentId() && ""!= studentDTO.getStudentId()) {
@@ -52,12 +51,6 @@ public class StudentServiceImpl implements StudentService  {
             }
         }
         return result;
-    }
-
-
-    @Override
-    public Page<Student> getListStudent( Pageable pageable)throws IOException {
-          return studentRepository.findAll( pageable);
     }
 
     @Override

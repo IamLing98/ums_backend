@@ -89,8 +89,8 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<CommonDTO> getEthnicByCountryId(String keySearch) {
-        List<Ethnic> ethnicList = ethnicRepository.findAllByCountryId(keySearch);;
+    public List<CommonDTO> getEthnicByNationalityId(String keySearch) {
+        List<Ethnic> ethnicList = ethnicRepository.findAllByNationalityId(keySearch);;
         List<CommonDTO> commonDTOList  = new ArrayList<>();
         for(int i = 0 ; i < ethnicList.size(); i++){
             commonDTOList.add(ethnicList.get(i).toDTO());
