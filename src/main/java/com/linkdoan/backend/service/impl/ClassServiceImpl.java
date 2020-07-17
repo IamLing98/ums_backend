@@ -9,6 +9,7 @@ import com.linkdoan.backend.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class ClassServiceImpl implements ClassService {
     private int checkExist(ClassDTO classDTO) {
         int result = 0 ;
         if (null != classDTO.getClassId() && ""!= classDTO.getClassId()) {
-            Class classModel = this.classRepository.findClassByClassId(classDTO.getClassId());
+            Class classModel = this.classRepository.findFirstByClassId(classDTO.getClassId());
             if (null == classModel) {
                 result = 0;
             }else{
@@ -41,9 +42,11 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public Page findBy(Pageable pageable, ClassDTO classDTO) {
-        return classRepository.findAll(pageable);
+    public Page findBy(ClassDTO classDTO) {
+        Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
+        return classRepository.findBy(classDTO.getClassId(), classDTO.getDepartmentId(), pageable);
     }
+
     @Override
     public Class createClass(ClassDTO classDTO){
         if(checkExist( classDTO) == 1 ) throw  new EntityExistsException("Lớp học này đã tồn tại");

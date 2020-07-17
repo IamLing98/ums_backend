@@ -6,10 +6,8 @@ import com.linkdoan.backend.model.Department;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Date;
 import com.linkdoan.backend.model.Class;
 
-import javax.persistence.Column;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +24,7 @@ public class ClassDTO extends SystemDTO {
     @AdjHistory(field = "yearStart" )
     private Integer yearStart; //date type
 
-    @AdjHistory(field = "course_number" )
+    @AdjHistory(field = "courseNumber" )
     private Integer courseNumber;
 
     @AdjHistory(field = "departmentId" )

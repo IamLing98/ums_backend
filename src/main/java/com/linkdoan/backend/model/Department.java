@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Data
-@Entity
+@Entity(name="department")
 @Table(name="department")
 public class Department {
     @Id

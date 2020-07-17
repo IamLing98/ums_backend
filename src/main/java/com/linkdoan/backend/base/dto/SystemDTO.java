@@ -1,13 +1,27 @@
 package com.linkdoan.backend.base.dto;
 
+
+import lombok.Value;
+
 public abstract class SystemDTO {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    private Integer page;
+
+    private Integer page = 0;
+
+    private Integer pageSize = 999999;
+
     private String id;
     private java.lang.String pathFile;
+    private String keySearch1;
+    private String keySearchAction;
+    // thêm keysearch2
+    private String keySearch2;
+    private String keySearch3;
+    private String keySearch4;
+    private Integer keySearch5;
 
     public java.lang.String getPathFile() {
         return pathFile;
@@ -59,15 +73,6 @@ public abstract class SystemDTO {
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
-
-    private Integer pageSize;
-    private String keySearch1;
-    private String keySearchAction;
-    // thêm keysearch2
-    private String keySearch2;
-    private String keySearch3;
-    private String keySearch4;
-    private Integer keySearch5;
 
     public String getKeySearchAction() {
         return keySearchAction;

@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name="class")
 @Table(name = "class")
 @Data
 public class Class {
@@ -34,15 +34,17 @@ public class Class {
     @Column(name = "course_number", columnDefinition="Int")
     private Integer courseNumber;
 
-    @ManyToOne(fetch=FetchType.LAZY, optional=false)
-    @JoinColumn(name="department_id", nullable=false)
-    //@JsonBackReference quat the fackkkkk, cai nay lam treo sys dcmm
-    @JsonIgnore
-    private Department department;
-
-
     @Column(name = "adviser_id" )
     private String adviserId;
+
+    @Column(name = "next_val", columnDefinition="Int")
+    private Integer nextVal;
+
+    @ManyToOne(fetch=FetchType.LAZY, optional=false)
+    @JoinColumn(name="department_id", nullable=false,insertable = false, updatable = false)
+    //@JsonBackReference// quat the fackkkkk, cai nay lam treo sys dcmm
+    @JsonIgnore
+    private Department department;
 
 
 

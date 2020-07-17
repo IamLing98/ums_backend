@@ -16,13 +16,13 @@ import java.util.Set;
 public class DepartmentDTO extends SystemDTO {
     private String departmentId;
 
-    @AdjHistory(field = "department_name")
+    @AdjHistory(field = "departmentName")
     private String departmentName;
 
-    @AdjHistory(field = "department_type")
+    @AdjHistory(field = "departmentType")
     private Integer departmentType;
 
-    @AdjHistory(field = "cheif_id")
+    @AdjHistory(field = "employee")
     private Employee employee; //1 - 1 relationship
 
 }

@@ -44,9 +44,6 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "email")
     private String email;
 
-    @AdjHistory(field = "homeNumber")
-    private String homeNumber;
-
     @AdjHistory(field = "phoneNumber")
     private String phoneNumber;
 
@@ -56,11 +53,8 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "fatherDatebirth")
     private Date fatherDatebirth;
 
-    @AdjHistory(field = "fatherPhoneNumber")
-    private String fatherPhoneNumber;
-
-    @AdjHistory(field = "fatherWorkWhere")
-    private String fatherWorkWhere;
+    @AdjHistory(field = "fatherWork")
+    private String fatherWork;
 
     @AdjHistory(field = "motherName")
     private String motherName;
@@ -68,11 +62,11 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "motherDatebirth")
     private Date motherDatebirth;
 
-    @AdjHistory(field = "motherPhoneNumber")
-    private String motherPhoneNumber;
+    @AdjHistory(field = "motherWork")
+    private String motherWork;
 
-    @AdjHistory(field = "motherWorkWhere")
-    private String motherWorkWhere;
+    @AdjHistory(field = "familyPhoneNumber")
+    private String familyPhoneNumber;
 
     @AdjHistory(field = "startSchool")
     private Date startSchool;
@@ -82,7 +76,6 @@ public class StudentDTO  extends SystemDTO {
 
     @AdjHistory(field = "avatar")
     private String avatar;
-
 
     @AdjHistory(field = "classId")
     private String classId;
@@ -105,15 +98,13 @@ public class StudentDTO  extends SystemDTO {
         student.setHomeAddress(this.homeAddress);
         student.setCurrentAddress(this.currentAddress);
         student.setEmail(this.email);
-        student.setHomeNumber(this.homeNumber);
+        student.setFamilyPhoneNumber(this.familyPhoneNumber);
         student.setPhoneNumber(this.phoneNumber);
         student.setFatherDateBirth(this.fatherDatebirth);
-        student.setFatherPhoneNumber(this.fatherPhoneNumber);
-        student.setFatherWorkWhere(this.fatherWorkWhere);
+        student.setFatherWork(this.fatherWork);
         student.setMotherName(this.motherName);
         student.setMotherDateBirth(this.motherDatebirth);
-        student.setMotherPhoneNumber(this.motherPhoneNumber);
-        student.setMotherWorkWhere(this.motherWorkWhere);
+        student.setMotherWork(this.motherWork);
         student.setStartSchool(this.startSchool);
         student.setReligion(this.religion);
         student.setAvatar(this.avatar);

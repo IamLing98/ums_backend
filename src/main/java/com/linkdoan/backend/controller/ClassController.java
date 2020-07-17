@@ -5,16 +5,14 @@ import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.model.Class;
 import com.linkdoan.backend.repository.ClassRepository;
 import com.linkdoan.backend.service.ClassService;
+import com.linkdoan.backend.service.impl.ClassServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,21 +20,23 @@ import javax.validation.Valid;
 public class ClassController {
 
     @Autowired
-    private ClassService classService;
+    private ClassServiceImpl classService;
 
-    @RequestMapping(value="/class/findBy",method = RequestMethod.GET)
+    @PostMapping("/class/getAll")
     public ResponseEntity<?> findBy(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
-        Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
-        return new ResponseEntity<>(this.classService.findBy(pageable,classDTO), HttpStatus.OK);
+        return new ResponseEntity<>(this.classService.findBy(classDTO), HttpStatus.OK);
     }
+
     @RequestMapping(value="/class/create",method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.createClass(classDTO), HttpStatus.OK);
     }
+
     @RequestMapping(value="/class/update",method = RequestMethod.POST)
     public ResponseEntity<?> update(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.updateClass(classDTO), HttpStatus.OK);
     }
+
     @RequestMapping(value="/class/delete",method = RequestMethod.POST)
     public ResponseEntity<?> delete(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.deleteClass(classDTO), HttpStatus.OK);

@@ -8,7 +8,7 @@ import com.linkdoan.backend.model.Class;
 
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface ClassService {
-    public Page findBy(Pageable pageable ,ClassDTO classDTO);
+    public Page findBy(ClassDTO classDTO);
     public Class createClass(ClassDTO classDTO);
     public Class updateClass(ClassDTO classDTO);
     public int deleteClass(ClassDTO classDTO);

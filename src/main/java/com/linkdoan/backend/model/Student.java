@@ -24,19 +24,20 @@ public class Student {
     @Column(name = "last_name")
     private String lastName;
 
-
     @Column(name = "full_name")
     private String fullName;
 
     @Column(name = "date_birth")
     private Date dateBirth;
 
-
     @Column(name = "sex")
     private Integer sex;
 
-    @Column(name = "nation")
+    @Column(name = "nation",columnDefinition = "varchar(30)")
     private String nation;
+
+    @Column(name = "ethnic", columnDefinition = "varchar(30)")
+    private String ethnic;
 
     @Column(name = "home_address")
     private String homeAddress;
@@ -47,9 +48,6 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "home_number")
-    private String homeNumber;
-
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -59,11 +57,8 @@ public class Student {
     @Column(name = "father_date_birth")
     private Date fatherDateBirth;
 
-    @Column(name = "father_phone_number")
-    private String fatherPhoneNumber;
-
-    @Column(name = "father_work_where")
-    private String fatherWorkWhere;
+    @Column(name = "father_work")
+    private String fatherWork;
 
     @Column(name = "mother_name")
     private String motherName;
@@ -71,16 +66,16 @@ public class Student {
     @Column(name = "mother_date_birth")
     private Date motherDateBirth;
 
-    @Column(name = "mother_phone_number")
-    private String motherPhoneNumber;
+    @Column(name = "mother_work")
+    private String motherWork;
 
-    @Column(name = "mother_work_where")
-    private String motherWorkWhere;
+    @Column(name = "family_phone_number", columnDefinition = "char(20)")
+    private String familyPhoneNumber;
 
     @Column(name = "start_school")
     private Date startSchool;
 
-    @Column(name = "religion")
+    @Column(name = "religion", columnDefinition = "varchar(45)")
     private String religion;
 
     @Column(name = "avatar")
@@ -95,7 +90,7 @@ public class Student {
     @Column(name = "status", columnDefinition="Int")
     private Integer status;
 
-    public com.linkdoan.backend.dto.StudentDTO toDTO(){
+    public StudentDTO toDTO(){
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setAvatar(this.avatar);
         studentDTO.setClassId(this.classId);
@@ -104,16 +99,14 @@ public class Student {
         studentDTO.setDepartmentId(this.departmentId);
         studentDTO.setEmail(this.email);
         studentDTO.setFatherDatebirth(this.fatherDateBirth);
-        studentDTO.setFatherPhoneNumber(this.fatherPhoneNumber);
-        studentDTO.setFatherWorkWhere(this.fatherWorkWhere);
+        studentDTO.setFatherWork(this.fatherWork);
         studentDTO.setFirstName(this.firstName);
         studentDTO.setHomeAddress(this.fatherName);
-        studentDTO.setHomeNumber(this.homeNumber);
+        studentDTO.setFamilyPhoneNumber(this.familyPhoneNumber);
         studentDTO.setLastName(this.lastName);
         studentDTO.setMotherDatebirth(this.motherDateBirth);
         studentDTO.setMotherName(this.motherName);
-        studentDTO.setMotherPhoneNumber(this.motherPhoneNumber);
-        studentDTO.setMotherWorkWhere(this.motherWorkWhere);
+        studentDTO.setMotherWork(this.motherWork);
         studentDTO.setNation(this.nation);
         studentDTO.setPhoneNumber(this.phoneNumber);
         studentDTO.setReligion(this.religion);
