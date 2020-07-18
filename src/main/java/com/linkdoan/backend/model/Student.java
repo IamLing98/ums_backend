@@ -1,13 +1,10 @@
 package com.linkdoan.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linkdoan.backend.dto.StudentDTO;
 import lombok.Data;
-import com.linkdoan.backend.model.Department;
-import com.linkdoan.backend.model.Class;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "student")
@@ -18,17 +15,17 @@ public class Student {
     @Column(name = "student_id",unique = true,columnDefinition="CHAR(9)")
     private String studentId;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", columnDefinition = "VARCHAR(45)")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name" , columnDefinition = "VARCHAR(45)")
     private String lastName;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", columnDefinition = "TEXT")
     private String fullName;
 
     @Column(name = "date_birth")
-    private Date dateBirth;
+    private java.sql.Date dateBirth;
 
     @Column(name = "sex")
     private Integer sex;
@@ -39,13 +36,13 @@ public class Student {
     @Column(name = "ethnic", columnDefinition = "varchar(30)")
     private String ethnic;
 
-    @Column(name = "home_address")
+    @Column(name = "home_address", columnDefinition = "text")
     private String homeAddress;
 
-    @Column(name = "current_address")
+    @Column(name = "current_address", columnDefinition = "text")
     private String currentAddress;
 
-    @Column(name = "email")
+    @Column(name = "email", columnDefinition = "char(40)")
     private String email;
 
     @Column(name = "phone_number")
@@ -55,7 +52,7 @@ public class Student {
     private String fatherName;
 
     @Column(name = "father_date_birth")
-    private Date fatherDateBirth;
+    private Integer fatherDateBirth;
 
     @Column(name = "father_work")
     private String fatherWork;
@@ -64,7 +61,7 @@ public class Student {
     private String motherName;
 
     @Column(name = "mother_date_birth")
-    private Date motherDateBirth;
+    private Integer motherDateBirth;
 
     @Column(name = "mother_work")
     private String motherWork;
@@ -81,13 +78,13 @@ public class Student {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "class_id",columnDefinition="CHAR(10)")
+    @Column(name = "class_id",columnDefinition="CHAR(6)")
     private String classId;
 
     @Column(name = "department_id",columnDefinition="CHAR(10)")
     private String departmentId;
 
-    @Column(name = "status", columnDefinition="Int")
+    @Column(name = "status", columnDefinition="INT" )
     private Integer status;
 
     public StudentDTO toDTO(){
@@ -95,26 +92,26 @@ public class Student {
         studentDTO.setAvatar(this.avatar);
         studentDTO.setClassId(this.classId);
         studentDTO.setCurrentAddress(this.currentAddress);
-        studentDTO.setDateBirth(this.dateBirth);
+        studentDTO.setDateBirth(this.dateBirth.toString());
         studentDTO.setDepartmentId(this.departmentId);
         studentDTO.setEmail(this.email);
-        studentDTO.setFatherDatebirth(this.fatherDateBirth);
+        studentDTO.setFatherDateBirth(this.fatherDateBirth.toString());
         studentDTO.setFatherWork(this.fatherWork);
         studentDTO.setFirstName(this.firstName);
         studentDTO.setHomeAddress(this.fatherName);
         studentDTO.setFamilyPhoneNumber(this.familyPhoneNumber);
         studentDTO.setLastName(this.lastName);
-        studentDTO.setMotherDatebirth(this.motherDateBirth);
+        studentDTO.setMotherDateBirth(this.motherDateBirth.toString());
         studentDTO.setMotherName(this.motherName);
         studentDTO.setMotherWork(this.motherWork);
-        studentDTO.setNation(this.nation);
+        studentDTO.setNationality(this.nation);
         studentDTO.setPhoneNumber(this.phoneNumber);
         studentDTO.setReligion(this.religion);
-        studentDTO.setSex(this.sex);
-        studentDTO.setStartSchool(this.startSchool);
+        studentDTO.setSex(this.sex.toString());
+        studentDTO.setStartSchool(this.startSchool.toString());
         studentDTO.setStudentId(this.studentId);
         studentDTO.setFullName(this.fullName);
-        studentDTO.setStatus(this.status);
+        studentDTO.setStatus(this.status.toString());
         return studentDTO;
     }
 }

@@ -19,12 +19,12 @@ public interface ClassRepository  extends JpaRepository<Class, String> {
     @Query( value = "SELECT Class.*  FROM Class   WHERE (:class_id is null or :class_id =''  or class_id = :class_id)"
             + "and (:department_id is null or :department_id ='' or department_id =  :department_id)"
             + "ORDER BY class_id ASC ",
-            countQuery = "SELECT count(*) FROM Class WHERE (:class_id is null or :class_id =''  or class_id = :class_id) and (:department_id is null or :department_id ='' or department_id =:department_id))",
+            countQuery = "SELECT count(*) FROM Class WHERE (:class_id is null or :class_id =''  or class_id = :class_id) and (:department_id is null or :department_id ='' or department_id =:department_id)",
             nativeQuery = true
     )
     Page<Class> findBy(@Param("class_id") String classId, @Param("department_id") String departmentId , Pageable pageable);
 
-    @Query( value = "SELECT next_val FROM Class WHERE (:class_id is null or :class_id ='' or class_id = : class_id)",
+    @Query( value = "SELECT next_val FROM Class WHERE (:class_id is null or :class_id ='' or class_id = :class_id)",
             nativeQuery = true
     )
     Optional<Integer> findNextValueSeqInClass(@Param("class_id") String classId);

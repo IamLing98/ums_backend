@@ -8,13 +8,18 @@ import com.linkdoan.backend.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO  extends SystemDTO {
+    @AdjHistory(field = "firstName")
     private String studentId;
 
     @AdjHistory(field = "firstName")
@@ -27,13 +32,15 @@ public class StudentDTO  extends SystemDTO {
     private String fullName;
 
     @AdjHistory(field = "dateBirth")
-    private Date dateBirth;
+    private String dateBirth;
 
     @AdjHistory(field = "sex")
-    private int sex;
+    private String sex = "";
 
-    @AdjHistory(field = "nation")
-    private String nation;
+    @AdjHistory(field = "nationality")
+    private String nationality;
+
+    private String ethnic;
 
     @AdjHistory(field = "homeAddress")
     private String homeAddress;
@@ -50,8 +57,8 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "fatherName")
     private String fatherName;
 
-    @AdjHistory(field = "fatherDatebirth")
-    private Date fatherDatebirth;
+    @AdjHistory(field = "fatherDateBirth")
+    private String fatherDateBirth = "";
 
     @AdjHistory(field = "fatherWork")
     private String fatherWork;
@@ -59,8 +66,8 @@ public class StudentDTO  extends SystemDTO {
     @AdjHistory(field = "motherName")
     private String motherName;
 
-    @AdjHistory(field = "motherDatebirth")
-    private Date motherDatebirth;
+    @AdjHistory(field = "motherDateBirth")
+    private String motherDateBirth = "";
 
     @AdjHistory(field = "motherWork")
     private String motherWork;
@@ -69,7 +76,7 @@ public class StudentDTO  extends SystemDTO {
     private String familyPhoneNumber;
 
     @AdjHistory(field = "startSchool")
-    private Date startSchool;
+    private String startSchool = "";
 
     @AdjHistory(field = "religion")
     private String religion;
@@ -84,33 +91,36 @@ public class StudentDTO  extends SystemDTO {
     private String departmentId;
 
     @AdjHistory(field = "status")
-    private Integer status;
+    private String status;
 
-    public Student toModel(){
+    public Student toModel() throws ParseException {
         Student student = new Student();
         student.setStudentId(this.studentId);
         student.setFirstName(this.firstName) ;
         student.setLastName(this.lastName);
         student.setFullName(this.fullName);
-        student.setDateBirth(this.dateBirth);
-        student.setSex(this.sex);
-        student.setNation(this.nation);
+        if(this.dateBirth != "") {
+            Date javaDatetime = new SimpleDateFormat("yyyy-MM-dd").parse(this.getDateBirth());
+            student.setDateBirth(new java.sql.Date(javaDatetime.getTime()));
+        }
+        if(StringUtils.isNumeric(this.sex) ) student.setSex(Integer.parseInt(this.sex));
+        student.setNation(this.nationality);
         student.setHomeAddress(this.homeAddress);
         student.setCurrentAddress(this.currentAddress);
         student.setEmail(this.email);
         student.setFamilyPhoneNumber(this.familyPhoneNumber);
         student.setPhoneNumber(this.phoneNumber);
-        student.setFatherDateBirth(this.fatherDatebirth);
+        student.setFatherName(this.fatherName);
+        if(StringUtils.isNumeric(this.fatherDateBirth)) student.setFatherDateBirth(Integer.parseInt(this.fatherDateBirth));
         student.setFatherWork(this.fatherWork);
         student.setMotherName(this.motherName);
-        student.setMotherDateBirth(this.motherDatebirth);
+        if(StringUtils.isNumeric(this.motherDateBirth)) student.setMotherDateBirth(Integer.parseInt(this.motherDateBirth));
         student.setMotherWork(this.motherWork);
-        student.setStartSchool(this.startSchool);
         student.setReligion(this.religion);
         student.setAvatar(this.avatar);
         student.setClassId(this.classId);
         student.setDepartmentId(this.departmentId);
-        student.setStatus(this.status);
+        student.setEthnic(this.ethnic);
         return student;
 
     }

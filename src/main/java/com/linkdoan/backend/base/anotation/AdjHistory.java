@@ -7,3 +7,4 @@ import java.lang.annotation.*;
 public @interface AdjHistory {
     String field() default "";
 }
+

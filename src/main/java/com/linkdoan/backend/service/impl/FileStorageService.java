@@ -65,5 +65,14 @@ public class FileStorageService   {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
         }
     }
+
+    public void deleteFileAsResource(String fileName){
+        try{
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Files.delete(filePath);
+        } catch (IOException e) {
+            throw new MyFileNotFoundException("File not found " + fileName, e);
+        }
+    }
 }
 
