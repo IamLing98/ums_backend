@@ -14,14 +14,11 @@ import java.sql.Date;
 @Table(name="employee")
 public class Employee  {
     @Id
-    @Column(name="employee_id")
+    @Column(name="employee_id", columnDefinition = "char(10)")
     private String employeeId;
 
-    @Column(name="first_name")
-    private String firstName;
-
-    @Column(name="last_name")
-    private String lastName;
+    @Column(name="full_name")
+    private String fullName;
 
     @Column(name="sex")
     private Integer sex;
@@ -52,11 +49,14 @@ public class Employee  {
 
     @Column(name="avatar")
     private String avatar;
+
+    @Column(name="department_id", columnDefinition = "char(7)")
+    private String departmentId;
+
     public EmployeeDTO toDTO(){
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setEmployeeId(this.employeeId);
-        employeeDTO.setFirstName(this.firstName);
-        employeeDTO.setLastName(this.lastName);
+        employeeDTO.setFullName(this.fullName);
         employeeDTO.setSex(this.sex);
         employeeDTO.setDateBirth(this.dateBirth);
         employeeDTO.setHomeAddress(this.homeAddress);
@@ -67,6 +67,7 @@ public class Employee  {
         employeeDTO.setEmail(this.email);
         employeeDTO.setStartWork(this.startWork);
         employeeDTO.setAvatar(this.avatar);
+        employeeDTO.setDepartmentId(this.departmentId);
         return employeeDTO;
     }
 }

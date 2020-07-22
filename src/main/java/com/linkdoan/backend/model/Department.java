@@ -31,10 +31,6 @@ public class Department {
     @Column(name="start_year")
     private Integer startYear; //date type
 
-    @OneToOne
-    @JoinColumn(name = "cheif_id")
-    private Employee employee; //1 - 1 relationship
-
     @OneToMany(mappedBy="department")
     @Column(nullable = true)
     @JsonManagedReference

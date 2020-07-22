@@ -39,7 +39,6 @@ public class ClassDTO extends SystemDTO {
         classModel.setClassId(this.classId);
         classModel.setAdviserId(this.adviserId);
         classModel.setClassName(this.className);
-        classModel.setTotalMember(this.totalMember);
         classModel.setYearStart(this.yearStart);
         classModel.setDepartment(department);
         classModel.setCourseNumber(this.courseNumber);

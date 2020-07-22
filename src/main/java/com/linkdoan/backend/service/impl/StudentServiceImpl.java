@@ -51,9 +51,10 @@ public class StudentServiceImpl implements StudentService  {
         Student studentModel  = studentDTO.toModel();
         String classId = studentDTO.getClassId();
         String departmentId = studentDTO.getDepartmentId();
+        String courseNumber = studentDTO.getKeySearch1();
         Pageable pageable = PageRequest.of(0, 1);
         String studentId = "";
-        Page<Class> classes = classRepository.findBy(classId, departmentId, pageable);
+        Page<Class> classes = classRepository.findBy(classId, departmentId, courseNumber, pageable);
         if(classes.getTotalElements() < 1) throw  new EntityNotFoundException("Lớp học không hợp lệ !!!");
         else{
             List<Class> classList = classes.getContent();

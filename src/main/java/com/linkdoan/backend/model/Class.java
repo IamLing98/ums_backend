@@ -26,7 +26,7 @@ public class Class {
     private String className;
 
     @Column(name = "total_member" )
-    private String totalMember;
+    private Integer totalMember;
 
     @Column(name = "year_start" )
     private Integer yearStart; // date type
@@ -52,7 +52,7 @@ public class Class {
         ClassDTO classDTO = new ClassDTO();
         classDTO.setClassId(this.classId);
         classDTO.setClassName(this.className);
-        classDTO.setTotalMember(this.totalMember);
+        classDTO.setTotalMember(this.totalMember.toString());
         classDTO.setYearStart(this.yearStart);
         classDTO.setDepartmentId(department.getDepartmentId());
         classDTO.setAdviserId(this.adviserId);

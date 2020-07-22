@@ -16,11 +16,8 @@ public class EmployeeDTO extends SystemDTO {
     @AdjHistory(field = "employeeId")
     private String employeeId;
 
-    @AdjHistory(field = "firstName")
-    private String firstName;
-
-    @AdjHistory(field = "lastName")
-    private String lastName;
+    @AdjHistory(field = "fullName")
+    private String fullName;
 
     @AdjHistory(field = "sex")
     private int sex;
@@ -51,11 +48,13 @@ public class EmployeeDTO extends SystemDTO {
 
     @AdjHistory(field = "avatar")
     private String avatar;
+
+    private String departmentId;
+
     public Employee toModel(){
         Employee employee = new Employee();
         employee.setEmployeeId(this.employeeId);
-        employee.setFirstName(this.firstName);
-        employee.setLastName(this.lastName);
+        employee.setFullName(this.fullName);
         employee.setSex(this.sex);
         employee.setDateBirth(this.dateBirth);
         employee.setHomeAddress(this.homeAddress);
@@ -66,6 +65,7 @@ public class EmployeeDTO extends SystemDTO {
         employee.setEmail(this.email);
         employee.setStartWork(this.startWork);
         employee.setAvatar(this.avatar);
+        employee.setDepartmentId(this.departmentId);
         return employee;
     }
 }

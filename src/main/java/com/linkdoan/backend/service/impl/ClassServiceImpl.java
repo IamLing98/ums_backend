@@ -44,7 +44,10 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Page findBy(ClassDTO classDTO) {
         Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
-        return classRepository.findBy(classDTO.getClassId(), classDTO.getDepartmentId(), pageable);
+        if(classDTO.getDepartmentId() != "" && classDTO.getDepartmentId() != null){
+
+        }
+        return classRepository.findBy(classDTO.getClassId(), classDTO.getDepartmentId(),classDTO.getKeySearch1(), pageable);
     }
 
     @Override
