@@ -12,8 +12,8 @@ import java.util.Date;
 public class Role {
 
     @Id
-    @SequenceGenerator(name="pk_sequence_role",sequenceName="SYS_ROLES_SEQ")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_sequence_role")
+    @SequenceGenerator(name = "pk_sequence_role", sequenceName = "SYS_ROLES_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence_role")
     @Column(name = "role_id")
     private Long roleId;
 

@@ -10,13 +10,13 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name="province_city")
+@Table(name = "province_city")
 public class ProvinceCity {
     @Id
-    @Column(name="province_city_id", unique = true, columnDefinition = "varchar(5)")
+    @Column(name = "province_city_id", unique = true, columnDefinition = "varchar(5)")
     private String provinceCityId;
 
-    @Column(name="name" , columnDefinition = "VARCHAR(100)")
+    @Column(name = "name", columnDefinition = "VARCHAR(100)")
     private String name;
 
     @Column(name = "type", columnDefinition = "VARCHAR(30)")
@@ -25,7 +25,7 @@ public class ProvinceCity {
     @Column(name = "country_id", columnDefinition = "CHAR(10)")
     private String countryId;
 
-    public CommonDTO toDTO(){
+    public CommonDTO toDTO() {
         CommonDTO commonDTO = new CommonDTO();
         commonDTO.setId(this.provinceCityId);
         commonDTO.setLabel(this.name);

@@ -1,5 +1,6 @@
 package com.linkdoan.backend.service;
 
+import com.linkdoan.backend.dto.DepartmentDTO;
 import com.linkdoan.backend.dto.SpecializedDTO;
 import com.linkdoan.backend.model.Department;
 import com.linkdoan.backend.model.Specialized;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface DepartmentService {
-    List<Department> getAllDepartment(String departmentId)throws IOException;
+    List<DepartmentDTO> getAllDepartment(String departmentId)throws IOException;
     Page<Specialized> getAllSpecialized(SpecializedDTO specializedDTO) throws IOException;
 
 }

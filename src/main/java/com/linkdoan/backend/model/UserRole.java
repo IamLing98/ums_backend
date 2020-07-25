@@ -18,10 +18,10 @@ public class UserRole {
     @Column(name = "user_id")
     private Long userId;
 
-    public UserRoleDTO toDto(){
+    public UserRoleDTO toDto() {
         UserRoleDTO userRoleDTO = new UserRoleDTO();
         userRoleDTO.setRoleId(roleId);
         userRoleDTO.setUserId(userId);
-        return  userRoleDTO;
+        return userRoleDTO;
     }
 }

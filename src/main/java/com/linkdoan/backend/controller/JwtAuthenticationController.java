@@ -35,8 +35,9 @@ public class JwtAuthenticationController {
     //@Autowired
     //private JwtUserDetailsService userDetailsService;
     private UserDetailsService userDetailsService;
+
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken( @ModelAttribute @Valid JwtRequest authenticationRequest  ) throws Exception { //@RequestBody JwtRequest authenticationRequest
+    public ResponseEntity<?> createAuthenticationToken(@ModelAttribute @Valid JwtRequest authenticationRequest) throws Exception { //@RequestBody JwtRequest authenticationRequest
         //authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -52,8 +53,9 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtTokenUtil.AUTHORIZATION_HEADER, "Bearer " + token);
-        return new ResponseEntity<>(new JwtResponse(token,userDetails),httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new JwtResponse(token, userDetails), httpHeaders, HttpStatus.OK);
     }
+
     private void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -65,9 +67,8 @@ public class JwtAuthenticationController {
     }
 
 
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(){
+    public String home() {
         return "home";
     }
 

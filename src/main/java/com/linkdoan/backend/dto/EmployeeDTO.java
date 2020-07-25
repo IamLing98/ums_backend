@@ -65,7 +65,7 @@ public class EmployeeDTO extends SystemDTO {
         employee.setEmail(this.email);
         employee.setStartWork(this.startWork);
         employee.setAvatar(this.avatar);
-        employee.setDepartmentId(this.departmentId);
+       // employee.set(this.departmentId);
         return employee;
     }
 }

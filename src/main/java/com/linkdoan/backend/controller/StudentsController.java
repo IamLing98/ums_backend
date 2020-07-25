@@ -23,38 +23,38 @@ public class StudentsController {
     @Resource(name = "studentService")
     private StudentServiceImpl studentService;
 
-    public StudentServiceImpl getStudentService(StudentServiceImpl studentService){
+    public StudentServiceImpl getStudentService(StudentServiceImpl studentService) {
         return studentService;
     }
 
     @Autowired
-    public void setStudentService(StudentServiceImpl studentService){
+    public void setStudentService(StudentServiceImpl studentService) {
         this.studentService = studentService;
     }
 
     @RequestMapping(value = "/student/getAll", method = RequestMethod.POST)
-    public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
+    public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
-        return new ResponseEntity<>( studentService.findBy( studentDTO),HttpStatus.OK);
+        return new ResponseEntity<>(studentService.findBy(studentDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/student/insert", method = RequestMethod.POST)
-    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
+    @RequestMapping(value = "/student/create", method = RequestMethod.POST)
+    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
 
-        return new ResponseEntity<>( studentService.insertStudent(studentDTO),HttpStatus.OK);
+        return new ResponseEntity<>(studentService.insertStudent(studentDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
+    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
 
-        return new ResponseEntity<>( studentService.updateStudent(studentDTO),HttpStatus.OK);
+        return new ResponseEntity<>(studentService.updateStudent(studentDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/student/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute StudentDTO studentDTO  ) throws Exception {
-            if(studentService.deleteStudent(studentDTO) == 0 )
-                 return new ResponseEntity<>( HttpStatus.NOT_FOUND);
-            else
-                return new ResponseEntity<>( HttpStatus.OK);
+    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
+        if (studentService.deleteStudent(studentDTO) == 0)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 }

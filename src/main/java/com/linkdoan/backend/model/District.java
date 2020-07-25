@@ -9,22 +9,23 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Table(name="district")
+@Table(name = "district")
 @Entity
 public class District {
     @Id
-    @Column(name="district_id", columnDefinition = "VARCHAR(5)", unique = true)
+    @Column(name = "district_id", columnDefinition = "VARCHAR(5)", unique = true)
     private String districtId;
 
-    @Column(name="name", columnDefinition = "VARCHAR(100)")
+    @Column(name = "name", columnDefinition = "VARCHAR(100)")
     private String name;
 
-    @Column(name="type", columnDefinition = "VARCHAR(30)")
+    @Column(name = "type", columnDefinition = "VARCHAR(30)")
     private String type;
 
-    @Column(name="province_city_id", columnDefinition = "VARCHAR(5)")
+    @Column(name = "province_city_id", columnDefinition = "VARCHAR(5)")
     private String provinceCityId;
-    public CommonDTO toDTO(){
+
+    public CommonDTO toDTO() {
         CommonDTO commonDTO = new CommonDTO();
         commonDTO.setId(this.districtId);
         commonDTO.setLabel(this.name);

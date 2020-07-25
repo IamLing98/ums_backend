@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.linkdoan.backend.model.Class;
 
+import java.util.Optional;
+
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface ClassService {
     public Page findBy(ClassDTO classDTO);

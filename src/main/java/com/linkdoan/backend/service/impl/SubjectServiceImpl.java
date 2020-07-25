@@ -19,13 +19,14 @@ public class SubjectServiceImpl implements SubjectService {
     @Autowired
     private SubjectRepository subjectRepository;
     private static final String SUBJECT = "Subject";
+
     private int checkExist(SubjectDTO subjectDTO) {
-        int result = 0 ;
-        if (null != subjectDTO.getSubjectId() && ""!= subjectDTO.getSubjectId()) {
+        int result = 0;
+        if (null != subjectDTO.getSubjectId() && "" != subjectDTO.getSubjectId()) {
             Subject subject = subjectRepository.findBySubjectId(subjectDTO.getSubjectId());
             if (null == subject) {
                 result = 0;
-            }else{
+            } else {
                 result = 1;
             }
         }
@@ -34,24 +35,24 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Page findBy(Pageable pageable, SubjectDTO subjectDTO) {
-        return subjectRepository.findAll( pageable);
+        return subjectRepository.findAll(pageable);
     }
 
     @Override
     public Subject createSubject(SubjectDTO subjectDTO) {
-        if(checkExist(subjectDTO) == 1) throw  new EntityExistsException("Môn học này đã tồn tại");
+        if (checkExist(subjectDTO) == 1) throw new EntityExistsException("Môn học này đã tồn tại");
         return subjectRepository.save(subjectDTO.toModel());
     }
 
     @Override
     public Subject updateSubject(SubjectDTO subjectDTO) {
-        if(checkExist(subjectDTO) == 0) throw  new EntityExistsException("Môn học này không tồn tại");
+        if (checkExist(subjectDTO) == 0) throw new EntityExistsException("Môn học này không tồn tại");
         return subjectRepository.save(subjectDTO.toModel());
     }
 
     @Override
     public int deleteSubject(SubjectDTO subjectDTO) {
-        if(checkExist(subjectDTO) == 0)  return 0;
+        if (checkExist(subjectDTO) == 0) return 0;
         subjectRepository.delete(subjectDTO.toModel());
         return 1;
     }

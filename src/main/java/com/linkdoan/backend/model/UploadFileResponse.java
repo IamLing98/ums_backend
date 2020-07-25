@@ -14,6 +14,5 @@ public class UploadFileResponse implements Serializable {
     private long size;
 
 
-
     // Getters and Setters (Omitted for brevity)
 }

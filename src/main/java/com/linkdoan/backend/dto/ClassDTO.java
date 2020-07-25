@@ -7,12 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.linkdoan.backend.model.Class;
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.ParseException;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassDTO extends SystemDTO {
+public class ClassDTO  extends SystemDTO {
     private String classId;
 
     @AdjHistory(field = "className" )
@@ -22,10 +25,10 @@ public class ClassDTO extends SystemDTO {
     private String totalMember;
 
     @AdjHistory(field = "yearStart" )
-    private Integer yearStart; //date type
+    private String yearStart; //date type
 
     @AdjHistory(field = "courseNumber" )
-    private Integer courseNumber;
+    private String courseNumber;
 
     @AdjHistory(field = "departmentId" )
     private String departmentId;
@@ -34,14 +37,11 @@ public class ClassDTO extends SystemDTO {
     private String adviserId;
 
 
-    public Class toModel(Department department){
+    public Class toModel(){
         Class classModel = new Class();
         classModel.setClassId(this.classId);
         classModel.setAdviserId(this.adviserId);
         classModel.setClassName(this.className);
-        classModel.setYearStart(this.yearStart);
-        classModel.setDepartment(department);
-        classModel.setCourseNumber(this.courseNumber);
         return classModel;
     }
 }

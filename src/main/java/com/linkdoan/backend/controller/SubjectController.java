@@ -20,32 +20,32 @@ import javax.validation.Valid;
 @RestController
 public class SubjectController {
     @Autowired
-    SubjectServiceImpl subjectService ;
+    SubjectServiceImpl subjectService;
 
 
     @RequestMapping(value = "/subject/findBy", method = RequestMethod.POST)
-    public ResponseEntity<?> findBy(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
+    public ResponseEntity<?> findBy(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
         Pageable pageable = PageRequest.of(subjectDTO.getPage(), subjectDTO.getPageSize());
-        return new ResponseEntity<>( subjectService.findBy( pageable,subjectDTO),HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.findBy(pageable, subjectDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/insert", method = RequestMethod.POST)
-    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
+    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
 
-        return new ResponseEntity<>( subjectService.createSubject(subjectDTO),HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.createSubject(subjectDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
+    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
 
-        return new ResponseEntity<>( subjectService.updateSubject(subjectDTO),HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.updateSubject(subjectDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute SubjectDTO subjectDTO  ) throws Exception {
-        if(subjectService.deleteSubject(subjectDTO) == 0 )
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
+        if (subjectService.deleteSubject(subjectDTO) == 0)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
-            return new ResponseEntity<>( HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 }

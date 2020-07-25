@@ -10,19 +10,19 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="ethnic")
+@Table(name = "ethnic")
 public class Ethnic {
     @Id
-    @Column(name="ethnic_id", unique = true, columnDefinition = "int")
+    @Column(name = "ethnic_id", unique = true, columnDefinition = "int")
     private Integer ethnicId;
 
-    @Column(name="ethnic_name",  columnDefinition = "varchar(45)")
+    @Column(name = "ethnic_name", columnDefinition = "varchar(45)")
     private String ethnicName;
 
-    @Column(name="nationality_id",  columnDefinition = "int")
+    @Column(name = "nationality_id", columnDefinition = "int")
     private String nationalityId;
 
-    public CommonDTO toDTO(){
+    public CommonDTO toDTO() {
         CommonDTO commonDTO = new CommonDTO();
         commonDTO.setId(this.ethnicId.toString());
         commonDTO.setLabel(this.ethnicName);

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommonDTO   {
     private String id;
-    private  String label;
+    private String label;
 }

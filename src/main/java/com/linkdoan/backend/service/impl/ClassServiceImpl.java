@@ -1,7 +1,7 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.ClassDTO;
- import com.linkdoan.backend.model.Class;
+import com.linkdoan.backend.model.Class;
 import com.linkdoan.backend.model.Department;
 import com.linkdoan.backend.repository.ClassRepository;
 import com.linkdoan.backend.repository.DepartmentRepository;
@@ -14,6 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 @Service("classService")
 public class ClassServiceImpl implements ClassService {
@@ -28,49 +31,61 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    private int checkExist(ClassDTO classDTO) {
-        int result = 0 ;
-        if (null != classDTO.getClassId() && ""!= classDTO.getClassId()) {
-            Class classModel = this.classRepository.findFirstByClassId(classDTO.getClassId());
-            if (null == classModel) {
-                result = 0;
-            }else{
-                result = 1;
-            }
+    @Override
+    public Page findBy(ClassDTO classDTO) {
+        Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
+        if (classDTO.getDepartmentId() != "" && classDTO.getDepartmentId() != null) {
+
         }
+        return classRepository.findBy(classDTO.getClassId(), classDTO.getDepartmentId(), classDTO.getKeySearch1(), pageable);
+    }
+
+    @Override
+    public Class createClass(ClassDTO classDTO) {
+        if (classRepository.existsById(classDTO.getClassId()))
+            throw new EntityExistsException("Lớp học này đã tồn tại");
+        Class classModel = classDTO.toModel();
+        Class result;
+        String departmentId = classDTO.getDepartmentId();
+        Optional<Department> optionalDepartment = departmentRepository.findFirstByDepartmentId(departmentId);
+        if (optionalDepartment.isPresent()) {
+            Department department = optionalDepartment.get();
+            classModel.setDepartment(department);
+            result = classRepository.save(classModel);
+            List<Class> classList = department.getChildren();
+            classList.add(classModel);
+            department.setChildren(classList);
+        } else throw new EntityNotFoundException("Khoa này không tồn tại");
         return result;
     }
 
     @Override
-    public Page findBy(ClassDTO classDTO) {
-        Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
-        if(classDTO.getDepartmentId() != "" && classDTO.getDepartmentId() != null){
-
-        }
-        return classRepository.findBy(classDTO.getClassId(), classDTO.getDepartmentId(),classDTO.getKeySearch1(), pageable);
-    }
-
-    @Override
-    public Class createClass(ClassDTO classDTO){
-        if(checkExist( classDTO) == 1 ) throw  new EntityExistsException("Lớp học này đã tồn tại");
-        else{
-            Department department = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
-            return this.classRepository.save(classDTO.toModel(department));
-        }
-    }
-
-    @Override
     public Class updateClass(ClassDTO classDTO) {
-        if(checkExist( classDTO) == 0 ) throw  new EntityExistsException("Lớp học này không tồn tại");
-        Department department = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
-        return this.classRepository.save(classDTO.toModel(department));
-     }
+        Class classModel = classDTO.toModel();
+        Class result;
+        if (!classRepository.existsById(classDTO.getClassId()))
+            throw new EntityExistsException("Lớp học này không tồn tại");
+        Optional<Department> optionalDepartment = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
+        if (optionalDepartment.isPresent()) {
+            Department department = optionalDepartment.get();
+            classModel.setDepartment(department);
+            result = classRepository.save(classModel);
+            List<Class> classList = department.getChildren();
+            classList.add(classModel);
+            department.setChildren(classList);
+        }
+        else throw new EntityNotFoundException("Khoa này không tồn tại");
+        return result;
+    }
 
     @Override
     public int deleteClass(ClassDTO classDTO) {
-        if(checkExist(classDTO) == 0)  return 0;
-        Department department = departmentRepository.findFirstByDepartmentId(classDTO.getDepartmentId());
-         classRepository.delete(classDTO.toModel(department));
+        if (!classRepository.existsById(classDTO.getClassId()))
+            throw new EntityExistsException("Lớp học này không tồn tại");
+        else {
+            Optional<Class> optionalClass = classRepository.findFirstByClassId(classDTO.getClassId());
+            classRepository.delete(optionalClass.get());
+        }
         return 1;
     }
 

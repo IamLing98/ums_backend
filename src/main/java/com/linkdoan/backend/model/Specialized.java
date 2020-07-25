@@ -1,12 +1,10 @@
 package com.linkdoan.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linkdoan.backend.dto.SpecializedDTO;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "specialized")
 @Data
@@ -14,20 +12,41 @@ import javax.persistence.Table;
 
 public class Specialized {
     @Id
-    @Column(name="specialized_id", columnDefinition = "char(10)",unique = true)
+    @Column(name = "specialized_id", columnDefinition = "char(10)", unique = true)
     private String specializedId;
 
-    @Column(name="specialized_name", columnDefinition = "varchar(100)")
+    @Column(name = "specialized_name", columnDefinition = "varchar(100)")
     private String specializedName;
 
-    @Column(name="department_id", columnDefinition = "char(10)")
-    private String departmentId;
+    @ManyToOne
+    @JoinColumn(name = "department_id", nullable = false)
+    //@JsonBackReference// quat the fackkkkk, cai nay lam treo sys dcmm
+    @JsonIgnore
+    private Department department;
 
-    public SpecializedDTO toDTO(){
+    public String getDepartmentId() {
+        return department.getDepartmentId();
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.department.setDepartmentId(departmentId);
+    }
+
+    @JsonIgnore
+    public Department getDepartment() {
+        return department;
+    }
+
+    @JsonIgnore
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public SpecializedDTO toDTO() {
         SpecializedDTO specializedDTO = new SpecializedDTO();
         specializedDTO.setSpecializedId(this.specializedId);
         specializedDTO.setSpecializedName(this.specializedName);
-        specializedDTO.setDepartmentId(this.departmentId);
+        specializedDTO.setDepartmentId(this.getDepartmentId());
         return specializedDTO;
     }
 }

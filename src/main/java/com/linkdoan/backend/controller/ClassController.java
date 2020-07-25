@@ -27,17 +27,17 @@ public class ClassController {
         return new ResponseEntity<>(this.classService.findBy(classDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/class/create",method = RequestMethod.POST)
+    @RequestMapping(value = "/class/create", method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.createClass(classDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/class/update",method = RequestMethod.POST)
+    @RequestMapping(value = "/class/update", method = RequestMethod.POST)
     public ResponseEntity<?> update(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.updateClass(classDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/class/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/class/delete", method = RequestMethod.POST)
     public ResponseEntity<?> delete(@Valid @ModelAttribute ClassDTO classDTO) throws Exception {
         return new ResponseEntity<>(classService.deleteClass(classDTO), HttpStatus.OK);
     }

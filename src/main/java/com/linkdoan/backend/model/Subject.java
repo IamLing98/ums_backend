@@ -10,31 +10,31 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="subject")
+@Table(name = "subject")
 public class Subject {
     @Id
-    @Column(name="subject_id",unique = true,length = 9)
+    @Column(name = "subject_id", unique = true, length = 9)
     private String subjectId;
 
-    @Column(name="subject_name")
+    @Column(name = "subject_name")
     private String subjectName;
 
-    @Column(name="section_id")
+    @Column(name = "section_id")
     private String sectionId;
 
-    @Column(name="type")//subject_type
+    @Column(name = "type")//subject_type
     private String type;
 
-    @Column(name="credit_number")
+    @Column(name = "credit_number")
     private String creditNumber;
 
-    @Column(name="theory_number")
+    @Column(name = "theory_number")
     private String theoryNumber;
 
-    @Column(name="practice_number")
+    @Column(name = "practice_number")
     private String practiceNumber;
 
-    public SubjectDTO toDTO(){
+    public SubjectDTO toDTO() {
         SubjectDTO subjectDTO = new SubjectDTO();
         subjectDTO.setSubjectId(this.subjectId);
         subjectDTO.setSubjectName(this.subjectName);
