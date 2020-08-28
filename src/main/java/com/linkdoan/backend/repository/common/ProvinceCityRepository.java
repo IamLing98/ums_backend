@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("provinceRepository")
+@Repository
 public interface ProvinceCityRepository extends JpaRepository<ProvinceCity, String> {
     List<ProvinceCity> findAllByCountryId(String countryId);
 }

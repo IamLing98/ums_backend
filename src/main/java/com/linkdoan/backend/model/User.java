@@ -2,8 +2,6 @@ package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.UserDTO;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Date;

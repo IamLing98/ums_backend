@@ -2,7 +2,6 @@ package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.DepartmentDTO;
 import com.linkdoan.backend.dto.SpecializedDTO;
-import com.linkdoan.backend.model.Department;
 import com.linkdoan.backend.model.Specialized;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;

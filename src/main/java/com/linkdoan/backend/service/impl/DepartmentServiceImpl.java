@@ -42,6 +42,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Page<Specialized> getAllSpecialized(SpecializedDTO specializedDTO) throws IOException {
         Pageable pageable = PageRequest.of(specializedDTO.getPage(), specializedDTO.getPageSize());
-        return specializedRepository.findBy(specializedDTO.getSpecializedId(), specializedDTO.getDepartmentId(), pageable);
+        return specializedRepository.findBy(specializedDTO.getSpecializedId(), specializedDTO.getBranchId(), pageable);
     }
 }

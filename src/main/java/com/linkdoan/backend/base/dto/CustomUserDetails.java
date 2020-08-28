@@ -1,7 +1,6 @@
 package com.linkdoan.backend.base.dto;
 
 
-import com.linkdoan.backend.dto.UserDTO;
 import com.linkdoan.backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;

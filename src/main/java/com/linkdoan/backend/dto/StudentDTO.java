@@ -2,14 +2,11 @@ package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.base.anotation.AdjHistory;
 import com.linkdoan.backend.base.dto.SystemDTO;
-import com.linkdoan.backend.model.Department;
-import com.linkdoan.backend.model.Class;
 import com.linkdoan.backend.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

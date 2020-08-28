@@ -33,13 +33,13 @@ public class SubjectDTO extends SystemDTO {
     private String practiceNumber;
     public Subject toModel(){
         Subject subject = new Subject();
-        subject.setSubjectId(this.subjectId);
-        subject.setSubjectName(this.subjectName);
-        subject.setSectionId(this.sectionId);
-        subject.setType(this.type);
-        subject.setCreditNumber(this.creditNumber);
-        subject.setTheoryNumber(this.theoryNumber);
-        subject.setPracticeNumber(this.practiceNumber);
+//        subject.setSubjectId(this.subjectId);
+//        subject.setSubjectName(this.subjectName);
+//        subject.setSectionId(this.sectionId);
+//        subject.setType(this.type);
+//        subject.setCreditNumber(this.creditNumber);
+//        subject.setTheoryNumber(this.theoryNumber);
+//        subject.setPracticeNumber(this.practiceNumber);
         return subject;
     }
 }

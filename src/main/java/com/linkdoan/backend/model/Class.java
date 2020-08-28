@@ -1,6 +1,5 @@
 package com.linkdoan.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.linkdoan.backend.dto.ClassDTO;
 import lombok.Data;
 
@@ -33,33 +32,8 @@ public class Class {
     @Column(name = "next_val", columnDefinition = "Int")
     private Integer nextVal;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id", nullable = false)
-    //@JsonBackReference// quat the fackkkkk, cai nay lam treo sys dcmm
-    @JsonIgnore
-    private Department department;
-
-    public String getDepartmentId() {
-        return department.getDepartmentId();
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.department.setDepartmentId(departmentId);
-    }
-
-    @JsonIgnore
-    public Department getDepartment() {
-        return department;
-    }
-
-    @JsonIgnore
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
-    public String getDepartmentName() {
-        return department.getDepartmentName();
-    }
+    @JoinColumn(name = "department_id", nullable = false, columnDefinition = "CHAR(7)")
+    private String departmentId;
 
     public ClassDTO toDTO() {
         ClassDTO classDTO = new ClassDTO();
@@ -67,7 +41,7 @@ public class Class {
         classDTO.setClassName(this.className);
         classDTO.setTotalMember(this.totalMember.toString());
         classDTO.setYearStart(this.yearStart.toString());
-        classDTO.setDepartmentId(department.getDepartmentId());
+        classDTO.setDepartmentId(this.departmentId);
         classDTO.setAdviserId(this.adviserId);
         classDTO.setCourseNumber(this.courseNumber.toString());
         return classDTO;

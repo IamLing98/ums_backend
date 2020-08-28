@@ -2,13 +2,13 @@ package com.linkdoan.backend.repository;
 
 import com.linkdoan.backend.model.Student;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.data.domain.Pageable;
 
-@Repository("studentRepository")
+@Repository
 public interface StudentRepository extends JpaRepository<Student, String> {
 
     Student findByStudentId(String studentId);

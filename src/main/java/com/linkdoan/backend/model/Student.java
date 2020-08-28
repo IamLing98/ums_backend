@@ -2,7 +2,11 @@ package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.StudentDTO;
 import lombok.Data;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 

@@ -1,20 +1,12 @@
 package com.linkdoan.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.linkdoan.backend.dto.ClassDTO;
 import com.linkdoan.backend.dto.DepartmentDTO;
 import lombok.Data;
 
-import javax.persistence.*;
-
-import com.linkdoan.backend.model.Employee;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity(name = "department")
@@ -33,34 +25,14 @@ public class Department {
     @Column(name = "start_year")
     private Integer startYear; //date type
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(nullable = true)
-    @JsonManagedReference
-    @JsonIgnore
-    private List<Class> children;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(nullable = true)
-    @JsonManagedReference
-    @JsonIgnore
-    private List<Employee> employeeList;
-
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(nullable = true)
-    @JsonManagedReference
-    @JsonIgnore
-    private List<Specialized> specializedList;
 
     public DepartmentDTO toDTO() {
         DepartmentDTO departmentDTO = new DepartmentDTO();
-
         departmentDTO.setDepartmentId(this.departmentId);
         departmentDTO.setDepartmentName(this.departmentName);
         departmentDTO.setDepartmentType(this.departmentType.toString());
         departmentDTO.setStartYear(this.startYear.toString());
-        departmentDTO.setChildren(this.children);
-        departmentDTO.setEmployeeList(this.employeeList);
-        departmentDTO.setSpecializedList(this.specializedList);
         return departmentDTO;
     }
 

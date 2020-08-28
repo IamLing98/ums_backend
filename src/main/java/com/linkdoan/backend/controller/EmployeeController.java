@@ -1,9 +1,6 @@
 package com.linkdoan.backend.controller;
 
-import com.linkdoan.backend.dto.ClassDTO;
 import com.linkdoan.backend.dto.EmployeeDTO;
-import com.linkdoan.backend.model.Employee;
-import com.linkdoan.backend.service.ClassService;
 import com.linkdoan.backend.service.impl.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

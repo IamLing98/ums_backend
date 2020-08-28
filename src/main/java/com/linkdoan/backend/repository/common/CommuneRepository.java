@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("communeRepository")
+@Repository
 public interface CommuneRepository extends JpaRepository<Commune, String> {
     List<Commune> findAllByDistrictId(String districtId);
 }

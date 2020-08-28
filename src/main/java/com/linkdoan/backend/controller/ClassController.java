@@ -1,15 +1,8 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.ClassDTO;
-import com.linkdoan.backend.dto.StudentDTO;
-import com.linkdoan.backend.model.Class;
-import com.linkdoan.backend.repository.ClassRepository;
-import com.linkdoan.backend.service.ClassService;
 import com.linkdoan.backend.service.impl.ClassServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

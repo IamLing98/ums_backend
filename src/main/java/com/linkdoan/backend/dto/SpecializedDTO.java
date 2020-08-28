@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 public class SpecializedDTO extends SystemDTO {
     private String specializedId;
     private String specializedName;
-    private String departmentId;
+    private String branchId;
 
     public Specialized toModel(){
         Specialized specialized = new Specialized();
-        specialized.setDepartmentId(this.departmentId);
+        specialized.setBranchId(this.branchId);
         specialized.setSpecializedId(this.specializedId);
         specialized.setSpecializedName(this.specializedName);
         return specialized;

@@ -1,6 +1,9 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.base.dto.CustomUserDetails;
+import com.linkdoan.backend.config.JwtTokenUtil;
+import com.linkdoan.backend.model.JwtRequest;
+import com.linkdoan.backend.model.JwtResponse;
 import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-import com.linkdoan.backend.config.JwtTokenUtil;
-import com.linkdoan.backend.model.JwtRequest;
-import com.linkdoan.backend.model.JwtResponse;
 
 import javax.validation.Valid;
 

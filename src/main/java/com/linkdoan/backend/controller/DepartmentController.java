@@ -1,21 +1,13 @@
 package com.linkdoan.backend.controller;
 
-import com.linkdoan.backend.dto.ClassDTO;
 import com.linkdoan.backend.dto.DepartmentDTO;
-import com.linkdoan.backend.dto.EmployeeDTO;
 import com.linkdoan.backend.dto.SpecializedDTO;
-import com.linkdoan.backend.model.Department;
-import com.linkdoan.backend.model.Specialized;
-import com.linkdoan.backend.repository.SpecializedRepository;
 import com.linkdoan.backend.service.impl.DepartmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 

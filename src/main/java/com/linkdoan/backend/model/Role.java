@@ -4,7 +4,6 @@ import com.linkdoan.backend.dto.RoleDTO;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "role")

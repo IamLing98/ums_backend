@@ -1,6 +1,5 @@
 package com.linkdoan.backend.model;
 
-import com.linkdoan.backend.dto.SubjectDTO;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -19,30 +18,22 @@ public class Subject {
     @Column(name = "subject_name")
     private String subjectName;
 
-    @Column(name = "section_id")
-    private String sectionId;
-
-    @Column(name = "type")//subject_type
-    private String type;
-
-    @Column(name = "credit_number")
-    private String creditNumber;
+    @Column(name = "each_subject")
+    private Integer eachSubject;
 
     @Column(name = "theory_number")
-    private String theoryNumber;
+    private Integer theoryNumber;
 
-    @Column(name = "practice_number")
-    private String practiceNumber;
+    @Column(name = "exercise_number")
+    private Integer exerciseNumber;
 
-    public SubjectDTO toDTO() {
-        SubjectDTO subjectDTO = new SubjectDTO();
-        subjectDTO.setSubjectId(this.subjectId);
-        subjectDTO.setSubjectName(this.subjectName);
-        subjectDTO.setSectionId(this.sectionId);
-        subjectDTO.setType(this.type);
-        subjectDTO.setCreditNumber(this.creditNumber);
-        subjectDTO.setTheoryNumber(this.theoryNumber);
-        subjectDTO.setPracticeNumber(this.practiceNumber);
-        return subjectDTO;
-    }
+    @Column(name = "discuss_number")
+    private Integer discussNumber;
+
+    @Column(name = "self_learning_number")
+    private Integer selfLeaningNumber;
+
+    @Column(name = "prerequisite_subject_id")
+    private Integer prerequisiteSubjectId;
+
 }

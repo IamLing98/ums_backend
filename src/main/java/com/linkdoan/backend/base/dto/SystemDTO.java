@@ -1,8 +1,6 @@
 package com.linkdoan.backend.base.dto;
 
 
-import lombok.Value;
-
 public abstract class SystemDTO {
     /**
      *
