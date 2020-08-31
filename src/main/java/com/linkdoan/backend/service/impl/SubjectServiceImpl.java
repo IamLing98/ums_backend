@@ -11,48 +11,50 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("subjectService")
 public class SubjectServiceImpl implements SubjectService {
     @Qualifier("subjectRepository")
     @Autowired
     private SubjectRepository subjectRepository;
-    private static final String SUBJECT = "Subject";
-
-    private int checkExist(SubjectDTO subjectDTO) {
-        int result = 0;
-        if (null != subjectDTO.getSubjectId() && "" != subjectDTO.getSubjectId()) {
-            Subject subject = subjectRepository.findBySubjectId(subjectDTO.getSubjectId());
-            if (null == subject) {
-                result = 0;
-            } else {
-                result = 1;
-            }
-        }
-        return result;
-    }
 
     @Override
     public Page findBy(Pageable pageable, SubjectDTO subjectDTO) {
-        return subjectRepository.findAll(pageable);
+        return null;
     }
 
     @Override
-    public Subject createSubject(SubjectDTO subjectDTO) {
-        if (checkExist(subjectDTO) == 1) throw new EntityExistsException("Môn học này đã tồn tại");
-        return subjectRepository.save(subjectDTO.toModel());
+    public SubjectDTO create(SubjectDTO subjectDTO) {
+        Subject subject = subjectDTO.toModel();
+        return subjectRepository.save(subject).toDTO();
     }
 
     @Override
-    public Subject updateSubject(SubjectDTO subjectDTO) {
-        if (checkExist(subjectDTO) == 0) throw new EntityExistsException("Môn học này không tồn tại");
-        return subjectRepository.save(subjectDTO.toModel());
+    public SubjectDTO update(SubjectDTO subjectDTO) {
+        Subject subject = subjectDTO.toModel();
+        return subjectRepository.save(subject).toDTO();
     }
 
     @Override
-    public int deleteSubject(SubjectDTO subjectDTO) {
-        if (checkExist(subjectDTO) == 0) return 0;
-        subjectRepository.delete(subjectDTO.toModel());
-        return 1;
+    public boolean delete(SubjectDTO subjectDTO) {
+        Subject subject = subjectDTO.toModel();
+        if(subjectRepository.findById(subjectDTO.getSubjectId()) != null){
+            subjectRepository.delete(subject);
+            return true;
+        }
+        return false;
     }
+
+    @Override
+    public List<SubjectDTO> getAll() {
+        List<Subject> subjectList = subjectRepository.findAll();
+        List<SubjectDTO> subjectDTOList = new ArrayList<>();
+        for(int i = 0 ; i< subjectList.size(); i++){
+            subjectDTOList.add(subjectList.get(i).toDTO());
+        }
+        return subjectDTOList;
+    }
+
 }

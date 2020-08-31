@@ -1,6 +1,6 @@
 package com.linkdoan.backend.config;
 
-import com.linkdoan.backend.service.UserService;
+import com.linkdoan.backend.service.impl.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

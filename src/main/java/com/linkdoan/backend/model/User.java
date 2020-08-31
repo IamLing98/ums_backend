@@ -2,6 +2,7 @@ package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.UserDTO;
 import lombok.Data;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,11 +11,11 @@ import java.util.Date;
 @Entity
 @Table(name = "user")
 @Data
+@BatchSize(size=10)
 public class User {
     @Id
-    @SequenceGenerator(name = "pk_sequence", sequenceName = "user_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "user_id" )
     private Long userId;
 
     @Column(name = "username")

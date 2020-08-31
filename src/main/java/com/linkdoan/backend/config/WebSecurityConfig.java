@@ -1,6 +1,6 @@
 package com.linkdoan.backend.config;
 
-import com.linkdoan.backend.service.UserService;
+import com.linkdoan.backend.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -77,6 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**"
                 )
                 .permitAll()
+                .antMatchers("/education-program/**")
+                .hasAnyAuthority("PDT")
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()
                 .and()

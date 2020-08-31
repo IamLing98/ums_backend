@@ -14,12 +14,15 @@ public class UserRoleDTO {
 
     @AdjHistory(field = "userId")
     private Long userId;
+
     private String roleName;
+
     private String description;
+
     public UserRole toModel(){
         UserRole userRole = new UserRole();
-        userRole.setRoleId(roleId);
-        userRole.setUserId(userId);
+//        userRole.setRoleId(roleId);
+//        userRole.setUserId(userId);
         return  userRole;
     }
 }

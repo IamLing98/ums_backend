@@ -8,4 +8,6 @@ import java.util.List;
 public interface EducationProgramRepository extends JpaRepository<EducationProgram, String> {
 
     List<EducationProgram> findAll();
+
+   EducationProgram findFirstByEducationProgramId(String id);
 }

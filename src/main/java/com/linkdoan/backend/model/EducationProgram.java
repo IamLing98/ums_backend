@@ -1,5 +1,6 @@
 package com.linkdoan.backend.model;
 
+import com.linkdoan.backend.dto.EducationProgramDTO;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -27,5 +28,17 @@ public class EducationProgram {
     @Column(name = "education_program_type", columnDefinition = "INT")
     private Integer educationProgramType;
 
+    @Column(name = "education_program_status", columnDefinition = "INT")
+    private Integer educationProgramStatus;
 
+    public EducationProgramDTO toDTO(){
+        EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
+        educationProgramDTO.setBranchId(this.branchId);
+        educationProgramDTO.setEducationProgramId(this.educationProgramId);
+        educationProgramDTO.setEducationProgramLevel(this.educationProgramLevel.toString());
+        educationProgramDTO.setEducationProgramName(this.educationProgramName);
+        educationProgramDTO.setEducationProgramStatus(this.educationProgramStatus.toString());
+        educationProgramDTO.setEducationProgramType(this.educationProgramType.toString());
+        return educationProgramDTO;
+    }
 }

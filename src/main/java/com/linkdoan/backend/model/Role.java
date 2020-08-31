@@ -3,7 +3,10 @@ package com.linkdoan.backend.model;
 import com.linkdoan.backend.dto.RoleDTO;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
@@ -11,11 +14,9 @@ import javax.persistence.*;
 public class Role {
 
     @Id
-    @SequenceGenerator(name = "pk_sequence_role", sequenceName = "SYS_ROLES_SEQ")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence_role")
-    @Column(name = "role_id")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "role_id", unique = true)
     private Long roleId;
-
 
     @Column(name = "role_name")
     private String roleName;
@@ -23,14 +24,12 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-
     public RoleDTO toDto() {
         RoleDTO sysRole = new RoleDTO();
         sysRole.setRoleId(roleId);
         sysRole.setRoleName(roleName);
         sysRole.setDescription(description);
         return sysRole;
-
     }
 
 }

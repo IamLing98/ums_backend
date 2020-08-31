@@ -2,10 +2,11 @@ package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.base.dto.CustomUserDetails;
 import com.linkdoan.backend.config.JwtTokenUtil;
+import com.linkdoan.backend.dto.UserDTO;
 import com.linkdoan.backend.model.JwtRequest;
 import com.linkdoan.backend.model.JwtResponse;
-import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.UserRepository;
+import com.linkdoan.backend.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
@@ -25,13 +26,19 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
+
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Qualifier("userRepository")
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    UserService userService ;
     //@Autowired
     //private JwtUserDetailsService userDetailsService;
     private UserDetailsService userDetailsService;
@@ -45,7 +52,7 @@ public class JwtAuthenticationController {
                         authenticationRequest.getPassword()
                 )
         );
-        User userDetails = userRepository.findByUsername(authenticationRequest.getUsername());
+        UserDTO userDTO = userService.getUserDetails(authenticationRequest.getUsername());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         //CustomUserDetails customUserDetails=(CustomUserDetails) authentication.getPrincipal();
@@ -53,7 +60,7 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken((CustomUserDetails) authentication.getPrincipal());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtTokenUtil.AUTHORIZATION_HEADER, "Bearer " + token);
-        return new ResponseEntity<>(new JwtResponse(token, userDetails), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new JwtResponse(token, userDTO), httpHeaders, HttpStatus.OK);
     }
 
     private void authenticate(String username, String password) throws Exception {

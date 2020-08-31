@@ -19,28 +19,30 @@ public class SubjectController {
     @Autowired
     SubjectServiceImpl subjectService;
 
-
     @RequestMapping(value = "/subject/findBy", method = RequestMethod.POST)
     public ResponseEntity<?> findBy(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
         Pageable pageable = PageRequest.of(subjectDTO.getPage(), subjectDTO.getPageSize());
         return new ResponseEntity<>(subjectService.findBy(pageable, subjectDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subject/insert", method = RequestMethod.POST)
-    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
+    @RequestMapping(value = "/subject/getAll", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll() throws Exception {
+        return new ResponseEntity<>(subjectService.getAll(), HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(subjectService.createSubject(subjectDTO), HttpStatus.OK);
+    @RequestMapping(value = "/subject/create", method = RequestMethod.POST)
+    public ResponseEntity<?> create(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
+        return new ResponseEntity<>(subjectService.create(subjectDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
-
-        return new ResponseEntity<>(subjectService.updateSubject(subjectDTO), HttpStatus.OK);
+    public ResponseEntity<?> update(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
+        return new ResponseEntity<>(subjectService.update(subjectDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subject/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
-        if (subjectService.deleteSubject(subjectDTO) == 0)
+    public ResponseEntity<?> delete(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
+        if (subjectService.delete(subjectDTO) == false)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(HttpStatus.OK);

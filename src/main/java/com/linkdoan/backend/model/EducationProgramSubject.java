@@ -9,16 +9,14 @@ import javax.persistence.*;
 @Entity
 public class EducationProgramSubject {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subjectId")
-    private Subject subject;
+    @Column(name="subject_id")
+    private String subjectId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "education_program_id")
-    private EducationProgram educationProgram;
+    @Column(name="education_program_id")
+    private String educationProgramId;
 
     @Column(name = "subject_type")
     private Integer subjectType;

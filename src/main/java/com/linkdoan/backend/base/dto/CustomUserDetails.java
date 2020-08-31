@@ -1,27 +1,38 @@
 package com.linkdoan.backend.base.dto;
 
 
-import com.linkdoan.backend.model.User;
+import com.linkdoan.backend.dto.RoleDTO;
+import com.linkdoan.backend.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    private User user;
+    private UserDTO user;
     private String jwt;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //        // Mặc định sẽ để tất cả là ROLE_USER. Để demo cho đơn giản.
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        List<RoleDTO> roleDTOList = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+        for (RoleDTO role : roleDTOList) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+
+        return authorities;
     }
-    public CustomUserDetails(User user){
+    public CustomUserDetails(UserDTO user){
         this.user = user;
     }
     @Override
