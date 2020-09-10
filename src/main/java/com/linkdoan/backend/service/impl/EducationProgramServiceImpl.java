@@ -2,7 +2,6 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.EducationProgramDTO;
 import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
-import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.Branch;
 import com.linkdoan.backend.model.EducationProgram;
 import com.linkdoan.backend.model.EducationProgramSubject;
@@ -12,16 +11,18 @@ import com.linkdoan.backend.repository.EducationProgramRepository;
 import com.linkdoan.backend.repository.EducationProgramSubjectRepository;
 import com.linkdoan.backend.repository.SubjectRepository;
 import com.linkdoan.backend.service.EducationProgramService;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EducationProgramServiceImpl implements EducationProgramService {
@@ -46,9 +47,9 @@ public class EducationProgramServiceImpl implements EducationProgramService {
         for (int i = 0; i < educationProgramList.size(); i++) {
             EducationProgram educationProgram = educationProgramList.get(i);
             EducationProgramDTO educationProgramDTO = educationProgram.toDTO();
-            Branch branch = branchRepository.findFirstByBranchId(educationProgram.getBranchId());
-            if (branch == null) throw new EntityNotFoundException("Not Found");
-            educationProgramDTO.setBranchName(branch.getBranchName());
+            Optional<Branch> branch = branchRepository.findFirstByBranchId(educationProgram.getBranchId());
+            if (branch.isPresent() == false) throw new EntityNotFoundException("Not Found");
+            educationProgramDTO.setBranchName(branch.get().getBranchName());
             educationProgramDTOList.add(educationProgramDTO);
         }
         return educationProgramDTOList;
@@ -56,6 +57,7 @@ public class EducationProgramServiceImpl implements EducationProgramService {
 
     @Override
     public EducationProgramDTO createNewEducationProgram(EducationProgramDTO educationProgramDTO) {
+        if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).get() != null) throw  new EntityExistsException("Đã tồn tại");
         EducationProgram educationProgram = educationProgramDTO.toModel();
         educationProgram.setEducationProgramStatus(2);
         return educationProgramRepository.save(educationProgram).toDTO();
@@ -69,19 +71,26 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     }
 
     @Override
-    public boolean delete(EducationProgramDTO educationProgramDTO) {
-        if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).get() != null) {
-            educationProgramRepository.delete(educationProgramDTO.toModel());
-            return true;
-        }
-        return false;
+    public boolean delete(List<EducationProgramDTO> educationProgramDTOList) {
+            for(int i = 0 ; i < educationProgramDTOList.size(); i++){
+                EducationProgramDTO educationProgramDTO = educationProgramDTOList.get(i);
+                if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).get() != null) {
+                    educationProgramRepository.delete(educationProgramDTO.toModel());
+
+                }else throw new EntityNotFoundException("Khong tim thay");
+            }
+        return true;
     }
 
     @Override
-    public List<EducationProgramSubject> updateEducationProgramSubject(List<EducationProgramSubjectDTO> educationProgramSubjectDTOList) {
+    @Transactional(rollbackFor = Exception.class)
+    public List<EducationProgramSubject> updateEducationProgramSubject(EducationProgramDTO educationProgramDTO) {
+        educationProgramSubjectRepository.deleteAllByEducationProgramId(educationProgramDTO.getEducationProgramId());
         List<EducationProgramSubject> educationProgramSubjectList = new ArrayList<>();
-        for(int i = 0 ; i< educationProgramSubjectDTOList.size();i++){
-            EducationProgramSubject educationProgramSubject = educationProgramSubjectDTOList.get(i).toModel();
+
+        for (int i = 0; i < educationProgramDTO.getSubjectList().size(); i++) {
+            EducationProgramSubjectDTO educationProgramSubjectDTO = educationProgramDTO.getSubjectList().get(i);
+            EducationProgramSubject educationProgramSubject = educationProgramSubjectDTO.toModel();
             educationProgramSubjectRepository.save(educationProgramSubject);
             educationProgramSubjectList.add(educationProgramSubject);
         }
@@ -92,18 +101,23 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     public EducationProgramDTO getDetails(EducationProgramDTO educationProgramDTO) {
         ExampleMatcher NAME_MATCHER = ExampleMatcher.matching()
                 .withMatcher("educationProgramId", ExampleMatcher.GenericPropertyMatchers.ignoreCase());
-        Example<EducationProgram> example = Example.<EducationProgram>of(educationProgramDTO.toModel(), NAME_MATCHER);
+        Example<EducationProgram> example = Example.<EducationProgram>of(educationProgramDTO.toModel(), NAME_MATCHER);//create new education model
         boolean exists = educationProgramRepository.exists(example);
-        if(exists == false) throw new EntityNotFoundException("Not found");
+        if (exists == false) throw new EntityNotFoundException("Not found");
+
         EducationProgram educationProgram = educationProgramRepository.findFirstByEducationProgramId(educationProgramDTO.getEducationProgramId());
         EducationProgramDTO rs = educationProgram.toDTO();
-        List<Subject> subjectList = subjectRepository.findAllByEducationProgramId(educationProgram.getEducationProgramId());
-        List<SubjectDTO> subjectDTOList = new ArrayList<>();
-        for(int i = 0 ; i < subjectList.size(); i++){
-            SubjectDTO subjectDTO = subjectList.get(i).toDTO();
-            subjectDTOList.add(subjectDTO);
+        List<EducationProgramSubject> educationProgramSubjectList = educationProgramSubjectRepository.findAllByEducationProgramId(educationProgramDTO.getEducationProgramId());
+        List<EducationProgramSubjectDTO> educationProgramSubjectDTOList = new ArrayList<>();
+        for (int i = 0; i < educationProgramSubjectList.size(); i++) {
+            EducationProgramSubject educationProgramSubject = educationProgramSubjectList.get(i);
+            EducationProgramSubjectDTO educationProgramSubjectDTO = educationProgramSubject.toDTO();
+            Subject subject = subjectRepository.findFirstBySubjectId(educationProgramSubject.getSubjectId());
+            if (subject != null) educationProgramSubjectDTO.setSubject(subject.toDTO());
+            else educationProgramSubjectDTO.setSubject(null);
+            educationProgramSubjectDTOList.add(educationProgramSubjectDTO);
         }
-        rs.setSubjectList(subjectDTOList);
+        rs.setSubjectList(educationProgramSubjectDTOList);
         return rs;
 
     }

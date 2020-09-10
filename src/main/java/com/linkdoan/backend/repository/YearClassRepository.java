@@ -1,6 +1,6 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.model.Class;
+import com.linkdoan.backend.model.YearClass;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,9 +13,9 @@ import java.util.Optional;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
-public interface ClassRepository extends JpaRepository<Class, String> {
+public interface YearClassRepository extends JpaRepository<YearClass, String> {
 
-    Optional<Class> findFirstByClassId(String classId);
+    Optional<YearClass> findFirstByClassId(String classId);
 
     @Query(value = "SELECT * FROM class c   WHERE (:class_id is null or :class_id =''  or class_id = :class_id)"
             + "and (:department_id is null or :department_id =\"\" or c.department_id =  :department_id)"
@@ -26,7 +26,7 @@ public interface ClassRepository extends JpaRepository<Class, String> {
                     + "and (:course_number is null or :course_number =\"\" or course_number =  :course_number)",
             nativeQuery = true
     )
-    Page<Class> findBy(@Param("class_id") String classId, @Param("department_id") String departmentId, @Param("course_number") String courseNumber, Pageable pageable);
+    Page<YearClass> findBy(@Param("class_id") String classId, @Param("department_id") String departmentId, @Param("course_number") String courseNumber, Pageable pageable);
 
     @Query(value = "SELECT next_val FROM Class WHERE (:class_id is null or :class_id ='' or class_id = :class_id)",
             nativeQuery = true

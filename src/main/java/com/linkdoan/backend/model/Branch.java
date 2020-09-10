@@ -1,5 +1,6 @@
 package com.linkdoan.backend.model;
 
+import com.linkdoan.backend.dto.BranchDTO;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -24,4 +25,12 @@ public class Branch {
 
     @Column(name = "department_id", columnDefinition="CHAR(7)")
     private String departmentId;
+
+    public BranchDTO toDTO(){
+        BranchDTO branchDTO = new BranchDTO();
+        branchDTO.setBranchId(this.branchId);
+        branchDTO.setBranchName(this.branchName);
+
+        return branchDTO;
+    }
 }

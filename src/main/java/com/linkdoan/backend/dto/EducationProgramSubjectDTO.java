@@ -10,14 +10,20 @@ import org.apache.commons.lang3.math.NumberUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EducationProgramSubjectDTO {
-    private String subjectId;
+    private String id;
     private String educationProgramId;
-    private String subjectType;
-    public EducationProgramSubject toModel(){
+    private String transactionType;
+    private SubjectDTO subject;
+
+    String getSubjectId (){
+        return this.subject.getSubjectId();
+    }
+    
+    public EducationProgramSubject toModel() {
         EducationProgramSubject educationProgramSubject = new EducationProgramSubject();
-        educationProgramSubject.setSubjectType(NumberUtils.toInt(this.subjectType));
+        educationProgramSubject.setTransactionType(NumberUtils.toInt(this.transactionType));
         educationProgramSubject.setEducationProgramId(this.educationProgramId);
-        educationProgramSubject.setSubjectId(this.subjectId);
+        educationProgramSubject.setSubjectId(this.getSubjectId());
         return educationProgramSubject;
     }
 }

@@ -30,29 +30,10 @@ public class StudentsController {
         this.studentService = studentService;
     }
 
-    @RequestMapping(value = "/student/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/student/getAllStudent", method = RequestMethod.POST)
     public ResponseEntity<?> findBy(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
         return new ResponseEntity<>(studentService.findBy(studentDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/student/create", method = RequestMethod.POST)
-    public ResponseEntity<?> insertStudent(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
-
-        return new ResponseEntity<>(studentService.insertStudent(studentDTO), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/student/update", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
-
-        return new ResponseEntity<>(studentService.updateStudent(studentDTO), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/student/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@Valid @ModelAttribute StudentDTO studentDTO) throws Exception {
-        if (studentService.deleteStudent(studentDTO) == 0)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else
-            return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

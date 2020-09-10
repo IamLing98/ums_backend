@@ -19,32 +19,72 @@ public class Student {
     @Column(name = "student_id",unique = true,columnDefinition="CHAR(9)")
     private String studentId;
 
-    @Column(name = "first_name", columnDefinition = "VARCHAR(45)")
-    private String firstName;
-
-    @Column(name = "last_name" , columnDefinition = "VARCHAR(45)")
-    private String lastName;
-
     @Column(name = "full_name", columnDefinition = "TEXT")
     private String fullName;
-
-    @Column(name = "date_birth")
-    private java.sql.Date dateBirth;
 
     @Column(name = "sex")
     private Integer sex;
 
-    @Column(name = "nation",columnDefinition = "varchar(30)")
-    private String nation;
+    @Column(name = "date_birth")
+    private java.sql.Date dateBirth;
 
+    @Column(name = "nick_name", columnDefinition = "VARCHAR(45)")
+    private String nickName;
+
+    @Column(name = "home_town", columnDefinition = "VARCHAR(200)")
+    private String homeTown;
+
+    //hộ khẩu thường trú
+    @Column(name = "permanent_residence",columnDefinition = "varchar(200)")
+    private String permanentResidence;
+
+    //dân tộc
     @Column(name = "ethnic", columnDefinition = "varchar(30)")
     private String ethnic;
 
-    @Column(name = "home_address", columnDefinition = "text")
-    private String homeAddress;
+    //ton giao
+    @Column(name = "religion", columnDefinition = "varchar(45)")
+    private String religion;
 
-    @Column(name = "current_address", columnDefinition = "text")
-    private String currentAddress;
+    //khu vuc tuyen sinh
+    @Column(name = "enrollment_area", columnDefinition = "INT")
+    private Integer enrollmentArea;
+
+    // đôi tượng ưu tiên
+    @Column(name = "priority_type", columnDefinition = "INT")
+    private Integer priorityType;
+
+    //chính sách ưu tiên
+    @Column(name = "incentives_type", columnDefinition = "INT")
+    private Integer incentivesType;
+
+    //thành phần gia đình
+    @Column(name = "family_element", columnDefinition = "INT")
+    private Integer familyElement;
+
+    //ngày vào đoàn
+    @Column(name = "CYU_startDate", columnDefinition = "DATE")
+    private Date CYUStartDate;
+
+    //ngày vào đảng
+    @Column(name = "CP_startDate", columnDefinition = "DATE")
+    private Date CPStartDate;
+
+    //thẻ căn cước/CMND
+    @Column(name = "identity_number", columnDefinition = "Char(20)")
+    private String identityNumber;
+
+    //thẻ căn cước/CMND ngày cấp
+    @Column(name = "identity_created_date", columnDefinition = "DATE")
+    private Date identityCreatedDate;
+
+    //thẻ căn cước/CMND nơi cấp
+    @Column(name = "identity_created_place", columnDefinition = "VARCHAR(200)")
+    private String identityCreatedPlace;
+
+    //số tài khoản ngân hàng
+    @Column(name = "bank_number", columnDefinition = "VARCHAR(45)")
+    private String bankNumber;
 
     @Column(name = "email", columnDefinition = "char(40)")
     private String email;
@@ -70,52 +110,59 @@ public class Student {
     @Column(name = "mother_work")
     private String motherWork;
 
-    @Column(name = "family_phone_number", columnDefinition = "char(20)")
-    private String familyPhoneNumber;
+    //địa chỉ liên lạc
+    @Column(name = "contact_address", columnDefinition = "varchar(200)")
+    private String contactAddress;
 
-    @Column(name = "start_school")
-    private Date startSchool;
-
-    @Column(name = "religion", columnDefinition = "varchar(45)")
-    private String religion;
+    @Column(name = "note")
+    private String note;
 
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "class_id",columnDefinition="CHAR(6)")
-    private String classId;
-
-    @Column(name = "department_id",columnDefinition="CHAR(10)")
-    private String departmentId;
+    @Column(name = "year_class_id",columnDefinition="CHAR(6)")
+    private String yearClassId;
 
     @Column(name = "status", columnDefinition="INT" )
     private Integer status;
 
+    //số báo danh
+    @Column(name = "identification_number", columnDefinition="Char(15)" )
+    private String identificationNumber;
+
+    //hình thức xét tuyển Admission
+    @Column(name = "admission_type", columnDefinition="INT" )
+    private Integer admissionType;
+
     public StudentDTO toDTO(){
-        StudentDTO studentDTO = new StudentDTO();
-        studentDTO.setAvatar(this.avatar);
-        studentDTO.setClassId(this.classId);
-        studentDTO.setCurrentAddress(this.currentAddress);
-        studentDTO.setDateBirth(this.dateBirth.toString());
-        studentDTO.setDepartmentId(this.departmentId);
-        studentDTO.setEmail(this.email);
-        studentDTO.setFatherDateBirth(this.fatherDateBirth.toString());
-        studentDTO.setFatherWork(this.fatherWork);
-        studentDTO.setFirstName(this.firstName);
-        studentDTO.setHomeAddress(this.fatherName);
-        studentDTO.setFamilyPhoneNumber(this.familyPhoneNumber);
-        studentDTO.setLastName(this.lastName);
-        studentDTO.setMotherDateBirth(this.motherDateBirth.toString());
-        studentDTO.setMotherName(this.motherName);
-        studentDTO.setMotherWork(this.motherWork);
-        studentDTO.setNationality(this.nation);
-        studentDTO.setPhoneNumber(this.phoneNumber);
-        studentDTO.setReligion(this.religion);
-        studentDTO.setSex(this.sex.toString());
-        studentDTO.setStartSchool(this.startSchool.toString());
-        studentDTO.setStudentId(this.studentId);
-        studentDTO.setFullName(this.fullName);
-        studentDTO.setStatus(this.status.toString());
-        return studentDTO;
+        StudentDTO student = new StudentDTO();
+        student.setStudentId(this.studentId);
+        student.setFullName(this.fullName);
+        student.setSex(this.sex);
+        student.setDateBirth(this.dateBirth);
+        student.setNickName(this.nickName);
+        student.setHomeTown(this.homeTown);
+        student.setPermanentResidence(this.permanentResidence);
+        student.setEthnic(this.ethnic);
+        student.setReligion(this.religion);
+        student.setEnrollmentArea(this.enrollmentArea);
+        student.setPriorityType(this.priorityType);
+        student.setIncentivesType(this.incentivesType);
+        student.setFamilyElement(this.familyElement);
+        student.setCYUStartDate(this.getCYUStartDate());
+        student.setCPStartDate(this.CPStartDate);
+        student.setIdentityNumber(this.identityNumber);
+        student.setIdentityCreatedDate(this.identityCreatedDate);
+        student.setIdentityCreatedPlace(this.identityCreatedPlace);
+        student.setBankNumber(this.bankNumber);
+        student.setEmail(this.email);
+        student.setPhoneNumber(this.phoneNumber);
+        student.setFatherName(this.fatherName);
+        student.setFatherDateBirth(this.fatherDateBirth);
+        student.setFatherWork(this.fatherWork);
+        student.setMotherName(this.motherName);
+        student.setMotherDateBirth(this.motherDateBirth);
+        student.setMotherWork(this.motherWork);
+        return student;
     }
 }

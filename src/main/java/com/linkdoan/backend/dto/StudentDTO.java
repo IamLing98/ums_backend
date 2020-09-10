@@ -1,124 +1,167 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.base.anotation.AdjHistory;
 import com.linkdoan.backend.base.dto.SystemDTO;
 import com.linkdoan.backend.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 
+import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO  extends SystemDTO {
-    @AdjHistory(field = "firstName")
+public class StudentDTO extends SystemDTO {
     private String studentId;
 
-    @AdjHistory(field = "firstName")
-    private String firstName;
-
-    @AdjHistory(field = "lastName")
-    private String lastName;
-
-    @AdjHistory(field = "fullName")
     private String fullName;
 
-    @AdjHistory(field = "dateBirth")
-    private String dateBirth;
+    private Integer sex;
 
-    @AdjHistory(field = "sex")
-    private String sex = "";
+    private java.sql.Date dateBirth;
 
-    @AdjHistory(field = "nationality")
-    private String nationality;
+    private String nickName;
 
+    private String homeTown;
+
+    //hộ khẩu thường trú
+    private String permanentResidence;
+
+    //dân tộc
     private String ethnic;
 
-    @AdjHistory(field = "homeAddress")
-    private String homeAddress;
-
-    @AdjHistory(field = "currentAddress")
-    private String currentAddress;
-
-    @AdjHistory(field = "email")
-    private String email;
-
-    @AdjHistory(field = "phoneNumber")
-    private String phoneNumber;
-
-    @AdjHistory(field = "fatherName")
-    private String fatherName;
-
-    @AdjHistory(field = "fatherDateBirth")
-    private String fatherDateBirth = "";
-
-    @AdjHistory(field = "fatherWork")
-    private String fatherWork;
-
-    @AdjHistory(field = "motherName")
-    private String motherName;
-
-    @AdjHistory(field = "motherDateBirth")
-    private String motherDateBirth = "";
-
-    @AdjHistory(field = "motherWork")
-    private String motherWork;
-
-    @AdjHistory(field = "familyPhoneNumber")
-    private String familyPhoneNumber;
-
-    @AdjHistory(field = "startSchool")
-    private String startSchool = "";
-
-    @AdjHistory(field = "religion")
+    //ton giao
     private String religion;
 
-    @AdjHistory(field = "avatar")
+    //khu vuc tuyen sinh
+    private Integer enrollmentArea;
+
+    // đôi tượng ưu tiên
+    private Integer priorityType;
+
+    //chính sách ưu tiên
+    private Integer incentivesType;
+
+    //thành phần gia đình
+    private Integer familyElement;
+
+    //ngày vào đoàn
+    private java.sql.Date CYUStartDate;
+
+    //ngày vào đảng
+    private java.sql.Date CPStartDate;
+
+    //thẻ căn cước/CMND
+    private String identityNumber;
+
+    //thẻ căn cước/CMND ngày cấp
+    private Date identityCreatedDate;
+
+    //thẻ căn cước/CMND nơi cấp
+    private String identityCreatedPlace;
+
+    //số tài khoản ngân hàng
+    private String bankNumber;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private String fatherName;
+
+    private Integer fatherDateBirth;
+
+    private String fatherWork;
+
+    private String motherName;
+
+    private Integer motherDateBirth;
+
+    private String motherWork;
+
+    //địa chỉ liên lạc
+    private String contactAddress;
+
+    private String note;
+
     private String avatar;
 
-    @AdjHistory(field = "classId")
-    private String classId;
-
-    @AdjHistory(field = "departmentId")
     private String departmentId;
 
-    @AdjHistory(field = "status")
-    private String status;
+    private String departmentName;
+
+    private String yearClassId;
+
+    private String yearClassName;
+
+    private String branchId;
+
+    private String branchName;
+
+    private Integer courseNumber;
+
+    private Integer status;
+
+    //số báo danh
+    private String identificationNumber;
+
+    //hình thức xét tuyển Admission
+    private Integer admissionType;
+
+    private  Integer startYear;
+
+    private Integer endYear;
 
     public Student toModel() throws ParseException {
         Student student = new Student();
         student.setStudentId(this.studentId);
-        student.setFirstName(this.firstName) ;
-        student.setLastName(this.lastName);
         student.setFullName(this.fullName);
-        if(this.dateBirth != "") {
-            Date javaDatetime = new SimpleDateFormat("yyyy-MM-dd").parse(this.getDateBirth());
-            student.setDateBirth(new java.sql.Date(javaDatetime.getTime()));
-        }
-        if(StringUtils.isNumeric(this.sex) ) student.setSex(Integer.parseInt(this.sex));
-        student.setNation(this.nationality);
-        student.setHomeAddress(this.homeAddress);
-        student.setCurrentAddress(this.currentAddress);
+        student.setSex(this.sex);
+        student.setDateBirth(this.dateBirth);
+        student.setNickName(this.nickName);
+        student.setHomeTown(this.homeTown);
+        student.setPermanentResidence(this.permanentResidence);
+        student.setEthnic(this.ethnic);
+        student.setReligion(this.religion);
+        student.setEnrollmentArea(this.enrollmentArea);
+        student.setPriorityType(this.priorityType);
+        student.setIncentivesType(this.incentivesType);
+        student.setFamilyElement(this.familyElement);
+        student.setCYUStartDate(this.getCYUStartDate());
+        student.setCPStartDate(this.CPStartDate);
+        student.setIdentityNumber(this.identityNumber);
+        student.setIdentityCreatedDate(this.identityCreatedDate);
+        student.setIdentityCreatedPlace(this.identityCreatedPlace);
+        student.setBankNumber(this.bankNumber);
         student.setEmail(this.email);
-        student.setFamilyPhoneNumber(this.familyPhoneNumber);
         student.setPhoneNumber(this.phoneNumber);
         student.setFatherName(this.fatherName);
-        if(StringUtils.isNumeric(this.fatherDateBirth)) student.setFatherDateBirth(Integer.parseInt(this.fatherDateBirth));
+        student.setFatherDateBirth(this.fatherDateBirth);
         student.setFatherWork(this.fatherWork);
         student.setMotherName(this.motherName);
-        if(StringUtils.isNumeric(this.motherDateBirth)) student.setMotherDateBirth(Integer.parseInt(this.motherDateBirth));
+        student.setMotherDateBirth(this.motherDateBirth);
         student.setMotherWork(this.motherWork);
-        student.setReligion(this.religion);
-        student.setAvatar(this.avatar);
-        student.setClassId(this.classId);
-        student.setDepartmentId(this.departmentId);
-        student.setEthnic(this.ethnic);
         return student;
 
+    }
+
+    public StudentDTO(String studentId, String fullName, Integer sex, String departmentName, String yearClassId, String yearClassName, String branchName, Integer courseNumber, Integer status, Integer startYear, Integer endYear) {
+        this.studentId = studentId;
+        this.fullName = fullName;
+        this.sex = sex;
+        this.departmentName = departmentName;
+        this.yearClassId = yearClassId;
+        this.yearClassName = yearClassName;
+        this.branchName = branchName;
+        this.courseNumber = courseNumber;
+        this.status = status;
+        this.startYear = startYear;
+        this.endYear = endYear;
+    }
+
+    public StudentDTO(String studentId, String fullName) {
+        this.studentId = studentId;
+        this.fullName = fullName;
     }
 }

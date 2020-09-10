@@ -2,6 +2,7 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.Subject;
+import com.linkdoan.backend.repository.EducationProgramSubjectRepository;
 import com.linkdoan.backend.repository.SubjectRepository;
 import com.linkdoan.backend.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,9 @@ public class SubjectServiceImpl implements SubjectService {
     @Qualifier("subjectRepository")
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private EducationProgramSubjectRepository educationProgramSubjectRepository;
 
     @Override
     public Page findBy(Pageable pageable, SubjectDTO subjectDTO) {
@@ -38,13 +43,16 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public boolean delete(SubjectDTO subjectDTO) {
-        Subject subject = subjectDTO.toModel();
-        if(subjectRepository.findById(subjectDTO.getSubjectId()) != null){
-            subjectRepository.delete(subject);
-            return true;
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delete(List<SubjectDTO> subjectDTOList) {
+        for(int i = 0; i< subjectDTOList.size(); i++){
+            Subject subject = subjectDTOList.get(i).toModel();
+            if(subjectRepository.findById(subject.getSubjectId()) != null){
+                subjectRepository.delete(subject);
+                educationProgramSubjectRepository.deleteAllBySubjectId(subject.getSubjectId());
+            }else throw new EntityNotFoundException("Not Found");
         }
-        return false;
+        return true;
     }
 
     @Override

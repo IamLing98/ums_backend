@@ -1,9 +1,9 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.dto.ClassDTO;
-import com.linkdoan.backend.model.Class;
-import com.linkdoan.backend.repository.ClassRepository;
+import com.linkdoan.backend.dto.YearClassDTO;
+import com.linkdoan.backend.model.YearClass;
 import com.linkdoan.backend.repository.DepartmentRepository;
+import com.linkdoan.backend.repository.YearClassRepository;
 import com.linkdoan.backend.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,46 +20,47 @@ public class ClassServiceImpl implements ClassService {
 
     private static final String CLASS = "Class";
 
-    @Qualifier("classRepository")
+    @Qualifier("yearClassRepository")
     @Autowired
-    private ClassRepository classRepository;
+    private YearClassRepository yearClassRepository;
 
     @Qualifier("departmentRepository")
     @Autowired
     private DepartmentRepository departmentRepository;
 
     @Override
-    public Page findBy(ClassDTO classDTO) {
-        Pageable pageable = PageRequest.of(classDTO.getPage(), classDTO.getPageSize());
-        if (classDTO.getDepartmentId() != "" && classDTO.getDepartmentId() != null) {
+    public Page findBy(YearClassDTO yearClassDTO) {
+        Pageable pageable = PageRequest.of(yearClassDTO.getPage(), yearClassDTO.getPageSize());
+        YearClass yearClass = yearClassDTO.toModel();
+        if (yearClass.getBranchId() != "" && yearClass.getBranchId() != null) {
 
         }
-        return classRepository.findBy(classDTO.getClassId(), classDTO.getDepartmentId(), classDTO.getKeySearch1(), pageable);
+        return yearClassRepository.findBy(yearClassDTO.getClassId(), yearClass.getBranchId(), yearClassDTO.getKeySearch1(), pageable);
     }
 
     @Override
-    public Class createClass(ClassDTO classDTO) {
-        if (classRepository.existsById(classDTO.getClassId()))
+    public YearClass createClass(YearClassDTO yearClassDTO) {
+        if (yearClassRepository.existsById(yearClassDTO.getClassId()))
             throw new EntityExistsException("Lớp học này đã tồn tại");
-        Class classModel = classDTO.toModel();
-        Class result;
+        YearClass classModel = yearClassDTO.toModel();
+        YearClass result;
         return classModel;
     }
 
     @Override
-    public Class updateClass(ClassDTO classDTO) {
-        Class classModel = classDTO.toModel();
-        Class result;
+    public YearClass updateClass(YearClassDTO yearClassDTO) {
+        YearClass classModel = yearClassDTO.toModel();
+        YearClass result;
         return classModel;
     }
 
     @Override
-    public int deleteClass(ClassDTO classDTO) {
-        if (!classRepository.existsById(classDTO.getClassId()))
+    public int deleteClass(YearClassDTO yearClassDTO) {
+        if (!yearClassRepository.existsById(yearClassDTO.getClassId()))
             throw new EntityExistsException("Lớp học này không tồn tại");
         else {
-            Optional<Class> optionalClass = classRepository.findFirstByClassId(classDTO.getClassId());
-            classRepository.delete(optionalClass.get());
+            Optional<YearClass> optionalClass = yearClassRepository.findFirstByClassId(yearClassDTO.getClassId());
+            yearClassRepository.delete(optionalClass.get());
         }
         return 1;
     }

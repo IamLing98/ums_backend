@@ -1,5 +1,6 @@
 package com.linkdoan.backend.model;
 
+import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,15 +11,28 @@ import javax.persistence.*;
 public class EducationProgramSubject {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name="subject_id")
     private String subjectId;
 
     @Column(name="education_program_id")
-    private String educationProgramId;
+    private String educationProgramId ;
 
-    @Column(name = "subject_type")
-    private Integer subjectType;
+    @Column(name = "transaction_type")
+    private Integer transactionType = 0;
+
+    @Column(name = "term")
+    private Integer term = 0;
+
+    public EducationProgramSubjectDTO toDTO(){
+        EducationProgramSubjectDTO educationProgramSubjectDTO = new EducationProgramSubjectDTO();
+        educationProgramSubjectDTO.setId(this.id.toString());
+        educationProgramSubjectDTO.setEducationProgramId(this.educationProgramId);
+        educationProgramSubjectDTO.setTransactionType(this.transactionType.toString());
+//        educationProgramSubjectDTO.se
+        return educationProgramSubjectDTO;
+    }
+
 
 }

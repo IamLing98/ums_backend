@@ -1,10 +1,6 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.EducationProgramDTO;
-import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
-import com.linkdoan.backend.dto.EmployeeDTO;
-import com.linkdoan.backend.model.EducationProgram;
-import com.linkdoan.backend.model.EducationProgramSubject;
 import com.linkdoan.backend.model.Role;
 import com.linkdoan.backend.repository.RoleRepository;
 import com.linkdoan.backend.service.impl.EducationProgramServiceImpl;
@@ -49,16 +45,16 @@ public class EducationProgramController {
     }
 
     @RequestMapping(value="/education-program/delete",method = RequestMethod.POST)
-    public ResponseEntity<?> delete(@Valid @ModelAttribute EducationProgramDTO educationProgramDTO) throws Exception {
-        if (educationProgramServiceImpl.delete(educationProgramDTO) == false)
+    public ResponseEntity<?> delete(@RequestBody List<EducationProgramDTO> educationProgramDTOList) throws Exception {
+        if (educationProgramServiceImpl.delete(educationProgramDTOList) == false)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value="/education-program/updateSubject",   consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> updateSubject(@RequestBody List<EducationProgramSubjectDTO> educationProgramSubjectDTOList ) throws Exception {
-        return new ResponseEntity<>(educationProgramServiceImpl.updateEducationProgramSubject(educationProgramSubjectDTOList), HttpStatus.OK);
+    public ResponseEntity<?> updateSubject(@RequestBody EducationProgramDTO educationProgramDTO ) throws Exception {
+        return new ResponseEntity<>(educationProgramServiceImpl.updateEducationProgramSubject(educationProgramDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/education-program/getDetails", method = RequestMethod.POST)

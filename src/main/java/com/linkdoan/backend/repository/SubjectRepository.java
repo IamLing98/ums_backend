@@ -15,4 +15,6 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
     @Query(value = "SELECT s  FROM Subject  s, EducationProgramSubject es  WHERE (s.subjectId = es.subjectId AND es.educationProgramId = :edId )"
     )
     List<Subject> findAllByEducationProgramId(@Param("edId") String Id);
+
+    Subject findFirstBySubjectId(String subjectId);
 }

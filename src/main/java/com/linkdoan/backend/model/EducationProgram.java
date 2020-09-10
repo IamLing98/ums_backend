@@ -31,6 +31,9 @@ public class EducationProgram {
     @Column(name = "education_program_status", columnDefinition = "INT")
     private Integer educationProgramStatus;
 
+    @Column(name = "total_term", columnDefinition = "INT")
+    private Integer totalTerm;
+
     public EducationProgramDTO toDTO(){
         EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
         educationProgramDTO.setBranchId(this.branchId);

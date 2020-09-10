@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,21 +14,21 @@ import java.util.List;
 @NoArgsConstructor
 public class EducationProgramDTO  {
 
-    private String educationProgramId="";
+    private String educationProgramId;
 
-    private String educationProgramName="" ;
+    private String educationProgramName ;
 
-    private String educationProgramLevel = "0";
+    private String educationProgramLevel ;
 
     private String branchId="";
 
-    private String educationProgramType = "0";
+    private String educationProgramType ;
 
-    private String educationProgramStatus ="0";
+    private String educationProgramStatus ;
 
-    private String branchName="";
+    private String branchName;
 
-    private List<SubjectDTO> subjectList;
+    private List<EducationProgramSubjectDTO> subjectList = new ArrayList<>();
 
     public EducationProgram toModel(){
         EducationProgram educationProgram = new EducationProgram();

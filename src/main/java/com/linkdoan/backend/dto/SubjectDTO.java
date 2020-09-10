@@ -1,16 +1,12 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.base.anotation.AdjHistory;
 import com.linkdoan.backend.base.dto.SystemDTO;
-import com.linkdoan.backend.model.PrerequisitesSubject;
 import com.linkdoan.backend.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,25 +14,25 @@ import java.util.List;
 @NoArgsConstructor
 public class SubjectDTO extends SystemDTO  {
 
-    private String subjectId="";
+    private String subjectId;
 
-    private String subjectName="";
+    private String subjectName;
 
-    private String eachSubject="0";
+    private String eachSubject;
 
-    private String theoryNumber="0";
+    private String theoryNumber;
 
-    private String exerciseNumber="0";
+    private String exerciseNumber;
 
-    private String discussNumber="0";
+    private String discussNumber;
 
-    private String selfLearningNumber="0";
+    private String selfLearningNumber;
 
-    private String practiceNumber="0";
+    private String practiceNumber;
 
-    private String subjectForLevel="0";
+    private String subjectForLevel;
 
-    private String subjectType="0";
+    private String subjectType;
 
     private List<SubjectDTO> prerequisitesSubjects ;
 
