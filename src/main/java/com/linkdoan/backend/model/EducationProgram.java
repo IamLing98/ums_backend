@@ -19,29 +19,29 @@ public class EducationProgram {
     @Column(name = "education_program_name", columnDefinition = "VARCHAR(100)")
     private String educationProgramName;
 
-    @Column(name = "education_program_level", columnDefinition = "VARCHAR(100)")
+    @Column(name = "education_program_level", columnDefinition = "INT")
     private Integer educationProgramLevel;
-
-    @Column(name = "branch_id", columnDefinition="CHAR(10)")
-    private String branchId;
 
     @Column(name = "education_program_type", columnDefinition = "INT")
     private Integer educationProgramType;
+
+    @Column(name = "branch_id", columnDefinition="CHAR(10)")
+    private String branchId;
 
     @Column(name = "education_program_status", columnDefinition = "INT")
     private Integer educationProgramStatus;
 
     @Column(name = "total_term", columnDefinition = "INT")
-    private Integer totalTerm;
+    private Integer totalTerm = 8;
 
     public EducationProgramDTO toDTO(){
         EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
         educationProgramDTO.setBranchId(this.branchId);
         educationProgramDTO.setEducationProgramId(this.educationProgramId);
-        educationProgramDTO.setEducationProgramLevel(this.educationProgramLevel.toString());
+        educationProgramDTO.setEducationProgramLevel(this.educationProgramLevel);
         educationProgramDTO.setEducationProgramName(this.educationProgramName);
-        educationProgramDTO.setEducationProgramStatus(this.educationProgramStatus.toString());
-        educationProgramDTO.setEducationProgramType(this.educationProgramType.toString());
+        educationProgramDTO.setEducationProgramStatus(this.educationProgramStatus);
+        educationProgramDTO.setEducationProgramType(this.educationProgramType);
         return educationProgramDTO;
     }
 }

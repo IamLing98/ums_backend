@@ -56,7 +56,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<SubjectDTO> getAll() {
+    public List<SubjectDTO> getAll(Integer page, Integer pageSize, String subjectId, String subjectName, String educationProgramId) {
         List<Subject> subjectList = subjectRepository.findAll();
         List<SubjectDTO> subjectDTOList = new ArrayList<>();
         for(int i = 0 ; i< subjectList.size(); i++){

@@ -15,10 +15,18 @@ public class BranchDTO {
 
     private String branchName;
 
+    private String departmentId;
+
     private List<YearClassDTO> yearClassDTOList;
 
     public BranchDTO(String branchId, String branchName) {
         this.branchId = branchId;
         this.branchName = branchName;
+    }
+
+    public BranchDTO(String branchId, String branchName, String departmentId) {
+        this.branchId = branchId;
+        this.branchName = branchName;
+        this.departmentId = departmentId;
     }
 }

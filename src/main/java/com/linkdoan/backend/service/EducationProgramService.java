@@ -6,10 +6,10 @@ import com.linkdoan.backend.model.EducationProgramSubject;
 import java.util.List;
 
 public interface EducationProgramService {
-    List<EducationProgramDTO> getAllProgram();
+    List<EducationProgramDTO> getAllProgram(String branchId, String educationProgramId);
     EducationProgramDTO createNewEducationProgram(EducationProgramDTO educationProgramDTO);
     EducationProgramDTO updateEducationProgram(EducationProgramDTO educationProgramDTO);
     boolean delete(List<EducationProgramDTO> educationProgramDTOList);
     List<EducationProgramSubject> updateEducationProgramSubject(EducationProgramDTO educationProgramDTO);
-    EducationProgramDTO getDetails(EducationProgramDTO educationProgramDTO);
+    EducationProgramDTO getDetails(String educationProgramDTO);
 }

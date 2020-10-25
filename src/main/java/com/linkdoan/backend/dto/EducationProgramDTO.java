@@ -4,7 +4,6 @@ import com.linkdoan.backend.model.EducationProgram;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,33 +11,48 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EducationProgramDTO  {
+public class EducationProgramDTO {
 
     private String educationProgramId;
 
-    private String educationProgramName ;
+    private String educationProgramName;
 
-    private String educationProgramLevel ;
+    private Integer educationProgramLevel;
 
-    private String branchId="";
+    private String branchId = "";
 
-    private String educationProgramType ;
+    private Integer educationProgramType;
 
-    private String educationProgramStatus ;
+    private Integer educationProgramStatus;
 
     private String branchName;
 
+    private Integer totalTerm;
+
     private List<EducationProgramSubjectDTO> subjectList = new ArrayList<>();
 
-    public EducationProgram toModel(){
+    public EducationProgram toModel() {
         EducationProgram educationProgram = new EducationProgram();
         educationProgram.setBranchId(this.branchId);
-        educationProgram.setEducationProgramLevel(NumberUtils.toInt(this.educationProgramLevel));
+        educationProgram.setEducationProgramLevel(this.educationProgramLevel);
         educationProgram.setEducationProgramId(this.educationProgramId);
         educationProgram.setEducationProgramName(this.educationProgramName);
-        educationProgram.setEducationProgramType(NumberUtils.toInt(this.educationProgramType));
-        educationProgram.setEducationProgramStatus(NumberUtils.toInt(this.educationProgramStatus));
+        educationProgram.setEducationProgramType(this.educationProgramType);
+        educationProgram.setEducationProgramStatus(this.educationProgramStatus);
         return educationProgram;
     }
 
+
+    public EducationProgramDTO(String educationProgramId, String educationProgramName, Integer educationProgramLevel,
+                               String branchId, Integer educationProgramType, Integer educationProgramStatus,
+                               String branchName, Integer totalTerm) {
+        this.educationProgramId = educationProgramId;
+        this.educationProgramName = educationProgramName;
+        this.educationProgramLevel = educationProgramLevel;
+        this.branchId = branchId;
+        this.educationProgramType = educationProgramType;
+        this.educationProgramStatus = educationProgramStatus;
+        this.branchName = branchName;
+        this.totalTerm = totalTerm;
+    }
 }

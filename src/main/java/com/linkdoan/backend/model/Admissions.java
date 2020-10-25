@@ -10,6 +10,7 @@ import java.sql.Date;
 @Table(name="admissions")
 @Data
 public class Admissions {
+
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,

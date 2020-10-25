@@ -14,5 +14,5 @@ public interface SubjectService {
     public SubjectDTO create(SubjectDTO subjectDTO);
     public SubjectDTO update(SubjectDTO subjectDTO);
     public boolean delete(List<SubjectDTO> subjectDTOList);
-    List<SubjectDTO> getAll();
+    List<SubjectDTO> getAll(Integer page, Integer pageSize, String subjectId, String subjectName, String educationProgramId);
 }

@@ -24,12 +24,13 @@ public class YearClass {
     @Column(name = "total_member")
     private Integer totalMember;
 
-    @Column(name = "start_year")
+    @Column(name = "start_year", columnDefinition = "INT")
     private Integer startYear; // date type
 
-    @Column(name = "endYear")
+    @Column(name = "endYear", columnDefinition = "INT")
     private Integer endYear;
 
+    //khoa' bao nhieu
     @Column(name = "course_number", columnDefinition = "Int")
     private Integer courseNumber;
 
@@ -43,6 +44,19 @@ public class YearClass {
     @Column(name = "branch_id", nullable = false, columnDefinition = "CHAR(10)")
     private String branchId;
 
+    @Column(name = "education_program_level", columnDefinition = "INT")
+    private Integer educationProgramLevel;
+
+    @Column(name = "education_program_type", columnDefinition = "INT")
+    private Integer educationProgramType;
+
+    @Column(name = "teacher_id", columnDefinition = "CHAR(10)")
+    private String teacherId;
+
+    //ky hoc hien tai
+    @Column(name = "current_term", columnDefinition = "INT")
+    private Integer currentTerm = 1;
+
     public YearClassDTO toDTO() {
         YearClassDTO yearClassDTO = new YearClassDTO();
         yearClassDTO.setClassId(this.classId);
@@ -54,4 +68,6 @@ public class YearClass {
         yearClassDTO.setCourseNumber(this.courseNumber);
         return yearClassDTO;
     }
+
+
 }

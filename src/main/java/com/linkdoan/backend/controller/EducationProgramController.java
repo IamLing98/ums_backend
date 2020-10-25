@@ -22,9 +22,9 @@ public class EducationProgramController {
     @Autowired
     RoleRepository roleRepository;
 
-    @RequestMapping(value = "/education-program/getAllProgram", method = RequestMethod.GET)
-    public ResponseEntity<?> getAll() throws Exception {
-        List<EducationProgramDTO> rs = educationProgramServiceImpl.getAllProgram();
+    @RequestMapping(value = "/education-programs", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll(@RequestParam (name = "educationProgramId", required = false) String educationProgramId,@RequestParam (name = "branchId", required = false) String branchId) throws Exception {
+        List<EducationProgramDTO> rs = educationProgramServiceImpl.getAllProgram(branchId,educationProgramId);
         return new ResponseEntity<>(rs, HttpStatus.OK);
     }
 
@@ -57,9 +57,9 @@ public class EducationProgramController {
         return new ResponseEntity<>(educationProgramServiceImpl.updateEducationProgramSubject(educationProgramDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/education-program/getDetails", method = RequestMethod.POST)
-    public ResponseEntity<?> getDetails(@RequestBody @Valid EducationProgramDTO educationProgramDTO) throws Exception {
+    @RequestMapping(value = "/education-program/details", method = RequestMethod.GET)
+    public ResponseEntity<?> getDetails(@RequestParam("educationProgramId") String educationProgramId) throws Exception {
 
-        return new ResponseEntity<>(educationProgramServiceImpl.getDetails(educationProgramDTO), HttpStatus.OK);
+        return new ResponseEntity<>(educationProgramServiceImpl.getDetails(educationProgramId), HttpStatus.OK);
     }
 }

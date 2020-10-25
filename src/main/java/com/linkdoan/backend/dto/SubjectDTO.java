@@ -5,7 +5,6 @@ import com.linkdoan.backend.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.List;
 
@@ -18,35 +17,45 @@ public class SubjectDTO extends SystemDTO  {
 
     private String subjectName;
 
-    private String eachSubject;
+    private Integer eachSubject;
 
-    private String theoryNumber;
+    private Integer theoryNumber;
 
-    private String exerciseNumber;
+    private Integer exerciseNumber;
 
-    private String discussNumber;
+    private Integer discussNumber;
 
-    private String selfLearningNumber;
+    private Integer selfLearningNumber;
 
-    private String practiceNumber;
+    private Integer practiceNumber;
 
-    private String subjectForLevel;
-
-    private String subjectType;
+    private Integer subjectForLevel;
 
     private List<SubjectDTO> prerequisitesSubjects ;
+
+    public SubjectDTO(String subjectId, String subjectName, Integer eachSubject, Integer theoryNumber, Integer exerciseNumber, Integer discussNumber, Integer selfLearningNumber, Integer practiceNumber, Integer subjectForLevel) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+        this.eachSubject = eachSubject;
+        this.theoryNumber = theoryNumber;
+        this.exerciseNumber = exerciseNumber;
+        this.discussNumber = discussNumber;
+        this.selfLearningNumber = selfLearningNumber;
+        this.practiceNumber = practiceNumber;
+        this.subjectForLevel = subjectForLevel;
+    }
 
     public Subject toModel(){
         Subject subject = new Subject();
         subject.setSubjectId(this.subjectId);
         subject.setSubjectName(this.subjectName);
-        subject.setDiscussNumber(NumberUtils.toInt(this.discussNumber));
-        subject.setEachSubject(NumberUtils.toInt(this.eachSubject));
-        subject.setExerciseNumber(NumberUtils.toInt(this.exerciseNumber));
-        subject.setTheoryNumber(NumberUtils.toInt(this.theoryNumber));
-        subject.setPracticeNumber(NumberUtils.toInt(this.practiceNumber));
-        subject.setSubjectForLevel(NumberUtils.toInt(subjectForLevel));
-        subject.setSelfLearningNumber(NumberUtils.toInt(this.selfLearningNumber));
+        subject.setDiscussNumber( this.discussNumber);
+        subject.setEachSubject( this.eachSubject);
+        subject.setExerciseNumber( this.exerciseNumber);
+        subject.setTheoryNumber( this.theoryNumber);
+        subject.setPracticeNumber( this.practiceNumber);
+        subject.setSubjectForLevel( subjectForLevel);
+        subject.setSelfLearningNumber( this.selfLearningNumber);
         return subject;
     }
 }

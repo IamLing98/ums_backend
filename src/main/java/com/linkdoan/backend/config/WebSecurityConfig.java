@@ -74,12 +74,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/authenticate",
                                     "/v3/api-docs/**",
                                     "/swagger-ui.html",
-                        "/swagger-ui/**",
-                        "/education-program/**"
+                        "/swagger-ui/**"
                 )
                 .permitAll()
-//                .antMatchers("/education-program/**","/class/**")
-//                .hasAnyAuthority("PDT")
+                .antMatchers("/education-program/**","/class/**","/students/**")
+               .hasAnyAuthority("PDT")
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()
                 .and()

@@ -1,6 +1,7 @@
 package com.linkdoan.backend.repository;
 
 import com.linkdoan.backend.dto.StudentDTO;
+import com.linkdoan.backend.dto.StudentDetailsDTO;
 import com.linkdoan.backend.model.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,32 +13,60 @@ import org.springframework.stereotype.Repository;
 @Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, String> {
 
-    Student findByStudentId(String studentId);
-
-    @Query(value = "SELECT student.*, class.course_number FROM Student,Class  WHERE (:student_id is null or :student_id =''  or student.student_id = :student_id)"
-            + "and (:full_name is null or :full_name ='' or student.full_name like %:full_name%)"
-            + "and (:class_id is null or :class_id ='' or student.class_id = :class_id)"
-            + "and (student.class_id = class.class_id)"
-            + "and (:course_number is null or :course_number = 0  or class.course_number = :course_number)"
-            + "and (:department_id is null or :department_id = '' or  student.department_id = :department_id) ORDER BY student_id ASC ",
-            countQuery = "SELECT count(*) FROM STUDENT,Class WHERE (:student_id is null or :student_id =''  or student.student_id = :student_id) and (:full_name is null or :full_name ='' or student.full_name like %:full_name%) and (:class_id is null or :class_id ='' or student.class_id = :class_id) and (student.class_id = class.class_id) and (:course_number is null or :course_number = 0  or class.course_number = :course_number) and (:department_id is null or :department_id = '' or  student.department_id = :department_id)",// paging SELECT SQL_CALC_FOUND_ROWS * FROM tbl limit 0, 20(with start  = page * page size, end = startt + pagesize)
-            nativeQuery = true
-    )
-    Page<Student> findBy(@Param("student_id") String studentId, @Param("full_name") String fullName, @Param("department_id") String departmentId, @Param("class_id") String classId, @Param("course_number") Integer courseNumber, Pageable pageable);
-
     @Query(value = "SELECT new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, student.sex, department.departmentName, yearClass.classId, yearClass.className, branch.branchName, yearClass.courseNumber, student.status, yearClass.startYear, yearClass.endYear) " +
-            "FROM  Student student left join  YearClass yearClass on student.yearClassId = yearClass.classId " +
+            "FROM  Student student left join  YearClass yearClass on student.yearClassId = yearClass.classId  " +
             "left join Branch branch on yearClass.branchId = branch.branchId " +
-            "left join Department  department on branch.departmentId = department.departmentId"
-                        //+ "WHERE student.name like :name"
-           ,
+            "left join Department  department on branch.departmentId = department.departmentId " +
+            "WHERE (:studentId is null or :studentId =''  or student.studentId = :studentId) " +
+            "and (:startYear is null or :startYear  < 1994  or yearClass.startYear = :startYear) " +
+            "and (:departmentId is null or :departmentId = '' or department.departmentId = :departmentId)"
+            ,
             countQuery = "SELECT count(student) " +
                     "FROM  Student student left join  YearClass yearClass on student.yearClassId = yearClass.classId " +
                     "left join Branch branch on yearClass.branchId = branch.branchId " +
-                    "left join Department  department on branch.departmentId = department.departmentId"
+                    "left join Department  department on branch.departmentId = department.departmentId " +
+                    "WHERE (:studentId is null or :studentId =''  or student.studentId = :studentId) " +
+                    "and (:startYear is null or :startYear < 1994  or yearClass.startYear = :startYear)" +
+                    "and (:departmentId is null or :departmentId = '' or department.departmentId = :departmentId)"
 
             // paging SELECT SQL_CALC_FOUND_ROWS * FROM tbl limit 0, 20(with start  = page * page size, end = startt + pagesize)
             //,nativeQuery = true
     )
-    Page<StudentDTO> findAllBy(Pageable pageable);
+    Page<StudentDTO> findAllBy(@Param("studentId") String studentId, @Param("startYear") Integer startYear, @Param("departmentId") String departmentId, Pageable pageable);
+
+    @Query(value = "SELECT new com.linkdoan.backend.dto.StudentDetailsDTO(student.studentId, student.fullName, student.sex, student.dateBirth, " +
+            "student.nickName, student.homeTown, nationality.nationalityId, nationality.nationalityName, student.bornPlace, student.permanentResidence," +
+            " ethnic.ethnicId, ethnic.ethnicName, student.religion, student.enrollmentArea, student.priorityType,student.educationLevel, student.incentivesType, " +
+            "student.familyElement, student.CYUStartDate, student.CPStartDate, student.identityNumber, student.identityCreatedDate, " +
+            "student.identityCreatedPlace, student.bankNumber, student.email, student.phoneNumber, student.fatherName, student.fatherDateBirth," +
+            " student.fatherWork, student.motherName, student.motherDateBirth, student.motherWork, student.contactAddress, student.note, " +
+            "student.avatar, department.departmentId, department.departmentName, yearClass.classId, yearClass.className, branch.branchId," +
+            " branch.branchName, yearClass.courseNumber, student.status, student.enrollId,  student.admissionType, yearClass.startYear, yearClass.endYear) " +
+            "FROM  Student student left join  YearClass yearClass on student.yearClassId = yearClass.classId  " +
+            "left join Branch branch on yearClass.branchId = branch.branchId " +
+            "left join Department  department on branch.departmentId = department.departmentId " +
+            "left join Nationality  nationality on student.nationalityId = nationality.nationalityId " +
+            "left join Ethnic  ethnic on student.ethnicId = ethnic.ethnicId " +
+            "WHERE student.studentId = :studentId "
+    )
+    StudentDetailsDTO getDetails(@Param("studentId") String studentId);
+
+    @Query(value = "SELECT new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, student.sex, department.departmentName, yearClass.classId, yearClass.className, branch.branchName, yearClass.courseNumber, student.status, yearClass.startYear, yearClass.endYear) " +
+            "FROM  Student student left join  YearClass yearClass on student.yearClassId = yearClass.classId  " +
+            "left join Branch branch on yearClass.branchId = branch.branchId " +
+            "left join Department  department on branch.departmentId = department.departmentId " +
+            "WHERE (yearClass.classId = :classId) "
+
+            ,
+            countQuery = "SELECT count(student) " +
+                    "FROM  Student student left join  YearClass yearClass on student.yearClassId = yearClass.classId " +
+                    "left join Branch branch on yearClass.branchId = branch.branchId " +
+                    "left join Department  department on branch.departmentId = department.departmentId " +
+                    "WHERE (yearClass.classId = :classId) "
+
+            // paging SELECT SQL_CALC_FOUND_ROWS * FROM tbl limit 0, 20(with start  = page * page size, end = startt + pagesize)
+            //,nativeQuery = true
+    )
+    Page<StudentDTO> findAllByClassId(@Param("classId") String classId , Pageable pageable);
+
 }

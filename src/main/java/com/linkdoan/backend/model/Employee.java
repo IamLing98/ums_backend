@@ -1,11 +1,12 @@
 package com.linkdoan.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.linkdoan.backend.dto.EmployeeDTO;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.sql.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -18,65 +19,78 @@ public class Employee {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "date_birth")
+    private LocalDate dateBirth;
+
     @Column(name = "sex")
     private Integer sex;
 
-    @Column(name = "date_birth")
-    private Date dateBirth;
+    @Column(name = "place_born")
+    private String placeBorn;
 
-    @Column(name = "home_address")
-    private String homeAddress;
+    @Column(name = "contact_address")
+    private String contactAddress;
 
-    @Column(name = "current_address")
-    private String currentAddress;
-
-    @Column(name = "degree")
-    private String degree;
-
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "home_phone")
-    private String homePhone;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "email")
     private String email;
 
+    @Column(name = "degree")
+    private Integer degree;
+
+    @Column(name = "degree_details")
+    private Integer degreeDetails;
+
+    @Column(name = "scientific_titles", columnDefinition = "INT")
+    private Integer scientificTitles;
+
+    @Column(name = "scientific_titles_get_year")
+    private Integer scientificTitlesGetYear;
+
+    @Column(name = "employee_type")
+    private Integer employeeType;
+
     @Column(name = "start_work")
-    private Date startWork;
+    private LocalDate startWork;
 
     @Column(name = "avatar")
     private String avatar;
+//
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "department_id", nullable = true, insertable = false, updatable = false)
+//    //@JsonBackReference// quat the fackkkkk, cai nay lam treo sys dcmm
+//    @JsonIgnore
+//    private Department department;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "department_id", nullable = true, insertable = false, updatable = false)
-    //@JsonBackReference// quat the fackkkkk, cai nay lam treo sys dcmm
-    @JsonIgnore
-    private Department department;
+    @Column(name = "department_id")
+    private String departmentId;
+//
+//
+//    public String getDepartmentId() {
+//        return department.getDepartmentId();
+//    }
+//
+//    public String getDepartmentName() {
+//        return department.getDepartmentName();
+//    }
 
-    public String getDepartmentId() {
-        return department.getDepartmentId();
-    }
-
-    public String getDepartmentName() {
-        return department.getDepartmentName();
-    }
-
-    public EmployeeDTO toDTO() {
-        EmployeeDTO employeeDTO = new EmployeeDTO();
-        employeeDTO.setEmployeeId(this.employeeId);
-        employeeDTO.setFullName(this.fullName);
-        employeeDTO.setSex(this.sex);
-        employeeDTO.setDateBirth(this.dateBirth);
-        employeeDTO.setHomeAddress(this.homeAddress);
-        employeeDTO.setCurrentAddress(this.currentAddress);
-        employeeDTO.setDegree(this.degree);
-        employeeDTO.setPhone(this.phone);
-        employeeDTO.setHomePhone(this.homePhone);
-        employeeDTO.setEmail(this.email);
-        employeeDTO.setStartWork(this.startWork);
-        employeeDTO.setAvatar(this.avatar);
-        employeeDTO.setDepartmentId(this.getDepartmentId());
-        return employeeDTO;
-    }
+//    public EmployeeDTO toDTO() {
+//        EmployeeDTO employeeDTO = new EmployeeDTO();
+//        employeeDTO.setEmployeeId(this.employeeId);
+//        employeeDTO.setFullName(this.fullName);
+//        employeeDTO.setSex(this.sex);
+//        employeeDTO.setDateBirth(this.dateBirth);
+//        employeeDTO.setHomeAddress(this.homeAddress);
+//        employeeDTO.setCurrentAddress(this.currentAddress);
+//        employeeDTO.setDegree(this.degree);
+//        employeeDTO.setPhone(this.phone);
+//        employeeDTO.setHomePhone(this.homePhone);
+//        employeeDTO.setEmail(this.email);
+//        employeeDTO.setStartWork(this.startWork);
+//        employeeDTO.setAvatar(this.avatar);
+//        employeeDTO.setDepartmentId(this.getDepartmentId());
+//        return employeeDTO;
+//    }
 }

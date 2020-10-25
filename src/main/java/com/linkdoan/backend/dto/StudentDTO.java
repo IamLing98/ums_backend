@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.text.ParseException;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -19,11 +19,17 @@ public class StudentDTO extends SystemDTO {
 
     private Integer sex;
 
-    private java.sql.Date dateBirth;
+    private LocalDate dateBirth;
 
     private String nickName;
 
     private String homeTown;
+
+    //quốc tịch
+    private String nationality;
+
+    // nơi sinh
+    private String bornPlace;
 
     //hộ khẩu thường trú
     private String permanentResidence;
@@ -44,19 +50,19 @@ public class StudentDTO extends SystemDTO {
     private Integer incentivesType;
 
     //thành phần gia đình
-    private Integer familyElement;
+    private String familyElement;
 
     //ngày vào đoàn
-    private java.sql.Date CYUStartDate;
+    private LocalDate CYUStartDate;
 
     //ngày vào đảng
-    private java.sql.Date CPStartDate;
+    private LocalDate CPStartDate;
 
     //thẻ căn cước/CMND
     private String identityNumber;
 
     //thẻ căn cước/CMND ngày cấp
-    private Date identityCreatedDate;
+    private LocalDate identityCreatedDate;
 
     //thẻ căn cước/CMND nơi cấp
     private String identityCreatedPlace;
@@ -104,12 +110,12 @@ public class StudentDTO extends SystemDTO {
     private Integer status;
 
     //số báo danh
-    private String identificationNumber;
+    private String enrollId;
 
     //hình thức xét tuyển Admission
     private Integer admissionType;
 
-    private  Integer startYear;
+    private Integer startYear;
 
     private Integer endYear;
 
@@ -122,7 +128,7 @@ public class StudentDTO extends SystemDTO {
         student.setNickName(this.nickName);
         student.setHomeTown(this.homeTown);
         student.setPermanentResidence(this.permanentResidence);
-        student.setEthnic(this.ethnic);
+//        student.setEthnicId(this.ethnicId);
         student.setReligion(this.religion);
         student.setEnrollmentArea(this.enrollmentArea);
         student.setPriorityType(this.priorityType);
@@ -160,8 +166,4 @@ public class StudentDTO extends SystemDTO {
         this.endYear = endYear;
     }
 
-    public StudentDTO(String studentId, String fullName) {
-        this.studentId = studentId;
-        this.fullName = fullName;
-    }
 }

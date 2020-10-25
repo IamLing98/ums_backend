@@ -4,7 +4,11 @@ import com.linkdoan.backend.dto.EmployeeDTO;
 import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.repository.EmployeeRepository;
 import com.linkdoan.backend.service.EmployeeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -13,42 +17,34 @@ import java.io.IOException;
 
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
     EmployeeRepository employeeRepository;
 
-    private int checkExist(EmployeeDTO employeeDTO) {
-        int result = 0;
-        if (null != employeeDTO.getEmployeeId() && "" != employeeDTO.getEmployeeId()) {
-            Employee employee = employeeRepository.findByEmployeeId(employeeDTO.getEmployeeId());
-            if (null == employee) {
-                result = 0;
-            } else {
-                result = 1;
-            }
-        }
-        return result;
-    }
+    private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Override
-    public Employee createEmployee(EmployeeDTO employeeDTO) {
-        if (checkExist(employeeDTO) == 1) throw new EntityExistsException("Nhân viên này đã tồn tại");
+    public Employee createEmployee(EmployeeDTO employeeDTO) throws IOException {
+        if(employeeRepository.existsById(employeeDTO.getEmployeeId()) == true) throw  new EntityExistsException("Exist");
         return employeeRepository.save(employeeDTO.toModel());
     }
 
     @Override
     public Employee updateEmployee(EmployeeDTO employeeDTO) throws IOException {
-        if (checkExist(employeeDTO) == 0) throw new EntityExistsException("Nhân viên này không tồn tại");
-        return employeeRepository.save(employeeDTO.toModel());
-    }
-
-    @Override
-    public int deleteEmployee(EmployeeDTO employeeDTO) {
-        if (checkExist(employeeDTO) == 0) return 0;
-        employeeRepository.delete(employeeDTO.toModel());
-        return 1;
-    }
-
-    @Override
-    public Page findBy(Pageable pageable, EmployeeDTO employeeDTO) {
         return null;
+    }
+
+    @Override
+    public int deleteEmployee(EmployeeDTO employeeDTO) throws IOException {
+        return 0;
+    }
+
+    @Override
+    public Page<EmployeeDTO> findBy(String employeeId, String departmentId, Integer type, Integer page, Integer pageSize) {
+        logger.info("start");
+        if (page == null) page = 0;
+        if (pageSize == null) pageSize = 999999;
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return employeeRepository.findBy(employeeId, departmentId, type, pageable);
     }
 }

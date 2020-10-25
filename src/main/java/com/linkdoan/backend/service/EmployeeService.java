@@ -7,10 +7,13 @@ import org.springframework.data.domain.Page;
 
 import java.io.IOException;
 
-@ComponentScan(basePackages= {"com.linkdoan.backend.*"})
+@ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface EmployeeService {
-     Employee createEmployee(EmployeeDTO employeeDTO)throws IOException;
+    Employee createEmployee(EmployeeDTO employeeDTO) throws IOException;
+
     Employee updateEmployee(EmployeeDTO employeeDTO) throws IOException;
-    int deleteEmployee(EmployeeDTO employeeDTO)throws IOException;
-    Page findBy(org.springframework.data.domain.Pageable pageable, EmployeeDTO employeeDTO)throws IOException;
+
+    int deleteEmployee(EmployeeDTO employeeDTO) throws IOException;
+
+    Page findBy(String employeeId, String departmentId, Integer type, Integer page, Integer pageSize) throws IOException;
 }

@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     RoleRepository roleRepository;
 
-    @RequestMapping(value = "/users/getDetails", method = RequestMethod.GET)
+        @RequestMapping(value = "/users/getDetails", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@RequestParam(name = "username") String username) throws Exception {
        userService.getUserDetails(username);
         return new ResponseEntity<>( userService.getUserDetails(username), HttpStatus.OK);

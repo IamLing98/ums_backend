@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "student")
@@ -26,11 +26,16 @@ public class Student {
     private Integer sex;
 
     @Column(name = "date_birth")
-    private java.sql.Date dateBirth;
+    private LocalDate dateBirth;
 
     @Column(name = "nick_name", columnDefinition = "VARCHAR(45)")
     private String nickName;
 
+    //nơi sinh
+    @Column(name = "born_place", columnDefinition = "VARCHAR(45)")
+    private String bornPlace;
+
+    //quê quán
     @Column(name = "home_town", columnDefinition = "VARCHAR(200)")
     private String homeTown;
 
@@ -38,9 +43,13 @@ public class Student {
     @Column(name = "permanent_residence",columnDefinition = "varchar(200)")
     private String permanentResidence;
 
+    //quốc tịch
+    @Column(name = "nationality_id",columnDefinition = "INT")
+    private Integer nationalityId;
+
     //dân tộc
-    @Column(name = "ethnic", columnDefinition = "varchar(30)")
-    private String ethnic;
+    @Column(name = "ethnic_id", columnDefinition = "INT")
+    private Integer ethnicId;
 
     //ton giao
     @Column(name = "religion", columnDefinition = "varchar(45)")
@@ -58,17 +67,21 @@ public class Student {
     @Column(name = "incentives_type", columnDefinition = "INT")
     private Integer incentivesType;
 
+    //trình độ văn hoá
+    @Column(name = "education_level", columnDefinition="VARCHAR(45)" )
+    private String educationLevel;
+
     //thành phần gia đình
-    @Column(name = "family_element", columnDefinition = "INT")
-    private Integer familyElement;
+    @Column(name = "family_element", columnDefinition = "VARCHAR(45)")
+    private String familyElement;
 
     //ngày vào đoàn
     @Column(name = "CYU_startDate", columnDefinition = "DATE")
-    private Date CYUStartDate;
+    private LocalDate CYUStartDate;
 
     //ngày vào đảng
     @Column(name = "CP_startDate", columnDefinition = "DATE")
-    private Date CPStartDate;
+    private LocalDate CPStartDate;
 
     //thẻ căn cước/CMND
     @Column(name = "identity_number", columnDefinition = "Char(20)")
@@ -76,7 +89,7 @@ public class Student {
 
     //thẻ căn cước/CMND ngày cấp
     @Column(name = "identity_created_date", columnDefinition = "DATE")
-    private Date identityCreatedDate;
+    private LocalDate identityCreatedDate;
 
     //thẻ căn cước/CMND nơi cấp
     @Column(name = "identity_created_place", columnDefinition = "VARCHAR(200)")
@@ -127,12 +140,17 @@ public class Student {
     private Integer status;
 
     //số báo danh
-    @Column(name = "identification_number", columnDefinition="Char(15)" )
-    private String identificationNumber;
+    @Column(name = "enroll_id", columnDefinition="Char(15)" )
+    private String enrollId;
 
     //hình thức xét tuyển Admission
     @Column(name = "admission_type", columnDefinition="INT" )
     private Integer admissionType;
+
+    //CTDT theo đuổi
+    @Column(name="education_program_id", columnDefinition = "CHAR(11)")
+    private String educationProgramId;
+
 
     public StudentDTO toDTO(){
         StudentDTO student = new StudentDTO();
@@ -143,7 +161,7 @@ public class Student {
         student.setNickName(this.nickName);
         student.setHomeTown(this.homeTown);
         student.setPermanentResidence(this.permanentResidence);
-        student.setEthnic(this.ethnic);
+//        student.setEthnic(this.ethnic);
         student.setReligion(this.religion);
         student.setEnrollmentArea(this.enrollmentArea);
         student.setPriorityType(this.priorityType);

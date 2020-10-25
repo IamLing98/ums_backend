@@ -1,71 +1,89 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.base.anotation.AdjHistory;
 import com.linkdoan.backend.base.dto.SystemDTO;
 import com.linkdoan.backend.model.Employee;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
 public class EmployeeDTO extends SystemDTO {
-    @AdjHistory(field = "employeeId")
+
     private String employeeId;
 
-    @AdjHistory(field = "fullName")
     private String fullName;
 
-    @AdjHistory(field = "sex")
-    private int sex;
+    private LocalDate dateBirth;
 
-    @AdjHistory(field = "dateBirth")
-    private Date dateBirth;
+    private Integer sex;
 
-    @AdjHistory(field = "homeAddress")
-    private String homeAddress;
+    private String placeBorn;
 
-    @AdjHistory(field = "currentAddress")
-    private String currentAddress;
+    private String contactAddress;
 
-    @AdjHistory(field = "degree")
-    private String degree;
+    private String phoneNumber;
 
-    @AdjHistory(field = "phone")
-    private String phone;
-
-    @AdjHistory(field = "homePhone")
-    private String homePhone;
-
-    @AdjHistory(field = "email")
     private String email;
 
-    @AdjHistory(field = "startWork")
-    private Date startWork;
+    private Integer degree;
 
-    @AdjHistory(field = "avatar")
+    private Integer degreeDetails;
+
+    private Integer scientificTitles;
+
+    private Integer scientificTitlesGetYear;
+
+    private Integer employeeType;
+
+    private LocalDate startWork;
+
     private String avatar;
 
     private String departmentId;
 
     public Employee toModel(){
         Employee employee = new Employee();
-        employee.setEmployeeId(this.employeeId);
-        employee.setFullName(this.fullName);
-        employee.setSex(this.sex);
-        employee.setDateBirth(this.dateBirth);
-        employee.setHomeAddress(this.homeAddress);
-        employee.setCurrentAddress(this.currentAddress);
-        employee.setDegree(this.degree);
-        employee.setPhone(this.phone);
-        employee.setHomePhone(this.homePhone);
-        employee.setEmail(this.email);
-        employee.setStartWork(this.startWork);
-        employee.setAvatar(this.avatar);
-       // employee.set(this.departmentId);
+        employee.setEmployeeId(employeeId);
+        employee.setFullName(fullName);
+        employee.setDateBirth(dateBirth);
+        employee.setSex(sex);
+        employee.setPlaceBorn(placeBorn);
+        employee.setContactAddress(contactAddress);;
+        employee.setPhoneNumber(phoneNumber);
+        employee.setEmail(email);
+        employee.setDegree(degree);
+        employee.setDegreeDetails(degreeDetails);
+        employee.setScientificTitles(scientificTitles);
+        employee.setScientificTitlesGetYear(scientificTitlesGetYear);;
+        employee.setEmployeeType(employeeType);;
+        employee.setStartWork(startWork);
+        employee.setAvatar(avatar);
+        employee.setDepartmentId(departmentId);
         return employee;
+    }
+
+
+    public EmployeeDTO(String employeeId, String fullName, LocalDate dateBirth, Integer sex, String placeBorn,
+                       String contactAddress, String phoneNumber, String email, Integer degree, Integer degreeDetails,
+                       Integer scientificTitles, Integer scientificTitlesGetYear, Integer employeeType, LocalDate startWork,
+                       String avatar, String departmentId) {
+        this.employeeId = employeeId;
+        this.fullName = fullName;
+        this.dateBirth = dateBirth;
+        this.sex = sex;
+        this.placeBorn = placeBorn;
+        this.contactAddress = contactAddress;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.degree = degree;
+        this.degreeDetails = degreeDetails;
+        this.scientificTitles = scientificTitles;
+        this.scientificTitlesGetYear = scientificTitlesGetYear;
+        this.employeeType = employeeType;
+        this.startWork = startWork;
+        this.avatar = avatar;
+        this.departmentId = departmentId;
     }
 }

@@ -40,17 +40,20 @@ public class Subject {
     @Column(name="subject_for_level")
     private Integer subjectForLevel;
 
+    @Column(name="department_id", columnDefinition = "CHAR(7)")
+    private String departmentId;
+
     public SubjectDTO toDTO(){
         SubjectDTO subjectDTO = new SubjectDTO();
         subjectDTO.setSubjectId(this.subjectId);
         subjectDTO.setSubjectName(this.subjectName);
-        subjectDTO.setEachSubject(this.eachSubject.toString());
-        subjectDTO.setTheoryNumber(this.theoryNumber.toString());
-        subjectDTO.setExerciseNumber(this.exerciseNumber.toString());
-        subjectDTO.setDiscussNumber(this.discussNumber.toString());
-        subjectDTO.setSelfLearningNumber(this.selfLearningNumber.toString());
-        subjectDTO.setPracticeNumber(this.practiceNumber.toString());
-        subjectDTO.setSubjectForLevel(this.subjectForLevel.toString());
+        subjectDTO.setEachSubject(this.eachSubject);
+        subjectDTO.setTheoryNumber(this.theoryNumber);
+        subjectDTO.setExerciseNumber(this.exerciseNumber);
+        subjectDTO.setDiscussNumber(this.discussNumber);
+        subjectDTO.setSelfLearningNumber(this.selfLearningNumber);
+        subjectDTO.setPracticeNumber(this.practiceNumber);
+        subjectDTO.setSubjectForLevel(this.subjectForLevel);
         return subjectDTO;
     }
 }
