@@ -5,22 +5,17 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class SubjectRegistrationDTO extends SubjectDTO{
+public class SubjectRegistrationDTO {
 
-    private Integer id;
+    private Long id;
 
     private String term;
 
     private LocalDate date;
 
-    public SubjectRegistrationDTO(String subjectId, String subjectName, Integer eachSubject, Integer theoryNumber, Integer exerciseNumber,
-                                  Integer discussNumber, Integer selfLearningNumber, Integer practiceNumber, Integer subjectForLevel, Integer id,
-                                  String term, LocalDate date) {
-        super(subjectId, subjectName, eachSubject, theoryNumber, exerciseNumber, discussNumber, selfLearningNumber, practiceNumber, subjectForLevel);
-        this.id = id;
-        this.term = term;
-        this.date = date;
-    }
+    private String subjectId;
+
+    private String studentId;
 
     public SubjectRegistration toSubjectRegistrationModel(){
         SubjectRegistration subjectRegistration = new SubjectRegistration();

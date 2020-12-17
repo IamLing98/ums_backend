@@ -36,10 +36,10 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
     @Autowired
     SubjectRepository subjectRepository;
 
-    public List<SubjectRegistrationDTO> getAll(String studentId) {
+    public List<SubjectRegistration> getAll(String studentId) {
         Term currentTerm = termRepository.findFirstByStatus(1);
         if (currentTerm != null) {
-            return subjectRegistrationRepository.getListSubjectRegistrationByStudentIdAndTermId(studentId, currentTerm.getId());
+            return subjectRegistrationRepository.getAllByStudentIdAndTermId(studentId, currentTerm.getId());
         }
         return Collections.emptyList();
     }
@@ -51,7 +51,7 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
                 SubjectRegistration subjectRegistration = subjectRegistrationDTO.toSubjectRegistrationModel();
                 subjectRegistration.setStudentId(studentId);
                 subjectRegistration.setTermId(currentTerm.getId());
-                if (subjectRegistrationRepository.findFirstByStudentIdAndDateAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), currentTerm.getId()) != null) {
+                if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), currentTerm.getId()) != null) {
                     if (subjectRegistrationRepository.save(subjectRegistration) != null)
                         return true;
                 }
@@ -64,7 +64,7 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
         if (studentRepository.existsById(studentId) && subjectId != ""  ) {
             Term currentTerm = termRepository.findFirstByStatus(1);
             if (currentTerm != null) {
-                if (subjectRegistrationRepository.findFirstByStudentIdAndDateAndSubjectIdAndTermId(studentId, subjectId, currentTerm.getId()) != null) {
+                if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectId, currentTerm.getId()) != null) {
                     if (subjectRegistrationRepository.deleteByStudentIdAndSubjectIdAndTermId(studentId,subjectId, currentTerm.getId()) != 0) return 1;
                     else  throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy");
                 }

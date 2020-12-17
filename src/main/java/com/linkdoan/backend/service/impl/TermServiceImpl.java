@@ -12,12 +12,15 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TermServiceImpl implements TermService {
+
     @Autowired
     TermRepository termRepository ;
 
+    @Override
     public List<TermDTO> getAll(Integer year, Integer term ){
         List<Term> termList = termRepository.findAll();
         List<TermDTO> termDTOList = new ArrayList<>();
@@ -28,6 +31,12 @@ public class TermServiceImpl implements TermService {
         return termDTOList;
     }
 
+    @Override
+    public Optional<TermDTO> getDetail(String termId){
+        return termRepository.findFirstById(termId);
+    }
+
+    @Override
     public int create(TermDTO termDTO){
         if(termRepository.findFirstByYearAndTerm(termDTO.getYear(), termDTO.getTerm()) != null)
             throw  new ResponseStatusException(HttpStatus.CONFLICT, "Không thể thêm kỳ học này!!!");
@@ -38,13 +47,15 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
+    @Override
     public int update(TermDTO termDTO){
         if(termRepository.existsById((termDTO.getId())) == false) throw  new EntityNotFoundException("Not Found");
         termRepository.save(termDTO.toModel());
         return 1;
     }
 
-    public int delete(Long id){
+    @Override
+    public int delete(String id){
         if(termRepository.existsById(id) == false) throw new EntityNotFoundException("Not Found");
         termRepository.deleteById(id);
         return 1;
