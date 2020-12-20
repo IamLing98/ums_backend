@@ -1,6 +1,7 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.TermDTO;
+import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.service.TermService;
 import com.linkdoan.backend.service.impl.TermServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class TermController {
     @RequestMapping(value = "/terms/{termId}", method = RequestMethod.GET)
     public ResponseEntity<?> getDetail(@PathVariable("termId") String termId)
             throws Exception {
-        Optional<TermDTO> termDTOOptional = termService.getDetail(termId);
-        return new ResponseEntity<>(termService.getDetail(termId).get(), HttpStatus.OK);
+        Optional<Term> termDTOOptional = termService.getDetail(termId);
+        return new ResponseEntity<>(termDTOOptional.get(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/terms", method = RequestMethod.POST)
@@ -44,11 +45,12 @@ public class TermController {
         return new ResponseEntity<>(termService.update(termDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/terms", method = RequestMethod.DELETE)
-    public ResponseEntity<?> update(@RequestParam(name = "id", required = true) String id)
+//    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping(value = "/terms/{termId}")
+    public ResponseEntity<?> deleteTerm(@PathVariable("termId") String termId)
             throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
-        return new ResponseEntity<>(termService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<>(termService.delete(termId), HttpStatus.OK);
     }
 
 

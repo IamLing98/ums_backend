@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    UserService userService ;
+    UserService userService;
 
     @Autowired
     RoleRepository roleRepository;
 
-        @RequestMapping(value = "/users/getDetails", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/getDetails", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@RequestParam(name = "username") String username) throws Exception {
-       userService.getUserDetails(username);
-        return new ResponseEntity<>( userService.getUserDetails(username), HttpStatus.OK);
+        userService.getUserDetails(username);
+        return new ResponseEntity<>(userService.getUserDetails(username), HttpStatus.OK);
     }
 
 

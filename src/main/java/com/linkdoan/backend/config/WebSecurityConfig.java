@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //            }
 //        };
 //    }
+
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -65,22 +68,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // We don't need CSRF for this example
         httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf().disable()
                 // dont authenticate this particular request
+
                 .authorizeRequests()
                 .antMatchers(
                         "/authenticate",
-                                    "/v3/api-docs/**",
-                                    "/swagger-ui.html",
+                        "/v3/api-docs/**",
+                        "/swagger-ui.html",
                         "/swagger-ui/**"
                 )
                 .permitAll()
-                .antMatchers("/education-program/**","/class/**","/students/**")
-               .hasAnyAuthority("PDT")
+                .antMatchers("/education-program/**", "/class/**", "/students/**")
+                .hasAnyAuthority("PDT")
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()
                 .and()

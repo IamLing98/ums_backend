@@ -32,7 +32,7 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public Optional<TermDTO> getDetail(String termId){
+    public Optional<Term> getDetail(String termId){
         return termRepository.findFirstById(termId);
     }
 
@@ -43,20 +43,21 @@ public class TermServiceImpl implements TermService {
         Term term = termDTO.toModel();
         term.setId(termDTO.getYear().toString() + termDTO.getTerm().toString());
         term.setStatus(2);
+        term.setProgress(11);
         termRepository.save(term);
         return 1;
     }
 
     @Override
     public int update(TermDTO termDTO){
-        if(termRepository.existsById((termDTO.getId())) == false) throw  new EntityNotFoundException("Not Found");
+        if(termRepository.existsById((termDTO.getId())) == false) throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Học kỳ không tồn tại!!!");
         termRepository.save(termDTO.toModel());
         return 1;
     }
 
     @Override
     public int delete(String id){
-        if(termRepository.existsById(id) == false) throw new EntityNotFoundException("Not Found");
+        if(termRepository.existsById(id) == false) throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Học kỳ không tồn tại!!!");
         termRepository.deleteById(id);
         return 1;
     }

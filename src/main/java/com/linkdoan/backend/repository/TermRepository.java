@@ -13,5 +13,5 @@ public interface TermRepository extends JpaRepository<Term, String> {
 
     Term findFirstByStatus(Integer status);
 
-    Optional<TermDTO> findFirstById(String termId);
+    Optional<Term> findFirstById(String termId);
 }

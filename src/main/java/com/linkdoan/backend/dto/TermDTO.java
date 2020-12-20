@@ -26,13 +26,19 @@ public class TermDTO {
 
     private LocalDate progress12Date;
 
+    private LocalDate progress13Date;
+
     private LocalDate progress21Date;
 
     private LocalDate progress22Date;
 
+    private LocalDate progress23Date;
+
     private LocalDate progress31Date;
 
     private LocalDate progress32Date;
+
+    private LocalDate progress33Date;
 
     public Term toModel(){
         Term term = new Term();
@@ -43,10 +49,13 @@ public class TermDTO {
         term.setProgress(this.progress);
         term.setProgress11Date(this.progress11Date);
         term.setProgress12Date(this.progress12Date);
+        term.setProgress13Date(this.progress13Date);
         term.setProgress21Date(this.progress21Date);
         term.setProgress22Date(this.progress22Date);
+        term.setProgress23Date(this.progress23Date);
         term.setProgress31Date(this.progress31Date);
         term.setProgress32Date(this.progress32Date);
+        term.setProgress33Date(this.progress33Date);
         return term;
     }
 }

@@ -28,23 +28,23 @@ public class EducationProgramController {
         return new ResponseEntity<>(rs, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/education-program/getAllRoles", method = RequestMethod.GET)
+    @RequestMapping(value = "/education-programs/getAllRoles", method = RequestMethod.GET)
     public ResponseEntity<?> getAllRoles() throws Exception {
         List<Role> rs = roleRepository.findAllRoles((long) 1);
         return new ResponseEntity<>(rs, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/education-program/create",method = RequestMethod.POST)
+    @RequestMapping(value="/education-programs",method = RequestMethod.POST)
     public ResponseEntity<?> create(@Valid @ModelAttribute EducationProgramDTO educationProgramDTO) throws Exception {
         return new ResponseEntity<>(educationProgramServiceImpl.createNewEducationProgram(educationProgramDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/education-program/update",method = RequestMethod.POST)
-    public ResponseEntity<?> update(@Valid @ModelAttribute EducationProgramDTO educationProgramDTO) throws Exception {
+    @PutMapping(value="/education-programs/{id}")
+    public ResponseEntity<?> update (@PathVariable("id") String id, @Valid  @ModelAttribute EducationProgramDTO educationProgramDTO) throws Exception {
         return new ResponseEntity<>(educationProgramServiceImpl.updateEducationProgram(educationProgramDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/education-program/delete",method = RequestMethod.POST)
+    @RequestMapping(value="/education-program/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@RequestBody List<EducationProgramDTO> educationProgramDTOList) throws Exception {
         if (educationProgramServiceImpl.delete(educationProgramDTOList) == false)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

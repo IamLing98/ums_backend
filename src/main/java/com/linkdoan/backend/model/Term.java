@@ -33,17 +33,26 @@ public class Term {
     @Column(name="progress12_date")
     private LocalDate progress12Date;
 
+    @Column(name="progress13_date")
+    private LocalDate progress13Date;
+
     @Column(name="progress21_date")
     private LocalDate progress21Date;
 
     @Column(name="progress22_date")
     private LocalDate progress22Date;
 
+    @Column(name="progress23_date")
+    private LocalDate progress23Date;
+
     @Column(name="progress31_date")
     private LocalDate progress31Date;
 
     @Column(name="progress32_date")
     private LocalDate progress32Date;
+
+    @Column(name="progress33_date")
+    private LocalDate progress33Date;
 
     public TermDTO toDTO(){
         TermDTO termDTO = new TermDTO();
@@ -54,10 +63,13 @@ public class Term {
         termDTO.setProgress(this.progress);
         termDTO.setProgress11Date(this.progress11Date);
         termDTO.setProgress12Date(this.progress12Date);
+        termDTO.setProgress13Date(this.progress13Date);
         termDTO.setProgress21Date(this.progress21Date);
         termDTO.setProgress22Date(this.progress22Date);
+        termDTO.setProgress23Date(this.progress23Date);
         termDTO.setProgress31Date(this.progress31Date);
         termDTO.setProgress32Date(this.progress32Date);
+        termDTO.setProgress33Date(this.progress33Date);
         return termDTO;
     }
 

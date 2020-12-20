@@ -14,7 +14,7 @@ public interface TermService {
 
     public List<TermDTO> getAll(Integer year, Integer term );
 
-    public Optional<TermDTO> getDetail(String termId);
+    public Optional<Term> getDetail(String termId);
 
     public int create(TermDTO termDTO);
 
