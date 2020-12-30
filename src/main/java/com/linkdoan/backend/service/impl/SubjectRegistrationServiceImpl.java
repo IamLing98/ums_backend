@@ -44,33 +44,26 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
         return Collections.emptyList();
     }
 
+    @Override
     public boolean addSubject(String studentId, SubjectRegistrationDTO subjectRegistrationDTO) {
-        if (studentRepository.existsById(studentId) && subjectRepository.existsById(subjectRegistrationDTO.getSubjectId())) {
+        if (studentId.equals(subjectRegistrationDTO.getStudentId())) {
             Term currentTerm = termRepository.findFirstByStatus(1);
-            if (currentTerm != null) {
+            if ((currentTerm.getId().equals(subjectRegistrationDTO.getTermId()))) {
                 SubjectRegistration subjectRegistration = subjectRegistrationDTO.toSubjectRegistrationModel();
-                subjectRegistration.setStudentId(studentId);
-                subjectRegistration.setTermId(currentTerm.getId());
                 if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), currentTerm.getId()) != null) {
                     if (subjectRegistrationRepository.save(subjectRegistration) != null)
                         return true;
-                }
-            }
-        }
+                }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
+            }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Không thể thực hiện!!!");
+        } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Có lỗi xảy ra!!!");
         return false;
     }
 
-    public int deleteSubject(String studentId, String subjectId) {
-        if (studentRepository.existsById(studentId) && subjectId != ""  ) {
-            Term currentTerm = termRepository.findFirstByStatus(1);
-            if (currentTerm != null) {
-                if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectId, currentTerm.getId()) != null) {
-                    if (subjectRegistrationRepository.deleteByStudentIdAndSubjectIdAndTermId(studentId,subjectId, currentTerm.getId()) != 0) return 1;
-                    else  throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy");
-                }
-                else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Không tìm thấy");
-            }
-        }
+    @Override
+    public int deleteSubject(String studentId, String subjectId, String termId) {
+        SubjectRegistration subjectRegistration = subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId,subjectId,termId);
+        if(subjectRegistration != null) subjectRegistrationRepository.delete(subjectRegistration);
+        else throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
         return 0;
     }
 }

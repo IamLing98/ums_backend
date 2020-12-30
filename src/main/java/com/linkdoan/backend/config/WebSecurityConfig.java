@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // configure AuthenticationManager so that it knows from where to load
         // user for matching credentials
         // Use BCryptPasswordEncoder
-        //auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+        //auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder()); 
         auth.userDetailsService(userService) // Cung cáp userservice cho spring security
                 .passwordEncoder(passwordEncoder()); // cung cấp password encoder
     }

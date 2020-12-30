@@ -38,8 +38,8 @@ public class SubjectController {
         return new ResponseEntity<>(subjectService.create(subjectDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subject/update", method = RequestMethod.POST)
-    public ResponseEntity<?> update(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
+    @RequestMapping(value = "/subject/update", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@Valid @RequestBody SubjectDTO subjectDTO) throws Exception {
         return new ResponseEntity<>(subjectService.update(subjectDTO), HttpStatus.OK);
     }
 

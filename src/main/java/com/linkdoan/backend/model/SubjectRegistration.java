@@ -13,7 +13,7 @@ public class SubjectRegistration {
 
     @Id
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "student_id", columnDefinition="CHAR(9)")
     private String studentId;

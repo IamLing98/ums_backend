@@ -3,6 +3,7 @@ package com.linkdoan.backend.controller;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
 import com.linkdoan.backend.dto.TermDTO;
 import com.linkdoan.backend.model.SubjectRegistration;
+import com.linkdoan.backend.service.SubjectRegistrationService;
 import com.linkdoan.backend.service.impl.StudentServiceImpl;
 import com.linkdoan.backend.service.impl.SubjectRegistrationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,9 @@ public class SubjectRegistrationController {
     private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Autowired
-    SubjectRegistrationServiceImpl subjectRegistrationService;
+    SubjectRegistrationService subjectRegistrationService;
 
+    //    admin section
     @RequestMapping(value = "/subjectsRegistration", method = RequestMethod.GET)
     public ResponseEntity<?> findBy(SecurityContextHolder request)
             throws Exception {
@@ -35,15 +37,17 @@ public class SubjectRegistrationController {
             throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
         String studentId = request.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(subjectRegistrationService.addSubject(studentId,subjectRegistrationDTO), HttpStatus.OK);
+        return new ResponseEntity<>(subjectRegistrationService.addSubject(studentId, subjectRegistrationDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subjectsRegistration/{subjectId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable String subjectId,SecurityContextHolder request)
+    @RequestMapping(value = "/subjectsRegistration/{subjectId}/{termId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("subjectId") String subjectId,@PathVariable("termId") String termId, SecurityContextHolder request)
             throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
         String studentId = request.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(subjectRegistrationService.deleteSubject(studentId,subjectId), HttpStatus.OK);
+        return new ResponseEntity<>(subjectRegistrationService.deleteSubject(studentId, subjectId,termId), HttpStatus.OK);
     }
+
+    //    student section
 
 }
