@@ -13,6 +13,8 @@ public class SubjectRegistration {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+    @SequenceGenerator(name = "id_Sequence", sequenceName = "ORACLE_DB_SEQ_ID")
     private Long id;
 
     @Column(name = "student_id", columnDefinition="CHAR(9)")

@@ -9,6 +9,7 @@ import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.repository.SubjectRegistrationRepository;
 import com.linkdoan.backend.repository.SubjectRepository;
 import com.linkdoan.backend.repository.TermRepository;
+import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.service.SubjectRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,17 +48,19 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
 
     @Override
     public boolean addSubject(String studentId, SubjectRegistrationDTO subjectRegistrationDTO) {
-        if (studentId.equals(subjectRegistrationDTO.getStudentId())) {
-            Term currentTerm = termRepository.findFirstByStatus(1);
+        if (studentRepository.existsById(studentId)) {
+            Term currentTerm = termRepository.findFirstByStatus(2);
             if ((currentTerm.getId().equals(subjectRegistrationDTO.getTermId()))) {
+                subjectRegistrationDTO.setStudentId(studentId);
+                subjectRegistrationDTO.setTermId(currentTerm.getId());
+                subjectRegistrationDTO.setDate(LocalDate.now());
                 SubjectRegistration subjectRegistration = subjectRegistrationDTO.toSubjectRegistrationModel();
-                if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), currentTerm.getId()) != null) {
-                    if (subjectRegistrationRepository.save(subjectRegistration) != null)
-                        return true;
+                if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), currentTerm.getId()) == null) {
+                     SubjectRegistration subjectRegistration1 = subjectRegistrationRepository.save(subjectRegistration);
+                        return subjectRegistrationRepository.existsById(subjectRegistration1.getId());
                 }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
             }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Không thể thực hiện!!!");
-        } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Có lỗi xảy ra!!!");
-        return false;
+        } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Lỗi xác thực!!!");
     }
 
     @Override

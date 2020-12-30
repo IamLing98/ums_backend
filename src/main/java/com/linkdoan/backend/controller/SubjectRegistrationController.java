@@ -37,6 +37,7 @@ public class SubjectRegistrationController {
             throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
         String studentId = request.getContext().getAuthentication().getName();
+        System.out.println(studentId);
         return new ResponseEntity<>(subjectRegistrationService.addSubject(studentId, subjectRegistrationDTO), HttpStatus.OK);
     }
 

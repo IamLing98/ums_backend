@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -30,7 +31,6 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-
     @Qualifier("yearClassRepository")
     @Autowired
     private YearClassRepository yearClassRepository;
@@ -40,7 +40,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private BranchRepository branchRepository ;
-
     @Override
     public Page<StudentDTO> findBy(Integer page, Integer pageSize, String studentId, Integer startYear, String classId, String departmentId) throws IOException {
         if(page == null) page = 0;

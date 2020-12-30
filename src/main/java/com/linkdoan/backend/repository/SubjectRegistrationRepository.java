@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegistration, Integer> {
+public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegistration, Long> {
 
 
     List<SubjectRegistration> getAllByStudentIdAndTermId(String studentId,String termId);

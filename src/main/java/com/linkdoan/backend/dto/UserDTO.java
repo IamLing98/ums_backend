@@ -25,12 +25,6 @@ public class UserDTO  {
     @AdjHistory(field = "password")
     private String password;
 
-    @AdjHistory(field = "firstName")
-    private String firstName;
-
-    @AdjHistory(field = "lastName")
-    private String lastName;
-
     @AdjHistory(field = "createdAt")
     private Date createdAt;
 
@@ -57,10 +51,8 @@ public class UserDTO  {
         user.setUserId(userId);
         user.setCreatedAt(createdAt);
         user.setEmail(email);
-        user.setFirstName(firstName);
         user.setIsActive(isActive);
         user.setIsEmailVerified(isEmailVerified);
-        user.setLastName(lastName);
         user.setOwnerId(ownerId);
         user.setUpdatedAt(updatedAt);
         user.setPassword(password);

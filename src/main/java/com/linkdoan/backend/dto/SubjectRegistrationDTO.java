@@ -22,6 +22,9 @@ public class SubjectRegistrationDTO {
     public SubjectRegistration toSubjectRegistrationModel(){
         SubjectRegistration subjectRegistration = new SubjectRegistration();
         subjectRegistration.setSubjectId(this.getSubjectId());
+        subjectRegistration.setTermId(this.termId);
+        subjectRegistration.setStudentId(this.studentId);
+        subjectRegistration.setDate(this.date);
         return subjectRegistration;
     }
 }
