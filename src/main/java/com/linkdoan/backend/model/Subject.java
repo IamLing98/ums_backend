@@ -54,6 +54,7 @@ public class Subject {
         subjectDTO.setSelfLearningNumber(this.selfLearningNumber);
         subjectDTO.setPracticeNumber(this.practiceNumber);
         subjectDTO.setSubjectForLevel(this.subjectForLevel);
+        subjectDTO.setDepartmentId(this.departmentId);
         return subjectDTO;
     }
 }

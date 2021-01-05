@@ -21,10 +21,17 @@ public class SubjectRegistrationDTO {
 
     public SubjectRegistration toSubjectRegistrationModel(){
         SubjectRegistration subjectRegistration = new SubjectRegistration();
-        subjectRegistration.setSubjectId(this.getSubjectId());
+        subjectRegistration.setSubjectId(this.subjectId);
         subjectRegistration.setTermId(this.termId);
         subjectRegistration.setStudentId(this.studentId);
         subjectRegistration.setDate(this.date);
         return subjectRegistration;
+    }
+
+    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDate date){
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+        this.termId = termId;
+        this.date = date;
     }
 }

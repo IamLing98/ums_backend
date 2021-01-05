@@ -119,6 +119,11 @@ public class StudentDTO extends SystemDTO {
 
     private Integer endYear;
 
+    private String educationProgramId;
+
+    //currentTerm
+    private Integer currentTerm;
+
     public Student toModel() throws ParseException {
         Student student = new Student();
         student.setStudentId(this.studentId);
@@ -164,6 +169,13 @@ public class StudentDTO extends SystemDTO {
         this.status = status;
         this.startYear = startYear;
         this.endYear = endYear;
+    }
+
+    public StudentDTO(String studentId, String yearClassId, String educationProgramId, Integer currentTerm){
+        this.studentId = studentId;
+        this.yearClassId = yearClassId;
+        this.educationProgramId = educationProgramId;
+        this.currentTerm = currentTerm;
     }
 
 }

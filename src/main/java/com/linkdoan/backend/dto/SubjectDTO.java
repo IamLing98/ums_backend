@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.util.List;
 
 @Data
@@ -31,6 +32,8 @@ public class SubjectDTO extends SystemDTO  {
 
     private Integer subjectForLevel;
 
+    private String departmentId;
+
     private List<SubjectDTO> prerequisitesSubjects ;
 
     public SubjectDTO(String subjectId, String subjectName, Integer eachSubject, Integer theoryNumber, Integer exerciseNumber, Integer discussNumber, Integer selfLearningNumber, Integer practiceNumber, Integer subjectForLevel) {
@@ -45,17 +48,32 @@ public class SubjectDTO extends SystemDTO  {
         this.subjectForLevel = subjectForLevel;
     }
 
+    public SubjectDTO(String subjectId, String subjectName, Integer eachSubject, Integer theoryNumber, Integer exerciseNumber, Integer discussNumber, Integer selfLearningNumber, Integer practiceNumber, Integer subjectForLevel, String departmentId) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+        this.eachSubject = eachSubject;
+        this.theoryNumber = theoryNumber;
+        this.exerciseNumber = exerciseNumber;
+        this.discussNumber = discussNumber;
+        this.selfLearningNumber = selfLearningNumber;
+        this.practiceNumber = practiceNumber;
+        this.subjectForLevel = subjectForLevel;
+        this.departmentId = departmentId;
+    }
+
+
     public Subject toModel(){
         Subject subject = new Subject();
         subject.setSubjectId(this.subjectId);
         subject.setSubjectName(this.subjectName);
-        subject.setDiscussNumber( this.discussNumber);
-        subject.setEachSubject( this.eachSubject);
-        subject.setExerciseNumber( this.exerciseNumber);
-        subject.setTheoryNumber( this.theoryNumber);
-        subject.setPracticeNumber( this.practiceNumber);
-        subject.setSubjectForLevel( subjectForLevel);
-        subject.setSelfLearningNumber( this.selfLearningNumber);
+        subject.setEachSubject(this.eachSubject);
+        subject.setTheoryNumber(this.theoryNumber);
+        subject.setExerciseNumber(this.exerciseNumber);
+        subject.setDiscussNumber(this.discussNumber);
+        subject.setSelfLearningNumber(this.selfLearningNumber);
+        subject.setPracticeNumber(this.practiceNumber);
+        subject.setSubjectForLevel(this.subjectForLevel);
+        subject.setDepartmentId(this.departmentId);
         return subject;
     }
 }

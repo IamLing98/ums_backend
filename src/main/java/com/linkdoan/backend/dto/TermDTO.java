@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Data
@@ -22,23 +23,23 @@ public class TermDTO {
 
     private Integer progress;
 
-    private LocalDate progress11Date;
+    private LocalDate createdDate;
 
-    private LocalDate progress12Date;
+    private LocalDate termEndDate;
 
-    private LocalDate progress13Date;
+    private LocalDate subjectSubmittingStartDate;
 
-    private LocalDate progress21Date;
+    private LocalDate subjectSubmittingEndDate;
 
-    private LocalDate progress22Date;
+    private LocalDate subjectClassSubmittingStartDate;
 
-    private LocalDate progress23Date;
+    private LocalDate subjectCLassSubmittingEndDate;
 
-    private LocalDate progress31Date;
+    private LocalDate editSubmittingStartDate;
 
-    private LocalDate progress32Date;
+    private LocalDate editSubmittingEndDate;
 
-    private LocalDate progress33Date;
+    private String actionType;
 
     public Term toModel(){
         Term term = new Term();
@@ -47,15 +48,14 @@ public class TermDTO {
         term.setTerm(this.term);
         term.setYear(this.year);
         term.setProgress(this.progress);
-        term.setProgress11Date(this.progress11Date);
-        term.setProgress12Date(this.progress12Date);
-        term.setProgress13Date(this.progress13Date);
-        term.setProgress21Date(this.progress21Date);
-        term.setProgress22Date(this.progress22Date);
-        term.setProgress23Date(this.progress23Date);
-        term.setProgress31Date(this.progress31Date);
-        term.setProgress32Date(this.progress32Date);
-        term.setProgress33Date(this.progress33Date);
+        term.setCreatedDate(this.createdDate);
+        term.setTermEndDate(this.termEndDate);
+        term.setSubjectSubmittingStartDate(this.subjectSubmittingStartDate);
+        term.setSubjectSubmittingEndDate(this.subjectSubmittingEndDate);
+        term.setSubjectClassSubmittingStartDate(this.subjectClassSubmittingStartDate);
+        term.setSubjectCLassSubmittingEndDate(this.subjectCLassSubmittingEndDate);
+        term.setEditSubmittingStartDate(this.editSubmittingStartDate);
+        term.setEditSubmittingEndDate(this.editSubmittingEndDate);
         return term;
     }
 }

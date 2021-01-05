@@ -1,8 +1,11 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.controller.SubjectRegistrationController;
+import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
+import com.linkdoan.backend.model.Student;
+import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.model.SubjectRegistration;
 import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.repository.StudentRepository;
@@ -18,8 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SubjectRegistrationServiceImpl implements SubjectRegistrationService {
@@ -38,36 +40,72 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
     @Autowired
     SubjectRepository subjectRepository;
 
-    public List<SubjectRegistration> getAll(String studentId) {
-        Term currentTerm = termRepository.findFirstByStatus(1);
-        if (currentTerm != null) {
-            return subjectRegistrationRepository.getAllByStudentIdAndTermId(studentId, currentTerm.getId());
+    //admin role
+
+    @Override
+    public List<Map<String, Object>> getSubmittingInfo(String termId) {
+        Map<String, Object> detail = new HashMap<>(2);
+        List<Object[]> result = subjectRegistrationRepository.getSubmittingInfo(termId);
+        List<Map<String, Object>> rs = new ArrayList<>();
+        if (result != null && !result.isEmpty()) {
+            for (Object[] object : result) {
+                detail = new HashMap<String, Object>();
+                detail.put("subjectId", object[0]);
+                detail.put("subjectName", object[1]);
+                detail.put("totalSubmit", object[2]);
+                rs.add(detail);
+            }
         }
-        return Collections.emptyList();
+//        return subjectRegistrationRepository.getSubmittingInfo(termId);
+        return rs;
+    }
+
+    //auto submit for new student
+    public boolean subjectSubmitForNewStudent(String termId) {
+        List<StudentDTO> studentDTOList = studentRepository.findAllStudentHasTermIsOne();
+        List<SubjectDTO> subjectList = new ArrayList<>();
+        LocalDate lt  = LocalDate.now();
+        for(StudentDTO studentDTO : studentDTOList){
+             subjectList = subjectRepository.findAllByEducationProgramIdAndTerm(studentDTO.getEducationProgramId(),studentDTO.getCurrentTerm() + 1);
+             for(int i = 0 ; i < subjectList.size(); i++){
+                 SubjectRegistrationDTO subjectRegistrationDTO = new SubjectRegistrationDTO(studentDTO.getStudentId(), subjectList.get(i).getSubjectId(), termId, lt );
+                 subjectRegistrationRepository.save(subjectRegistrationDTO.toSubjectRegistrationModel());
+             }
+        }
+        return true;
     }
 
     @Override
+    public List<SubjectDTO> getListSubjectSubmitted(String termId, String studentId) {
+        return subjectRegistrationRepository.getAllByStudentIdAndTermId(studentId, termId);
+    }
+
+    //student role
+    @Override
     public boolean addSubject(String studentId, SubjectRegistrationDTO subjectRegistrationDTO) {
         if (studentRepository.existsById(studentId)) {
-            Term currentTerm = termRepository.findFirstByStatus(2);
-            if ((currentTerm.getId().equals(subjectRegistrationDTO.getTermId()))) {
-                subjectRegistrationDTO.setStudentId(studentId);
-                subjectRegistrationDTO.setTermId(currentTerm.getId());
-                subjectRegistrationDTO.setDate(LocalDate.now());
-                SubjectRegistration subjectRegistration = subjectRegistrationDTO.toSubjectRegistrationModel();
-                if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), currentTerm.getId()) == null) {
-                     SubjectRegistration subjectRegistration1 = subjectRegistrationRepository.save(subjectRegistration);
+            Term nextTerm = termRepository.findFirstByStatus(2);
+            if (nextTerm != null) {
+                String termId = nextTerm.getId();
+                String dtoTermId = subjectRegistrationDTO.getTermId();
+                if (termId.equals(dtoTermId)) {
+                    subjectRegistrationDTO.setStudentId(studentId);
+                    subjectRegistrationDTO.setDate(LocalDate.now());
+                    SubjectRegistration model = subjectRegistrationDTO.toSubjectRegistrationModel();
+                    if (subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), dtoTermId) == null) {
+                        SubjectRegistration subjectRegistration1 = subjectRegistrationRepository.save(model);
                         return subjectRegistrationRepository.existsById(subjectRegistration1.getId());
-                }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
-            }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Không thể thực hiện!!!");
-        } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Lỗi xác thực!!!");
+                    } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
+                } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
+            } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
+        } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã đăng ký!!!");
     }
 
     @Override
     public int deleteSubject(String studentId, String subjectId, String termId) {
-        SubjectRegistration subjectRegistration = subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId,subjectId,termId);
-        if(subjectRegistration != null) subjectRegistrationRepository.delete(subjectRegistration);
-        else throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        SubjectRegistration subjectRegistration = subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectId, termId);
+        if (subjectRegistration != null) subjectRegistrationRepository.delete(subjectRegistration);
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
         return 0;
     }
 }

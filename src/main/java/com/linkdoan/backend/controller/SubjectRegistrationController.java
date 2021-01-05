@@ -24,29 +24,30 @@ public class SubjectRegistrationController {
     SubjectRegistrationService subjectRegistrationService;
 
     //    admin section
-    @RequestMapping(value = "/subjectsRegistration", method = RequestMethod.GET)
-    public ResponseEntity<?> findBy(SecurityContextHolder request)
+    @RequestMapping(value = "/subjectsRegistration/{termId}", method = RequestMethod.GET)
+    public ResponseEntity<?> findBy(@PathVariable("termId") String termId, SecurityContextHolder request)
             throws Exception {
-        //        Example<Student> searchTerm = Example.of(new Student());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("PDT"))) {
+            return new ResponseEntity<>(subjectRegistrationService.getSubmittingInfo(termId), HttpStatus.OK);
+        }
         logger.info(request.getContext().getAuthentication().getName());
-        return new ResponseEntity<>(subjectRegistrationService.getAll(request.getContext().getAuthentication().getName()), HttpStatus.OK);
+        return new ResponseEntity<>(subjectRegistrationService.getListSubjectSubmitted(termId, request.getContext().getAuthentication().getName()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjectsRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody SubjectRegistrationDTO subjectRegistrationDTO, SecurityContextHolder request)
             throws Exception {
-        //        Example<Student> searchTerm = Example.of(new Student());
         String studentId = request.getContext().getAuthentication().getName();
         System.out.println(studentId);
         return new ResponseEntity<>(subjectRegistrationService.addSubject(studentId, subjectRegistrationDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjectsRegistration/{subjectId}/{termId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable("subjectId") String subjectId,@PathVariable("termId") String termId, SecurityContextHolder request)
+    public ResponseEntity<?> delete(@PathVariable("subjectId") String subjectId, @PathVariable("termId") String termId, SecurityContextHolder request)
             throws Exception {
-        //        Example<Student> searchTerm = Example.of(new Student());
         String studentId = request.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(subjectRegistrationService.deleteSubject(studentId, subjectId,termId), HttpStatus.OK);
+        return new ResponseEntity<>(subjectRegistrationService.deleteSubject(studentId, subjectId, termId), HttpStatus.OK);
     }
 
     //    student section

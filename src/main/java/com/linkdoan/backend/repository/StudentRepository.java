@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, String> {
 
@@ -68,5 +70,12 @@ public interface StudentRepository extends JpaRepository<Student, String> {
             //,nativeQuery = true
     )
     Page<StudentDTO> findAllByClassId(@Param("classId") String classId , Pageable pageable);
+
+    //find all student by current term
+    @Query(value = "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId,  student.yearClassId, student.educationProgramId, yearClass.currentTerm) " +
+            " FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
+            "WHERE (yearClass.currentTerm < 3) "
+    )
+    List<StudentDTO> findAllStudentHasTermIsOne();
 
 }

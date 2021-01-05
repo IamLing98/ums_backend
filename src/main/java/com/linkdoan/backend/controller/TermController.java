@@ -20,7 +20,6 @@ public class TermController {
     public ResponseEntity<?> findBy(@RequestParam(name = "year", required = false) Integer year,
                                     @RequestParam(name = "term", required = false) Integer term)
             throws Exception {
-        //        Example<Student> searchTerm = Example.of(new Student());
         return new ResponseEntity<>(termService.getAll(year, term), HttpStatus.OK);
     }
 
@@ -34,15 +33,14 @@ public class TermController {
     @RequestMapping(value = "/terms", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody TermDTO termDTO)
             throws Exception {
-        //        Example<Student> searchTerm = Example.of(new Student());
         return new ResponseEntity<>(termService.create(termDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/terms", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@RequestBody TermDTO termDTO)
+    @RequestMapping(value = "/terms/{termId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@PathVariable("termId") String termId, @RequestBody TermDTO termDTO)
             throws Exception {
         //        Example<Student> searchTerm = Example.of(new Student());
-        return new ResponseEntity<>(termService.update(termDTO), HttpStatus.OK);
+        return new ResponseEntity<>(termService.update(termId, termDTO), HttpStatus.OK);
     }
 
 //    @CrossOrigin(origins = "http://localhost:3000")

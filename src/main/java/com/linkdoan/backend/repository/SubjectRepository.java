@@ -1,6 +1,7 @@
 package com.linkdoan.backend.repository;
 
 import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
+import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +33,11 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
 //            "or yearClass.classId = :yearClassId)"
 //    )
 //    List<EducationProgramSubjectDTO> findAllByYearClassId(@Param("yearClassId") String Id);
+
+    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName, subject.eachSubject, " +
+            "subject.theoryNumber, subject.exerciseNumber, subject.discussNumber, subject.selfLearningNumber, subject.practiceNumber, subject.subjectForLevel) " +
+            "FROM Subject  subject inner join  EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
+            "inner join  EducationProgram educationProgram on educationProgramSubject.educationProgramId = educationProgram.educationProgramId " +
+            "WHERE educationProgram.educationProgramId = :educationProgramId and  educationProgramSubject.term = :term ")
+    List<SubjectDTO> findAllByEducationProgramIdAndTerm(@Param("educationProgramId") String educationProgramId, @Param("term") Integer term);
 }
