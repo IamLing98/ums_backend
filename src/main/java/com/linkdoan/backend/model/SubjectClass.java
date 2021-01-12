@@ -1,5 +1,6 @@
 package com.linkdoan.backend.model;
 
+import com.linkdoan.backend.dto.SubjectClassDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -30,4 +31,15 @@ public class SubjectClass {
 
     @Column(name="created_date", columnDefinition = "DATE")
     private LocalDate createdDate;
+
+    public SubjectClassDTO toDTO(){
+        SubjectClassDTO sj = new SubjectClassDTO();
+        sj.setSubjectClassId(this.subjectClassId);
+        sj.setTermId(this.termId);
+        sj.setTeacherId(this.teacherId);
+        sj.setNumberOfSeats(this.numberOfSeats);
+        sj.setIsRequireLab(this.isRequireLab);
+        sj.setCreatedDate(this.createdDate);
+        return sj;
+    }
 }

@@ -7,12 +7,16 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-@ComponentScan(basePackages= {"com.linkdoan.backend.*"})
+@ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 
 public interface SubjectService {
-    public Page findBy(Pageable pageable , SubjectDTO subjectDTO);
-    public SubjectDTO create(SubjectDTO subjectDTO);
-    public SubjectDTO update(SubjectDTO subjectDTO);
-    public boolean delete(List<SubjectDTO> subjectDTOList);
+    Page findBy(Pageable pageable, SubjectDTO subjectDTO);
+
+    SubjectDTO create(SubjectDTO subjectDTO);
+
+    SubjectDTO update(SubjectDTO subjectDTO);
+
+    boolean delete(List<SubjectDTO> subjectDTOList);
+
     List<SubjectDTO> getAll(Integer page, Integer pageSize, String subjectId, String subjectName, String educationProgramId);
 }
