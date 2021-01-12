@@ -1,7 +1,6 @@
 package com.linkdoan.backend.repository;
 
 import com.linkdoan.backend.dto.SubjectDTO;
-import com.linkdoan.backend.dto.SubjectRegistrationDTO;
 import com.linkdoan.backend.model.SubjectRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,11 +16,25 @@ public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegi
     )
     List<SubjectDTO> getAllByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId);
 
-    @Query(value = "SELECT subject.subjectId, subject.subjectName, count(subjectRegistration.subjectId ) as sum   from Subject subject left join SubjectRegistration  subjectRegistration" +
-            " on subject.subjectId = subjectRegistration.subjectId " +
-            " group by subject.subjectId  ")
-    List<Object[]> getSubmittingInfo(@Param("termId") String termId);
+    @Query(value = "SELECT subject.subjectId, subject.subjectName , count(subject.subjectId), " +
+            "subject.discussNumber, subject.exerciseNumber, subject.practiceNumber, subject.selfLearningNumber, subject.theoryNumber " +
+            " FROM  Subject subject " +
+            " inner join EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
+            " inner join EducationProgram  educationProgram on educationProgram.educationProgramId = educationProgramSubject.educationProgramId " +
+            " inner join Student student on educationProgram.educationProgramId = student.educationProgramId " +
+            " inner join YearClass yearClass on student.yearClassId = yearClass.classId " +
+            " where yearClass.currentTerm + 1 = educationProgramSubject.term group by subject.subjectId")
+    List<Object[]> getPredictTotalSubmit(@Param("termId") String termId);
 
+    @Query(value = "SELECT  subject.subjectId, subject.subjectName, count(subjectRegistration.subjectId) FROM Subject subject " +
+            "inner join SubjectRegistration subjectRegistration on subject.subjectId = subjectRegistration.subjectId " +
+            "where subjectRegistration.termId = :termId    group by subject.subjectId ")
+    List<Object[]> getCurrentTotalSubmit(@Param("termId") String termId);
+
+    @Query(value = "SELECT  subject.subjectId, subject.subjectName, count(subjectRegistration.subjectId) FROM Subject subject " +
+            "inner join SubjectRegistration subjectRegistration on subject.subjectId = subjectRegistration.subjectId " +
+            "where subjectRegistration.termId = :termId and subjectRegistration.autoSubmit = 1 group by subject.subjectId ")
+    List<Object[]> getTotalAutoSubmit(@Param("termId") String termId);
 
     SubjectRegistration findFirstByStudentIdAndSubjectIdAndTermId(String studentId, String subjectId, String termId);
 

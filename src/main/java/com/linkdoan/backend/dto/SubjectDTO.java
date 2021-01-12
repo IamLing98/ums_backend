@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.util.List;
 
 @Data
@@ -35,6 +34,11 @@ public class SubjectDTO extends SystemDTO  {
     private String departmentId;
 
     private List<SubjectDTO> prerequisitesSubjects ;
+
+    public SubjectDTO(String subjectId, String subjectName) {
+        this.subjectId = subjectId;
+        this.subjectName = subjectName;
+    }
 
     public SubjectDTO(String subjectId, String subjectName, Integer eachSubject, Integer theoryNumber, Integer exerciseNumber, Integer discussNumber, Integer selfLearningNumber, Integer practiceNumber, Integer subjectForLevel) {
         this.subjectId = subjectId;

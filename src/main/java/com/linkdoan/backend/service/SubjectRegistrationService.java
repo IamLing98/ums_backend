@@ -2,14 +2,8 @@ package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
-import com.linkdoan.backend.model.SubjectRegistration;
-import com.linkdoan.backend.model.Term;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 

@@ -1,7 +1,6 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.TermDTO;
-import com.linkdoan.backend.model.SubjectRegistration;
 import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.repository.TermRepository;
 import com.linkdoan.backend.service.SubjectRegistrationService;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +60,8 @@ public class TermServiceImpl implements TermService {
                 case "SSON":
                     if (term.getProgress() == 11) {
                         term.setProgress(12);
+                        term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
+                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         termRepository.save(term);
                         subjectRegistrationService.subjectSubmitForNewStudent(termId);
                     } else {
@@ -71,8 +71,10 @@ public class TermServiceImpl implements TermService {
                 case "SSOFF":
                     if (term.getProgress() == 12) {
                         term.setProgress(13);
+                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
+                        termRepository.save(term);
                     } else {
-
+                        throw new ResponseStatusException(HttpStatus.CHECKPOINT, "Không đúng tiến trình");
                     }
                     break;
                 case "SCSON":

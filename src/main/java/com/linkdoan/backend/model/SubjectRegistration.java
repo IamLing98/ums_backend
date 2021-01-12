@@ -3,7 +3,6 @@ package com.linkdoan.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
 
 @Data
@@ -28,4 +27,7 @@ public class SubjectRegistration {
 
     @Column(name = "date")
     private LocalDate date;
+
+    @Column(name="auto_submit", columnDefinition = "INT")
+    private Integer autoSubmit;
 }

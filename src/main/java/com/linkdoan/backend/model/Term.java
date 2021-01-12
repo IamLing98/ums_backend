@@ -1,10 +1,12 @@
 package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.TermDTO;
-import jdk.vm.ci.meta.Local;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity

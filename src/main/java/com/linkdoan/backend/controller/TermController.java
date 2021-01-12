@@ -3,7 +3,6 @@ package com.linkdoan.backend.controller;
 import com.linkdoan.backend.dto.TermDTO;
 import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.service.TermService;
-import com.linkdoan.backend.service.impl.TermServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

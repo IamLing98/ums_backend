@@ -1,18 +1,14 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.controller.SubjectRegistrationController;
 import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
-import com.linkdoan.backend.model.Student;
-import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.model.SubjectRegistration;
 import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.repository.SubjectRegistrationRepository;
 import com.linkdoan.backend.repository.SubjectRepository;
 import com.linkdoan.backend.repository.TermRepository;
-import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.service.SubjectRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class SubjectRegistrationServiceImpl implements SubjectRegistrationService {
@@ -45,14 +44,40 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
     @Override
     public List<Map<String, Object>> getSubmittingInfo(String termId) {
         Map<String, Object> detail = new HashMap<>(2);
-        List<Object[]> result = subjectRegistrationRepository.getSubmittingInfo(termId);
+        List<Object[]> predictSubjectSubmit = subjectRegistrationRepository.getPredictTotalSubmit(termId);
+        List<Object[]> currentSubjectSubmit = subjectRegistrationRepository.getCurrentTotalSubmit(termId);
+        List<Object[]> autoSubjectSubmit = subjectRegistrationRepository.getTotalAutoSubmit(termId);
         List<Map<String, Object>> rs = new ArrayList<>();
-        if (result != null && !result.isEmpty()) {
-            for (Object[] object : result) {
+        if (predictSubjectSubmit != null && !predictSubjectSubmit.isEmpty()) {
+            for (Object[] object : predictSubjectSubmit) {
                 detail = new HashMap<String, Object>();
                 detail.put("subjectId", object[0]);
                 detail.put("subjectName", object[1]);
-                detail.put("totalSubmit", object[2]);
+                detail.put("predictSubmit", object[2]);
+                detail.put("discussNumber", object[3]);
+                detail.put("exerciseNumber", object[4]);
+                detail.put("practiceNumber", object[5]);
+                detail.put("selfLearningNumber", object[6]);
+                detail.put("theoryNumber", object[7]);
+
+                if(currentSubjectSubmit != null && !currentSubjectSubmit.isEmpty()){
+                    Object[] hasPeopleSubmitted = currentSubjectSubmit.stream().filter(entry -> entry[0].toString().equals(object[0].toString())).findFirst().orElse(null);
+                    if(hasPeopleSubmitted != null){
+                        detail.put("totalSubmit", hasPeopleSubmitted[2]);
+                    }
+                    else{
+                        detail.put("totalSubmit", 0);
+                    }
+                }else  detail.put("totalSubmit", 0);
+                if(autoSubjectSubmit != null && !autoSubjectSubmit.isEmpty()){
+                    Object[] hasAutoSubmitted = autoSubjectSubmit.stream().filter(entry -> entry[0].toString().equals(object[0].toString())).findFirst().orElse(null);
+                    if(hasAutoSubmitted != null){
+                        detail.put("autoSubmit", hasAutoSubmitted[2]);
+                    }
+                    else{
+                        detail.put("autoSubmit", 0);
+                    }
+                }else detail.put("autoSubmit", 0);
                 rs.add(detail);
             }
         }
@@ -61,14 +86,19 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
     }
 
     //auto submit for new student
+    @Override
     public boolean subjectSubmitForNewStudent(String termId) {
         List<StudentDTO> studentDTOList = studentRepository.findAllStudentHasTermIsOne();
+        System.out.println("list student has term is one:" + studentDTOList.size());
         List<SubjectDTO> subjectList = new ArrayList<>();
         LocalDate lt  = LocalDate.now();
-        for(StudentDTO studentDTO : studentDTOList){
+        int studentListSize = studentDTOList.size();
+        for(int j = 0 ; j < studentListSize; j++){
+            StudentDTO studentDTO = studentDTOList.get(j);
              subjectList = subjectRepository.findAllByEducationProgramIdAndTerm(studentDTO.getEducationProgramId(),studentDTO.getCurrentTerm() + 1);
-             for(int i = 0 ; i < subjectList.size(); i++){
-                 SubjectRegistrationDTO subjectRegistrationDTO = new SubjectRegistrationDTO(studentDTO.getStudentId(), subjectList.get(i).getSubjectId(), termId, lt );
+             int subjectListSize = subjectList.size();
+             for(int i = 0 ; i < subjectListSize; i++){
+                 SubjectRegistrationDTO subjectRegistrationDTO = new SubjectRegistrationDTO(studentDTO.getStudentId(), subjectList.get(i).getSubjectId(), termId, lt, 1  );
                  subjectRegistrationRepository.save(subjectRegistrationDTO.toSubjectRegistrationModel());
              }
         }

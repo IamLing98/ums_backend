@@ -3,7 +3,6 @@ package com.linkdoan.backend.dto;
 import com.linkdoan.backend.model.SubjectRegistration;
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 
 @Data
@@ -19,19 +18,30 @@ public class SubjectRegistrationDTO {
 
     private LocalDate date;
 
-    public SubjectRegistration toSubjectRegistrationModel(){
+    private Integer autoSubmit;
+
+    public SubjectRegistration toSubjectRegistrationModel() {
         SubjectRegistration subjectRegistration = new SubjectRegistration();
         subjectRegistration.setSubjectId(this.subjectId);
         subjectRegistration.setTermId(this.termId);
         subjectRegistration.setStudentId(this.studentId);
         subjectRegistration.setDate(this.date);
+        subjectRegistration.setAutoSubmit(this.autoSubmit);
         return subjectRegistration;
     }
 
-    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDate date){
+    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDate date) {
         this.studentId = studentId;
         this.subjectId = subjectId;
         this.termId = termId;
         this.date = date;
+    }
+
+    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDate date, Integer autoSubmit) {
+        this.studentId = studentId;
+        this.subjectId = subjectId;
+        this.termId = termId;
+        this.date = date;
+        this.autoSubmit = autoSubmit;
     }
 }

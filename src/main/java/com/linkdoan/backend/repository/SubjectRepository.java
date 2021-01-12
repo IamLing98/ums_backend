@@ -34,9 +34,8 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
 //    )
 //    List<EducationProgramSubjectDTO> findAllByYearClassId(@Param("yearClassId") String Id);
 
-    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName, subject.eachSubject, " +
-            "subject.theoryNumber, subject.exerciseNumber, subject.discussNumber, subject.selfLearningNumber, subject.practiceNumber, subject.subjectForLevel) " +
-            "FROM Subject  subject inner join  EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
+    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName )  FROM Subject  subject " +
+            "inner join  EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
             "inner join  EducationProgram educationProgram on educationProgramSubject.educationProgramId = educationProgram.educationProgramId " +
             "WHERE educationProgram.educationProgramId = :educationProgramId and  educationProgramSubject.term = :term ")
     List<SubjectDTO> findAllByEducationProgramIdAndTerm(@Param("educationProgramId") String educationProgramId, @Param("term") Integer term);

@@ -1,5 +1,6 @@
 package com.linkdoan.backend.model;
 
+import com.linkdoan.backend.dto.RoomDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,11 +9,6 @@ import javax.persistence.*;
 @Table(name="room")
 @Data
 public class Room {
-
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
-    )
     @Id
     @Column (name="room_id", columnDefinition = "CHAR(10)")
     private String roomId;
@@ -23,4 +19,11 @@ public class Room {
     @Column (columnDefinition = "INT")
     private  Integer isLab;
 
+    public RoomDTO toDTO(){
+        RoomDTO room = new RoomDTO();
+        room.setIsLab(this.isLab);
+        room.setNumberOfSeats(this.numberOfSeats);
+        room.setRoomId(this.roomId);
+        return room;
+    }
 }
