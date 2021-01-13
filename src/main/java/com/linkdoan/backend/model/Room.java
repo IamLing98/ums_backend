@@ -3,7 +3,10 @@ package com.linkdoan.backend.model;
 import com.linkdoan.backend.dto.RoomDTO;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="room")

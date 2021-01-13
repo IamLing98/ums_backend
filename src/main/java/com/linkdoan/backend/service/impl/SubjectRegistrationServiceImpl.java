@@ -47,6 +47,7 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
         List<Object[]> predictSubjectSubmit = subjectRegistrationRepository.getPredictTotalSubmit(termId);
         List<Object[]> currentSubjectSubmit = subjectRegistrationRepository.getCurrentTotalSubmit(termId);
         List<Object[]> autoSubjectSubmit = subjectRegistrationRepository.getTotalAutoSubmit(termId);
+        List<Object[]> totalSubjectClassOpened = subjectRegistrationRepository.getTotalClassWithSubject(termId);
         List<Map<String, Object>> rs = new ArrayList<>();
         if (predictSubjectSubmit != null && !predictSubjectSubmit.isEmpty()) {
             for (Object[] object : predictSubjectSubmit) {
@@ -78,6 +79,16 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
                         detail.put("autoSubmit", 0);
                     }
                 }else detail.put("autoSubmit", 0);
+                if(totalSubjectClassOpened != null && !totalSubjectClassOpened.isEmpty()){
+                    Object[] subjectClassObject = totalSubjectClassOpened.stream().filter(entry -> entry[0].toString().equals(object[0].toString())).findFirst().orElse(null);
+                    if(subjectClassObject != null){
+                        detail.put("totalSubjectClassOpened", subjectClassObject[2]);
+                    }
+                    else{
+                        detail.put("totalSubjectClassOpened", 0);
+                    }
+                }else detail.put("totalSubjectClassOpened", 0);
+
                 rs.add(detail);
             }
         }

@@ -1,6 +1,5 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.base.dto.SystemDTO;
 import com.linkdoan.backend.model.Employee;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
-public class EmployeeDTO extends SystemDTO {
+public class EmployeeDTO  {
 
     private String employeeId;
 

@@ -38,6 +38,12 @@ public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegi
             "where subjectRegistration.termId = :termId and subjectRegistration.autoSubmit = 1 group by subject.subjectId ")
     List<Object[]> getTotalAutoSubmit(@Param("termId") String termId);
 
+    @Query(value = "SELECT  subject.subjectId, subject.subjectName, count(subject.subjectId) FROM Subject subject " +
+            "inner join SubjectClass subjectClass on subject.subjectId = subjectClass.subjectId " +
+            "where subjectClass.termId = :termId   group by subject.subjectId ")
+    List<Object[]> getTotalClassWithSubject(@Param("termId") String termId);
+
+
     SubjectRegistration findFirstByStudentIdAndSubjectIdAndTermId(String studentId, String subjectId, String termId);
 
     Long deleteByStudentIdAndSubjectIdAndTermId(String studentId, String subjectId, String termId);

@@ -1,0 +1,289 @@
+
+#prof
+	id = ID000
+	name = Aleida Goforth
+#end
+
+#prof
+	id = ID001
+	name = Patrick Perales
+#end
+
+#prof
+	id = ID002
+	name = Felipe Franco
+#end
+
+#prof
+	id = ID003
+	name = Eric Gerald
+#end
+
+#prof
+	id = ID004
+	name = Clay Abrams
+#end
+
+#prof
+	id = ID005
+	name = Morris Moen
+#end
+
+#prof
+	id = ID006
+	name = Leonardo Archuleta
+#end
+
+#prof
+	id = ID007
+	name = Jimmy Dexter
+#end
+
+#prof
+	id = ID008
+	name = Leigh Amato
+#end
+
+#prof
+	id = ID009
+	name = Silvana Hoffmann
+#end
+
+#course
+	id = 0000104
+	name = Triết học Mác-Lêninnn
+#end
+
+#course
+	id = 0000106
+	name = Chủ nghĩa xã hội khoa học
+#end
+
+#course
+	id = 0000104
+	name = Triết học Mác-Lêninnn
+#end
+
+#course
+	id = 0000106
+	name = Chủ nghĩa xã hội khoa học
+#end
+
+#course
+	id = 0000107
+	name = Lịch sử Đảng cộng sản Việt Nam
+#end
+
+#course
+	id = 0000515
+	name = Pháp luật đại cương
+#end
+
+#course
+	id = 0000701
+	name = Tiếng Anh cơ bản (GE 1)
+#end
+
+#course
+	id = 0221001
+	name = Phương pháp nghiên cứu khoa học
+#end
+
+#course
+	id = 0000104
+	name = Triết học Mác-Lêninnn
+#end
+
+#course
+	id = 0000106
+	name = Chủ nghĩa xã hội khoa học
+#end
+
+#course
+	id = 0000107
+	name = Lịch sử Đảng cộng sản Việt Nam
+#end
+
+#course
+	id = 0000515
+	name = Pháp luật đại cương
+#end
+
+#course
+	id = 0000701
+	name = Tiếng Anh cơ bản (GE 1)
+#end
+
+#course
+	id = 0221001
+	name = Phương pháp nghiên cứu khoa học
+#end
+
+#course
+	id = 0221801
+	name = Nhập môn công nghệ thông tin 
+#end
+
+#room
+	name = 101
+	lab = true
+	size = 30
+	distance = 0
+#end
+
+#room
+	name = 102
+	lab = true
+	size = 30
+	distance = 0
+#end
+
+#room
+	name = 103
+	lab = false
+	size = 60
+	distance = 0
+#end
+
+#room
+	name = 104
+	lab = false
+	size = 90
+	distance = 0
+#end
+
+#room
+	name = 105
+	lab = false
+	size = 90
+	distance = 0
+#end
+
+#group
+	id = 1
+	name = no name
+	size = 68
+#end
+
+#group
+	id = 2
+	name = no name
+	size = 55
+#end
+
+#group
+	id = 3
+	name = no name
+	size = 55
+#end
+
+#group
+	id = 4
+	name = no name
+	size = 46
+#end
+
+#group
+	id = 5
+	name = no name
+	size = 46
+#end
+
+#group
+	id = 6
+	name = no name
+	size = 66
+#end
+
+#group
+	id = 7
+	name = no name
+	size = 66
+#end
+
+#group
+	id = 8
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 9
+	name = no name
+	size = 30
+#end
+
+#class
+	id = 1
+	professor = ID000
+	course = 0000104
+	duration = 3
+	group = 1
+#end
+
+#class
+	id = 2
+	professor = ID002
+	course = 0000106
+	duration = 2
+	group = 2
+#end
+
+#class
+	id = 3
+	professor = ID003
+	course = 0000106
+	duration = 2
+	group = 3
+#end
+
+#class
+	id = 4
+	professor = ID005
+	course = 0000515
+	duration = 2
+	group = 4
+#end
+
+#class
+	id = 5
+	professor = ID009
+	course = 0000515
+	duration = 2
+	group = 5
+#end
+
+#class
+	id = 6
+	professor = ID009
+	course = 0000701
+	duration = 3
+	group = 6
+#end
+
+#class
+	id = 7
+	professor = ID019
+	course = 0000701
+	duration = 3
+	group = 7
+#end
+
+#class
+	id = 8
+	professor = ID025
+	course = 0221001
+	duration = 2
+	group = 8
+	lab = true
+#end
+
+#class
+	id = 9
+	professor = ID029
+	course = 0221801
+	duration = 3
+	group = 9
+	lab = true
+#end
+

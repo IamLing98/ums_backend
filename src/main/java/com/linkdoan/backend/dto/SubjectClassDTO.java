@@ -3,8 +3,6 @@ package com.linkdoan.backend.dto;
 import com.linkdoan.backend.model.SubjectClass;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Data
@@ -23,6 +21,8 @@ public class SubjectClassDTO {
 
     private LocalDate createdDate;
 
+    private int duration;
+
     public SubjectClass toModel(){
         SubjectClass sj = new SubjectClass();
         sj.setSubjectClassId(this.subjectClassId);
@@ -31,6 +31,22 @@ public class SubjectClassDTO {
         sj.setNumberOfSeats(this.numberOfSeats);
         sj.setIsRequireLab(this.isRequireLab);
         sj.setCreatedDate(this.createdDate);
+        sj.setSubjectId(this.subjectId);
         return sj;
+    }
+
+    public SubjectClassDTO( ) {
+    }
+
+    public SubjectClassDTO(String subjectClassId, String subjectId, String termId, String teacherId, Integer numberOfSeats,
+                           Integer isRequireLab, LocalDate createdDate, int duration) {
+        this.subjectClassId = subjectClassId;
+        this.subjectId = subjectId;
+        this.termId = termId;
+        this.teacherId = teacherId;
+        this.numberOfSeats = numberOfSeats;
+        this.isRequireLab = isRequireLab;
+        this.createdDate = createdDate;
+        this.duration = duration;
     }
 }

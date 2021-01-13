@@ -3,9 +3,9 @@ package com.linkdoan.backend.service;
 import com.linkdoan.backend.dto.EmployeeDTO;
 import com.linkdoan.backend.model.Employee;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.domain.Page;
 
 import java.io.IOException;
+import java.util.List;
 
 @ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface EmployeeService {
@@ -15,5 +15,5 @@ public interface EmployeeService {
 
     int deleteEmployee(EmployeeDTO employeeDTO) throws IOException;
 
-    Page findBy(String employeeId, String departmentId, Integer type, Integer page, Integer pageSize) throws IOException;
+    List<EmployeeDTO> findBy(String employeeId, String departmentId, Integer type) throws IOException;
 }

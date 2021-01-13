@@ -1,15 +1,11 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.RoomDTO;
-import com.linkdoan.backend.dto.TermDTO;
-import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 public class RoomController {

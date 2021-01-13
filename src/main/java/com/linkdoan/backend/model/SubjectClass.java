@@ -3,7 +3,10 @@ package com.linkdoan.backend.model;
 import com.linkdoan.backend.dto.SubjectClassDTO;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Table(name="subject_class")
@@ -42,4 +45,5 @@ public class SubjectClass {
         sj.setCreatedDate(this.createdDate);
         return sj;
     }
+
 }

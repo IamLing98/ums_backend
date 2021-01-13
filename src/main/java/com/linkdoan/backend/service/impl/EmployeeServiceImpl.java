@@ -7,13 +7,11 @@ import com.linkdoan.backend.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import java.io.IOException;
+import java.util.List;
 
 @Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -40,11 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<EmployeeDTO> findBy(String employeeId, String departmentId, Integer type, Integer page, Integer pageSize) {
-        logger.info("start");
-        if (page == null) page = 0;
-        if (pageSize == null) pageSize = 999999;
-        Pageable pageable = PageRequest.of(page, pageSize);
-        return employeeRepository.findBy(employeeId, departmentId, type, pageable);
+    public List<EmployeeDTO> findBy(String employeeId, String departmentId, Integer type) {
+        return employeeRepository.getAll(employeeId, departmentId, type);
     }
 }
