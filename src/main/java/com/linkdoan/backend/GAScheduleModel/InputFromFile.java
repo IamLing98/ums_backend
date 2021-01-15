@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
 public class InputFromFile {
 
     private static Scanner sc;
@@ -33,7 +34,6 @@ public class InputFromFile {
     public static ArrayList<Room> getRoomList() {
         return roomList;
     }
-
 
 
     public static Room getRoomById(int id) {
@@ -164,7 +164,7 @@ public class InputFromFile {
                     }
                     break;
                 case "course":
-                    String idCourse =  attr.get(2);
+                    String idCourse = attr.get(2);
                     for (Course i : courseList) {
                         if (i.getId().equals(idCourse)) {
                             tempCourse = i;
@@ -186,7 +186,7 @@ public class InputFromFile {
             }
 
         }
-        classList.add(new CourseClass(id,tempProf, tempCourse, tempGroups, requiresLab, duration));
+        classList.add(new CourseClass(id, tempProf, tempCourse, tempGroups, requiresLab, duration));
     }
 
     private static void readRoom() {
@@ -218,7 +218,7 @@ public class InputFromFile {
             }
         }
 
-        roomList.add(new Room(temp_name,temp_lab,temp_size,temp_distance) );
+        roomList.add(new Room(temp_name, temp_lab, temp_size, temp_distance));
     }
 
     public static void readFile() throws FileNotFoundException {

@@ -2,132 +2,186 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.GAScheduleModel.CourseClass;
 import com.linkdoan.backend.GAScheduleModel.GA;
-import com.linkdoan.backend.GAScheduleModel.Room;
+import com.linkdoan.backend.GAScheduleModel.InputFromFile;
 import com.linkdoan.backend.GAScheduleModel.Schedule;
+import com.linkdoan.backend.View.ViewExcel;
+import com.linkdoan.backend.dto.SubjectClassDTO;
+import com.linkdoan.backend.dto.SubjectDTO;
+import com.linkdoan.backend.model.Employee;
+import com.linkdoan.backend.model.Room;
+import com.linkdoan.backend.repository.EmployeeRepository;
 import com.linkdoan.backend.repository.RoomRepository;
+import com.linkdoan.backend.repository.SubjectClassRepository;
+import com.linkdoan.backend.repository.SubjectRepository;
 import com.linkdoan.backend.service.ScheduleService;
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
-import jxl.write.biff.RowsExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
+    SubjectClassRepository subjectClassRepository;
+
+    private static GA ga;
+    private static final int DAY_HOURS = 10;
+    private static final int DAY_NUM = 5;
+    private static int ROOM_NUM;
+
+    public static int getDAY_HOURS() {
+        return DAY_HOURS;
+    }
+
+    public static int getROOM_NUM() {
+        return ROOM_NUM;
+    }
+
+    public static int getDAY_NUM() {
+        return DAY_NUM;
+    }
+
+    public static GA getGA() {
+        return ga;
+    }
+
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Qualifier("subjectRepository")
+    @Autowired
+    SubjectRepository subjectRepository;
+
+    @Autowired
     RoomRepository roomRepository;
 
-    GA ga;
-
-    Schedule schedule;
-    private static final int DAY_HOURS = 12;
-    private static final int ROOM_NUM = 5;
-    private final String fileName = "Schedule.xls";
-
-    // data to write file
-    private Object[][] data = {
-            {"ROOM : ", "MON", "TUE", "WED", "THU", "FRI"},
-            {"07h00 - 07h50", null, null, null, null, null},
-            {"07h55 - 08h45", null, null, null, null, null},
-            {"08h55 - 09h45", null, null, null, null, null},
-            {"09h50 - 10h40", null, null, null, null, null},
-            {"10h50 - 11h40", null, null, null, null, null},
-            {"12h30 - 13h20", null, null, null, null, null},
-            {"13h25 - 14h15", null, null, null, null, null},
-            {"14h25 - 15h15", null, null, null, null, null},
-            {"15h20 - 16h20", null, null, null, null, null},
-            {"16h30 - 17h20", null, null, null, null, null}
-    };
-
-    private String showLesson(int i) {
-        StringBuilder s = new StringBuilder();
-        if (schedule.getSlots().get(i).size() > 0) {
-            for (CourseClass cc : schedule.getSlots().get(i)) {
-                s.append(cc.getId()).append("\n");
-                s.append(cc.getCourse().getName()).append("\n");
-                s.append(cc.getProfessor().getName()).append("\n");
-                if (cc.isLabRequired()) {
-                    s.append("lab\n");
-                }
-                s.append(cc.getNumberOfSeats());
-            }
-        }
-        return s.toString();
-    }
-
-    @SuppressWarnings("empty-statement")
-    private void loadTableByRoom(int i, List<Room> roomList) {
-        data = new Object[][]{{"ROOM : " + roomList.get(i).getName() + "\n" + (roomList.get(i).isLab() ? "lab\n" : "\n") + roomList.get(i).getNumberOfSeats(), "MON", "TUE", "WED", "THU", "FRI"},
-                {"07h00 - 07h50", showLesson(i * DAY_HOURS + 0), showLesson(i * DAY_HOURS + 0 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 0 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 0 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 0 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"07h55 - 08h45", showLesson(i * DAY_HOURS + 1), showLesson(i * DAY_HOURS + 1 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 1 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 1 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 1 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"08h55 - 09h45", showLesson(i * DAY_HOURS + 2), showLesson(i * DAY_HOURS + 2 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 2 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 2 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 2 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"09h50 - 10h40", showLesson(i * DAY_HOURS + 3), showLesson(i * DAY_HOURS + 3 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 3 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 3 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 3 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"10h50 - 11h40", showLesson(i * DAY_HOURS + 5), showLesson(i * DAY_HOURS + 5 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 5 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 5 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 5 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"12h30 - 13h20", showLesson(i * DAY_HOURS + 6), showLesson(i * DAY_HOURS + 6 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 6 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 6 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 6 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"13h25 - 14h15", showLesson(i * DAY_HOURS + 7), showLesson(i * DAY_HOURS + 7 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 7 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 7 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 7 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"14h25 - 15h15", showLesson(i * DAY_HOURS + 8), showLesson(i * DAY_HOURS + 8 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 8 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 8 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 8 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"15h20 - 16h20", showLesson(i * DAY_HOURS + 9), showLesson(i * DAY_HOURS + 9 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 9 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 9 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 9 + 4 * DAY_HOURS * ROOM_NUM)},
-                {"16h30 - 17h20", showLesson(i * DAY_HOURS + 10), showLesson(i * DAY_HOURS + 10 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 10 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 10 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 10 + 4 * DAY_HOURS * ROOM_NUM)},
-        };
-    }
-
-    public void writeFileExcel(List<Room> roomList) {
-        WritableWorkbook workbook;
-        // create workbook
-        try {
-            workbook = Workbook.createWorkbook(new File(fileName));
-
-            // create sheet
-            WritableSheet sheet1 = workbook.createSheet("AI-Genetic Algorithm", 0);
-
-            // create Label and add to sheet
-            sheet1.addCell(new Label(0, 0, "Making a Class Schedule Using a Genetic Algorithm "));
-
-            // row begin write data
-            int rowBegin = 2;
-            int colBegin = 0;
-
-            for (int x = 0; x < ROOM_NUM; x++) {
-                loadTableByRoom(x, roomList);
-                for (int row = rowBegin, i = 0; row < data.length + rowBegin; row++, i++) {
-                    for (int col = colBegin, j = 0; col < data[0].length + colBegin; col++, j++) {
-                        sheet1.addCell(new Label(col, row, (String) data[i][j]));
-                    }
-                }
-                colBegin += data[0].length + 1;
-            }
-            // write file
-            workbook.write();
-
-            // close
-            workbook.close();
-            System.out.println("create and write success");
-            JOptionPane.showMessageDialog(null, "Export Success!");
-        } catch (IOException e) {
-            System.out.println("Error create file\n" + e.toString());
-            JOptionPane.showMessageDialog(null, "Error create file!", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (RowsExceededException e) {
-            System.out.println("Error write file\n" + e.toString());
-            JOptionPane.showMessageDialog(null, "Error write file!", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (WriteException e) {
-            System.out.println("Error write file\n" + e.toString());
-            JOptionPane.showMessageDialog(null, "Error write file!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
     @Override
-    public int create() {
+    public String initData() throws Exception {
+        try {
+            OutputStreamWriter writer = new OutputStreamWriter(
+                    new FileOutputStream("src//main//java//com//linkdoan//backend//GAScheduleModel//ax.txt"), "UTF-8");
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            List<Employee> employeeList = employeeRepository.findAll();
+            bufferedWriter.newLine();
+            for (int i = 0; i < employeeList.size(); i++) {
+                bufferedWriter.write("#prof");
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "id = " + employeeList.get(i).getEmployeeId());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "name = " + employeeList.get(i).getFullName());
+                bufferedWriter.newLine();
+                bufferedWriter.write("#end");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+            }
 
-        return 1;
+            List<SubjectDTO> subjectDTOList = subjectRepository.getAllSubject();
+            for (int i = 0; i < subjectDTOList.size(); i++) {
+                bufferedWriter.write("#course");
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "id = " + subjectDTOList.get(i).getSubjectId());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "name = " + subjectDTOList.get(i).getSubjectName());
+                bufferedWriter.newLine();
+                bufferedWriter.write("#end");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+            }
+
+            List<com.linkdoan.backend.model.Room> roomList = roomRepository.findAll();
+            for (int i = 0; i < roomList.size(); i++) {
+                Room room = roomList.get(i);
+                bufferedWriter.write("#room");
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "name = " + room.getRoomId());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "lab = " + (room.getIsLab() == 1 ? "true" : "false"));
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "size = " + room.getNumberOfSeats());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "distance = " + 0);
+                bufferedWriter.newLine();
+                bufferedWriter.write("#end");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+            }
+
+            List<SubjectClassDTO> subjectClassList = subjectClassRepository.getListSubjectClassByTermId("20202");
+            for (int i = 0; i < subjectClassList.size(); i++) {
+                SubjectClassDTO subjectClassDTO = subjectClassList.get(i);
+                bufferedWriter.write("#group");
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "id = " + (i + 1));
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "name = " + "no name");
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "size = " + subjectClassDTO.getNumberOfSeats());
+                bufferedWriter.newLine();
+                bufferedWriter.write("#end");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+            }
+
+            for (int i = 0; i < subjectClassList.size(); i++) {
+                SubjectClassDTO subjectClassDTO = subjectClassList.get(i);
+                bufferedWriter.write("#class");
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "id = " + (i + 1));
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "professor = " + subjectClassDTO.getTeacherId());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "course = " + subjectClassDTO.getSubjectId());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "duration = " + subjectClassDTO.getDuration());
+                bufferedWriter.newLine();
+                bufferedWriter.write("\t" + "group = " + (i + 1));
+                bufferedWriter.newLine();
+                if (subjectClassDTO.getIsRequireLab() == 1) {
+                    bufferedWriter.write("\t" + "lab = true");
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.write("#end");
+                bufferedWriter.newLine();
+                bufferedWriter.newLine();
+            }
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return create();
+
+    }
+
+    public String create() throws Exception {
+        try {
+            InputFromFile.readFile();
+        } catch (Exception ex) {
+
+        }
+        ROOM_NUM = InputFromFile.getRoomList().size();
+        System.out.println("room num" + ROOM_NUM);
+        ga = new GA(80, 10, 1, 2000);
+        System.out.println("prosss");
+        long start = System.currentTimeMillis();
+        int generation = ga.runGA();
+        long end = System.currentTimeMillis();
+        double time = (double) (end - start) / 1000;
+//
+//        lbCrossover.setText("Crossover           : " + ga.getCrossoverProbability() + " %");
+//        lbMutation.setText("Mutation              : " + ga.getMutationProbability() + " %");
+//        lbPopSize.setText("Population Size  : " + ga.getPopSize());
+//
+//        tfFitness.setText(Double.toString(ga.getBestOfBest().getFitness()));
+//        tfGeneration.setText(Integer.toString(generation));
+//        tfTime.setText(Double.toString(time));
+//        cbPhong.setEnabled(true);
+        ViewExcel excel = new ViewExcel(ga.getBestOfBest());
+        excel.writeFileExcel();
+        return excel.getFileName();
     }
 }

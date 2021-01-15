@@ -1,5 +1,5 @@
 package com.linkdoan.backend.service;
 
 public interface ScheduleService {
-    int create();
+    String initData() throws Exception;
 }

@@ -263,7 +263,7 @@
 
 #class
 	id = 7
-	professor = ID019
+	professor = ID009
 	course = 0000701
 	duration = 3
 	group = 7
@@ -271,7 +271,7 @@
 
 #class
 	id = 8
-	professor = ID025
+	professor = ID009
 	course = 0221001
 	duration = 2
 	group = 8
@@ -280,7 +280,7 @@
 
 #class
 	id = 9
-	professor = ID029
+	professor = ID009
 	course = 0221801
 	duration = 3
 	group = 9

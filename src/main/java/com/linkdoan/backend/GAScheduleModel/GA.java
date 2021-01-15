@@ -2,6 +2,7 @@ package com.linkdoan.backend.GAScheduleModel;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 public class GA {
 
     private final int crossoverProbability;    //Xac suat lai ghep
@@ -12,7 +13,7 @@ public class GA {
     private Schedule bestOfBest;         //ca the tot nhat qua cac the he
     private final ArrayList<Schedule> population;           //Quan the ban dau
     private final ArrayList<Schedule> nextPopulation;       //Quan the sau
-    private ArrayList<Double> rulet;                           //Banh xe Rulet ung vi vi tri xac suat cua tung ca the trong quan the
+    private ArrayList<Double> rulet;                           //Banh xe Rulet ung voi vi tri xac suat cua tung ca the trong quan the
 
     public GA(int crossoverProbability, int mutationProbability, double desiredFitness, int popSize) {
         this.crossoverProbability = crossoverProbability;
@@ -199,7 +200,7 @@ public class GA {
                 population.set(i, nextPopulation.get(i));
             }
             generation++;
-        } while (!((bestOfPopulation.getFitness() == desiredFitness) || generation == 10000));
+        } while (!((bestOfPopulation.getFitness() == desiredFitness) || generation == 200));
 //        while (!((bestOfPopulation.getFitness() == desiredFitness && bestOfPopulation.softConflict()==0 ) || generation == 10000));
 
         System.out.println("BestOfBest:" + bestOfBest.getFitness());

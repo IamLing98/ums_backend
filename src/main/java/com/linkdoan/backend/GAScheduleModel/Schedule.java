@@ -1,11 +1,12 @@
 package com.linkdoan.backend.GAScheduleModel;
 
-import com.linkdoan.backend.View.ViewSchedule;
+import com.linkdoan.backend.service.impl.ScheduleServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
+
 public class Schedule {
 
     private double fitness = 0;
@@ -13,13 +14,13 @@ public class Schedule {
     private final int numberOfCrossoverPoints = 5;
     private final int mutationSize = 5;
 
-    private static final int DAY_HOURS = ViewSchedule.getDAY_HOURS();
-    private static final int DAY_NUM = ViewSchedule.getDAY_NUM();
-    private static final int ROOM_NUM = ViewSchedule.getROOM_NUM();
+    private static final int DAY_HOURS = ScheduleServiceImpl.getDAY_HOURS();
+    private static final int DAY_NUM = ScheduleServiceImpl.getDAY_NUM();
+    private static final int ROOM_NUM = ScheduleServiceImpl.getROOM_NUM();
 
-    private Vector< ArrayList<CourseClass>> slots;
+    private Vector<ArrayList<CourseClass>> slots;
 
-    private Vector< Integer> classes;
+    private Vector<Integer> classes;
 
     private Vector<Boolean> criteria;
 
@@ -88,6 +89,7 @@ public class Schedule {
             }
         }
     }
+
     //---Basic init
 //    public void initializeSchedule() {
 //        ArrayList<CourseClass> listClass = InputFromMySQL.getClassList();
@@ -111,18 +113,15 @@ public class Schedule {
 //        Fitness();
 //    }
     //---Advanced init
-    //Tao ra NST ngau nhien : Cac lop xep sat nhau sao cho 1 lop chi hoc 1 phong trong pham vi 6 tiet mot
+    //Tao ra NST ngau nhien : Cac lop xep sat nhau sao cho 1 lop chi hoc 1 phong trong pham vi 5 tiet mot
     public void initializeSchedule() {
-        //Tao danh sach cac lop voi so tiet bang nhau, cac day 4 ,3 , 2 tiet
+        //Tao danh sach cac lop voi so tiet bang nhau, cac day 3 , 2 tiet
         ArrayList<CourseClass> listClass = InputFromFile.getClassList();
-        ArrayList<CourseClass> cc4 = new ArrayList();
+//        ArrayList<CourseClass> cc4 = new ArrayList();
         ArrayList<CourseClass> cc3 = new ArrayList();
         ArrayList<CourseClass> cc2 = new ArrayList();
         for (CourseClass i : listClass) {
             switch (i.getDuration()) {
-                case 4:
-                    cc4.add(i);
-                    break;
                 case 3:
                     cc3.add(i);
                     break;
@@ -133,14 +132,12 @@ public class Schedule {
         }
 
         //Xao tron cac danh sach lop hoc
-        Collections.shuffle(cc4);
         Collections.shuffle(cc3);
         Collections.shuffle(cc2);
 
-        int size4 = cc4.size();
+//        int size4 = cc4.size();
         int size3 = cc3.size();
         int size2 = cc2.size();
-
         int i = 0, j = 0, k = 0; // i,j,k la vi tri dang xet trong danh sach cac lop tren
         int next = 0;            // next la vi tri dang xet trong slots
         listClass.stream().forEach((_item) -> {
@@ -148,41 +145,27 @@ public class Schedule {
         });
         Random rd = new Random();
         //Lay ngau nhien lop tu cac danh sach tren
-        for (int x = 0; x < listClass.size();) {
+        for (int x = 0; x < listClass.size(); ) {
             switch (rd.nextInt(3) + 2) {
                 case 2:
-                    //Neu random so 2 thi kiem tra xem con lop 2 tiet khong, neu khong con thi break de random lop khac
+                    //Neu random so 2 thi kiem tra xem con lop  2 tiet khong, neu khong con thi break de random lop khac
                     if (i < size2) {
                         classes.set(listClass.indexOf(cc2.get(i++)), next);
                         next += 2;
                         x++;
-                        //Kiem tra xem con lop 4 tiet khong, neu con thi set vao ngay sau lop 2 tiet tren
-                        if (k < size4) {
-                            classes.set(listClass.indexOf(cc4.get(k++)), next);
-                            next += 4;
-                            x++;
-                            break;
-                            //Neu khong con lop 4 tiet thi kiem tra neu trong ds con 2 lop 2 tiet thi set 2 lop nay vao ngay sau lop 2 tiet ban dau
-                        } else if (i < size2 - 1) {
-                            classes.set(listClass.indexOf(cc2.get(i++)), next);
-                            next += 2;
-                            x++;
-                            classes.set(listClass.indexOf(cc2.get(i++)), next);
-                            next += 2;
-                            x++;
-                            break;
-                            //Neu ko con lop 4 tiet hay 2 lop 2 tiet thi kiem tra con lop 3 tiet khong ...
-                        } else if (j < size3) {
+                        //Kiem tra xem con lop 3 tiet khong, neu con thi set vao ngay sau lop 2 tiet tren
+                        if (j < size3) {
                             classes.set(listClass.indexOf(cc3.get(j++)), next);
-                            next += 4;
+                            next += 3;
                             x++;
                             break;
-                            //Neu cung khong thi kiem tra neu con 1 lop 2 tiet thi lai set vao ngay sau lop 2 tiet bd
-                        } else if (i < size2) {
+                        }
+                        //Neu cung khong thi kiem tra neu con 1 lop 2 tiet thi lai set vao ngay sau lop 2 tiet bd
+                        else if (i < size2) {
                             classes.set(listClass.indexOf(cc2.get(i++)), next);
-                            next += 4;
+                            next += 3;
                             x++;
-                            //Neu khong con TH nao thi break
+                            //Neu khong con TH nao thi +3 break
                         } else {
                             break;
                         }
@@ -190,32 +173,12 @@ public class Schedule {
                         break;
                     }
                 case 3:
+                    //Neu random so 3 thi kiem tra xem con lop  3 tiet khong, neu khong con thi break de random lop khac
                     if (j < size3) {
                         classes.set(listClass.indexOf(cc3.get(j++)), next);
                         next += 3;
                         x++;
-                        if (j < size3) {
-                            classes.set(listClass.indexOf(cc3.get(j++)), next);
-                            next += 3;
-                            x++;
-                            break;
-                        } else if (i < size2) {
-                            classes.set(listClass.indexOf(cc2.get(i++)), next);
-                            next += 3;
-                            x++;
-                            break;
-                        } else {
-                            next += 3;
-                            break;
-                        }
-                    } else {
-                        break;
-                    }
-                case 4:
-                    if (k < size4) {
-                        classes.set(listClass.indexOf(cc4.get(k++)), next);
-                        next += 4;
-                        x++;
+                        //Kiem tra xem con lop 2 tiet khong, neu con thi set vao ngay sau lop 3 tiet tren
                         if (i < size2) {
                             classes.set(listClass.indexOf(cc2.get(i++)), next);
                             next += 2;
@@ -228,7 +191,6 @@ public class Schedule {
                     } else {
                         break;
                     }
-
             }
         }
         //Tao vector tu HashMap
@@ -278,7 +240,6 @@ public class Schedule {
             if (criteria.get(ci + 2)) {
                 score++;
             }
-
             //Kiem tra lop co bi trung giao vien tiet nao khong (+1)
             //va bi trung nhom SV tiet nao khong (+1)
             boolean po = false, go = false;
@@ -326,33 +287,33 @@ public class Schedule {
         int daySize = DAY_HOURS * ROOM_NUM;
         ArrayList<CourseClass> classList = InputFromFile.getClassList();
         //Xet tung giao vien xem co vi pham rang buoc mem khong?
-        for(Professor pr : InputFromFile.getProfList()) {
+        for (Professor pr : InputFromFile.getProfList()) {
             ArrayList<CourseClass> class_list = pr.getCourseClasses();
-            for(int i=0; i < class_list.size()-1; i++) {
+            for (int i = 0; i < class_list.size() - 1; i++) {
 
                 int index1 = classList.indexOf(class_list.get(i));
                 int day1 = this.getClasses().get(index1) / daySize;
-                int room1 = ( this.getClasses().get(index1) % daySize ) / DAY_HOURS;
+                int room1 = (this.getClasses().get(index1) % daySize) / DAY_HOURS;
 
-                for( int j=i+1; j < class_list.size(); j++) {
+                for (int j = i + 1; j < class_list.size(); j++) {
 
                     int index2 = classList.indexOf(class_list.get(j));
                     int day2 = this.getClasses().get(index2) / daySize;
-                    int room2 = ( this.getClasses().get(index2) % daySize ) / DAY_HOURS;
+                    int room2 = (this.getClasses().get(index2) % daySize) / DAY_HOURS;
 
-                    if((day2 == day1) && ( InputFromFile.getRoomById(room1).getDistance() != InputFromFile.getRoomById(room2).getDistance())) {
-                        soft_conflict ++;
+                    if ((day2 == day1) && (InputFromFile.getRoomById(room1).getDistance() != InputFromFile.getRoomById(room2).getDistance())) {
+                        soft_conflict++;
                     }
                 }
             }
         }
         return soft_conflict;
     }
+
     public void showSchedule() {
         for (int i = 0; i < DAY_HOURS * DAY_NUM * ROOM_NUM; i++) {
             System.out.println("************" + i);
             for (CourseClass cc : slots.get(i)) {
-                System.out.println("Class:" + cc.getId());
 //                    System.out.println(cc.getProfessor().getName());
 //                    System.out.println(cc.getCourse().getName());
 //                    cc.getGroups().stream().forEach((sg) -> {
@@ -361,6 +322,7 @@ public class Schedule {
 //                    if (cc.isLabRequired()) {
 //                        System.out.println("lab");
 //                    }
+                System.out.println("Room Id:" + (i % (DAY_HOURS * DAY_NUM * ROOM_NUM)));
                 System.out.println("Duration :" + cc.getDuration());
                 System.out.println(cc.getNumberOfSeats());
                 System.out.println("##");
@@ -498,12 +460,12 @@ public class Schedule {
             int dur = cc1.getDuration();
             int day = rd.nextInt(DAY_NUM);
             int room = rd.nextInt(ROOM_NUM);
-            int time = rd.nextInt(DAY_HOURS/2 + 1 - dur);
+            int time = rd.nextInt(DAY_HOURS / 2 + 1 - dur);
             switch (rd.nextInt(2)) {
-                case 0 :
+                case 0:
                     break;
                 case 1:
-                    time += DAY_HOURS/2;
+                    time += DAY_HOURS / 2;
                     break;
             }
             int pos = day * ROOM_NUM * DAY_HOURS + room * DAY_HOURS + time;
