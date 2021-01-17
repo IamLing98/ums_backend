@@ -35,18 +35,18 @@ public class EducationProgramController {
     }
 
     @RequestMapping(value="/education-programs",method = RequestMethod.POST)
-    public ResponseEntity<?> create(@Valid @ModelAttribute EducationProgramDTO educationProgramDTO) throws Exception {
-        return new ResponseEntity<>(educationProgramServiceImpl.createNewEducationProgram(educationProgramDTO), HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestBody EducationProgramDTO educationProgramDTO) throws Exception {
+        return new ResponseEntity<>(educationProgramServiceImpl.create(educationProgramDTO), HttpStatus.OK);
     }
 
     @PutMapping(value="/education-programs/{id}")
-    public ResponseEntity<?> update (@PathVariable("id") String id, @Valid  @ModelAttribute EducationProgramDTO educationProgramDTO) throws Exception {
-        return new ResponseEntity<>(educationProgramServiceImpl.updateEducationProgram(educationProgramDTO), HttpStatus.OK);
+    public ResponseEntity<?> update (@PathVariable("id") String id,  @RequestBody EducationProgramDTO educationProgramDTO) throws Exception {
+        return new ResponseEntity<>(educationProgramServiceImpl.update(id,educationProgramDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value="/education-program/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@RequestBody List<EducationProgramDTO> educationProgramDTOList) throws Exception {
-        if (educationProgramServiceImpl.delete(educationProgramDTOList) == false)
+    public ResponseEntity<?> delete(@PathVariable String id) throws Exception {
+        if (educationProgramServiceImpl.delete(id) == false)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(HttpStatus.OK);

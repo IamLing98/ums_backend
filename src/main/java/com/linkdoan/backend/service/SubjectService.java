@@ -1,22 +1,24 @@
 package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.SubjectDTO;
+import com.linkdoan.backend.model.Subject;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 @ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 
 public interface SubjectService {
     Page findBy(Pageable pageable, SubjectDTO subjectDTO);
 
-    SubjectDTO create(SubjectDTO subjectDTO);
+    List<Map<String, Object>> getAll();
 
-    SubjectDTO update(SubjectDTO subjectDTO);
+    int create(List<SubjectDTO>  subjectDTO);
 
-    boolean delete(List<SubjectDTO> subjectDTOList);
+    Subject update(String id, SubjectDTO subjectDTO);
 
-    List<SubjectDTO> getAll(Integer page, Integer pageSize, String subjectId, String subjectName, String educationProgramId);
+    int delete(List<String> subjectDTOList);
 }

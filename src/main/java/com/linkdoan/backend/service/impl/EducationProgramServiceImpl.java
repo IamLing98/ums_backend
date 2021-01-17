@@ -44,30 +44,28 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     }
 
     @Override
-    public EducationProgramDTO createNewEducationProgram(EducationProgramDTO educationProgramDTO) {
-        if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).get() != null)
-            throw new EntityExistsException("Đã tồn tại");
+    public EducationProgramDTO create(EducationProgramDTO educationProgramDTO) {
+        if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).isPresent())
+            throw new  ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại!!!");
         EducationProgram educationProgram = educationProgramDTO.toModel();
         educationProgram.setEducationProgramStatus(2);
         return educationProgramRepository.save(educationProgram).toDTO();
     }
 
     @Override
-    public EducationProgramDTO updateEducationProgram(EducationProgramDTO educationProgramDTO) {
+    public EducationProgramDTO update(String id, EducationProgramDTO educationProgramDTO) {
+        if (!educationProgramRepository.findById(id).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
         EducationProgram educationProgram = educationProgramDTO.toModel();
         educationProgram.setEducationProgramStatus(2);
         return educationProgramRepository.save(educationProgram).toDTO();
     }
 
     @Override
-    public boolean delete(List<EducationProgramDTO> educationProgramDTOList) {
-        for (int i = 0; i < educationProgramDTOList.size(); i++) {
-            EducationProgramDTO educationProgramDTO = educationProgramDTOList.get(i);
-            if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).get() != null) {
-                educationProgramRepository.delete(educationProgramDTO.toModel());
-
-            } else throw new EntityNotFoundException("Khong tim thay");
-        }
+    public boolean delete(String id) {
+        if (!educationProgramRepository.findById(id).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        educationProgramRepository.deleteById(id);
         return true;
     }
 

@@ -17,7 +17,7 @@ public class DepartmentController {
     @Autowired
     private DepartmentServiceImpl departmentService;
 
-    @RequestMapping(value = "/department/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@RequestParam(name = "departmentId", required = false) String departmentId) throws Exception {
         List<DepartmentDTO> rs = departmentService.getAllDepartment(departmentId);
         return new ResponseEntity<>(rs, HttpStatus.OK);

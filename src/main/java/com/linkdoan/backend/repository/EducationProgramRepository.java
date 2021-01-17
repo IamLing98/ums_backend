@@ -27,4 +27,6 @@ public interface EducationProgramRepository extends JpaRepository<EducationProgr
             "WHERE (:branchId is null or :branchId = '' or ep.branchId = :branchId) and (:educationProgramId is null or :educationProgramId ='' or ep.educationProgramId = :educationProgramId) "
     )
     List<EducationProgramDTO> findAll(@Param("branchId") String branchId, @Param("educationProgramId") String educationProgramId );
+
+
 }

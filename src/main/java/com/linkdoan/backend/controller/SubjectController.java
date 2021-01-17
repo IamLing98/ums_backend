@@ -1,10 +1,12 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.SubjectDTO;
+import com.linkdoan.backend.service.SubjectService;
 import com.linkdoan.backend.service.impl.SubjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,7 @@ import java.util.List;
 @RestController
 public class SubjectController {
     @Autowired
-    SubjectServiceImpl subjectService;
+    SubjectService subjectService;
 
     @RequestMapping(value = "/subject/findBy", method = RequestMethod.POST)
     public ResponseEntity<?> findBy(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
@@ -30,24 +32,21 @@ public class SubjectController {
                                     @RequestParam(name = "subjectName", required = false) String subjectName,
                                     @RequestParam(name = "educationProgramId", required = false) String educationProgramId
                                                                                     ) throws Exception {
-        return new ResponseEntity<>(subjectService.getAll(page, pageSize, subjectId, subjectName, educationProgramId), HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subject/create", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@Valid @ModelAttribute SubjectDTO subjectDTO) throws Exception {
-        return new ResponseEntity<>(subjectService.create(subjectDTO), HttpStatus.OK);
+    @RequestMapping(value = "/subjects", method = RequestMethod.POST)
+    public ResponseEntity<?> create( @RequestBody List<SubjectDTO> subjectDTOList) throws Exception {
+        return new ResponseEntity<>(subjectService.create(subjectDTOList), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subject/update", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@Valid @RequestBody SubjectDTO subjectDTO) throws Exception {
-        return new ResponseEntity<>(subjectService.update(subjectDTO), HttpStatus.OK);
+    @RequestMapping(value = "/subjects/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@Param("id") String id, @RequestBody SubjectDTO subjectDTO) throws Exception {
+        return new ResponseEntity<>(subjectService.update(  id,  subjectDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subject/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> delete(@RequestBody List<SubjectDTO> subjectDTOList) throws Exception {
-        if (subjectService.delete(subjectDTOList) == false)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else
-            return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(value = "/subjects", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete( @RequestParam("ids") List<String> ids) throws Exception {
+        return new ResponseEntity<>(subjectService.delete(ids), HttpStatus.OK);
     }
 }

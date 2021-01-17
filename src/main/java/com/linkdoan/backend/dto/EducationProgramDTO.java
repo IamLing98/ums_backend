@@ -39,6 +39,7 @@ public class EducationProgramDTO {
         educationProgram.setEducationProgramName(this.educationProgramName);
         educationProgram.setEducationProgramType(this.educationProgramType);
         educationProgram.setEducationProgramStatus(this.educationProgramStatus);
+        educationProgram.setTotalTerm(this.totalTerm);
         return educationProgram;
     }
 

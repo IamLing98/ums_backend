@@ -2,10 +2,7 @@ package com.linkdoan.backend.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -13,7 +10,9 @@ import javax.persistence.Table;
 public class PrerequisitesSubject {
 
     @Id
-    @Column(unique = true)
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "PrerequisitesSubject_Sequence")
+    @SequenceGenerator(name = "id_Sequence", sequenceName = "ORACLE_DB_SEQ_ID")
     private Long id;
 
     @Column(name="subject_id", columnDefinition = "VARCHAR(9)")

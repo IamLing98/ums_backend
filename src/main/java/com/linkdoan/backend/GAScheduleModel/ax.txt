@@ -162,19 +162,19 @@
 #group
 	id = 1
 	name = no name
-	size = 68
+	size = 60
 #end
 
 #group
 	id = 2
 	name = no name
-	size = 55
+	size = 60
 #end
 
 #group
 	id = 3
 	name = no name
-	size = 55
+	size = 60
 #end
 
 #group

@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository("subjectRepository")
 public interface SubjectRepository extends JpaRepository<Subject, String> {
-    Subject findBySubjectId(String subjectId);
 
     @Query(value = "SELECT new com.linkdoan.backend.dto.EducationProgramSubjectDTO(subject.subjectId, subject.subjectName, subject.eachSubject, subject.theoryNumber," +
             "subject.exerciseNumber, subject.discussNumber, subject.selfLearningNumber, subject.practiceNumber," +
@@ -21,8 +20,6 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
             "WHERE (subject.subjectId = educationProgramSubject.subjectId AND educationProgramSubject.educationProgramId = :educationProgramId )"
     )
     List<EducationProgramSubjectDTO> findAllByEducationProgramId(@Param("educationProgramId") String Id);
-
-    Subject findFirstBySubjectId(String subjectId);
 
 //    @Query(value = "SELECT distinct new com.linkdoan.backend.dto.EducationProgramSubjectDTO(subject.subjectId, subject.subjectName, subject.eachSubject, subject.theoryNumber," +
 //            "subject.exerciseNumber, subject.discussNumber, subject.selfLearningNumber, subject.practiceNumber," +
@@ -42,6 +39,19 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
 
     @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName )  FROM Subject  subject " +
             "inner join  EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
-            "inner join  EducationProgram educationProgram on educationProgramSubject.educationProgramId = educationProgram.educationProgramId " )
+            "inner join  EducationProgram educationProgram on educationProgramSubject.educationProgramId = educationProgram.educationProgramId ")
     List<SubjectDTO> getAllSubject();
+
+    @Query(value = "SELECT  sb.subjectId, sb.subjectName  " +
+            "FROM PrerequisitesSubject ps inner join Subject sb ON ps.prerequisitesSubjectId = sb.subjectId " +
+            "WHERE ps.subjectId =:subjectId"
+    )
+    List<Object[]> getPreviousLearnSubject(@Param("subjectId") String subjectId);
+
+    @Query(value = "SELECT subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber" +
+            " ,subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
+            "subject.theoryNumber, department.departmentName " +
+            "FROM Subject subject left join Department department ON subject.departmentId = department.departmentId "
+    )
+    List<Object[]> getAll();
 }
