@@ -16,25 +16,7 @@ public class EducationProgramSubjectDTO  {
 
     private String educationProgramId;
 
-    private String subjectName;
-
-    private Integer eachSubject;
-
-    private Integer theoryNumber;
-
-    private Integer exerciseNumber;
-
-    private Integer discussNumber;
-
-    private Integer selfLearningNumber;
-
-    private Integer practiceNumber;
-
-    private Integer subjectForLevel;
-
-    private List<SubjectDTO> prerequisitesSubjects ;
-
-    private Integer transactionType = 0;
+    private Integer transactionType = 1;
 
     private Integer term = 0;
 
@@ -43,24 +25,9 @@ public class EducationProgramSubjectDTO  {
         educationProgramSubject.setTransactionType(this.transactionType);
         educationProgramSubject.setEducationProgramId(this.educationProgramId);
         educationProgramSubject.setSubjectId(this.getSubjectId());
+        educationProgramSubject.setTerm(this.term);
         return educationProgramSubject;
     }
 
-    public EducationProgramSubjectDTO(String subjectId, String subjectName, Integer eachSubject, Integer theoryNumber,
-                                      Integer exerciseNumber, Integer discussNumber, Integer selfLearningNumber, Integer practiceNumber,
-                                      Integer subjectForLevel,   Integer transactionType, Integer term) {
-        this.subjectId = subjectId;
-        this.subjectName = subjectName;
-        this.eachSubject = eachSubject;
-        this.theoryNumber = theoryNumber;
-        this.exerciseNumber = exerciseNumber;
-        this.discussNumber = discussNumber;
-        this.selfLearningNumber = selfLearningNumber;
-        this.practiceNumber = practiceNumber;
-        this.subjectForLevel = subjectForLevel;
-        this.prerequisitesSubjects = prerequisitesSubjects;
-        this.educationProgramId = educationProgramId;
-        this.transactionType = transactionType;
-        this.term = term;
-    }
+
 }

@@ -28,10 +28,9 @@ public class EducationProgramController {
         return new ResponseEntity<>(rs, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/education-programs/getAllRoles", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllRoles() throws Exception {
-        List<Role> rs = roleRepository.findAllRoles((long) 1);
-        return new ResponseEntity<>(rs, HttpStatus.OK);
+    @RequestMapping(value = "/education-programs/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getDetail(@PathVariable ("id") String educationProgramId) throws Exception {
+        return new ResponseEntity<>(educationProgramServiceImpl.getDetail(educationProgramId), HttpStatus.OK);
     }
 
     @RequestMapping(value="/education-programs",method = RequestMethod.POST)
@@ -50,16 +49,5 @@ public class EducationProgramController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
             return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping(value="/education-program/updateSubject",   consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> updateSubject(@RequestBody EducationProgramDTO educationProgramDTO ) throws Exception {
-        return new ResponseEntity<>(educationProgramServiceImpl.updateEducationProgramSubject(educationProgramDTO), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/education-program/details", method = RequestMethod.GET)
-    public ResponseEntity<?> getDetails(@RequestParam("educationProgramId") String educationProgramId) throws Exception {
-
-        return new ResponseEntity<>(educationProgramServiceImpl.getDetails(educationProgramId), HttpStatus.OK);
     }
 }

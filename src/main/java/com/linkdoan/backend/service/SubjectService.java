@@ -5,6 +5,7 @@ import com.linkdoan.backend.model.Subject;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,6 @@ public interface SubjectService {
     Subject update(String id, SubjectDTO subjectDTO);
 
     int delete(List<String> subjectDTOList);
+
+    String importFile(MultipartFile file);
 }

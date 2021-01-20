@@ -34,6 +34,9 @@ public class EducationProgram {
     @Column(name = "total_term", columnDefinition = "INT")
     private Integer totalTerm = 8;
 
+    @Column(name="department_id", columnDefinition = "char(12)")
+    private String departmentId;
+
     public EducationProgramDTO toDTO(){
         EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
         educationProgramDTO.setBranchId(this.branchId);
@@ -42,6 +45,7 @@ public class EducationProgram {
         educationProgramDTO.setEducationProgramName(this.educationProgramName);
         educationProgramDTO.setEducationProgramStatus(this.educationProgramStatus);
         educationProgramDTO.setEducationProgramType(this.educationProgramType);
+        educationProgramDTO.setDepartmentId(this.departmentId);
         return educationProgramDTO;
     }
 }

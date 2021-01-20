@@ -19,7 +19,7 @@ public class EducationProgramDTO {
 
     private Integer educationProgramLevel;
 
-    private String branchId = "";
+    private String branchId ;
 
     private Integer educationProgramType;
 
@@ -29,7 +29,11 @@ public class EducationProgramDTO {
 
     private Integer totalTerm;
 
-    private List<EducationProgramSubjectDTO> subjectList = new ArrayList<>();
+    private String departmentId;
+
+    private String departmentName;
+
+    private List<?> subjectList = new ArrayList<>();
 
     public EducationProgram toModel() {
         EducationProgram educationProgram = new EducationProgram();
@@ -40,13 +44,14 @@ public class EducationProgramDTO {
         educationProgram.setEducationProgramType(this.educationProgramType);
         educationProgram.setEducationProgramStatus(this.educationProgramStatus);
         educationProgram.setTotalTerm(this.totalTerm);
+        educationProgram.setDepartmentId(this.departmentId);
         return educationProgram;
     }
 
 
     public EducationProgramDTO(String educationProgramId, String educationProgramName, Integer educationProgramLevel,
                                String branchId, Integer educationProgramType, Integer educationProgramStatus,
-                               String branchName, Integer totalTerm) {
+                               String branchName, Integer totalTerm, String departmentId, String departmentName) {
         this.educationProgramId = educationProgramId;
         this.educationProgramName = educationProgramName;
         this.educationProgramLevel = educationProgramLevel;
@@ -55,5 +60,7 @@ public class EducationProgramDTO {
         this.educationProgramStatus = educationProgramStatus;
         this.branchName = branchName;
         this.totalTerm = totalTerm;
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
     }
 }

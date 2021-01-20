@@ -19,7 +19,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EducationProgramServiceImpl implements EducationProgramService {
@@ -38,6 +40,50 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     SubjectRepository subjectRepository;
 
     @Override
+    public EducationProgramDTO getDetail(String educationProgramId) {
+        if (!educationProgramRepository.findById(educationProgramId).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        EducationProgramDTO educationProgramDTO = educationProgramRepository.getDetail(educationProgramId);
+        //getList Subject By EP
+        List<Object[]> subjectObjectList = educationProgramRepository.getCorrectListSubjectByEp(educationProgramId);
+        List<Map<String, Object>> subjectListMap = new ArrayList<>();
+        if (!subjectObjectList.isEmpty()) {
+            for (Object[] object : subjectObjectList) {
+                Map<String, Object> subjectMap = new HashMap<>();
+                subjectMap.put("departmentId", object[0]);
+                subjectMap.put("discussNumber", object[1]);
+                subjectMap.put("eachSubject", object[2]);
+                subjectMap.put("exerciseNumber", object[3]);
+                subjectMap.put("practiceNumber", object[4]);
+                subjectMap.put("selfLearningNumber", object[5]);
+                subjectMap.put("subjectForLevel", object[6]);
+                subjectMap.put("subjectId", object[7]);
+                subjectMap.put("subjectName", object[8]);
+                subjectMap.put("theoryNumber", object[9]);
+                subjectMap.put("departmentName", object[10]);
+                subjectMap.put("term", object[11]);
+                List<Object[]> preLearnSubjectList = subjectRepository.getPreviousLearnSubject(object[7] + "");
+                if (preLearnSubjectList != null && !preLearnSubjectList.isEmpty()) {
+                    List<Map<String, Object>> preLearnList = new ArrayList<>();
+                    for (Object[] preObject : preLearnSubjectList) {
+                        Map<String, Object> preObjectMap = new HashMap<>();
+                        preObjectMap.put("subjectId", preObject[0]);
+                        preObjectMap.put("subjectName", preObject[1]);
+                        preLearnList.add(preObjectMap);
+                    }
+                    subjectMap.put("preLearnSubjectList", preLearnList);
+                } else {
+                    subjectMap.put("preLearnSubjectList", new ArrayList<>());
+                }
+                subjectListMap.add(subjectMap);
+            }
+            //set Subject List
+            educationProgramDTO.setSubjectList(subjectListMap);
+        }
+        return educationProgramDTO;
+    }
+
+    @Override
     public List<EducationProgramDTO> getAllProgram(String branchId, String educationProgramId) {
         List<EducationProgramDTO> educationProgramDTOList = educationProgramRepository.findAll(branchId, educationProgramId);
         return educationProgramDTOList;
@@ -46,7 +92,7 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     @Override
     public EducationProgramDTO create(EducationProgramDTO educationProgramDTO) {
         if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).isPresent())
-            throw new  ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại!!!");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại!!!");
         EducationProgram educationProgram = educationProgramDTO.toModel();
         educationProgram.setEducationProgramStatus(2);
         return educationProgramRepository.save(educationProgram).toDTO();
@@ -68,30 +114,5 @@ public class EducationProgramServiceImpl implements EducationProgramService {
         educationProgramRepository.deleteById(id);
         return true;
     }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public List<EducationProgramSubject> updateEducationProgramSubject(EducationProgramDTO educationProgramDTO) {
-        educationProgramSubjectRepository.deleteAllByEducationProgramId(educationProgramDTO.getEducationProgramId());
-        List<EducationProgramSubject> educationProgramSubjectList = new ArrayList<>();
-
-//        for (int i = 0; i < educationProgramDTO.getSubjectList().size(); i++) {
-//            EducationProgramSubject educationProgramSubject = educationProgramDTO.getSubjectList().get(i).toModel();
-//            educationProgramSubjectRepository.save(educationProgramSubject);
-//            educationProgramSubjectList.add(educationProgramSubject);
-//        }
-        return educationProgramSubjectList;
-    }
-
-    @Override
-    public EducationProgramDTO getDetails(String educationProgramId) {
-        if (educationProgramRepository.existsById(educationProgramId) == false)
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not Found");
-        EducationProgramDTO educationProgramDTO = educationProgramRepository.findDTOById(educationProgramId);
-        List<EducationProgramSubjectDTO> subjectDTOList = subjectRepository.findAllByEducationProgramId(educationProgramId);
-        educationProgramDTO.setSubjectList(subjectDTOList);
-        return educationProgramDTO;
-    }
-
 
 }

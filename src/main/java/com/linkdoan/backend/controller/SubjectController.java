@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -48,5 +49,10 @@ public class SubjectController {
     @RequestMapping(value = "/subjects", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete( @RequestParam("ids") List<String> ids) throws Exception {
         return new ResponseEntity<>(subjectService.delete(ids), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/subjects/importFile", method = RequestMethod.POST)
+    public ResponseEntity<?> importFile(@RequestParam("file") MultipartFile file) throws Exception {
+        return new ResponseEntity<>(subjectService.importFile(file), HttpStatus.OK);
     }
 }

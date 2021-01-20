@@ -1,11 +1,14 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.base.dto.SystemDTO;
+import com.linkdoan.backend.model.PrerequisitesSubject;
 import com.linkdoan.backend.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -33,7 +36,7 @@ public class SubjectDTO extends SystemDTO  {
 
     private String departmentId;
 
-    private List<SubjectDTO> prerequisitesSubjects ;
+    private List<String> preLearnSubjectList ;
 
     public SubjectDTO(String subjectId, String subjectName) {
         this.subjectId = subjectId;
@@ -79,5 +82,16 @@ public class SubjectDTO extends SystemDTO  {
         subject.setSubjectForLevel(this.subjectForLevel);
         subject.setDepartmentId(this.departmentId);
         return subject;
+    }
+
+    public List<PrerequisitesSubject> toPrerequisitesSubjectList(){
+        List<PrerequisitesSubject> prerequisitesSubjectList = new ArrayList<>();
+        for(String  id : this.preLearnSubjectList){
+            PrerequisitesSubject prerequisitesSubject = new PrerequisitesSubject();
+            prerequisitesSubject.setSubjectId(this.subjectId);
+            prerequisitesSubject.setPrerequisitesSubjectId(id);
+            prerequisitesSubjectList.add(prerequisitesSubject);
+        }
+        return prerequisitesSubjectList;
     }
 }

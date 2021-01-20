@@ -20,7 +20,7 @@ public class EducationProgramSubject {
     private String educationProgramId;
 
     @Column(name = "transaction_type")
-    private Integer transactionType = 0;
+    private Integer transactionType = 1;
 
     @Column(name = "term")
     private Integer term = 0;
