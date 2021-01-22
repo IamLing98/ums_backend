@@ -1,12 +1,10 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
-import com.linkdoan.backend.model.EducationProgram;
 import com.linkdoan.backend.model.EducationProgramSubject;
 import com.linkdoan.backend.repository.EducationProgramRepository;
 import com.linkdoan.backend.repository.EducationProgramSubjectRepository;
 import com.linkdoan.backend.repository.SubjectRepository;
-import com.linkdoan.backend.service.EducationProgramService;
 import com.linkdoan.backend.service.EducationProgramSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service

@@ -39,7 +39,7 @@ public class StudentsController {
         return new ResponseEntity<>(studentService.findBy(page, pageSize, studentId, startYear, classId, departmentId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/students/details/{studentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/students/{studentId}", method = RequestMethod.GET)
     public ResponseEntity<?> getDetails(@PathVariable("studentId" )String studentId) throws Exception {
         return new ResponseEntity<>(studentService.getDetails(studentId), HttpStatus.OK);
     }

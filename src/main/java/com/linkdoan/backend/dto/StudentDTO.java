@@ -1,6 +1,5 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.base.dto.SystemDTO;
 import com.linkdoan.backend.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO extends SystemDTO {
+public class StudentDTO  {
     private String studentId;
 
     private String fullName;
@@ -157,18 +156,16 @@ public class StudentDTO extends SystemDTO {
 
     }
 
-    public StudentDTO(String studentId, String fullName, Integer sex, String departmentName, String yearClassId, String yearClassName, String branchName, Integer courseNumber, Integer status, Integer startYear, Integer endYear) {
+    public StudentDTO(String studentId, String fullName, String departmentId, String departmentName, String yearClassId, String yearClassName, Integer startYear, Integer endYear, Integer courseNumber) {
         this.studentId = studentId;
         this.fullName = fullName;
-        this.sex = sex;
+        this.departmentId = departmentId;
         this.departmentName = departmentName;
         this.yearClassId = yearClassId;
         this.yearClassName = yearClassName;
-        this.branchName = branchName;
-        this.courseNumber = courseNumber;
-        this.status = status;
         this.startYear = startYear;
         this.endYear = endYear;
+        this.courseNumber = courseNumber;
     }
 
     public StudentDTO(String studentId, String yearClassId, String educationProgramId, Integer currentTerm){

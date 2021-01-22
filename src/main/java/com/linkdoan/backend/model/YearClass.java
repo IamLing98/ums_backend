@@ -7,10 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="year_class")
+@Table(name = "year_class")
 @Data
 public class YearClass {
 
@@ -22,7 +21,7 @@ public class YearClass {
     private String className;
 
     @Column(name = "total_member")
-    private Integer totalMember;
+    private Integer totalMember = 0;
 
     @Column(name = "start_year", columnDefinition = "INT")
     private Integer startYear; // date type
@@ -34,21 +33,11 @@ public class YearClass {
     @Column(name = "course_number", columnDefinition = "Int")
     private Integer courseNumber;
 
-    @Column(name = "adviser_id")
-    private String adviserId;
-
-    @Column(name = "next_val", columnDefinition = "Int")
-    private Integer nextVal;
-
-    @NotNull
-    @Column(name = "branch_id", nullable = false, columnDefinition = "CHAR(10)")
-    private String branchId;
-
     @Column(name = "education_program_level", columnDefinition = "INT")
     private Integer educationProgramLevel;
 
     @Column(name = "education_program_type", columnDefinition = "INT")
-    private Integer educationProgramType;
+    private Integer educationProgramType = 1;
 
     @Column(name = "teacher_id", columnDefinition = "CHAR(10)")
     private String teacherId;
@@ -57,15 +46,17 @@ public class YearClass {
     @Column(name = "current_term", columnDefinition = "INT")
     private Integer currentTerm = 1;
 
+    @Column(name = "department_id", columnDefinition = "CHAR(7)")
+    private String departmentId;
+
     public YearClassDTO toDTO() {
         YearClassDTO yearClassDTO = new YearClassDTO();
         yearClassDTO.setClassId(this.classId);
         yearClassDTO.setClassName(this.className);
         yearClassDTO.setTotalMember(this.totalMember);
         yearClassDTO.setStartYear(this.startYear);
-        //classYearDTO.setBranchId(this.branchId);
-        yearClassDTO.setAdviserId(this.adviserId);
         yearClassDTO.setCourseNumber(this.courseNumber);
+        yearClassDTO.setDepartmentId(this.departmentId);
         return yearClassDTO;
     }
 

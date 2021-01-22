@@ -181,6 +181,7 @@ public class Student {
         student.setMotherName(this.motherName);
         student.setMotherDateBirth(this.motherDateBirth);
         student.setMotherWork(this.motherWork);
+        student.setYearClassId(this.yearClassId);
         return student;
     }
 }

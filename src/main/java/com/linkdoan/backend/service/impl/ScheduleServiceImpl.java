@@ -1,9 +1,7 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.GAScheduleModel.CourseClass;
 import com.linkdoan.backend.GAScheduleModel.GA;
 import com.linkdoan.backend.GAScheduleModel.InputFromFile;
-import com.linkdoan.backend.GAScheduleModel.Schedule;
 import com.linkdoan.backend.View.ViewExcel;
 import com.linkdoan.backend.dto.SubjectClassDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
@@ -18,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 
 @Service

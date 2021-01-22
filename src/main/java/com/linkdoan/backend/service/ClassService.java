@@ -1,17 +1,16 @@
 package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.YearClassDTO;
-import com.linkdoan.backend.model.YearClass;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.domain.Page;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @ComponentScan(basePackages= {"com.linkdoan.backend.*"})
 public interface ClassService {
-    public Page findBy(String classId, String departmentId, Integer startYear, Integer page, Integer pageSize);
-    public YearClass createClass(YearClassDTO yearClassDTO);
-    public YearClass updateYearClass(YearClassDTO yearClassDTO);
-    public int deleteClass(YearClassDTO yearClassDTO);
-    YearClassDTO getDetails(String classId) throws IOException;
+    List<YearClassDTO> getAll();
+    List<Map<String, Object>> getDetail(String id);
+    int create(YearClassDTO yearClassDTO);
+    int update(YearClassDTO yearClassDTO);
+    int delete(String id);
 }

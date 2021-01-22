@@ -2,6 +2,7 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.dto.StudentDetailsDTO;
+import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.repository.BranchRepository;
 import com.linkdoan.backend.repository.DepartmentRepository;
 import com.linkdoan.backend.repository.StudentRepository;
@@ -11,13 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("studentService")
 public class StudentServiceImpl implements StudentService {
@@ -39,32 +38,25 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private BranchRepository branchRepository ;
+
     @Override
-    public Page<StudentDTO> findBy(Integer page, Integer pageSize, String studentId, Integer startYear, String classId, String departmentId) throws IOException {
-        if(page == null) page = 0;
-        if(pageSize == null) pageSize = 999999;
-        Pageable pageable = PageRequest.of(page, pageSize);
-        logger.info("student id " + studentId);
-        logger.info("student id " + departmentId);
-        logger.info("student id " + startYear);
+    public List<StudentDTO> findBy(Integer page, Integer pageSize, String studentId, Integer startYear, String classId, String departmentId) throws IOException {
+//        if(page == null) page = 0;
+       // Pageable pageable = Pageable.unpaged();
+//        if(pageSize == null) pageSize = 999999;
+//        Pageable pageable = PageRequest.of(page, pageSize);
         //logger.info(studentDTO.getStartYear().toString());
 //        return studentRepository.findBy(studentDTO.getKeySearch1(), studentDTO.getKeySearch2(), studentDTO.getKeySearch3(), studentDTO.getKeySearch4(), studentDTO.getKeySearch5(), pageable);
-        Page<StudentDTO> studentPage =  studentRepository.findAllBy(studentId, startYear,departmentId, pageable);
-        return studentPage;
+        List<StudentDTO> studentDTOList = studentRepository.getAllStudent();
+        return studentDTOList;
     }
 
     @Override
     public StudentDetailsDTO getDetails(String studentId) {
-        if(studentRepository.existsById(studentId) == false) throw  new EntityNotFoundException("Not Foundd");
-        StudentDetailsDTO studentDetailsDTO = studentRepository.getDetails(studentId);
-        return studentDetailsDTO;
+
+        return null;
     }
 
-    public Page findAllByClassId(String classId ) {
-        Pageable pageable = Pageable.unpaged();
-        return studentRepository.findAllByClassId(classId,   pageable);
-    }
-//
 //    @Override
 //    public Student insertStudent(StudentDTO studentDTO) throws ParseException {
 //        Student studentModel = studentDTO.toModel();

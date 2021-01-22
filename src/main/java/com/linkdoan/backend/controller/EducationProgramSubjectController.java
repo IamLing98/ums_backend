@@ -1,6 +1,5 @@
 package com.linkdoan.backend.controller;
 
-import com.linkdoan.backend.dto.EducationProgramDTO;
 import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
 import com.linkdoan.backend.service.EducationProgramSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,8 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.SubjectDTO;
-import com.linkdoan.backend.model.EducationProgramSubject;
 import com.linkdoan.backend.model.PrerequisitesSubject;
 import com.linkdoan.backend.model.Subject;
-import com.linkdoan.backend.repository.EducationProgramRepository;
 import com.linkdoan.backend.repository.EducationProgramSubjectRepository;
 import com.linkdoan.backend.repository.PrerequisitesSubjectRepository;
 import com.linkdoan.backend.repository.SubjectRepository;
@@ -19,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
