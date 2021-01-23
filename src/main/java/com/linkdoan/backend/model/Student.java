@@ -44,12 +44,12 @@ public class Student {
     private String permanentResidence;
 
     //quốc tịch
-    @Column(name = "nationality_id",columnDefinition = "INT")
-    private Integer nationalityId;
+    @Column(name = "nationality")
+    private String nationality;
 
     //dân tộc
-    @Column(name = "ethnic_id", columnDefinition = "INT")
-    private Integer ethnicId;
+    @Column(name = "ethnic" )
+    private String ethnic;
 
     //ton giao
     @Column(name = "religion", columnDefinition = "varchar(45)")
@@ -151,6 +151,8 @@ public class Student {
     @Column(name="education_program_id", columnDefinition = "CHAR(11)")
     private String educationProgramId;
 
+    @Column(name = "created_date", columnDefinition = "DATE")
+    private LocalDate createdDate;
 
     public StudentDTO toDTO(){
         StudentDTO student = new StudentDTO();
@@ -161,7 +163,7 @@ public class Student {
         student.setNickName(this.nickName);
         student.setHomeTown(this.homeTown);
         student.setPermanentResidence(this.permanentResidence);
-//        student.setEthnic(this.ethnic);
+        student.setEthnic(this.ethnic);
         student.setReligion(this.religion);
         student.setEnrollmentArea(this.enrollmentArea);
         student.setPriorityType(this.priorityType);
@@ -182,6 +184,8 @@ public class Student {
         student.setMotherDateBirth(this.motherDateBirth);
         student.setMotherWork(this.motherWork);
         student.setYearClassId(this.yearClassId);
+        student.setCreatedDate(this.createdDate);
+        student.setContactAddress(this.contactAddress);
         return student;
     }
 }

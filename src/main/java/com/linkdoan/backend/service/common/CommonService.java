@@ -12,5 +12,5 @@ public interface CommonService {
     List<CommonDTO> getDistrictByProvinceCityId(String keySearch);
     List<CommonDTO> getCommuneByDistrictId(String keySearch);
     List<CommonDTO> getAllNationality();
-    List<CommonDTO> getEthnicByNationalityId(String keySearch);
+    List<CommonDTO> getAllEthnics();
 }

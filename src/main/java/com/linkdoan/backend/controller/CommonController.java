@@ -1,5 +1,6 @@
 package com.linkdoan.backend.controller;
 
+import com.linkdoan.backend.service.common.CommonService;
 import com.linkdoan.backend.service.common.Impl.CommonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,16 +15,16 @@ public class CommonController {
 
     @Qualifier("commonService")
     @Autowired
-    CommonServiceImpl commonService;
+    CommonService commonService;
 
     @GetMapping("/country/findAll")
     public ResponseEntity getAllCountry(){
         return new ResponseEntity(commonService.getAllCountry(), HttpStatus.OK);
     }
 
-    @GetMapping("/provinceCity/findByCountry")
-    public ResponseEntity getProvinceByCountryId(@RequestParam(name="keySearch") String keySearch){
-        return new ResponseEntity(commonService.getProvinceByCountryId(keySearch), HttpStatus.OK);
+    @GetMapping("/provinceCities")
+    public ResponseEntity getProvinceByCountryId(@RequestParam(name="countryId") String countryId){
+        return new ResponseEntity(commonService.getProvinceByCountryId(countryId), HttpStatus.OK);
     }
 
     @GetMapping("/district/findByProvinceCityId")
@@ -36,9 +37,9 @@ public class CommonController {
         return new ResponseEntity(commonService.getCommuneByDistrictId(keySearch), HttpStatus.OK);
     }
 
-    @GetMapping("/ethnic/findByCountryId")
-    public ResponseEntity getEthnicByCountryId(@RequestParam(name = "keySearch") String keySearch){
-        return new ResponseEntity(commonService.getEthnicByNationalityId(keySearch), HttpStatus.OK);
+    @GetMapping("/ethnics")
+    public ResponseEntity getAllEthnics(){
+        return new ResponseEntity(commonService.getAllEthnics(), HttpStatus.OK);
     }
 
     @GetMapping("/nationality/findAll")

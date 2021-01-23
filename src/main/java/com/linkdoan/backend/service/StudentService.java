@@ -10,9 +10,13 @@ import java.util.List;
 @ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface StudentService {
 
-    StudentDTO update(StudentDTO studentDTO) throws IOException;
-
     List<StudentDTO> findBy(Integer page, Integer pageSize, String studentId, Integer startYear, String classId, String departmentId) throws IOException;
 
-    StudentDetailsDTO getDetails(String studentId);
+    StudentDTO getDetail(String studentId);
+
+    List<StudentDTO>  update(List<StudentDTO> studentDTOS) throws IOException;
+
+    int create(List<StudentDTO> studentDTOS);
+
+    int delete(List<String> ids);
 }

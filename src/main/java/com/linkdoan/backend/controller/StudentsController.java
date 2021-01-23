@@ -1,6 +1,8 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.StudentDTO;
+import com.linkdoan.backend.model.Student;
+import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,18 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 
 
 public class StudentsController {
 
-    @Resource(name = "studentService")
-    private StudentServiceImpl studentService;
-
-    public StudentServiceImpl getStudentService(StudentServiceImpl studentService) {
-        return studentService;
-    }
+    private StudentService studentService;
 
     @Autowired
     public void setStudentService(StudentServiceImpl studentService) {
@@ -41,12 +39,22 @@ public class StudentsController {
 
     @RequestMapping(value = "/students/{studentId}", method = RequestMethod.GET)
     public ResponseEntity<?> getDetails(@PathVariable("studentId" )String studentId) throws Exception {
-        return new ResponseEntity<>(studentService.getDetails(studentId), HttpStatus.OK);
+        return new ResponseEntity<>(studentService.getDetail(studentId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/students/", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@Valid @RequestBody StudentDTO studentDTO) throws Exception {
-        return new ResponseEntity<>(studentService.update(studentDTO), HttpStatus.OK);
+    @RequestMapping(value = "/students", method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestBody List<StudentDTO> studentDTOList) throws Exception {
+        return new ResponseEntity<>(studentService.create(studentDTOList), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/students" )
+    public ResponseEntity<?> update( @RequestBody List<StudentDTO> studentDTOList) throws Exception {
+        return new ResponseEntity<>(studentService.update(studentDTOList), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/students" )
+    public ResponseEntity<?> delete( @RequestParam("ids") List<String> ids) throws Exception {
+        return new ResponseEntity<>(studentService.delete(ids), HttpStatus.OK);
     }
 
 

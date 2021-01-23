@@ -23,7 +23,7 @@ public class YearClassDTO {
 
     private Integer educationProgramLevel;
 
-    private Integer educationProgramType ;
+    private Integer educationProgramType = 1 ;
 
     private String teacherId;
 
@@ -62,7 +62,17 @@ public class YearClassDTO {
 
     public YearClass toModel() {
         YearClass yearClass = new YearClass();
-        yearClass.setClassName(this.classId);
+        yearClass.setClassName(this.className);
+        yearClass.setClassId(this.classId);
+        yearClass.setDepartmentId(this.departmentId);
+        yearClass.setStartYear(this.startYear);
+        yearClass.setEndYear(this.endYear);
+        yearClass.setCourseNumber(this.courseNumber);
+        yearClass.setEducationProgramType(this.educationProgramType);
+        yearClass.setEducationProgramLevel(this.educationProgramLevel);
+        yearClass.setTeacherId(this.teacherId);
+        yearClass.setTotalMember(this.totalMember);
+        yearClass.setCurrentTerm(this.currentTerm);
         return yearClass;
     }
 

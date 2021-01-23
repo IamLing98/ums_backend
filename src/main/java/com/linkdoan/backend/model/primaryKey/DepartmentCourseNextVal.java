@@ -23,4 +23,7 @@ public class DepartmentCourseNextVal {
 
     @Column(name="next_class_value")
     private Integer nextClassValue;
+
+    @Column(name="next_student_value")
+    private Integer nextStudentValue;
 }

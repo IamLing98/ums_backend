@@ -5,10 +5,7 @@ import com.linkdoan.backend.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class YearClassController {
@@ -24,6 +21,16 @@ public class YearClassController {
     @PostMapping("/yearClasses")
     public ResponseEntity<?> create(@RequestBody YearClassDTO yearClassDTO) throws Exception {
         return new ResponseEntity<>(classService.create(yearClassDTO), HttpStatus.OK);
+    }
+
+    @PutMapping("/yearClasses")
+    public ResponseEntity<?> update(@RequestBody YearClassDTO yearClassDTO) throws Exception {
+        return new ResponseEntity<>(classService.update(yearClassDTO), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/yearClasses/{id}")
+    public ResponseEntity<?> delete(@PathVariable String id) throws Exception {
+        return new ResponseEntity<>(classService.delete(id), HttpStatus.OK);
     }
     //details
 //    @RequestMapping(value = "/yearClasses/details", method = RequestMethod.GET)

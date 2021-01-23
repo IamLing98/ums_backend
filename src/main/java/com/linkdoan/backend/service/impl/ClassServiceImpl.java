@@ -2,6 +2,7 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.YearClassDTO;
 import com.linkdoan.backend.model.Department;
+import com.linkdoan.backend.model.YearClass;
 import com.linkdoan.backend.model.primaryKey.DepartmentCourseNextVal;
 import com.linkdoan.backend.repository.DepartmentCourseNextValRepository;
 import com.linkdoan.backend.repository.DepartmentRepository;
@@ -11,10 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service("classService")
 public class ClassServiceImpl implements ClassService {
@@ -51,27 +57,47 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public int create(YearClassDTO yearClassDTO) {
-        List<Department> departmentList = departmentRepository.findAll();
-        for(Department department : departmentList){
-            int max = 2100 - department.getStartYear();
-            for(int i = 1; i < max; i++){
-                DepartmentCourseNextVal departmentCourseNextVal = new DepartmentCourseNextVal();
-                departmentCourseNextVal.setDepartmentId(department.getDepartmentId());
-                departmentCourseNextVal.setCourseNumber(i);
-                departmentCourseNextVal.setNextClassValue(0);
+        Optional<Department> departmentOptional = departmentRepository.findById(yearClassDTO.getDepartmentId());
+        if (departmentOptional.isPresent()) {
+            Department department = departmentOptional.get();
+            Integer courseNumber = yearClassDTO.getStartYear() - department.getStartYear() + 1;
+            DepartmentCourseNextVal departmentCourseNextVal = departmentCourseNextValRepository.findDistinctFirstByDepartmentIdAndAndCourseNumber(yearClassDTO.getDepartmentId(), courseNumber);
+            if (departmentCourseNextVal != null) {
+                Integer modStarYear = yearClassDTO.getStartYear() % 2000;
+                String modDepartmentId = department.getDepartmentId().substring(4, 6);
+                String classId = "5" + modStarYear + modDepartmentId + departmentCourseNextVal.getNextClassValue();
+                yearClassDTO.setClassId(classId);
+                yearClassDTO.setClassName(department.getDepartmentName());
+                yearClassDTO.setTotalMember(0);
+                yearClassDTO.setCurrentTerm(1);
+                yearClassDTO.setCourseNumber(courseNumber);
+                YearClass yearClass = yearClassDTO.toModel();
+                yearClassRepository.save(yearClass);
+                departmentCourseNextVal.setNextClassValue(departmentCourseNextVal.getNextClassValue() + 1);
                 departmentCourseNextValRepository.save(departmentCourseNextVal);
             }
-        }
-        return 0;
+        } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Không hợp lệ!!!");
+        return 1;
     }
 
     @Override
     public int update(YearClassDTO yearClassDTO) {
-        return 0;
+        Optional<YearClass> yearClassOptional = yearClassRepository.findById(yearClassDTO.getClassId());
+        if(yearClassOptional.isPresent()){
+            YearClass yearClass = yearClassDTO.toModel();
+            yearClassRepository.save(yearClass);
+            return 1;
+        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+
     }
 
     @Override
     public int delete(String id) {
-        return 0;
+        Optional<YearClass> yearClassOptional = yearClassRepository.findById(id);
+        if(yearClassOptional.isPresent()){
+            yearClassRepository.deleteById(id);
+            return 1;
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
     }
 }

@@ -4,6 +4,7 @@ import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -64,4 +65,20 @@ public interface StudentRepository extends JpaRepository<Student, String> {
             "INNER JOIN Department department ON yearClass.departmentId = department.departmentId "
     )
     List<StudentDTO> getAllStudent();
+
+    @Query(value = "SELECT new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, student.sex, student.dateBirth, " +
+            "student.nickName, student.homeTown, student.nationality, student.bornPlace, student.permanentResidence, student.ethnic, " +
+            "student.religion, student.enrollmentArea, student.priorityType, student.incentivesType, student.familyElement, student.CYUStartDate, " +
+            "student.CPStartDate, student.identityNumber, student.identityCreatedDate, student.identityCreatedPlace, student.bankNumber, student.email, " +
+            "student.phoneNumber, student.fatherName, student.fatherDateBirth, student.fatherWork, student.motherName, student.motherDateBirth, " +
+            "student.motherWork, student.contactAddress, student.note, student.avatar, yearClass.departmentId, department.departmentName, " +
+            "student.yearClassId, yearClass.className, br.branchId, br.branchName, yearClass.courseNumber, student.status, student.enrollId, " +
+            "student.admissionType, yearClass.startYear, yearClass.endYear, student.educationProgramId, yearClass.currentTerm) " +
+            "FROM Student student INNER JOIN YearClass yearClass ON student.yearClassId = yearClass.classId " +
+            "INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
+            "INNER JOIN EducationProgram ed ON student.educationProgramId = ed.educationProgramId " +
+            "INNER JOIN Branch br ON ed.branchId = br.branchId " +
+            "WHERE student.studentId = :studentId"
+    )
+    StudentDTO getDetail(@Param("studentId") String studentId);
 }

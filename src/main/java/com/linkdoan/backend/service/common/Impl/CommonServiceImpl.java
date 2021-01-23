@@ -18,7 +18,6 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     CountryRepository countryRepository;
 
-    @Qualifier("provinceRepository")
     @Autowired
     ProvinceCityRepository provinceCityRepository;
 
@@ -89,8 +88,8 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<CommonDTO> getEthnicByNationalityId(String keySearch) {
-        List<Ethnic> ethnicList = ethnicRepository.findAllByNationalityId(keySearch);;
+    public List<CommonDTO> getAllEthnics() {
+        List<Ethnic> ethnicList = ethnicRepository.findAll();;
         List<CommonDTO> commonDTOList  = new ArrayList<>();
         for(int i = 0 ; i < ethnicList.size(); i++){
             commonDTOList.add(ethnicList.get(i).toDTO());
