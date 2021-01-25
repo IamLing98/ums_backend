@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("subjectService")
 public class SubjectServiceImpl implements SubjectService {
@@ -87,8 +84,13 @@ public class SubjectServiceImpl implements SubjectService {
             if (!subjectRepository.findById(subjectDTO.getSubjectId()).isPresent()) {
                 subjectRepository.save(subjectDTO.toModel());
                 List<PrerequisitesSubject> prerequisitesSubjectList = subjectDTO.toPrerequisitesSubjectList();
+                List<PrerequisitesSubject> currentList = prerequisitesSubjectRepository.findAllBySubjectId(subjectDTO.getSubjectId());
+                for (PrerequisitesSubject prerequisitesSubject : currentList) {
+                    prerequisitesSubjectRepository.delete(prerequisitesSubject);
+                }
                 for (PrerequisitesSubject prerequisitesSubject : prerequisitesSubjectList) {
-                    if (!subjectDTO.getSubjectId().equals(prerequisitesSubject.getPrerequisitesSubjectId())) {
+                    Optional<PrerequisitesSubject> prerequisitesSubjectOptional = prerequisitesSubjectRepository.findFirstBySubjectIdAndAndPrerequisitesSubjectId(subjectDTO.getSubjectId(), prerequisitesSubject.getPrerequisitesSubjectId());
+                    if (!subjectDTO.getSubjectId().equals(prerequisitesSubject.getPrerequisitesSubjectId()) && !prerequisitesSubjectOptional.isPresent()) {
                         prerequisitesSubjectRepository.save(prerequisitesSubject);
                     }
                 }
@@ -102,9 +104,14 @@ public class SubjectServiceImpl implements SubjectService {
     public Subject update(String id, SubjectDTO subjectDTO) {
         if (!subjectRepository.findById(subjectDTO.getSubjectId()).isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        List<PrerequisitesSubject> currentList = prerequisitesSubjectRepository.findAllBySubjectId(subjectDTO.getSubjectId());
+        for (PrerequisitesSubject prerequisitesSubject : currentList) {
+            prerequisitesSubjectRepository.delete(prerequisitesSubject);
+        }
         List<PrerequisitesSubject> prerequisitesSubjectList = subjectDTO.toPrerequisitesSubjectList();
         for (PrerequisitesSubject prerequisitesSubject : prerequisitesSubjectList) {
-            if (!subjectDTO.getSubjectId().equals(prerequisitesSubject.getPrerequisitesSubjectId())) {
+            Optional<PrerequisitesSubject> prerequisitesSubjectOptional = prerequisitesSubjectRepository.findFirstBySubjectIdAndAndPrerequisitesSubjectId(subjectDTO.getSubjectId(), prerequisitesSubject.getPrerequisitesSubjectId());
+            if (!subjectDTO.getSubjectId().equals(prerequisitesSubject.getPrerequisitesSubjectId()) && !prerequisitesSubjectOptional.isPresent()) {
                 prerequisitesSubjectRepository.save(prerequisitesSubject);
             }
         }
@@ -117,6 +124,10 @@ public class SubjectServiceImpl implements SubjectService {
         int count = 0;
         for (String id : subjectDTOList) {
             if (subjectRepository.findById(id).isPresent()) {
+                List<PrerequisitesSubject> currentList = prerequisitesSubjectRepository.findAllBySubjectId(id);
+                for (PrerequisitesSubject prerequisitesSubject : currentList){
+                    prerequisitesSubjectRepository.delete(prerequisitesSubject);
+                }
                 subjectRepository.deleteById(id);
                 count++;
             }

@@ -143,6 +143,7 @@ public class InputFromFile {
         ArrayList<StudentsGroup> tempGroups = new ArrayList();
         boolean requiresLab = false;
         int duration = 0;
+        String subjectClassId = "";
         while (sc.hasNext()) {
             temp = sc.nextLine().trim();
             if (temp.equals("#end")) {
@@ -183,10 +184,13 @@ public class InputFromFile {
                         tempGroups.add(i);
                     });
                     break;
+                case "subjectClassId":
+                    subjectClassId = attr.get(2);
+                    break;
             }
 
         }
-        classList.add(new CourseClass(id, tempProf, tempCourse, tempGroups, requiresLab, duration));
+        classList.add(new CourseClass(id, tempProf, tempCourse, tempGroups, requiresLab, duration, subjectClassId));
     }
 
     private static void readRoom() {

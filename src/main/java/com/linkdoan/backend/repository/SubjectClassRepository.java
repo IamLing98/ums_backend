@@ -20,9 +20,10 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
     )
     List<Object[]> getAllByTermIdd(@Param("termId") String termId);
 
-    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectClassDTO(subjectClass.subjectClassId, subject.subjectId, subjectClass.termId," +
-            " subjectClass.teacherId, subjectClass.numberOfSeats, subjectClass.isRequireLab, subjectClass.createdDate, subject.eachSubject) " +
-            "FROM Subject subject inner join SubjectClass  subjectClass ON subject.subjectId = subjectClass.subjectId " +
+    @Query(value = "SELECT distinct new com.linkdoan.backend.dto.SubjectClassDTO(subjectClass.subjectClassId, subjectClass.subjectId, " +
+            "subjectClass.termId, subjectClass.teacherId, subjectClass.numberOfSeats, subjectClass.isRequireLab, " +
+            "subjectClass.createdDate, subjectClass.duration, subjectClass.groupId) " +
+            "FROM Subject subject INNER JOIN SubjectClass subjectClass ON subject.subjectId = subjectClass.subjectId " +
             "WHERE subjectClass.termId = :termId "
     )
     List<SubjectClassDTO> getListSubjectClassByTermId(@Param("termId") String termId);

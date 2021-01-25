@@ -21,7 +21,9 @@ public class SubjectClassDTO {
 
     private LocalDate createdDate;
 
-    private int duration;
+    private Integer duration;
+
+    private Integer groupId;
 
     public SubjectClass toModel(){
         SubjectClass sj = new SubjectClass();
@@ -39,7 +41,7 @@ public class SubjectClassDTO {
     }
 
     public SubjectClassDTO(String subjectClassId, String subjectId, String termId, String teacherId, Integer numberOfSeats,
-                           Integer isRequireLab, LocalDate createdDate, int duration) {
+                           Integer isRequireLab, LocalDate createdDate, Integer duration, Integer groupId) {
         this.subjectClassId = subjectClassId;
         this.subjectId = subjectId;
         this.termId = termId;
@@ -48,5 +50,6 @@ public class SubjectClassDTO {
         this.isRequireLab = isRequireLab;
         this.createdDate = createdDate;
         this.duration = duration;
+        this.groupId = groupId;
     }
 }

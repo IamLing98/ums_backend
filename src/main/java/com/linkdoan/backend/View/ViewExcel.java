@@ -46,29 +46,6 @@ public class ViewExcel {
 
     public ViewExcel(Schedule schedule) {
         this.schedule = schedule;
-        Vector<ArrayList<CourseClass>> slots = schedule.getSlots();
-        ArrayList<Room> roomArrayList =  InputFromFile.getRoomList();
-        for(int i = 0; i< roomArrayList.size() ;i++){
-            System.out.println("Room name: " + roomArrayList.get(i).getName());
-        }
-        for(int i = 0 ; i < 250; i++){
-            if(slots.get(i).size() > 0){
-                System.out.println("Slot: " + i + slots.get(i).get(0).getCourse().getName() + "\n");
-            }
-        }
-        for(int i = 0 ; i < 5; i++){
-            for(int j = 0 ; j < ROOM_NUM; j++){
-                for(int k = 0 ; k < 10; k++){
-                    int currentVal = i * 5 * 10 + j *10 + k;
-                    if(slots.get(currentVal).size() > 0) {
-//                        for(int s = 0 ; s < slots.get(currentVal).size() ; s++){
-                            System.out.println("Room: " + InputFromFile.getRoomList().get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
-                            System.out.println(slots.get(currentVal).get(0).getCourse().getName() + "\n");
-
-                    }
-                }
-            }
-        }
     }
 
     // create and write new file *.xls

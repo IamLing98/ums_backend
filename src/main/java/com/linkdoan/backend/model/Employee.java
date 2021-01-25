@@ -57,24 +57,15 @@ public class Employee {
 
     @Column(name = "avatar")
     private String avatar;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "department_id", nullable = true, insertable = false, updatable = false)
-//    //@JsonBackReference// quat the fackkkkk, cai nay lam treo sys dcmm
-//    @JsonIgnore
-//    private Department department;
 
     @Column(name = "department_id")
     private String departmentId;
-//
-//
-//    public String getDepartmentId() {
-//        return department.getDepartmentId();
-//    }
-//
-//    public String getDepartmentName() {
-//        return department.getDepartmentName();
-//    }
+
+    @Column(name = "office_id", columnDefinition = "CHAR(7)")
+    private String officeId;
+
+    @Column(name = "staff_level", columnDefinition = "INT")
+    private Integer staffLevel;
 
 //    public EmployeeDTO toDTO() {
 //        EmployeeDTO employeeDTO = new EmployeeDTO();

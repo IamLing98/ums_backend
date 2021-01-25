@@ -23,6 +23,13 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
             "inner join  EducationProgram educationProgram on educationProgramSubject.educationProgramId = educationProgram.educationProgramId ")
     List<SubjectDTO> getAllSubject();
 
+    //for schedule service
+    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName )  " +
+            "FROM Subject subject INNER JOIN SubjectClass subjectClass ON subject.subjectId = subjectClass.subjectId " +
+            "GROUP BY subject.subjectId"
+            )
+    List<SubjectDTO> getAllSubjectInSubjectClass();
+
     @Query(value = "SELECT  sb.subjectId, sb.subjectName  " +
             "FROM PrerequisitesSubject ps inner join Subject sb ON ps.prerequisitesSubjectId = sb.subjectId " +
             "WHERE ps.subjectId = :subjectId"

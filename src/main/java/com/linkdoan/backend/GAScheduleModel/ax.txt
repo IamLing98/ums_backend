@@ -50,38 +50,28 @@
 #end
 
 #course
-	id = 0000104
-	name = Triết học Mác-Lêninnn
+	id = 0000310
+	name = Xác suất thống kê
 #end
 
 #course
-	id = 0000106
-	name = Chủ nghĩa xã hội khoa học
+	id = 0000311
+	name = Phương pháp tính
 #end
 
 #course
-	id = 0000104
-	name = Triết học Mác-Lêninnn
+	id = 0000511
+	name = Marketing căn bản
 #end
 
 #course
-	id = 0000106
-	name = Chủ nghĩa xã hội khoa học
+	id = 0000702
+	name = Tiếng Anh cơ bản (GE 2)
 #end
 
 #course
-	id = 0000107
-	name = Lịch sử Đảng cộng sản Việt Nam
-#end
-
-#course
-	id = 0000515
-	name = Pháp luật đại cương
-#end
-
-#course
-	id = 0000701
-	name = Tiếng Anh cơ bản (GE 1)
+	id = 0000704
+	name = Tiếng Anh cơ bản (GE 4) 
 #end
 
 #course
@@ -90,33 +80,8 @@
 #end
 
 #course
-	id = 0000104
-	name = Triết học Mác-Lêninnn
-#end
-
-#course
-	id = 0000106
-	name = Chủ nghĩa xã hội khoa học
-#end
-
-#course
-	id = 0000107
-	name = Lịch sử Đảng cộng sản Việt Nam
-#end
-
-#course
-	id = 0000515
-	name = Pháp luật đại cương
-#end
-
-#course
-	id = 0000701
-	name = Tiếng Anh cơ bản (GE 1)
-#end
-
-#course
-	id = 0221001
-	name = Phương pháp nghiên cứu khoa học
+	id = 0221501
+	name = Kỹ năng lập kế hoạch và tổ chức
 #end
 
 #course
@@ -162,43 +127,43 @@
 #group
 	id = 1
 	name = no name
-	size = 60
+	size = 30
 #end
 
 #group
 	id = 2
 	name = no name
-	size = 60
+	size = 30
 #end
 
 #group
 	id = 3
 	name = no name
-	size = 60
+	size = 30
 #end
 
 #group
 	id = 4
 	name = no name
-	size = 46
+	size = 30
 #end
 
 #group
 	id = 5
 	name = no name
-	size = 46
+	size = 30
 #end
 
 #group
 	id = 6
 	name = no name
-	size = 66
+	size = 30
 #end
 
 #group
 	id = 7
 	name = no name
-	size = 66
+	size = 30
 #end
 
 #group
@@ -211,79 +176,302 @@
 	id = 9
 	name = no name
 	size = 30
+#end
+
+#group
+	id = 10
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 11
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 12
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 13
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 14
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 15
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 16
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 17
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 18
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 19
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 20
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 21
+	name = no name
+	size = 60
+#end
+
+#group
+	id = 22
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 23
+	name = no name
+	size = 80
 #end
 
 #class
 	id = 1
 	professor = ID000
-	course = 0000104
-	duration = 3
+	course = 0000310
+	duration = 2
 	group = 1
+	subjectClassId = 2020200003100
 #end
 
 #class
 	id = 2
 	professor = ID002
-	course = 0000106
-	duration = 2
+	course = 0000310
+	duration = 3
 	group = 2
+	subjectClassId = 2020200003101
 #end
 
 #class
 	id = 3
-	professor = ID003
-	course = 0000106
+	professor = ID002
+	course = 0000310
 	duration = 2
 	group = 3
+	subjectClassId = 2020200003102
 #end
 
 #class
 	id = 4
-	professor = ID005
-	course = 0000515
-	duration = 2
+	professor = ID002
+	course = 0000311
+	duration = 3
 	group = 4
+	subjectClassId = 2020200003110
 #end
 
 #class
 	id = 5
-	professor = ID009
-	course = 0000515
+	professor = ID002
+	course = 0000311
 	duration = 2
 	group = 5
+	subjectClassId = 2020200003111
+	lab = true
 #end
 
 #class
 	id = 6
-	professor = ID009
-	course = 0000701
+	professor = ID000
+	course = 0000311
 	duration = 3
 	group = 6
+	subjectClassId = 2020200003112
+	lab = true
 #end
 
 #class
 	id = 7
-	professor = ID009
-	course = 0000701
-	duration = 3
+	professor = ID004
+	course = 0000311
+	duration = 2
 	group = 7
+	subjectClassId = 2020200003113
+	lab = true
 #end
 
 #class
 	id = 8
-	professor = ID009
-	course = 0221001
-	duration = 2
+	professor = ID004
+	course = 0000511
+	duration = 3
 	group = 8
-	lab = true
+	subjectClassId = 2020200005110
 #end
 
 #class
 	id = 9
-	professor = ID009
-	course = 0221801
-	duration = 3
+	professor = ID000
+	course = 0000511
+	duration = 2
 	group = 9
+	subjectClassId = 2020200005111
 	lab = true
+#end
+
+#class
+	id = 10
+	professor = ID008
+	course = 0000511
+	duration = 3
+	group = 10
+	subjectClassId = 2020200005112
+	lab = true
+#end
+
+#class
+	id = 11
+	professor = ID002
+	course = 0000511
+	duration = 2
+	group = 11
+	subjectClassId = 2020200005113
+#end
+
+#class
+	id = 12
+	professor = ID002
+	course = 0000702
+	duration = 3
+	group = 12
+	subjectClassId = 2020200007020
+#end
+
+#class
+	id = 13
+	professor = ID004
+	course = 0000702
+	duration = 2
+	group = 13
+	subjectClassId = 2020200007021
+#end
+
+#class
+	id = 14
+	professor = ID004
+	course = 0000702
+	duration = 3
+	group = 14
+	subjectClassId = 2020200007022
+#end
+
+#class
+	id = 15
+	professor = ID008
+	course = 0000704
+	duration = 2
+	group = 15
+	subjectClassId = 2020200007040
+#end
+
+#class
+	id = 16
+	professor = ID002
+	course = 0000704
+	duration = 3
+	group = 16
+	subjectClassId = 2020200007041
+	lab = true
+#end
+
+#class
+	id = 17
+	professor = ID004
+	course = 0000704
+	duration = 2
+	group = 17
+	subjectClassId = 2020200007042
+#end
+
+#class
+	id = 18
+	professor = ID004
+	course = 0221001
+	duration = 3
+	group = 18
+	subjectClassId = 2020202210010
+#end
+
+#class
+	id = 19
+	professor = ID004
+	course = 0221001
+	duration = 2
+	group = 19
+	subjectClassId = 2020202210011
+#end
+
+#class
+	id = 20
+	professor = ID008
+	course = 0221501
+	duration = 2
+	group = 20
+	subjectClassId = 2020202215010
+#end
+
+#class
+	id = 21
+	professor = ID000
+	course = 0221501
+	duration = 2
+	group = 21
+	subjectClassId = 2020202215011
+#end
+
+#class
+	id = 22
+	professor = ID004
+	course = 0221801
+	duration = 2
+	group = 22
+	subjectClassId = 2020202218010
+#end
+
+#class
+	id = 23
+	professor = ID002
+	course = 0221801
+	duration = 2
+	group = 23
+	subjectClassId = 2020202218011
 #end
 

@@ -117,6 +117,10 @@ public class Schedule {
     public void initializeSchedule() {
         //Tao danh sach cac lop voi so tiet bang nhau, cac day 3 , 2 tiet
         ArrayList<CourseClass> listClass = InputFromFile.getClassList();
+        System.out.println("COURSE LIST:--------------");
+        for(int i = 0 ;  i < listClass.size(); i++){
+            System.out.println("Class: " + listClass.get(i).getCourse().getName() + " duration: " + listClass.get(i).getDuration());
+        }
 //        ArrayList<CourseClass> cc4 = new ArrayList();
         ArrayList<CourseClass> cc3 = new ArrayList();
         ArrayList<CourseClass> cc2 = new ArrayList();
@@ -129,6 +133,10 @@ public class Schedule {
                     cc2.add(i);
                     break;
             }
+        }
+
+        for(int i = 0 ;  i < cc3.size(); i++){
+            System.out.println("Class: " + cc3.get(i).getCourse().getName() + " duration: " + cc3.get(i).getDuration());
         }
 
         //Xao tron cac danh sach lop hoc
@@ -148,7 +156,8 @@ public class Schedule {
         for (int x = 0; x < listClass.size(); ) {
             switch (rd.nextInt(3) + 2) {
                 case 2:
-                    //Neu random so 2 thi kiem tra xem con lop  2 tiet khong, neu khong con thi break de random lop khac
+                    System.out.println("CASE 2");
+                    //Neu random so 2 thi kiem tra xem con lop  3 tiet khong, neu khong con thi break de random lop khac
                     if (i < size2) {
                         classes.set(listClass.indexOf(cc2.get(i++)), next);
                         next += 2;
@@ -173,6 +182,7 @@ public class Schedule {
                         break;
                     }
                 case 3:
+                    System.out.println("CASE 3");
                     //Neu random so 3 thi kiem tra xem con lop  3 tiet khong, neu khong con thi break de random lop khac
                     if (j < size3) {
                         classes.set(listClass.indexOf(cc3.get(j++)), next);
@@ -183,8 +193,8 @@ public class Schedule {
                             classes.set(listClass.indexOf(cc2.get(i++)), next);
                             next += 2;
                             x++;
-                            break;
                         } else {
+                            System.out.println("NOT FOUND CLASS WITH 2");
                             next += 2;
                             break;
                         }
@@ -196,6 +206,7 @@ public class Schedule {
         //Tao vector tu HashMap
         fromClassesToSlots();
         Fitness();
+        System.out.println("initializeDSchedule DONE!!!");
     }
 
     public void Fitness() {

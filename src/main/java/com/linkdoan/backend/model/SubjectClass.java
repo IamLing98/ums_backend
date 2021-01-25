@@ -35,6 +35,18 @@ public class SubjectClass {
     @Column(name="created_date", columnDefinition = "DATE")
     private LocalDate createdDate;
 
+    @Column(name="group_id", columnDefinition = "INT")
+    private Integer groupId;
+
+    @Column(name="duration", columnDefinition = "INT")
+    private Integer duration;
+
+    @Column(name="type", columnDefinition = "INT")
+    private Integer type;
+
+    @Column(name="main_subject_classId", columnDefinition = "char(14)")
+    private String maiSubjectClassId;
+
     public SubjectClassDTO toDTO(){
         SubjectClassDTO sj = new SubjectClassDTO();
         sj.setSubjectClassId(this.subjectClassId);
@@ -43,6 +55,8 @@ public class SubjectClass {
         sj.setNumberOfSeats(this.numberOfSeats);
         sj.setIsRequireLab(this.isRequireLab);
         sj.setCreatedDate(this.createdDate);
+        sj.setGroupId(this.groupId);
+        sj.setDuration(this.duration);
         return sj;
     }
 

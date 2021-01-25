@@ -13,17 +13,19 @@ public class CourseClass {
     private Professor professor;
     private Course course;
     private ArrayList < StudentsGroup> groups;
-    private int numberOfSeats=0;
+    private String subjectClassId;
+    private int numberOfSeats = 0;
     private boolean requiresLab; //co doi hoi Lab khong?
     private int duration;        //thoi gian hoc
 
-    public CourseClass(String id, Professor professor, Course course, ArrayList<StudentsGroup> groups, boolean requiresLab, int duration) {
+    public CourseClass(String id, Professor professor, Course course, ArrayList<StudentsGroup> groups, boolean requiresLab, int duration, String subjectClassId) {
         this.id = id;
         this.professor = professor;
         this.course = course;
         this.groups = groups;
         this.requiresLab = requiresLab;
         this.duration = duration;
+        this.subjectClassId = subjectClassId;
 
         //Gan CourseClass nay cho professor
         professor.addCourseClass(this);
@@ -69,6 +71,8 @@ public class CourseClass {
         return duration;
     }
 
+    public String getSubjectClassId(){return this.subjectClassId;}
+
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }
@@ -93,6 +97,7 @@ public class CourseClass {
         this.duration = duration;
     }
 
+    public void setSubjectClassId(String subjectClassId){this.subjectClassId = subjectClassId;}
 
 
     //Returns TRUE neu lop nay trung it nhat 1 nhom SV voi lop c

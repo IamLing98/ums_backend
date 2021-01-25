@@ -4,18 +4,23 @@ import com.linkdoan.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ScheduleController {
     @Autowired
     ScheduleService scheduleServiceService;
 
+
     @RequestMapping(value = "/schedules", method = RequestMethod.GET)
-    public ResponseEntity<?> create ()
+    public ResponseEntity<?> getSchedule (@RequestParam(value = "termId", required = true) String termId)
             throws Exception {
-        return new ResponseEntity<>(scheduleServiceService.initData(), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleServiceService.getSchedule(termId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/schedules", method = RequestMethod.POST)
+    public ResponseEntity<?> create (@RequestBody String termId)
+            throws Exception {
+        return new ResponseEntity<>(scheduleServiceService.initData(termId), HttpStatus.OK);
     }
 }
