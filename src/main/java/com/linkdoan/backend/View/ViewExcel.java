@@ -22,6 +22,8 @@ public class ViewExcel {
     Schedule schedule;
     private static final int DAY_HOURS = ScheduleServiceImpl.getDAY_HOURS();
     private static final int ROOM_NUM = ScheduleServiceImpl.getROOM_NUM();
+//    private static final int DAY_HOURS = 10;
+//    private static final int ROOM_NUM = 5;
     private final String path = "C://linkdoan//uploads//";
     private final String fileName = "Schedule.xls";
 

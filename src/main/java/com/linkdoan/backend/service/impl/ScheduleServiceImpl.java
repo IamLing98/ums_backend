@@ -10,6 +10,7 @@ import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Room;
 import com.linkdoan.backend.model.ScheduleSubjectClass;
+import com.linkdoan.backend.model.SubjectClass;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -173,6 +171,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
+            InputFromFile.readFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -180,12 +179,30 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     }
 
-    public String create(String termId) throws Exception {
-        try {
-            InputFromFile.readFile();
-        } catch (Exception ex) {
+    @Override
+    public List<Map<String, Object>> getScheduleInfo(Long id) {
+        Optional<com.linkdoan.backend.model.Schedule> scheduleOptional = scheduleRepository.findById(id);
+        if(scheduleOptional.isPresent()){
+            List<Object[]> subjectClassInfoObject = scheduleRepository.getScheduleListObject(id);
+            List<Map<String, Object>> subjectClassObjectMapList = new ArrayList<>();
+            String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",  "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber", "practiceNumber","subjectClassId", "isRequireLab", "teacherId", "duration", "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId", "fullName" };
+            for(Object[] objectArray : subjectClassInfoObject){
+                Map<String, Object> stringObjectMap = new HashMap<>();
+                for(int i = 0 ; i < 19; i++){
+                    stringObjectMap.put(stringList[i], objectArray[i]);
+                }
+                subjectClassObjectMapList.add(stringObjectMap);
+            }
+            System.out.println("subjectClassInfoObject: " +
+                    subjectClassInfoObject.size());
 
+            return subjectClassObjectMapList;
         }
+        return null;
+    }
+
+    public String create(String termId) throws Exception {
+
         ROOM_NUM = InputFromFile.getRoomList().size();
         System.out.println("room num" + ROOM_NUM);
         ga = new GA(80, 10, 1, 2000);
@@ -214,40 +231,45 @@ public class ScheduleServiceImpl implements ScheduleService {
         //get all slots of schedule from GA
         Vector<ArrayList<CourseClass>> slots = schedule.getSlots();
         ArrayList<com.linkdoan.backend.GAScheduleModel.Room> roomArrayList = InputFromFile.getRoomList();
-//        for (int i = 0; i < roomArrayList.size(); i++) {
-//            System.out.println("Room name: " + roomArrayList.get(i).getName());
-//        }
-//        for (int i = 0; i < 250; i++) {
-//            if (slots.get(i).size() > 0) {
-//                System.out.println("Slot: " + i + slots.get(i).get(0).getCourse().getName() + "\n");
-//            }
-//        }
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < ROOM_NUM; j++) {
+        for (int i = 0; i < roomArrayList.size(); i++) {
+            System.out.println("Room name: " + roomArrayList.get(i).getName());
+        }
+        for (int i = 0; i < 250; i++) {
+            if (slots.get(i).size() > 0) {
+                System.out.println("Slot: " + i + slots.get(i).get(0).getCourse().getName() + "\n");
+            }
+        }
+        for (int i = 0; i < ROOM_NUM; i++) {
+            for (int j = 0; j < DAY_NUM; j++) {
                 for (int k = 0; k < 10; k++) {
-                    int currentVal = i * 5 * 10 + j * 10 + k;
+                    int currentVal = i * DAY_HOURS + k + j * DAY_HOURS * ROOM_NUM;
                     if (slots.get(currentVal).size() > 0) {
                         ScheduleSubjectClass scheduleSubjectClass = new ScheduleSubjectClass();
-                        String roomId = InputFromFile.getRoomList().get(j).getName();
+                        String roomId = roomArrayList.get(j).getName();
                         String subjectClassId = slots.get(currentVal).get(0).getSubjectClassId();
-                        Integer dayOfWeek = i;
+                        Integer dayOfWeek = i + 1;
                         Integer hourOfDay = k + 1;
                         scheduleSubjectClass.setScheduleId(savedSchedule.getId());
-                        scheduleSubjectClass.setRoom_id(roomId);
+                        scheduleSubjectClass.setRoomId(roomId);
                         scheduleSubjectClass.setSubjectClassId(subjectClassId);
                         scheduleSubjectClass.setDayOfWeek(dayOfWeek);
                         scheduleSubjectClass.setHourOfDay(hourOfDay);
-                        if (currentVal > 1) {
-                            if (slots.get(currentVal - 1).size() <= 0) {
+
+                        //kiem tra xem truoc do co la null hoặc cùng subject class k
+                        if (currentVal < 1) {
+                            scheduleSubjectClassRepository.save(scheduleSubjectClass);
+                        }
+                        else{
+                            if (slots.get(currentVal - 1).size() < 1) {
 //                          for(int s = 0 ; s < slots.get(currentVal).size() ; s++){
-                                System.out.println("Room: " + InputFromFile.getRoomList().get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
+                                System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
                                 System.out.println("Class id: " + slots.get(currentVal).get(0).getSubjectClassId());
                                 System.out.println("Course name: " + slots.get(currentVal).get(0).getCourse().getName());
                                 System.out.println("Course id: " + slots.get(currentVal).get(0).getCourse().getId());
                                 scheduleSubjectClassRepository.save(scheduleSubjectClass);
                             } else {
-                                if (!slots.get(currentVal).get(0).getCourse().getId().equals(slots.get(currentVal - 1).get(0).getCourse().getId())) {
-                                    System.out.println("Room: " + InputFromFile.getRoomList().get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
+                                if (slots.get(currentVal).get(0).getSubjectClassId().equals(slots.get(currentVal - 1).get(0).getSubjectClassId()) == false) {
+                                    System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
                                     System.out.println("Class id: " + slots.get(currentVal).get(0).getSubjectClassId());
                                     System.out.println("Course name: " + slots.get(currentVal).get(0).getCourse().getName());
                                     System.out.println("Course id: " + slots.get(currentVal).get(0).getCourse().getId());
@@ -255,13 +277,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                                 }
                             }
                         }
-                        else{
-                            scheduleSubjectClassRepository.save(scheduleSubjectClass);
-                        }
                     }
                 }
             }
         }
         return excel.getFileName();
     }
+
+
 }

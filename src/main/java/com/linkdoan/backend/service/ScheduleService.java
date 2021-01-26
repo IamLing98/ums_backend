@@ -8,4 +8,6 @@ public interface ScheduleService {
     List<com.linkdoan.backend.model.Schedule> getSchedule(String termId);
 
     String initData(String termId) throws Exception;
+
+    List<Map<String, Object>> getScheduleInfo(Long id);
 }

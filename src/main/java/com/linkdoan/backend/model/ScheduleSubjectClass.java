@@ -24,7 +24,7 @@ public class ScheduleSubjectClass {
     private String subjectClassId;
 
     @Column(name="room_id")
-    private String room_id;
+    private String roomId;
 
     @Column(name="day_of_week")
     private Integer dayOfWeek;

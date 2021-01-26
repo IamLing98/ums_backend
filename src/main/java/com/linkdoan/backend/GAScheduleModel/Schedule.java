@@ -14,8 +14,8 @@ public class Schedule {
     private final int numberOfCrossoverPoints = 5;
     private final int mutationSize = 5;
 
+    private static final int DAY_NUM = 5;
     private static final int DAY_HOURS = ScheduleServiceImpl.getDAY_HOURS();
-    private static final int DAY_NUM = ScheduleServiceImpl.getDAY_NUM();
     private static final int ROOM_NUM = ScheduleServiceImpl.getROOM_NUM();
 
     private Vector<ArrayList<CourseClass>> slots;

@@ -229,7 +229,6 @@ public class InputFromFile {
         System.setIn(new FileInputStream("src//main//java//com//linkdoan//backend//GAScheduleModel//ax.txt"));
         sc = new Scanner(System.in);
         String temp;
-
         while (sc.hasNext()) {
             temp = sc.nextLine();
             switch (temp) {
@@ -251,7 +250,7 @@ public class InputFromFile {
                 default:
                     break;
             }
-
         }
+        sc.close();
     }
 }

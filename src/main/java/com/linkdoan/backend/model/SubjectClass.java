@@ -41,11 +41,18 @@ public class SubjectClass {
     @Column(name="duration", columnDefinition = "INT")
     private Integer duration;
 
+    //LOẠI LỚP HỌC PHẦN(LỚP CHÍNHH HAY LỚP TÁCH)
     @Column(name="type", columnDefinition = "INT")
     private Integer type;
 
-    @Column(name="main_subject_classId", columnDefinition = "char(14)")
-    private String maiSubjectClassId;
+    //LỚP HỌC ĐƯỢC TÁCH RA
+    @Column(name="main_subject_classId", columnDefinition = "CHAR(14)")
+    private String mainSubjectClassId;
+
+    //TÌNH TRẠNG LỚP
+    @Column(name="status", columnDefinition = "INT")
+    private Integer status ;
+
 
     public SubjectClassDTO toDTO(){
         SubjectClassDTO sj = new SubjectClassDTO();

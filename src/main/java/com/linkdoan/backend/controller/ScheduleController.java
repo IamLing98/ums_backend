@@ -18,6 +18,13 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleServiceService.getSchedule(termId), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/schedules/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getScheduleInfo (@PathVariable(  "id") Long id)
+            throws Exception {
+        return new ResponseEntity<>(scheduleServiceService.getScheduleInfo(id), HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/schedules", method = RequestMethod.POST)
     public ResponseEntity<?> create (@RequestBody String termId)
             throws Exception {
