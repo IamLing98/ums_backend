@@ -1,8 +1,12 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.TermDTO;
+import com.linkdoan.backend.model.Schedule;
+import com.linkdoan.backend.model.SubjectClassRegistration;
 import com.linkdoan.backend.model.Term;
+import com.linkdoan.backend.repository.ScheduleRepository;
 import com.linkdoan.backend.repository.TermRepository;
+import com.linkdoan.backend.service.SubjectClassRegistrationService;
 import com.linkdoan.backend.service.SubjectRegistrationService;
 import com.linkdoan.backend.service.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.swing.text.html.Option;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +29,13 @@ public class TermServiceImpl implements TermService {
     @Autowired
     SubjectRegistrationService subjectRegistrationService;
 
+    @Autowired
+    ScheduleRepository scheduleRepository;
+
+    @Autowired
+    SubjectClassRegistrationService subjectClassRegistrationService;
+
+
     @Override
     public List<TermDTO> getAll(Integer year, Integer term) {
         List<Term> termList = termRepository.findAll();
@@ -35,8 +48,19 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public Optional<Term> getDetail(String termId) {
-        return termRepository.findFirstById(termId);
+    public TermDTO getDetail(String termId) {
+        Optional<Term> termOptional = termRepository.findFirstById(termId);
+        if(termOptional.isPresent()){
+            Term term = termOptional.get();
+            TermDTO termDTO = term.toDTO();
+            Optional<Schedule> scheduleOptional = scheduleRepository.findFirstByTermIdAndIsActive(termId,1);
+            if(scheduleOptional.isPresent()){
+                Schedule schedule = scheduleOptional.get();
+                termDTO.setActiveSchedule(schedule.getId());
+            }
+            return termDTO;
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "kHONG TON TAI TERM NAY!!!");
     }
 
     @Override
@@ -53,54 +77,77 @@ public class TermServiceImpl implements TermService {
 
     @Override
     public int update(String termId, TermDTO termDTO) {
-        Optional<Term> termOptional = termRepository.findById(termDTO.getId());
+        Optional<Term> termOptional = termRepository.findById(termId);
         if (termOptional.isPresent()) {
             Term term = termOptional.get();
-            switch (termDTO.getActionType()) {
-                case "SSON":
+            String actionType = termDTO.getActionType();
+            switch (actionType) {
+                    case "SSON":
                     if (term.getProgress() == 11) {
                         term.setProgress(12);
                         term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         termRepository.save(term);
                         subjectRegistrationService.subjectSubmitForNewStudent(termId);
-                    } else {
-                        throw new ResponseStatusException(HttpStatus.CHECKPOINT, "Không đúng tiến trình");
-                    }
-                    break;
+                        return 1;
+                    }break;
                 case "SSOFF":
                     if (term.getProgress() == 12) {
                         term.setProgress(13);
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         termRepository.save(term);
-                    } else {
-                        throw new ResponseStatusException(HttpStatus.CHECKPOINT, "Không đúng tiến trình");
-                    }
-                    break;
-                case "SCSON":
+                        return 1;
+                    } break;
+                case "SCRON":
                     if (term.getProgress() == 13) {
-                        term.setProgress(21);
+                        Optional<Schedule> scheduleOptional = scheduleRepository.findById(termDTO.getActiveSchedule());
+                        if (scheduleOptional.isPresent()) {
+                            Schedule schedule = scheduleOptional.get();
+                            if (schedule.getTermId().equals(term.getId())) {
+                                term.setProgress(21);
+                                term.setSubjectClassSubmittingStartDate(termDTO.getSubjectClassSubmittingStartDate());
+                                term.setSubjectCLassSubmittingEndDate(termDTO.getSubjectCLassSubmittingEndDate());
+                                schedule.setIsActive(1);
+                                termRepository.save(term);
+                                System.out.println("Save term");
+                                scheduleRepository.save(schedule);
+                                System.out.println("Active schedule: " +  termDTO.getActiveSchedule());
+                                subjectClassRegistrationService.subjectClassSubmitForNewStudent(termId,termDTO.getActiveSchedule());
+                                return 1;
+                            } else {
+//                                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Mã thời khoá biểu không hợp lệ!!!");
+                            }
+                        } else {
+//                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Mã thời khoá biểu không hợp lệ!!!");
+                        }
                     } else {
-
-                    }
-                    break;
-                case "SCSOFF":
+//                        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Không đúng tiến trình");
+                    }break;
+                case "SCROFF":
                     if (term.getProgress() == 21) {
                         term.setProgress(22);
+                        termRepository.save(term);
+                        return 1;
                     } else {
 
                     }
                     break;
-                case "ESON":
-                    if (term.getProgress() == 23) {
+                case "SCREON":
+                    if (term.getProgress() == 22) {
                         term.setProgress(31);
+                        term.setEditSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
+                        term.setEditSubmittingEndDate(termDTO.getEditSubmittingEndDate());
+                        termRepository.save(term);
+                        return 1;
                     } else {
 
                     }
                     break;
-                case "ESOFF":
+                case "SCREOFF":
                     if (term.getProgress() == 31) {
                         term.setProgress(32);
+                        termRepository.save(term);
+                        return 1;
                     } else {
 
                     }
@@ -108,7 +155,7 @@ public class TermServiceImpl implements TermService {
                 default:
             }
         }
-        return 1;
+        return 0;
     }
 
     @Override

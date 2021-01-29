@@ -1,6 +1,7 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.SubjectClassDTO;
+import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.SubjectClass;
 import com.linkdoan.backend.repository.SubjectClassRepository;
 import com.linkdoan.backend.service.SubjectClassService;
@@ -41,8 +42,28 @@ public class SubjectClassServiceImpl implements SubjectClassService {
     }
 
     @Override
-    public SubjectClassDTO getDetail(String subjectClassId) {
-        return null;
+    public Map<String, Object>  getDetail(String subjectClassId) {
+        List<Object[]> studentObjectList = subjectClassRepository.getListStudent(subjectClassId);
+        List<Map<String, Object>> rs = new ArrayList<>();
+        Map<String, Object> newMap = new HashMap<>(2);
+        if (studentObjectList != null && !studentObjectList.isEmpty()) {
+            for (Object[] subjectClassObject : studentObjectList) {
+                Map<String, Object> studentMap = new HashMap<>(2);
+                studentMap = new HashMap<String, Object>();
+                studentMap.put("studentId", subjectClassObject[0]);
+                studentMap.put("fullName", subjectClassObject[1]);
+                studentMap.put("diemBaiTap", subjectClassObject[2]);
+                studentMap.put("diemChuyenCan", subjectClassObject[3]);
+                studentMap.put("diemKiemTra", subjectClassObject[4]);
+                studentMap.put("diemThi", subjectClassObject[5]);
+                studentMap.put("diemThiLai", subjectClassObject[6]);
+                studentMap.put("diemTrungBinh", subjectClassObject[7]);
+                studentMap.put("diemThangBon", subjectClassObject[8]);
+                rs.add(studentMap);
+            }
+            newMap.put("studentList", rs);
+        }
+        return newMap;
     }
 
     @Override

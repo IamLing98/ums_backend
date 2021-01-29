@@ -7,10 +7,7 @@ import com.linkdoan.backend.GAScheduleModel.Schedule;
 import com.linkdoan.backend.View.ViewExcel;
 import com.linkdoan.backend.dto.SubjectClassDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
-import com.linkdoan.backend.model.Employee;
-import com.linkdoan.backend.model.Room;
-import com.linkdoan.backend.model.ScheduleSubjectClass;
-import com.linkdoan.backend.model.SubjectClass;
+import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -66,6 +64,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
     ScheduleSubjectClassRepository scheduleSubjectClassRepository;
+
+    @Autowired
+    SubjectClassRegistrationRepository subjectClassRegistrationRepository;
 
     @Override
     public List<com.linkdoan.backend.model.Schedule> getSchedule(String termId) {
@@ -127,7 +128,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
 
 
-            System.out.println("----------GET LIST SUBJECT----------");
+            System.out.println("----------GET LIST GROUPS----------");
             List<SubjectClassDTO> subjectClassList = subjectClassRepository.getListSubjectClassByTermId(termId);
             System.out.println("SUBJECT CLASSES SIZE: " + subjectClassList.size() );
             for (int i = 0; i < subjectClassList.size(); i++) {
@@ -146,6 +147,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
 
 
+            System.out.println("----------GET LIST CLASS----------");
             for (int i = 0; i < subjectClassList.size(); i++) {
                 SubjectClassDTO subjectClassDTO = subjectClassList.get(i);
                 bufferedWriter.write("#class");
@@ -185,12 +187,18 @@ public class ScheduleServiceImpl implements ScheduleService {
         if(scheduleOptional.isPresent()){
             List<Object[]> subjectClassInfoObject = scheduleRepository.getScheduleListObject(id);
             List<Map<String, Object>> subjectClassObjectMapList = new ArrayList<>();
-            String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",  "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber", "practiceNumber","subjectClassId", "isRequireLab", "teacherId", "duration", "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId", "fullName" };
+            String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
+                    "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
+                    "practiceNumber","subjectClassId", "isRequireLab", "teacherId", "duration",
+                    "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
+                    "fullName","employeeId", "departmentName","subjectType","status" };
             for(Object[] objectArray : subjectClassInfoObject){
                 Map<String, Object> stringObjectMap = new HashMap<>();
-                for(int i = 0 ; i < 19; i++){
+                for(int i = 0 ; i < 23; i++){
                     stringObjectMap.put(stringList[i], objectArray[i]);
                 }
+                Long currentOfSubmittingNumber = scheduleRepository.countSubmittedNumberBySubjectClassId(objectArray[9].toString());
+                stringObjectMap.put("currentOfSubmittingNumber", currentOfSubmittingNumber);
                 subjectClassObjectMapList.add(stringObjectMap);
             }
             System.out.println("subjectClassInfoObject: " +
@@ -199,6 +207,29 @@ public class ScheduleServiceImpl implements ScheduleService {
             return subjectClassObjectMapList;
         }
         return null;
+    }
+
+    @Override
+    public int update(String termId, Long scheduleId) {
+        return 0;
+    }
+
+    @Override
+    public int delete(String termId, Long scheduleId, List<String> ids) {
+        int count  = 0 ;
+        for(String subjectClassId : ids){
+            Optional<ScheduleSubjectClass> scheduleSubjectClassOptional = scheduleSubjectClassRepository.findFirstByScheduleIdAndSubjectClassId(scheduleId,subjectClassId) ;
+            if(scheduleSubjectClassOptional.isPresent()){
+                ScheduleSubjectClass scheduleSubjectClass = scheduleSubjectClassOptional.get();
+                scheduleSubjectClassRepository.delete(scheduleSubjectClass);
+                List<SubjectClassRegistration> subjectClassRegistrationList = subjectClassRegistrationRepository.findAllBySubjectClassIdAndTermId(subjectClassId, termId);
+                for(SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList){
+                    subjectClassRegistrationRepository.delete(subjectClassRegistration);
+                }
+                count++;
+            }
+        }
+        return count;
     }
 
     public String create(String termId) throws Exception {
@@ -227,6 +258,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         Schedule schedule = ga.getBestOfBest();
         com.linkdoan.backend.model.Schedule schedule1 = new com.linkdoan.backend.model.Schedule();
         schedule1.setTermId(termId);
+        schedule1.setCreatedDate(LocalDate.now());
+        schedule1.setIsActive(0);
         com.linkdoan.backend.model.Schedule savedSchedule = scheduleRepository.save(schedule1);
         //get all slots of schedule from GA
         Vector<ArrayList<CourseClass>> slots = schedule.getSlots();
@@ -254,7 +287,11 @@ public class ScheduleServiceImpl implements ScheduleService {
                         scheduleSubjectClass.setSubjectClassId(subjectClassId);
                         scheduleSubjectClass.setDayOfWeek(dayOfWeek);
                         scheduleSubjectClass.setHourOfDay(hourOfDay);
-
+                        scheduleSubjectClass.setTermId(termId);
+                        scheduleSubjectClass.setMaxOfSubmittingNumber(slots.get(currentVal).get(0).getNumberOfSeats());
+                        scheduleSubjectClass.setCurrentOfSubmittingNumber(0);
+                        scheduleSubjectClass.setStatus(0);
+                        scheduleSubjectClass.setSubjectId(slots.get(currentVal).get(0).getCourse().getId());
                         //kiem tra xem truoc do co la null hoặc cùng subject class k
                         if (currentVal < 1) {
                             scheduleSubjectClassRepository.save(scheduleSubjectClass);

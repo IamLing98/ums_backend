@@ -1,11 +1,15 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.model.SubjectRegistration;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubjectRegistrationDTO {
 
     private Long id;

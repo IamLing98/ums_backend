@@ -55,9 +55,9 @@ public interface StudentRepository extends JpaRepository<Student, String> {
     //find all student by current term
     @Query(value = "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId,  student.yearClassId, student.educationProgramId, yearClass.currentTerm) " +
             " FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
-            "WHERE (yearClass.currentTerm < 3) "
+            "WHERE (yearClass.currentTerm = :termIndex) "
     )
-    List<StudentDTO> findAllStudentHasTermIsOne();
+    List<StudentDTO> findAllStudentHasTermEqualsTermIndex(@Param("termIndex") Integer termIndex);
 
     @Query(value = "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, department.departmentId, " +
             "department.departmentName, student.yearClassId, yearClass.className, yearClass.startYear, yearClass.endYear, yearClass.courseNumber) " +

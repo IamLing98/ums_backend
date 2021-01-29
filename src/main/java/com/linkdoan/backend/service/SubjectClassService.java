@@ -10,7 +10,7 @@ public interface SubjectClassService {
 
     List<Map<String, Object>> getAll(String termId);
 
-    SubjectClassDTO getDetail(String subjectClassId);
+    Map<String, Object>  getDetail(String subjectClassId);
 
     List<SubjectClass> create(List<SubjectClassDTO> subjectDTO);
 

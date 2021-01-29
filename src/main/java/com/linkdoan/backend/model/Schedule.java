@@ -21,7 +21,8 @@ public class Schedule {
     @Column(name="created_data")
     private LocalDate createdDate;
 
-
+    @Column(name="is_active", columnDefinition = "INT")
+    private Integer isActive;
 
 
 }

@@ -20,8 +20,8 @@ public class SubjectClassController {
         return new ResponseEntity<>(subjectClassService.getAll(termId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subjectClasses/{termId}/{subjectClassId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getDetail(@PathVariable("termId") String termId, @PathVariable("subjectClassId") String subjectClassId)
+    @RequestMapping(value = "/subjectClasses/getDetail/{subjectClassId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getDetail( @PathVariable("subjectClassId") String subjectClassId)
             throws Exception {
         return new ResponseEntity<>(subjectClassService.getDetail(subjectClassId), HttpStatus.OK);
     }

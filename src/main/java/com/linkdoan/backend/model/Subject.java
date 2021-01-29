@@ -40,6 +40,9 @@ public class Subject {
     @Column(name="subject_for_level")
     private Integer subjectForLevel;
 
+    @Column(name="subject_type")
+    private Integer subjectType;
+
     @Column(name="department_id", columnDefinition = "CHAR(7)")
     private String departmentId;
 

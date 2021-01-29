@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ScheduleController {
     @Autowired
@@ -29,5 +31,17 @@ public class ScheduleController {
     public ResponseEntity<?> create (@RequestBody String termId)
             throws Exception {
         return new ResponseEntity<>(scheduleServiceService.initData(termId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/schedules/{termId}/{scheduleId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> update (@PathVariable("termId") String termId,@PathVariable("scheduleId") Long scheduleId)
+            throws Exception {
+        return new ResponseEntity<>(scheduleServiceService.update(termId,scheduleId), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/schedules/{termId}/{scheduleId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete (@PathVariable("termId") String termId,@PathVariable("scheduleId") Long scheduleId, @RequestParam("ids") List<String> ids)
+            throws Exception {
+        return new ResponseEntity<>(scheduleServiceService.delete(termId,scheduleId,ids), HttpStatus.OK);
     }
 }

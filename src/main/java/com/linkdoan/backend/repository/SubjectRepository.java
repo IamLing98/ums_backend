@@ -12,9 +12,10 @@ import java.util.List;
 @Repository("subjectRepository")
 public interface SubjectRepository extends JpaRepository<Subject, String> {
 
-    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName )  FROM Subject  subject " +
-            "inner join  EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
-            "inner join  EducationProgram educationProgram on educationProgramSubject.educationProgramId = educationProgram.educationProgramId " +
+    @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName )  " +
+            "FROM Subject subject " +
+            "INNER JOIN EducationProgramSubject educationProgramSubject ON subject.subjectId = educationProgramSubject.subjectId " +
+            "INNER JOIN EducationProgram educationProgram ON educationProgramSubject.educationProgramId = educationProgram.educationProgramId " +
             "WHERE educationProgram.educationProgramId = :educationProgramId and  educationProgramSubject.term = :term ")
     List<SubjectDTO> findAllByEducationProgramIdAndTerm(@Param("educationProgramId") String educationProgramId, @Param("term") Integer term);
 

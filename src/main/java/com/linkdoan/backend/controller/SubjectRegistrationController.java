@@ -48,5 +48,6 @@ public class SubjectRegistrationController {
     }
 
     //    student section
+    //get list submitted
 
 }

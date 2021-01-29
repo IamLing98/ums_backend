@@ -23,6 +23,9 @@ public class ScheduleSubjectClass {
     @Column(name="subject_class_id")
     private String subjectClassId;
 
+    @Column(name="subject_id")
+    private String subjectId;
+
     @Column(name="room_id")
     private String roomId;
 
@@ -31,4 +34,13 @@ public class ScheduleSubjectClass {
 
     @Column(name="hour_of_day")
     private Integer hourOfDay;
+
+    @Column(name="max_of_submitting_number")
+    private Integer maxOfSubmittingNumber ;
+
+    @Column(name="current_of_submitting_number")
+    private Integer currentOfSubmittingNumber = 0 ;
+
+    @Column(name="status")
+    private Integer status = 0 ;
 }

@@ -49,10 +49,6 @@ public class SubjectClass {
     @Column(name="main_subject_classId", columnDefinition = "CHAR(14)")
     private String mainSubjectClassId;
 
-    //TÌNH TRẠNG LỚP
-    @Column(name="status", columnDefinition = "INT")
-    private Integer status ;
-
 
     public SubjectClassDTO toDTO(){
         SubjectClassDTO sj = new SubjectClassDTO();

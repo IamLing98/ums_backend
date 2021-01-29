@@ -28,4 +28,14 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
     )
     List<SubjectClassDTO> getListSubjectClassByTermId(@Param("termId") String termId);
 
+    //get all class by subject Id
+    List<SubjectClass> findAllByTermIdAndSubjectId(String termId, String subjectId);
+
+    //getDetail subjectClass
+    @Query(value = "SELECT scr.studentId, student.fullName, scr.diemBaiTap, scr.diemChuyenCan, scr.diemKiemTra, scr.diemThi," +
+            " scr.diemThiLai, scr.diemTrungBinh, scr.diemThangBon  " +
+            "FROM SubjectClassRegistration scr INNER JOIN Student student ON scr.studentId = student.studentId " +
+            "WHERE scr.subjectClassId = :subjectClassId "
+    )
+    List<Object[]> getListStudent(@Param("subjectClassId") String subjectClassId);
 }

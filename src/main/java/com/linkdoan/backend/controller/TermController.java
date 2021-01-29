@@ -25,8 +25,7 @@ public class TermController {
     @RequestMapping(value = "/terms/{termId}", method = RequestMethod.GET)
     public ResponseEntity<?> getDetail(@PathVariable("termId") String termId)
             throws Exception {
-        Optional<Term> termDTOOptional = termService.getDetail(termId);
-        return new ResponseEntity<>(termDTOOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(termService.getDetail(termId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/terms", method = RequestMethod.POST)
