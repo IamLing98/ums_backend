@@ -1,8 +1,18 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.6.RELEASE'
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
 }
+
 
 jar {
     manifest {
@@ -13,7 +23,7 @@ jar {
 }
 
 group = 'com.linkdoan'
-version = '0.0.1-SNAPSHOT'
+version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -27,7 +37,7 @@ repositories {
 }
 
 dependencies {
-
+    
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -69,7 +79,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl
     compile group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.5.7'
-
 
 
     compileOnly 'org.projectlombok:lombok'

@@ -57,4 +57,9 @@ public class SubjectClassRegistration {
     @Column(name="diem_thang_bon", columnDefinition = "CHAR(2)")
     private String diemThangBon;
 
+    //progress when submit
+
+    @Column(name="progress_submitted")
+    private Integer progressSubmitted;
+
 }

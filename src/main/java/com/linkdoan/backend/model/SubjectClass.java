@@ -49,7 +49,6 @@ public class SubjectClass {
     @Column(name="main_subject_classId", columnDefinition = "CHAR(14)")
     private String mainSubjectClassId;
 
-
     public SubjectClassDTO toDTO(){
         SubjectClassDTO sj = new SubjectClassDTO();
         sj.setSubjectClassId(this.subjectClassId);

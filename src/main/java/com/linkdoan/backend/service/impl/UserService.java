@@ -17,10 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("userService")
+@Service()
 public class UserService implements UserDetailsService {
 
-    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 

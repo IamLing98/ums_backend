@@ -16,4 +16,6 @@ public interface SubjectClassRegistrationService {
 
     List<SubjectClassDTO> getListSubmitted(String student, String termId);
 
+    boolean delete(String studentId, String subjectClassId, Long scheduleId);
+
 }

@@ -28,4 +28,12 @@ public class SubjectClassRegistrationController {
         System.out.println(studentId);
         return new ResponseEntity<>(subjectClassRegistrationService.submit(studentId, subjectClassRegistrationDTO), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/subjectClassRegistration/{scheduleId}/{subjectClassId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("scheduleId") Long scheduleId, @PathVariable("subjectClassId") String subjectClassId, SecurityContextHolder request)
+            throws Exception {
+        String studentId = request.getContext().getAuthentication().getName();
+        System.out.println(studentId);
+        return new ResponseEntity<>(subjectClassRegistrationService.delete(studentId, subjectClassId,scheduleId), HttpStatus.OK);
+    }
 }
