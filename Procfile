@@ -1,2 +1,2 @@
-web: java $JAVA_OPTS -jar target/backend-0.0.1-SNAPSHOT.jar --server.port=$PORT $JAR_OPTS
+web: java -Dserver.port=$PORT -jar build/libs/crm-springboot-j2ee-1.0.0-SNAPSHOT.jar
 -Dspring.profiles.active=cloud
