@@ -11,13 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, String> {
-    Optional<Department> findFirstByDepartmentId(String departmentId);
 
-    @Query(value = "SELECT Department.* FROM Department  WHERE (:department_id is null or :department_id =''  or department_id = :department_id)"
-            + "ORDER BY department_id ASC ",
-            countQuery = "SELECT count(*) FROM Department WHERE (:department_id is null or :department_id =''  or department_id = :department_id)",
-            nativeQuery = true
-    )
-    List<Department> findBy(@Param("department_id") String departmentId
-    );
 }

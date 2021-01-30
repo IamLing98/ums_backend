@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<DepartmentDTO> getAllDepartment(String departmentId) throws IOException {
-        List<Department> departments = departmentRepository.findBy(departmentId);
+        List<Department> departments = departmentRepository.findAll();
         List<DepartmentDTO> departmentDTOList = new ArrayList<>();
         for (int i = 0; i < departments.size(); i++) {
             DepartmentDTO departmentDTO = departments.get(i).toDTO();

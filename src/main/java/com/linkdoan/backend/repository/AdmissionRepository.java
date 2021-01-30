@@ -9,9 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public interface AdmissionRepository {
-    @Query(value = "SELECT * FROM admissions ad   WHERE (status = 1)"
-            + "ORDER BY admission_id ASC ",
-            nativeQuery = true
-    )
-    Page<Admissions> getAllActiveAdmission();
+
 }
