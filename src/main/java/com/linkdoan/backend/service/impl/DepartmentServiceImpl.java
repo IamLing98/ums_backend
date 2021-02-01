@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("departmentService")
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
 
     @Qualifier("departmentRepository")

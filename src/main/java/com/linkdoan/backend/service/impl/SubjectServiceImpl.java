@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
-@Service("subjectService")
+@Service
 public class SubjectServiceImpl implements SubjectService {
 
     @Qualifier("subjectRepository")

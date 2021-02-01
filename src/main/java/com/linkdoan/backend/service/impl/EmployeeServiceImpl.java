@@ -13,7 +13,7 @@ import javax.persistence.EntityExistsException;
 import java.io.IOException;
 import java.util.List;
 
-@Service("employeeService")
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
