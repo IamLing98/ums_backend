@@ -30,9 +30,6 @@ public class SubjectServiceImpl implements SubjectService {
     private PrerequisitesSubjectRepository prerequisitesSubjectRepository;
 
     @Autowired
-    private FileStorageService fileStorageService;
-
-    @Autowired
     private EducationProgramSubjectRepository educationProgramSubjectRepository;
 
     @Override
@@ -137,9 +134,9 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public String importFile(MultipartFile file) {
-        String fileName = fileStorageService.storeFile(file);
 
-        return fileName;
+
+        return null;
     }
 
 }
