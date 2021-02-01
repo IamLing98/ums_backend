@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
+web: java -Dfile.encoding=UTF-8 -Xms2g -Xmx2g -jar backend-1.0.0-SNAPSHOT.jar
