@@ -2,7 +2,6 @@ package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.SubjectClassDTO;
 import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
-import com.linkdoan.backend.model.ScheduleSubjectClass;
 import com.linkdoan.backend.model.SubjectClassRegistration;
 
 import java.util.List;

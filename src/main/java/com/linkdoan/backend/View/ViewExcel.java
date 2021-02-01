@@ -2,7 +2,6 @@ package com.linkdoan.backend.View;
 
 import com.linkdoan.backend.GAScheduleModel.CourseClass;
 import com.linkdoan.backend.GAScheduleModel.InputFromFile;
-import com.linkdoan.backend.GAScheduleModel.Room;
 import com.linkdoan.backend.GAScheduleModel.Schedule;
 import com.linkdoan.backend.service.impl.ScheduleServiceImpl;
 import jxl.Workbook;
@@ -14,8 +13,6 @@ import jxl.write.biff.RowsExceededException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Vector;
 
 public class ViewExcel {
 

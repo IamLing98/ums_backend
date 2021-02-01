@@ -1,11 +1,9 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.model.Student;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 
 @Data

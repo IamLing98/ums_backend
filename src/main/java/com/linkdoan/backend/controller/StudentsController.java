@@ -1,7 +1,6 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.dto.StudentDTO;
-import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

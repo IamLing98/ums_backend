@@ -2,7 +2,6 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.TermDTO;
 import com.linkdoan.backend.model.Schedule;
-import com.linkdoan.backend.model.SubjectClassRegistration;
 import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.repository.ScheduleRepository;
 import com.linkdoan.backend.repository.TermRepository;
@@ -14,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.text.html.Option;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

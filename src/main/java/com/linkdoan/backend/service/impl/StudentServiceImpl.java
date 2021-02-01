@@ -1,7 +1,6 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.StudentDTO;
-import com.linkdoan.backend.dto.StudentDetailsDTO;
 import com.linkdoan.backend.model.Department;
 import com.linkdoan.backend.model.EducationProgram;
 import com.linkdoan.backend.model.Student;
@@ -17,11 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

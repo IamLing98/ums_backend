@@ -1,6 +1,7 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.dto.*;
+import com.linkdoan.backend.dto.SubjectClassDTO;
+import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
 import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.SubjectClassRegistrationService;
@@ -8,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

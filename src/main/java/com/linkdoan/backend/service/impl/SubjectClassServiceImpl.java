@@ -1,7 +1,6 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.SubjectClassDTO;
-import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.SubjectClass;
 import com.linkdoan.backend.repository.SubjectClassRepository;
 import com.linkdoan.backend.service.SubjectClassService;

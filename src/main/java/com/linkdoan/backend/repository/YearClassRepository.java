@@ -1,6 +1,5 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.YearClassDTO;
 import com.linkdoan.backend.model.YearClass;
 import org.springframework.data.jpa.repository.JpaRepository;

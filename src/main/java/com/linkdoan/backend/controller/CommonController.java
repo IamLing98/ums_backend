@@ -1,7 +1,6 @@
 package com.linkdoan.backend.controller;
 
 import com.linkdoan.backend.service.common.CommonService;
-import com.linkdoan.backend.service.common.Impl.CommonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
