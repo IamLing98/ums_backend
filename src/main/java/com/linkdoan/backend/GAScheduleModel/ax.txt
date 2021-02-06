@@ -65,18 +65,28 @@
 #end
 
 #course
+	id = 0000701
+	name = Tiếng Anh cơ bản (GE 1)
+#end
+
+#course
+	id = 0000702
+	name = Tiếng Anh cơ bản (GE 2)
+#end
+
+#course
 	id = 0000703
 	name = Tiếng Anh cơ bản (GE 3)
 #end
 
 #course
-	id = 0000704
-	name = Tiếng Anh cơ bản (GE 4) 
+	id = 0221501
+	name = Kỹ năng lập kế hoạch và tổ chức
 #end
 
 #course
-	id = 0221501
-	name = Kỹ năng lập kế hoạch và tổ chức
+	id = 0221801
+	name = Nhập môn công nghệ thông tin 
 #end
 
 #room
@@ -117,258 +127,324 @@
 #group
 	id = 1
 	name = no name
-	size = 37
+	size = 90
 #end
 
 #group
 	id = 2
 	name = no name
-	size = 37
+	size = 90
 #end
 
 #group
 	id = 3
 	name = no name
-	size = 37
+	size = 60
 #end
 
 #group
 	id = 4
 	name = no name
-	size = 37
+	size = 60
 #end
 
 #group
 	id = 5
 	name = no name
-	size = 45
+	size = 60
 #end
 
 #group
 	id = 6
 	name = no name
-	size = 45
+	size = 60
 #end
 
 #group
 	id = 7
 	name = no name
-	size = 45
+	size = 60
 #end
 
 #group
 	id = 8
 	name = no name
-	size = 45
+	size = 60
 #end
 
 #group
 	id = 9
 	name = no name
-	size = 45
+	size = 30
 #end
 
 #group
 	id = 10
 	name = no name
-	size = 35
+	size = 30
 #end
 
 #group
 	id = 11
 	name = no name
-	size = 35
+	size = 30
 #end
 
 #group
 	id = 12
 	name = no name
-	size = 45
+	size = 30
 #end
 
 #group
 	id = 13
 	name = no name
-	size = 45
+	size = 30
 #end
 
 #group
 	id = 14
 	name = no name
-	size = 45
+	size = 30
 #end
 
 #group
 	id = 15
 	name = no name
-	size = 45
+	size = 30
 #end
 
 #group
 	id = 16
 	name = no name
-	size = 45
+	size = 30
 #end
 
 #group
 	id = 17
 	name = no name
-	size = 45
+	size = 30
+#end
+
+#group
+	id = 18
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 19
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 20
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 21
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 22
+	name = no name
+	size = 30
+#end
+
+#group
+	id = 23
+	name = no name
+	size = 30
 #end
 
 #class
 	id = 1
 	professor = ID000
 	course = 0000310
-	duration = 2
+	duration = 3
 	group = 1
 	subjectClassId = 2020200003100
 #end
-
 #class
 	id = 2
 	professor = ID002
 	course = 0000310
-	duration = 2
+	duration = 3
 	group = 2
 	subjectClassId = 2020200003101
 #end
-
 #class
 	id = 3
-	professor = ID004
-	course = 0000310
-	duration = 2
-	group = 3
-	subjectClassId = 2020200003102
-#end
-
-#class
-	id = 4
-	professor = ID008
-	course = 0000310
-	duration = 2
-	group = 4
-	subjectClassId = 2020200003103
-#end
-
-#class
-	id = 5
 	professor = ID000
 	course = 0000311
-	duration = 3
-	group = 5
+	duration = 2
+	group = 3
 	subjectClassId = 2020200003110
-	lab = true
 #end
-
+#class
+	id = 4
+	professor = ID002
+	course = 0000311
+	duration = 2
+	group = 4
+	subjectClassId = 2020200003111
+#end
+#class
+	id = 5
+	professor = ID004
+	course = 0000311
+	duration = 2
+	group = 5
+	subjectClassId = 2020200003112
+#end
 #class
 	id = 6
 	professor = ID000
-	course = 0000311
-	duration = 3
-	group = 6
-	subjectClassId = 2020200003111
-	lab = true
-#end
-
-#class
-	id = 7
-	professor = ID000
-	course = 0000311
-	duration = 3
-	group = 7
-	subjectClassId = 2020200003112
-	lab = true
-#end
-
-#class
-	id = 8
-	professor = ID002
-	course = 0000311
-	duration = 3
-	group = 8
-	subjectClassId = 2020200003113
-#end
-
-#class
-	id = 9
-	professor = ID008
-	course = 0000311
-	duration = 3
-	group = 9
-	subjectClassId = 2020200003114
-#end
-
-#class
-	id = 10
-	professor = ID008
 	course = 0000511
 	duration = 2
-	group = 10
+	group = 6
 	subjectClassId = 2020200005110
 #end
-
 #class
-	id = 11
+	id = 7
 	professor = ID002
 	course = 0000511
 	duration = 2
-	group = 11
+	group = 7
 	subjectClassId = 2020200005111
 #end
-
+#class
+	id = 8
+	professor = ID004
+	course = 0000511
+	duration = 2
+	group = 8
+	subjectClassId = 2020200005112
+#end
+#class
+	id = 9
+	professor = ID000
+	course = 0000701
+	duration = 3
+	group = 9
+	subjectClassId = 2020200007010
+#end
+#class
+	id = 10
+	professor = ID000
+	course = 0000701
+	duration = 3
+	group = 10
+	subjectClassId = 2020200007011
+#end
+#class
+	id = 11
+	professor = ID000
+	course = 0000702
+	duration = 2
+	group = 11
+	subjectClassId = 2020200007020
+#end
 #class
 	id = 12
-	professor = ID008
-	course = 0000703
-	duration = 3
+	professor = ID002
+	course = 0000702
+	duration = 2
 	group = 12
-	subjectClassId = 2020200007030
+	subjectClassId = 2020200007021
 #end
-
 #class
 	id = 13
-	professor = ID002
-	course = 0000703
-	duration = 3
+	professor = ID004
+	course = 0000702
+	duration = 2
 	group = 13
-	subjectClassId = 2020200007031
+	subjectClassId = 2020200007022
 #end
-
 #class
 	id = 14
-	professor = ID004
-	course = 0000704
-	duration = 3
+	professor = ID000
+	course = 0000702
+	duration = 2
 	group = 14
-	subjectClassId = 2020200007040
+	subjectClassId = 2020200007023
 #end
-
 #class
 	id = 15
-	professor = ID008
-	course = 0000704
-	duration = 3
+	professor = ID002
+	course = 0000702
+	duration = 2
 	group = 15
-	subjectClassId = 2020200007041
+	subjectClassId = 2020200007024
 #end
-
 #class
 	id = 16
 	professor = ID004
-	course = 0221501
+	course = 0000702
 	duration = 2
 	group = 16
-	subjectClassId = 2020202215010
+	subjectClassId = 2020200007025
 #end
-
 #class
 	id = 17
-	professor = ID002
-	course = 0221501
+	professor = ID000
+	course = 0000703
 	duration = 2
 	group = 17
+	subjectClassId = 2020200007030
+#end
+#class
+	id = 18
+	professor = ID002
+	course = 0000703
+	duration = 2
+	group = 18
+	subjectClassId = 2020200007031
+#end
+#class
+	id = 19
+	professor = ID000
+	course = 0221501
+	duration = 2
+	group = 19
+	subjectClassId = 2020202215010
+#end
+#class
+	id = 20
+	professor = ID000
+	course = 0221501
+	duration = 2
+	group = 20
 	subjectClassId = 2020202215011
 #end
-
+#class
+	id = 21
+	professor = ID008
+	course = 0221501
+	duration = 2
+	group = 21
+	subjectClassId = 2020202215012
+#end
+#class
+	id = 22
+	professor = ID000
+	course = 0221801
+	duration = 3
+	group = 22
+	subjectClassId = 2020202218010
+	lab = true
+#end
+#class
+	id = 23
+	professor = ID000
+	course = 0221801
+	duration = 3
+	group = 23
+	subjectClassId = 2020202218011
+	lab = true
+#end

@@ -30,23 +30,24 @@ public class SubjectController {
                                     @RequestParam(name = "pageSize", required = false) Integer pageSize,
                                     @RequestParam(name = "subjectId", required = false) String subjectId,
                                     @RequestParam(name = "subjectName", required = false) String subjectName,
-                                    @RequestParam(name = "educationProgramId", required = false) String educationProgramId
-                                                                                    ) throws Exception {
-        return new ResponseEntity<>(subjectService.getAll(), HttpStatus.OK);
+                                    @RequestParam(name = "educationProgramId", required = false) String educationProgramId,
+                                    @RequestParam(name = "actionType", required = false) String actionType
+    ) throws Exception {
+        return new ResponseEntity<>(subjectService.getAll(actionType), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjects", method = RequestMethod.POST)
-    public ResponseEntity<?> create( @RequestBody List<SubjectDTO> subjectDTOList) throws Exception {
+    public ResponseEntity<?> create(@RequestBody List<SubjectDTO> subjectDTOList) throws Exception {
         return new ResponseEntity<>(subjectService.create(subjectDTOList), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjects/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@Param("id") String id, @RequestBody SubjectDTO subjectDTO) throws Exception {
-        return new ResponseEntity<>(subjectService.update(  id,  subjectDTO), HttpStatus.OK);
+        return new ResponseEntity<>(subjectService.update(id, subjectDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjects", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete( @RequestParam("ids") List<String> ids) throws Exception {
+    public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids) throws Exception {
         return new ResponseEntity<>(subjectService.delete(ids), HttpStatus.OK);
     }
 

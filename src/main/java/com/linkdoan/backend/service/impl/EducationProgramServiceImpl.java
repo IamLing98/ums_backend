@@ -2,10 +2,8 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.EducationProgramDTO;
 import com.linkdoan.backend.model.EducationProgram;
-import com.linkdoan.backend.repository.BranchRepository;
-import com.linkdoan.backend.repository.EducationProgramRepository;
-import com.linkdoan.backend.repository.EducationProgramSubjectRepository;
-import com.linkdoan.backend.repository.SubjectRepository;
+import com.linkdoan.backend.model.GroupStudent;
+import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.EducationProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,6 +31,9 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     @Qualifier("subjectRepository")
     @Autowired
     SubjectRepository subjectRepository;
+
+    @Autowired
+    GroupRepository groupRepository;
 
     @Override
     public EducationProgramDTO getDetail(String educationProgramId) {
@@ -90,6 +91,12 @@ public class EducationProgramServiceImpl implements EducationProgramService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại!!!");
         EducationProgram educationProgram = educationProgramDTO.toModel();
         educationProgram.setEducationProgramStatus(2);
+        for(int i = 1 ; i <= educationProgramDTO.getTotalTerm(); i++){
+            GroupStudent groupStudent = new GroupStudent();
+            groupStudent.setEducationProgramId(educationProgramDTO.getEducationProgramId());
+            groupStudent.setTerm(i);
+            groupRepository.save(groupStudent);
+        }
         return educationProgramRepository.save(educationProgram).toDTO();
     }
 
@@ -106,6 +113,7 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     public boolean delete(String id) {
         if (!educationProgramRepository.findById(id).isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        groupRepository.deleteByEducationProgramId(id);
         educationProgramRepository.deleteById(id);
         return true;
     }

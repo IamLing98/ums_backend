@@ -11,4 +11,6 @@ public interface ScheduleSubjectClassRepository extends JpaRepository<ScheduleSu
     List<ScheduleSubjectClass> findByScheduleIdAndSubjectId(Long scheduleId, String subjectId);
 
     Optional<ScheduleSubjectClass> findFirstByScheduleIdAndSubjectClassId(Long scheduleId, String subjectClassId);
+
+    List<ScheduleSubjectClass> findAllByScheduleId(Long scheduleId);
 }

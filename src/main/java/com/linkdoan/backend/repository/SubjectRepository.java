@@ -28,7 +28,7 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
     @Query(value = "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName )  " +
             "FROM Subject subject INNER JOIN SubjectClass subjectClass ON subject.subjectId = subjectClass.subjectId " +
             "GROUP BY subject.subjectId"
-            )
+    )
     List<SubjectDTO> getAllSubjectInSubjectClass();
 
     @Query(value = "SELECT  sb.subjectId, sb.subjectName  " +
@@ -39,7 +39,7 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
 
     @Query(value = "SELECT subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber" +
             " ,subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
-            "subject.theoryNumber, department.departmentName " +
+            "subject.theoryNumber, department.departmentName, subject.subjectType " +
             "FROM Subject subject left join Department department ON subject.departmentId = department.departmentId "
     )
     List<Object[]> getAll();
@@ -50,5 +50,17 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
     )
     List<String> getListSubjectIdByEducationProgramId(@Param("educationProgramId") String educationProgramId);
 
+
+    //find all education program has subject to extract group id
+    @Query(value =
+            "SELECT eps.educationProgramId,ep.educationProgramName, gr.groupId " +
+                    "FROM Subject subject  " +
+                    "INNER JOIN EducationProgramSubject eps ON subject.subjectId = eps.subjectId " +
+                    "INNER JOIN EducationProgram ep ON eps.educationProgramId = ep.educationProgramId " +
+                    "INNER JOIN YearClass yearClass ON eps.term = yearClass.currentTerm " +
+                    "INNER JOIN GroupStudent gr ON eps.educationProgramId = gr.educationProgramId " +
+                    "WHERE subject.subjectId = :subjectId AND gr.term = eps.term"
+    )
+    List<Object[]> getAllEducationProgramSubjectIsIn(@Param("subjectId") String subjectId);
 
 }

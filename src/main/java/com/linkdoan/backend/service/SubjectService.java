@@ -15,7 +15,7 @@ import java.util.Map;
 public interface SubjectService {
     Page findBy(Pageable pageable, SubjectDTO subjectDTO);
 
-    List<Map<String, Object>> getAll();
+    List<Map<String, Object>> getAll(String actionType);
 
     int create(List<SubjectDTO>  subjectDTO);
 

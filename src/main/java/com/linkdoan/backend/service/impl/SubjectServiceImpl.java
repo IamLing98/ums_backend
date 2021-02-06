@@ -38,40 +38,94 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Map<String, Object>> getAll() {
-        List<Object[]> subjectObjectList = subjectRepository.getAll();
-        List<Map<String, Object>> subjectListMap = new ArrayList<>();
-        if (!subjectObjectList.isEmpty()) {
-            for (Object[] object : subjectObjectList) {
-                Map<String, Object> subjectMap = new HashMap<>();
-                subjectMap.put("departmentId", object[0]);
-                subjectMap.put("discussNumber", object[1]);
-                subjectMap.put("eachSubject", object[2]);
-                subjectMap.put("exerciseNumber", object[3]);
-                subjectMap.put("practiceNumber", object[4]);
-                subjectMap.put("selfLearningNumber", object[5]);
-                subjectMap.put("subjectForLevel", object[6]);
-                subjectMap.put("subjectId", object[7]);
-                subjectMap.put("subjectName", object[8]);
-                subjectMap.put("theoryNumber", object[9]);
-                subjectMap.put("departmentName", object[10]);
-                List<Object[]> preLearnSubjectList = subjectRepository.getPreviousLearnSubject(object[7] + "");
-                if (preLearnSubjectList != null && !preLearnSubjectList.isEmpty()) {
-                    List<Map<String, Object>> preLearnList = new ArrayList<>();
-                    for (Object[] preObject : preLearnSubjectList) {
-                        Map<String, Object> preObjectMap = new HashMap<>();
-                        preObjectMap.put("subjectId", preObject[0]);
-                        preObjectMap.put("subjectName", preObject[1]);
-                        preLearnList.add(preObjectMap);
+    public List<Map<String, Object>> getAll(String actionType) {
+        if (actionType == "" || actionType == null) {
+            List<Object[]> subjectObjectList = subjectRepository.getAll();
+            List<Map<String, Object>> subjectListMap = new ArrayList<>();
+            if (!subjectObjectList.isEmpty()) {
+                for (Object[] object : subjectObjectList) {
+                    Map<String, Object> subjectMap = new HashMap<>();
+                    subjectMap.put("departmentId", object[0]);
+                    subjectMap.put("discussNumber", object[1]);
+                    subjectMap.put("eachSubject", object[2]);
+                    subjectMap.put("exerciseNumber", object[3]);
+                    subjectMap.put("practiceNumber", object[4]);
+                    subjectMap.put("selfLearningNumber", object[5]);
+                    subjectMap.put("subjectForLevel", object[6]);
+                    subjectMap.put("subjectId", object[7]);
+                    subjectMap.put("subjectName", object[8]);
+                    subjectMap.put("theoryNumber", object[9]);
+                    subjectMap.put("departmentName", object[10]);
+                    subjectMap.put("subjectType", object[11]);
+                    List<Object[]> preLearnSubjectList = subjectRepository.getPreviousLearnSubject(object[7] + "");
+                    if (preLearnSubjectList != null && !preLearnSubjectList.isEmpty()) {
+                        List<Map<String, Object>> preLearnList = new ArrayList<>();
+                        for (Object[] preObject : preLearnSubjectList) {
+                            Map<String, Object> preObjectMap = new HashMap<>();
+                            preObjectMap.put("subjectId", preObject[0]);
+                            preObjectMap.put("subjectName", preObject[1]);
+                            preLearnList.add(preObjectMap);
+                        }
+                        subjectMap.put("preLearnSubjectList", preLearnList);
+                    } else {
+                        subjectMap.put("preLearnSubjectList", new ArrayList<>());
                     }
-                    subjectMap.put("preLearnSubjectList", preLearnList);
-                } else {
-                    subjectMap.put("preLearnSubjectList", new ArrayList<>());
+                    subjectListMap.add(subjectMap);
                 }
-                subjectListMap.add(subjectMap);
             }
+            return subjectListMap;
+        } else if (actionType.equals("SCS")  ) {
+            System.out.println("SCS");
+            List<Object[]> subjectObjectList = subjectRepository.getAll();
+            List<Map<String, Object>> subjectListMap = new ArrayList<>();
+            if (!subjectObjectList.isEmpty()) {
+                for (Object[] object : subjectObjectList) {
+                    Map<String, Object> subjectMap = new HashMap<>();
+                    subjectMap.put("departmentId", object[0]);
+                    subjectMap.put("discussNumber", object[1]);
+                    subjectMap.put("eachSubject", object[2]);
+                    subjectMap.put("exerciseNumber", object[3]);
+                    subjectMap.put("practiceNumber", object[4]);
+                    subjectMap.put("selfLearningNumber", object[5]);
+                    subjectMap.put("subjectForLevel", object[6]);
+                    subjectMap.put("subjectId", object[7]);
+                    subjectMap.put("subjectName", object[8]);
+                    subjectMap.put("theoryNumber", object[9]);
+                    subjectMap.put("departmentName", object[10]);
+                    subjectMap.put("subjectType", object[11]);
+                    List<Object[]> preLearnSubjectList = subjectRepository.getPreviousLearnSubject(object[7] + "");
+                    if (preLearnSubjectList != null && !preLearnSubjectList.isEmpty()) {
+                        List<Map<String, Object>> preLearnList = new ArrayList<>();
+                        for (Object[] preObject : preLearnSubjectList) {
+                            Map<String, Object> preObjectMap = new HashMap<>();
+                            preObjectMap.put("subjectId", preObject[0]);
+                            preObjectMap.put("subjectName", preObject[1]);
+                            preLearnList.add(preObjectMap);
+                        }
+                        subjectMap.put("preLearnSubjectList", preLearnList);
+                    } else {
+                        subjectMap.put("preLearnSubjectList", new ArrayList<>());
+                    }
+                    List<Object[]> listEducationProgramBySubjectId = subjectRepository.getAllEducationProgramSubjectIsIn(object[7] + "");
+                    if (listEducationProgramBySubjectId != null && !listEducationProgramBySubjectId.isEmpty()) {
+                        List<Map<String, Object>> preLearnList = new ArrayList<>();
+                        for (Object[] preObject : listEducationProgramBySubjectId) {
+                            Map<String, Object> preObjectMap = new HashMap<>();
+                            preObjectMap.put("educationProgramId", preObject[0]);
+                            preObjectMap.put("educationProgramName", preObject[1]);
+                            preObjectMap.put("groupId", preObject[2]);
+                            preLearnList.add(preObjectMap);
+                        }
+                        subjectMap.put("groupList", preLearnList);
+                    } else {
+                        subjectMap.put("groupList", new ArrayList<>());
+                    }
+                    subjectListMap.add(subjectMap);
+                }
+            }
+            return subjectListMap;
         }
-        return subjectListMap;
+        return null;
     }
 
     @Override
@@ -122,7 +176,7 @@ public class SubjectServiceImpl implements SubjectService {
         for (String id : subjectDTOList) {
             if (subjectRepository.findById(id).isPresent()) {
                 List<PrerequisitesSubject> currentList = prerequisitesSubjectRepository.findAllBySubjectId(id);
-                for (PrerequisitesSubject prerequisitesSubject : currentList){
+                for (PrerequisitesSubject prerequisitesSubject : currentList) {
                     prerequisitesSubjectRepository.delete(prerequisitesSubject);
                 }
                 subjectRepository.deleteById(id);

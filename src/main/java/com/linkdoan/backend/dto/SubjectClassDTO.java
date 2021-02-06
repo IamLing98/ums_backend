@@ -25,6 +25,12 @@ public class SubjectClassDTO {
 
     private Integer groupId;
 
+    private String mainSubjectClassId;
+
+    private Integer subjectType;
+
+    private Integer type;
+
     public SubjectClass toModel(){
         SubjectClass sj = new SubjectClass();
         sj.setSubjectClassId(this.subjectClassId);
@@ -34,6 +40,10 @@ public class SubjectClassDTO {
         sj.setIsRequireLab(this.isRequireLab);
         sj.setCreatedDate(this.createdDate);
         sj.setSubjectId(this.subjectId);
+        sj.setMainSubjectClassId(this.mainSubjectClassId);
+        sj.setDuration(this.duration);
+        sj.setType(this.type);
+        sj.setGroupId(this.groupId);
         return sj;
     }
 

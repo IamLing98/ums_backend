@@ -13,5 +13,5 @@ public interface ScheduleService {
 
     int update(String termId, Long scheduleId);
 
-    int delete(String termId, Long scheduleId, List<String> ids);
+    int delete(String termId, Long scheduleId );
 }

@@ -40,8 +40,8 @@ public class ScheduleController {
     }
 
     @RequestMapping(value = "/schedules/{termId}/{scheduleId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete (@PathVariable("termId") String termId,@PathVariable("scheduleId") Long scheduleId, @RequestParam("ids") List<String> ids)
+    public ResponseEntity<?> delete (@PathVariable("termId") String termId,@PathVariable("scheduleId") Long scheduleId )
             throws Exception {
-        return new ResponseEntity<>(scheduleServiceService.delete(termId,scheduleId,ids), HttpStatus.OK);
+        return new ResponseEntity<>(scheduleServiceService.delete(termId,scheduleId) , HttpStatus.OK);
     }
 }

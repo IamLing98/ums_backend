@@ -11,22 +11,24 @@ public class GA {
     private final int popSize;                 //So luong ca the
     private Schedule bestOfPopulation;   //ca the tot nhat trong quan the hien tai
     private Schedule bestOfBest;         //ca the tot nhat qua cac the he
-    private final ArrayList<Schedule> population;           //Quan the ban dau
+    private final ArrayList<Schedule> population ;           //Quan the ban dau
     private final ArrayList<Schedule> nextPopulation;       //Quan the sau
     private ArrayList<Double> rulet;                           //Banh xe Rulet ung vi vi tri xac suat cua tung ca the trong quan the
+    private InputFromFile inputFromFile;
 
-    public GA(int crossoverProbability, int mutationProbability, double desiredFitness, int popSize) {
+    public GA(int crossoverProbability, int mutationProbability, double desiredFitness, int popSize, InputFromFile inputFromFile) {
         this.crossoverProbability = crossoverProbability;
         this.mutationProbability = mutationProbability;
         this.desiredFitness = desiredFitness;
         this.popSize = popSize;
+        this.inputFromFile = inputFromFile;
         population = new ArrayList(popSize);
         nextPopulation = new ArrayList(popSize);
         for (int i = 0; i < popSize; i++) {
             nextPopulation.add(null);
         }
-        bestOfPopulation = new Schedule();
-        bestOfBest = new Schedule();
+        bestOfPopulation = new Schedule(inputFromFile);
+        bestOfBest = new Schedule(inputFromFile);
         rulet = new ArrayList();
     }
 
@@ -36,6 +38,10 @@ public class GA {
 
     public Schedule getBestOfBest() {
         return bestOfBest;
+    }
+
+    public InputFromFile getInputFromFile() {
+        return inputFromFile;
     }
 
     public int getCrossoverProbability() {
@@ -72,7 +78,7 @@ public class GA {
     public void initializeThePopulation() {
         Schedule sc;
         for (int i = 0; i < popSize; i++) {
-            sc = new Schedule();
+            sc = new Schedule(getInputFromFile());
             sc.initializeSchedule();
             population.add(sc);
         }
@@ -213,7 +219,7 @@ public class GA {
                 System.out.print("0");
             }
             if ((x + 1) % 5 == 0) {
-                System.out.print("   " + InputFromFile.getClassList().get(x / 5).getId() + "\n");
+                System.out.print("   " + inputFromFile.getClassList().get(x / 5).getId() + "\n");
             }
             x++;
         }

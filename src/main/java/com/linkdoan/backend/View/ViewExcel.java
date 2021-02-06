@@ -23,6 +23,7 @@ public class ViewExcel {
 //    private static final int ROOM_NUM = 5;
     private final String path = "C://linkdoan//uploads//";
     private final String fileName = "Schedule.xls";
+    private InputFromFile inputFromFile;
 
     public String getFileName() {
         return fileName;
@@ -108,7 +109,7 @@ public class ViewExcel {
     //data tro den lich cua phong roomList[i]
     private void loadTableByRoom(int i) {
         data = new Object[][]{
-                {"ROOM : " + InputFromFile.getRoomList().get(i).getName() + "\n" + (InputFromFile.getRoomList().get(i).isLab() ? "lab\n" : "\n") + InputFromFile.getRoomList().get(i).getNumberOfSeats(), "MON", "TUE", "WED", "THU", "FRI"},
+                {"ROOM : " + schedule.getInputFromFile().getRoomList().get(i).getName() + "\n" + (schedule.getInputFromFile().getRoomList().get(i).isLab() ? "lab\n" : "\n") + schedule.getInputFromFile().getRoomList().get(i).getNumberOfSeats(), "MON", "TUE", "WED", "THU", "FRI"},
                 {"07h00 - 07h50", showLesson(i * DAY_HOURS + 0), showLesson(i * DAY_HOURS + 0 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 0 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 0 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 0 + 4 * DAY_HOURS * ROOM_NUM)},
                 {"07h55 - 08h45", showLesson(i * DAY_HOURS + 1), showLesson(i * DAY_HOURS + 1 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 1 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 1 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 1 + 4 * DAY_HOURS * ROOM_NUM)},
                 {"08h55 - 09h45", showLesson(i * DAY_HOURS + 2), showLesson(i * DAY_HOURS + 2 + DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 2 + 2 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 2 + 3 * DAY_HOURS * ROOM_NUM), showLesson(i * DAY_HOURS + 2 + 4 * DAY_HOURS * ROOM_NUM)},

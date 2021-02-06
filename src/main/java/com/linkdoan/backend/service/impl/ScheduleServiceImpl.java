@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -30,7 +27,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     SubjectClassRepository subjectClassRepository;
 
-    private static GA ga;
     private static final int DAY_HOURS = 10;
     private static final int DAY_NUM = 5;
     private static int ROOM_NUM;
@@ -45,10 +41,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     public static int getDAY_NUM() {
         return DAY_NUM;
-    }
-
-    public static GA getGA() {
-        return ga;
     }
 
 
@@ -78,6 +70,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public String initData(String termId) throws Exception {
+        InputFromFile inputFromFile = null;
         try {
             OutputStreamWriter writer = new OutputStreamWriter(
                     new FileOutputStream("src//main//java//com//linkdoan//backend//GAScheduleModel//ax.txt"), "UTF-8");
@@ -133,7 +126,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
             System.out.println("----------GET LIST GROUPS----------");
             List<SubjectClassDTO> subjectClassList = subjectClassRepository.getListSubjectClassByTermId(termId);
-            System.out.println("SUBJECT CLASSES SIZE: " + subjectClassList.size() );
+            System.out.println("SUBJECT CLASSES SIZE: " + subjectClassList.size());
             for (int i = 0; i < subjectClassList.size(); i++) {
                 SubjectClassDTO subjectClassDTO = subjectClassList.get(i);
                 bufferedWriter.write("#group");
@@ -173,31 +166,34 @@ public class ScheduleServiceImpl implements ScheduleService {
                 }
                 bufferedWriter.write("#end");
                 bufferedWriter.newLine();
-                bufferedWriter.newLine();
             }
             bufferedWriter.close();
-            InputFromFile.readFile();
+
+            inputFromFile = new InputFromFile();
+            inputFromFile.readFile();
+            ROOM_NUM = inputFromFile.getRoomList().size();
+            System.out.println("room num: " + ROOM_NUM);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return create(termId);
+        return create(termId, inputFromFile);
 
     }
 
     @Override
     public List<Map<String, Object>> getScheduleInfo(Long id) {
         Optional<com.linkdoan.backend.model.Schedule> scheduleOptional = scheduleRepository.findById(id);
-        if(scheduleOptional.isPresent()){
+        if (scheduleOptional.isPresent()) {
             List<Object[]> subjectClassInfoObject = scheduleRepository.getScheduleListObject(id);
             List<Map<String, Object>> subjectClassObjectMapList = new ArrayList<>();
             String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
                     "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
-                    "practiceNumber","subjectClassId", "isRequireLab", "teacherId", "duration",
+                    "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
                     "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
-                    "fullName","employeeId", "departmentName","subjectType","status" };
-            for(Object[] objectArray : subjectClassInfoObject){
+                    "fullName", "employeeId", "departmentName", "subjectType", "status"};
+            for (Object[] objectArray : subjectClassInfoObject) {
                 Map<String, Object> stringObjectMap = new HashMap<>();
-                for(int i = 0 ; i < 23; i++){
+                for (int i = 0; i < 23; i++) {
                     stringObjectMap.put(stringList[i], objectArray[i]);
                 }
                 Long currentOfSubmittingNumber = scheduleRepository.countSubmittedNumberBySubjectClassId(objectArray[9].toString());
@@ -212,39 +208,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         return null;
     }
 
-    @Override
-    public int update(String termId, Long scheduleId) {
-        return 0;
-    }
-
-    @Override
-    public int delete(String termId, Long scheduleId, List<String> ids) {
-        int count  = 0 ;
-        for(String subjectClassId : ids){
-            Optional<ScheduleSubjectClass> scheduleSubjectClassOptional = scheduleSubjectClassRepository.findFirstByScheduleIdAndSubjectClassId(scheduleId,subjectClassId) ;
-            if(scheduleSubjectClassOptional.isPresent()){
-                ScheduleSubjectClass scheduleSubjectClass = scheduleSubjectClassOptional.get();
-                scheduleSubjectClassRepository.delete(scheduleSubjectClass);
-                List<SubjectClassRegistration> subjectClassRegistrationList = subjectClassRegistrationRepository.findAllBySubjectClassIdAndTermId(subjectClassId, termId);
-                for(SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList){
-                    subjectClassRegistrationRepository.delete(subjectClassRegistration);
-                }
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public String create(String termId) throws Exception {
-
-        ROOM_NUM = InputFromFile.getRoomList().size();
-        System.out.println("room num" + ROOM_NUM);
-        ga = new GA(80, 10, 1, 2000);
+    public String create(String termId, InputFromFile inputFromFile) throws Exception {
+        GA ga = new GA(80, 10, 1, 2000, inputFromFile);
         System.out.println("processing....");
         long start = System.currentTimeMillis();
         int generation = ga.runGA();
         long end = System.currentTimeMillis();
         double time = (double) (end - start) / 1000;
+        Schedule schedule = ga.getBestOfBest();
 //
 //        lbCrossover.setText("Crossover           : " + ga.getCrossoverProbability() + " %");
 //        lbMutation.setText("Mutation              : " + ga.getMutationProbability() + " %");
@@ -254,11 +225,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 //        tfGeneration.setText(Integer.toString(generation));
 //        tfTime.setText(Double.toString(time));
 //        cbPhong.setEnabled(true);
-        ViewExcel excel = new ViewExcel(ga.getBestOfBest());
+        ViewExcel excel = new ViewExcel(schedule);
         excel.writeFileExcel();
 
         //call service and save schedule
-        Schedule schedule = ga.getBestOfBest();
         com.linkdoan.backend.model.Schedule schedule1 = new com.linkdoan.backend.model.Schedule();
         schedule1.setTermId(termId);
         schedule1.setCreatedDate(LocalDate.now());
@@ -266,7 +236,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         com.linkdoan.backend.model.Schedule savedSchedule = scheduleRepository.save(schedule1);
         //get all slots of schedule from GA
         Vector<ArrayList<CourseClass>> slots = schedule.getSlots();
-        ArrayList<com.linkdoan.backend.GAScheduleModel.Room> roomArrayList = InputFromFile.getRoomList();
+        ArrayList<com.linkdoan.backend.GAScheduleModel.Room> roomArrayList = inputFromFile.getRoomList();
         for (int i = 0; i < roomArrayList.size(); i++) {
             System.out.println("Room name: " + roomArrayList.get(i).getName());
         }
@@ -298,8 +268,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                         //kiem tra xem truoc do co la null hoặc cùng subject class k
                         if (currentVal < 1) {
                             scheduleSubjectClassRepository.save(scheduleSubjectClass);
-                        }
-                        else{
+                        } else {
                             if (slots.get(currentVal - 1).size() < 1) {
 //                          for(int s = 0 ; s < slots.get(currentVal).size() ; s++){
                                 System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
@@ -324,5 +293,24 @@ public class ScheduleServiceImpl implements ScheduleService {
         return excel.getFileName();
     }
 
+    @Override
+    public int update(String termId, Long scheduleId) {
+        return 0;
+    }
 
+    @Override
+    public int delete(String termId, Long scheduleId) {
+        int count = 0;
+        Optional<com.linkdoan.backend.model.Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
+        List<ScheduleSubjectClass> scheduleSubjectClassList = scheduleSubjectClassRepository.findAllByScheduleId(scheduleId);
+        for (ScheduleSubjectClass scheduleSubjectClass : scheduleSubjectClassList) {
+            scheduleSubjectClassRepository.delete(scheduleSubjectClass);
+        }
+        if (scheduleOptional.isPresent()) {
+            com.linkdoan.backend.model.Schedule schedule = scheduleOptional.get();
+            scheduleRepository.delete(schedule);
+            count++;
+        }
+        return count;
+    }
 }

@@ -1,42 +1,57 @@
 package com.linkdoan.backend.GAScheduleModel;
 
+import lombok.Data;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+@Data
 public class InputFromFile {
 
-    private static Scanner sc;
-    private static final ArrayList<Professor> profList = new ArrayList();
-    private static final ArrayList<CourseClass> classList = new ArrayList();
-    private static final ArrayList<Course> courseList = new ArrayList();
-    private static final ArrayList<StudentsGroup> groupList = new ArrayList();
-    private static final ArrayList<Room> roomList = new ArrayList();
+    private Scanner sc;
+    private ArrayList<Professor> profList = new ArrayList();
+    private ArrayList<CourseClass> classList = new ArrayList();
+    private ArrayList<Course> courseList = new ArrayList();
+    private ArrayList<StudentsGroup> groupList = new ArrayList();
+    private ArrayList<Room> roomList = new ArrayList();
 
-    public static ArrayList<Professor> getProfList() {
+    public ArrayList<Professor> getProfList() {
         return profList;
     }
 
-    public static ArrayList<CourseClass> getClassList() {
+    public ArrayList<CourseClass> getClassList() {
         return classList;
     }
 
-    public static ArrayList<Course> getCourseList() {
+    public ArrayList<Course> getCourseList() {
         return courseList;
     }
 
-    public static ArrayList<StudentsGroup> getGroupList() {
+    public ArrayList<StudentsGroup> getGroupList() {
         return groupList;
     }
 
-    public static ArrayList<Room> getRoomList() {
+    public ArrayList<Room> getRoomList() {
         return roomList;
     }
 
+    public InputFromFile(Scanner sc) throws Exception {
+        this.sc = sc;
+        readFile();
+    }
 
-    public static Room getRoomById(int id) {
+    public InputFromFile(){
+
+    }
+
+    public void setScanner(Scanner sc){
+        this.sc = sc;
+    }
+
+    public  Room getRoomById(int id) {
         for (Room r : roomList) {
             if (r.getId() == id) {
                 return r;
@@ -45,7 +60,7 @@ public class InputFromFile {
         return null;
     }
 
-    private static void readProfessor() {
+    private void readProfessor() {
         String temp;
         Professor i = new Professor();
         while (sc.hasNext()) {
@@ -74,7 +89,7 @@ public class InputFromFile {
         profList.add(i);
     }
 
-    private static void readStudentsGroup() {
+    private  void readStudentsGroup() {
         /**
          * @status: done
          */
@@ -104,7 +119,7 @@ public class InputFromFile {
         groupList.add(i);
     }
 
-    private static void readCourse() {
+    private void readCourse() {
         /**
          * @status: done
          */
@@ -135,7 +150,7 @@ public class InputFromFile {
         courseList.add(i);
     }
 
-    private static void readCourseClass() {
+    private void readCourseClass() {
         String temp;
         String id = "";
         Professor tempProf = new Professor();
@@ -193,7 +208,7 @@ public class InputFromFile {
         classList.add(new CourseClass(id, tempProf, tempCourse, tempGroups, requiresLab, duration, subjectClassId));
     }
 
-    private static void readRoom() {
+    private void readRoom() {
         String temp;
         String temp_name = new String();
         boolean temp_lab = false;
@@ -225,9 +240,10 @@ public class InputFromFile {
         roomList.add(new Room(temp_name, temp_lab, temp_size, temp_distance));
     }
 
-    public static void readFile() throws FileNotFoundException {
+    public void readFile() throws FileNotFoundException {
         System.setIn(new FileInputStream("src//main//java//com//linkdoan//backend//GAScheduleModel//ax.txt"));
-        sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        setSc(sc);
         String temp;
         while (sc.hasNext()) {
             temp = sc.nextLine();
