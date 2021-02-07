@@ -33,7 +33,7 @@ public class HibernateRepository<E, K extends Serializable> {
     }
 
     public Long insert(E entity) {
-        Long id = (Long)	currentSession().save(entity);
+        Long id = (Long) currentSession().save(entity);
         return id;
     }
 
@@ -53,7 +53,7 @@ public class HibernateRepository<E, K extends Serializable> {
         return (E) currentSession().get(daoType, key);
     }
 
-    public E findByFiled(String property,Object value){
+    public E findByFiled(String property, Object value) {
         return (E) findCriteria(daoType, property, value).uniqueResult();
     }
 

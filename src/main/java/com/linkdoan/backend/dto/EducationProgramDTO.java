@@ -19,7 +19,7 @@ public class EducationProgramDTO {
 
     private Integer educationProgramLevel;
 
-    private String branchId ;
+    private String branchId;
 
     private Integer educationProgramType;
 

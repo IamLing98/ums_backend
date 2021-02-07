@@ -81,21 +81,20 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public int update(YearClassDTO yearClassDTO) {
         Optional<YearClass> yearClassOptional = yearClassRepository.findById(yearClassDTO.getClassId());
-        if(yearClassOptional.isPresent()){
+        if (yearClassOptional.isPresent()) {
             YearClass yearClass = yearClassDTO.toModel();
             yearClassRepository.save(yearClass);
             return 1;
-        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
 
     }
 
     @Override
     public int delete(String id) {
         Optional<YearClass> yearClassOptional = yearClassRepository.findById(id);
-        if(yearClassOptional.isPresent()){
+        if (yearClassOptional.isPresent()) {
             yearClassRepository.deleteById(id);
             return 1;
-        }
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
     }
 }

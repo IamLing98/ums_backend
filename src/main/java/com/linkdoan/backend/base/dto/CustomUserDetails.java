@@ -32,9 +32,11 @@ public class CustomUserDetails implements UserDetails {
 
         return authorities;
     }
-    public CustomUserDetails(UserDTO user){
+
+    public CustomUserDetails(UserDTO user) {
         this.user = user;
     }
+
     @Override
     public String getPassword() {
         return user.getPassword();

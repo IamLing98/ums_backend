@@ -33,9 +33,10 @@ public class Schedule {
         this.inputFromFile = inputFromFile;
     }
 
-    public InputFromFile getInputFromFile(){
+    public InputFromFile getInputFromFile() {
         return this.inputFromFile;
     }
+
     public int getNumberOfCrossoverPoints() {
         return numberOfCrossoverPoints;
     }
@@ -123,7 +124,7 @@ public class Schedule {
         //Tao danh sach cac lop voi so tiet bang nhau, cac day 3 , 2 tiet
         ArrayList<CourseClass> listClass = inputFromFile.getClassList();
         System.out.println("COURSE LIST:--------------");
-        for(int i = 0 ;  i < listClass.size(); i++){
+        for (int i = 0; i < listClass.size(); i++) {
             System.out.println("Class: " + listClass.get(i).getCourse().getName() + " duration: " + listClass.get(i).getDuration());
         }
 //        ArrayList<CourseClass> cc4 = new ArrayList();
@@ -140,7 +141,7 @@ public class Schedule {
             }
         }
 
-        for(int i = 0 ;  i < cc3.size(); i++){
+        for (int i = 0; i < cc3.size(); i++) {
             System.out.println("Classs: " + cc3.get(i).getCourse().getName() + " duration: " + cc3.get(i).getDuration());
         }
 
@@ -241,10 +242,10 @@ public class Schedule {
             criteria.add(ci + 0, !ro);
 
             //Kiem tra phong co du cho khong? (+1)
-            System.out.println("room: " +  room);
+            System.out.println("room: " + room);
             Room r = getInputFromFile().getRoomById(room);
-            if(getInputFromFile() == null) System.out.println("input is null");
-            if(r == null) System.out.println("room null");
+            if (getInputFromFile() == null) System.out.println("input is null");
+            if (r == null) System.out.println("room null");
             getCriteria().add(ci + 1, r.getNumberOfSeats() >= cc.getNumberOfSeats());
             if (getCriteria().get(ci + 1)) {
                 score++;

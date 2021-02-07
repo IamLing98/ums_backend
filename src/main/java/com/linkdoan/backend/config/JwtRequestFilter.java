@@ -15,12 +15,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private UserService jwtUserDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {

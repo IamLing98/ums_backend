@@ -12,39 +12,43 @@ public interface EducationProgramRepository extends JpaRepository<EducationProgr
 
     List<EducationProgram> findAll();
 
-    @Query(value="SELECT   new com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
-            "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
-            "FROM EducationProgram  ep inner join Department department on ep.departmentId = department.departmentId " +
-            "inner join Branch branch on ep.branchId = branch.branchId " +
-            "WHERE (:branchId is null or :branchId = '' or ep.branchId = :branchId) and (:educationProgramId is null or :educationProgramId ='' or ep.educationProgramId = :educationProgramId) "
+    @Query(value =
+            "SELECT   new com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
+                    "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
+                    "FROM EducationProgram  ep inner join Department department on ep.departmentId = department.departmentId " +
+                    "inner join Branch branch on ep.branchId = branch.branchId " +
+                    "WHERE (:branchId is null or :branchId = '' or ep.branchId = :branchId) and (:educationProgramId is null or :educationProgramId ='' or ep.educationProgramId = :educationProgramId) "
     )
-    List<EducationProgramDTO> findAll(@Param("branchId") String branchId, @Param("educationProgramId") String educationProgramId );
+    List<EducationProgramDTO> findAll(@Param("branchId") String branchId, @Param("educationProgramId") String educationProgramId);
 
 
-    @Query(value="SELECT NEW com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
-            "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
-            "FROM EducationProgram  ep INNER JOIN Department department ON ep.departmentId = department.departmentId " +
-            "INNER JOIN Branch branch ON ep.branchId = branch.branchId " +
-            "WHERE ( ep.educationProgramId = :educationProgramId) "
+    @Query(value =
+            "SELECT NEW com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
+                    "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
+                    "FROM EducationProgram  ep INNER JOIN Department department ON ep.departmentId = department.departmentId " +
+                    "INNER JOIN Branch branch ON ep.branchId = branch.branchId " +
+                    "WHERE ( ep.educationProgramId = :educationProgramId) "
     )
     List<Object[]> findListSubjectObjectByEducationProgramId(@Param("educationProgramId") String educationProgramId);
 
-    @Query(value="SELECT NEW com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
-            "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
-            "FROM EducationProgram  ep INNER JOIN Department department ON ep.departmentId = department.departmentId " +
-            "INNER JOIN Branch branch ON ep.branchId = branch.branchId " +
-            "WHERE ( ep.educationProgramId = :educationProgramId) "
+    @Query(value =
+            "SELECT NEW com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
+                    "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
+                    "FROM EducationProgram  ep INNER JOIN Department department ON ep.departmentId = department.departmentId " +
+                    "INNER JOIN Branch branch ON ep.branchId = branch.branchId " +
+                    "WHERE ( ep.educationProgramId = :educationProgramId) "
     )
-    EducationProgramDTO getDetail( @Param("educationProgramId") String educationProgramId);
+    EducationProgramDTO getDetail(@Param("educationProgramId") String educationProgramId);
 
-    @Query(value="SELECT subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber, " +
-            "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
-            "subject.theoryNumber, department.departmentName, epd.term  " +
-            "FROM Subject subject  INNER JOIN Department department ON subject.departmentId = department.departmentId " +
-            "INNER JOIN EducationProgramSubject epd ON subject.subjectId = epd.subjectId " +
-            "WHERE ( epd.educationProgramId = :educationProgramId) "
+    @Query(value =
+            "SELECT subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber, " +
+                    "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
+                    "subject.theoryNumber, department.departmentName, epd.term  " +
+                    "FROM Subject subject  INNER JOIN Department department ON subject.departmentId = department.departmentId " +
+                    "INNER JOIN EducationProgramSubject epd ON subject.subjectId = epd.subjectId " +
+                    "WHERE ( epd.educationProgramId = :educationProgramId) "
     )
-    List<Object[]> getCorrectListSubjectByEp( @Param("educationProgramId") String educationProgramId);
+    List<Object[]> getCorrectListSubjectByEp(@Param("educationProgramId") String educationProgramId);
 
 
 }

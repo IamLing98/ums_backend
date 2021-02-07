@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BranchController {
 
     @Autowired
-    BranchServiceImpl branchService ;
+    BranchServiceImpl branchService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -22,7 +22,7 @@ public class BranchController {
     @RequestMapping(value = "/branches", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@RequestParam(name = "departmentId", required = false) String departmentId) throws Exception {
 
-        return new ResponseEntity<>( branchService.getAllBranch(departmentId) , HttpStatus.OK);
+        return new ResponseEntity<>(branchService.getAllBranch(departmentId), HttpStatus.OK);
     }
 
 

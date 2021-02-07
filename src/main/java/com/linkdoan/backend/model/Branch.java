@@ -10,23 +10,23 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 @Data
-@Table(name="branch")
+@Table(name = "branch")
 @Entity
 
 public class Branch {
 
     @Id
-    @Size(min=10, max=10)
-    @Column(name = "branch_id",unique = true,columnDefinition="CHAR(10)")
+    @Size(min = 10, max = 10)
+    @Column(name = "branch_id", unique = true, columnDefinition = "CHAR(10)")
     private String branchId;
 
-    @Column(name = "branch_name", columnDefinition="CHAR(45)")
+    @Column(name = "branch_name", columnDefinition = "CHAR(45)")
     private String branchName;
 
-    @Column(name = "department_id", columnDefinition="CHAR(7)")
+    @Column(name = "department_id", columnDefinition = "CHAR(7)")
     private String departmentId;
 
-    public BranchDTO toDTO(){
+    public BranchDTO toDTO() {
         BranchDTO branchDTO = new BranchDTO();
         branchDTO.setBranchId(this.branchId);
         branchDTO.setBranchName(this.branchName);

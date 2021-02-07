@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Table(name="education_program")
+@Table(name = "education_program")
 @Entity
 public class EducationProgram {
     @Id
@@ -25,7 +25,7 @@ public class EducationProgram {
     @Column(name = "education_program_type", columnDefinition = "INT")
     private Integer educationProgramType;
 
-    @Column(name = "branch_id", columnDefinition="CHAR(10)")
+    @Column(name = "branch_id", columnDefinition = "CHAR(10)")
     private String branchId;
 
     @Column(name = "education_program_status", columnDefinition = "INT")
@@ -34,10 +34,10 @@ public class EducationProgram {
     @Column(name = "total_term", columnDefinition = "INT")
     private Integer totalTerm = 8;
 
-    @Column(name="department_id", columnDefinition = "char(12)")
+    @Column(name = "department_id", columnDefinition = "char(12)")
     private String departmentId;
 
-    public EducationProgramDTO toDTO(){
+    public EducationProgramDTO toDTO() {
         EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
         educationProgramDTO.setBranchId(this.branchId);
         educationProgramDTO.setEducationProgramId(this.educationProgramId);

@@ -38,7 +38,7 @@ public class TermController {
         return new ResponseEntity<>(termService.update(termId, termDTO), HttpStatus.OK);
     }
 
-//    @CrossOrigin(origins = "http://localhost:3000")
+    //    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(value = "/terms/{termId}")
     public ResponseEntity<?> deleteTerm(@PathVariable("termId") String termId)
             throws Exception {

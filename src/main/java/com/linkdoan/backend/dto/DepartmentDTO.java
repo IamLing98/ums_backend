@@ -9,10 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class DepartmentDTO  {
+public class DepartmentDTO {
     private String departmentId;
 
     @AdjHistory(field = "departmentName")

@@ -9,9 +9,10 @@ import org.springframework.data.domain.Page;
 import java.io.IOException;
 import java.util.List;
 
-@ComponentScan(basePackages= {"com.linkdoan.backend.*"})
+@ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface DepartmentService {
-    List<DepartmentDTO> getAllDepartment(String departmentId)throws IOException;
+    List<DepartmentDTO> getAllDepartment(String departmentId) throws IOException;
+
     Page<Specialized> getAllSpecialized(SpecializedDTO specializedDTO) throws IOException;
 
 }

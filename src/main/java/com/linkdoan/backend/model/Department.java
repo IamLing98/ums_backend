@@ -26,7 +26,6 @@ public class Department {
     private Integer startYear; //date type
 
 
-
     public DepartmentDTO toDTO() {
         DepartmentDTO departmentDTO = new DepartmentDTO();
         departmentDTO.setDepartmentId(this.departmentId);

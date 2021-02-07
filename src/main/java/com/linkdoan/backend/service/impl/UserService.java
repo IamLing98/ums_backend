@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         return new CustomUserDetails(userDTO);
     }
 
-    public UserDTO getUserDetails(String username){
+    public UserDTO getUserDetails(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
         UserDTO userDTO = user.toDto();
         List<Role> roleList = roleRepository.findAllRoles(user.getUserId());
         List<RoleDTO> roleDTOList = new ArrayList<>();
-        for(int i = 0 ; i< roleList.size(); i++){
+        for (int i = 0; i < roleList.size(); i++) {
             RoleDTO roleDTO = roleList.get(i).toDto();
             roleDTOList.add(roleDTO);
         }

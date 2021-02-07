@@ -17,7 +17,7 @@ public interface SubjectService {
 
     List<Map<String, Object>> getAll(String actionType);
 
-    int create(List<SubjectDTO>  subjectDTO);
+    int create(List<SubjectDTO> subjectDTO);
 
     Subject update(String id, SubjectDTO subjectDTO);
 

@@ -23,7 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee createEmployee(EmployeeDTO employeeDTO) throws IOException {
-        if(employeeRepository.existsById(employeeDTO.getEmployeeId()) == true) throw  new EntityExistsException("Exist");
+        if (employeeRepository.existsById(employeeDTO.getEmployeeId()) == true)
+            throw new EntityExistsException("Exist");
         return employeeRepository.save(employeeDTO.toModel());
     }
 

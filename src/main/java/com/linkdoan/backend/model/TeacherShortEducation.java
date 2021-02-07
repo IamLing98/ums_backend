@@ -15,16 +15,16 @@ public class TeacherShortEducation {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer teacherTimeLineId;
 
-    @Column(name="teacher_id")
+    @Column(name = "teacher_id")
     private String teacherId;
 
-    @Column(name="year")
+    @Column(name = "year")
     private Integer year;
 
-    @Column(name="content")
+    @Column(name = "content")
     private String content;
 
-    @Column(name="education_place")
+    @Column(name = "education_place")
     private String educationPlace;
 
 

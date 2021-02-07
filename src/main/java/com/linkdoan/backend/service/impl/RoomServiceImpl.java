@@ -24,7 +24,7 @@ public class RoomServiceImpl implements RoomService {
         List<Room> roomList = new ArrayList<>();
         roomList = roomRepository.findAll();
         List<RoomDTO> roomDTOList = new ArrayList<>();
-        for(Room room : roomList){
+        for (Room room : roomList) {
             roomDTOList.add(room.toDTO());
         }
         return roomDTOList;
@@ -33,27 +33,27 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public int create(RoomDTO roomDTO) {
         Optional<Room> roomOptional = roomRepository.findFirstByRoomId(roomDTO.getRoomId());
-        if(roomOptional.isPresent()){
+        if (roomOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại");
-        }else roomRepository.save(roomDTO.toModel());
+        } else roomRepository.save(roomDTO.toModel());
         return 1;
     }
 
     @Override
     public int update(String roomId, RoomDTO roomDTO) {
         Optional<Room> roomOptional = roomRepository.findFirstByRoomId(roomDTO.getRoomId());
-        if(!roomOptional.isPresent()){
+        if (!roomOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Không tồn tại");
-        }else roomRepository.save(roomDTO.toModel());
+        } else roomRepository.save(roomDTO.toModel());
         return 1;
     }
 
     @Override
     public int delete(String roomId) {
         Optional<Room> roomOptional = roomRepository.findFirstByRoomId(roomId);
-        if(!roomOptional.isPresent()){
+        if (!roomOptional.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Không tồn tại");
-        }else roomRepository.deleteById(roomId);
+        } else roomRepository.deleteById(roomId);
         return 1;
     }
 }

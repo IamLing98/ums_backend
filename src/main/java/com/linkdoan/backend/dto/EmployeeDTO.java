@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
-public class EmployeeDTO  {
+public class EmployeeDTO {
 
     private String employeeId;
 
@@ -42,21 +42,24 @@ public class EmployeeDTO  {
 
     private String departmentId;
 
-    public Employee toModel(){
+    public Employee toModel() {
         Employee employee = new Employee();
         employee.setEmployeeId(employeeId);
         employee.setFullName(fullName);
         employee.setDateBirth(dateBirth);
         employee.setSex(sex);
         employee.setPlaceBorn(placeBorn);
-        employee.setContactAddress(contactAddress);;
+        employee.setContactAddress(contactAddress);
+        ;
         employee.setPhoneNumber(phoneNumber);
         employee.setEmail(email);
         employee.setDegree(degree);
         employee.setDegreeDetails(degreeDetails);
         employee.setScientificTitles(scientificTitles);
-        employee.setScientificTitlesGetYear(scientificTitlesGetYear);;
-        employee.setEmployeeType(employeeType);;
+        employee.setScientificTitlesGetYear(scientificTitlesGetYear);
+        ;
+        employee.setEmployeeType(employeeType);
+        ;
         employee.setStartWork(startWork);
         employee.setAvatar(avatar);
         employee.setDepartmentId(departmentId);

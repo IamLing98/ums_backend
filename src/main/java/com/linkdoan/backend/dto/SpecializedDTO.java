@@ -14,7 +14,7 @@ public class SpecializedDTO extends SystemDTO {
     private String specializedName;
     private String branchId;
 
-    public Specialized toModel(){
+    public Specialized toModel() {
         Specialized specialized = new Specialized();
         specialized.setBranchId(this.branchId);
         specialized.setSpecializedId(this.specializedId);

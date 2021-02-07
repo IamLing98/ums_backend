@@ -150,25 +150,26 @@ public class StudentServiceImpl implements StudentService {
 //
     @Override
     public List<StudentDTO> update(List<StudentDTO> studentDTOList) throws IOException {
-        for(StudentDTO studentDTO : studentDTOList){
+        for (StudentDTO studentDTO : studentDTOList) {
             Optional<Student> studentOptional = studentRepository.findById(studentDTO.getStudentId());
-            if(studentOptional.isPresent()){
+            if (studentOptional.isPresent()) {
                 Student student = studentDTO.toModel();
                 studentRepository.save(student);
-            }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinh viên không tồn tại!!!" + studentDTO.getStudentId());
+            } else
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinh viên không tồn tại!!!" + studentDTO.getStudentId());
         }
         return studentDTOList;
     }
 
     @Override
     public int delete(List<String> ids) {
-        int count  = 0;
-        for(String id : ids){
+        int count = 0;
+        for (String id : ids) {
             Optional<Student> studentOptional = studentRepository.findById(id);
-            if(studentOptional.isPresent()){
+            if (studentOptional.isPresent()) {
                 studentRepository.deleteById(id);
                 count++;
-            }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinh viên không tồn tại!!!" + id);
+            } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinh viên không tồn tại!!!" + id);
         }
         return count;
     }

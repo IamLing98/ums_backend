@@ -13,9 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDTO  {
+public class UserDTO {
     @NotNull
-    @AdjHistory(field =  "userId")
+    @AdjHistory(field = "userId")
     private Long userId;
 
     @NotNull
@@ -46,8 +46,8 @@ public class UserDTO  {
     private List<RoleDTO> roles;
 
 
-    public User toModel(){
-        User user= new User();
+    public User toModel() {
+        User user = new User();
         user.setUserId(userId);
         user.setCreatedAt(createdAt);
         user.setEmail(email);

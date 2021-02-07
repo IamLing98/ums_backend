@@ -1,22 +1,5 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.config.FileStorageProperties;
-import com.linkdoan.backend.exception.FileStorageException;
-import com.linkdoan.backend.exception.MyFileNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 //@Service
 public class FileStorageService {
 //    private final Path fileStorageLocation;

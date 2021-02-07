@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         List<DepartmentDTO> departmentDTOList = new ArrayList<>();
         for (int i = 0; i < departments.size(); i++) {
             DepartmentDTO departmentDTO = departments.get(i).toDTO();
-            List<BranchDTO>  branchDTOList = branchService.findAllByDepartmentId(departmentDTO.getDepartmentId());
+            List<BranchDTO> branchDTOList = branchService.findAllByDepartmentId(departmentDTO.getDepartmentId());
             departmentDTO.setBranchList(branchDTOList);
             departmentDTOList.add(departmentDTO);
         }

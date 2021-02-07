@@ -11,7 +11,7 @@ public class GA {
     private final int popSize;                 //So luong ca the
     private Schedule bestOfPopulation;   //ca the tot nhat trong quan the hien tai
     private Schedule bestOfBest;         //ca the tot nhat qua cac the he
-    private final ArrayList<Schedule> population ;           //Quan the ban dau
+    private final ArrayList<Schedule> population;           //Quan the ban dau
     private final ArrayList<Schedule> nextPopulation;       //Quan the sau
     private ArrayList<Double> rulet;                           //Banh xe Rulet ung vi vi tri xac suat cua tung ca the trong quan the
     private InputFromFile inputFromFile;

@@ -20,29 +20,29 @@ public class SubjectClassServiceImpl implements SubjectClassService {
 
     @Override
     public List<Map<String, Object>> getAll(String termId) {
-        Map<String, Object> subjectClassMap = new HashMap<>(2);
-        List<Object[]> subjectClassObjectsList = subjectClassRepository.getAllByTermIdd(termId);
+        String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
+                "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
+                "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
+                "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
+                "fullName", "departmentName", "subjectType", "status", "currentOfSubmittingNumber"};
+        List<Object[]> subjectClassObjectArrayList = subjectClassRepository.getSubjectClassObjectArraylist(termId);
+        System.out.println("Size of subjectClassObjectArrayList: " + subjectClassObjectArrayList.size());
         List<Map<String, Object>> rs = new ArrayList<>();
-        if (subjectClassObjectsList != null && !subjectClassObjectsList.isEmpty()) {
-            for (Object[] subjectClassObject : subjectClassObjectsList) {
-                subjectClassMap = new HashMap<String, Object>();
-                subjectClassMap.put("subjectClassId", subjectClassObject[0]);
-                subjectClassMap.put("subjectId", subjectClassObject[1]);
-                subjectClassMap.put("subjectName", subjectClassObject[2]);
-                subjectClassMap.put("numberOfSeats", subjectClassObject[3]);
-                subjectClassMap.put("isRequireLab", subjectClassObject[4]);
-                subjectClassMap.put("employeeId", subjectClassObject[5]);
-                subjectClassMap.put("employeeFullName", subjectClassObject[6]);
-                subjectClassMap.put("duration", subjectClassObject[7]);
-                rs.add(subjectClassMap);
+        if (subjectClassObjectArrayList != null && !subjectClassObjectArrayList.isEmpty()) {
+            for (Object[] subjectClassObjectArray : subjectClassObjectArrayList) {
+                Map<String, Object> subjectClassObjectMap = new HashMap<>();
+                for (int i = 0; i < stringList.length; i++) {
+                    subjectClassObjectMap.put(stringList[i], subjectClassObjectArray[i]);
+                }
+                rs.add(subjectClassObjectMap);
             }
         }
         return rs;
     }
 
     @Override
-    public Map<String, Object>  getDetail(String subjectClassId) {
-        List<Object[]> studentObjectList = subjectClassRepository.getListStudent(subjectClassId);
+    public Map<String, Object> getDetail(String subjectClassId) {
+        List<Object[]> studentObjectList = subjectClassRepository.getSubjectClassDetails(subjectClassId);
         List<Map<String, Object>> rs = new ArrayList<>();
         Map<String, Object> newMap = new HashMap<>(2);
         if (studentObjectList != null && !studentObjectList.isEmpty()) {
@@ -72,6 +72,7 @@ public class SubjectClassServiceImpl implements SubjectClassService {
         for (SubjectClassDTO subjectClassDTO : subjectClassDTOList) {
             SubjectClass subjectClass = subjectClassDTO.toModel();
             subjectClass.setCreatedDate(lt);
+            subjectClass.setCurrentOfSubmittingNumber(0);
             subjectClassList.add(subjectClass);
         }
         return subjectClassRepository.saveAll(subjectClassList);

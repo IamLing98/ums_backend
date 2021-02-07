@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @Data
 public class Student {
     @Id
-    @Size(min=9, max=9)
-    @Column(name = "student_id",unique = true,columnDefinition="CHAR(9)")
+    @Size(min = 9, max = 9)
+    @Column(name = "student_id", unique = true, columnDefinition = "CHAR(9)")
     private String studentId;
 
     @Column(name = "full_name", columnDefinition = "TEXT")
@@ -40,7 +40,7 @@ public class Student {
     private String homeTown;
 
     //hộ khẩu thường trú
-    @Column(name = "permanent_residence",columnDefinition = "varchar(200)")
+    @Column(name = "permanent_residence", columnDefinition = "varchar(200)")
     private String permanentResidence;
 
     //quốc tịch
@@ -48,7 +48,7 @@ public class Student {
     private String nationality;
 
     //dân tộc
-    @Column(name = "ethnic" )
+    @Column(name = "ethnic")
     private String ethnic;
 
     //ton giao
@@ -68,7 +68,7 @@ public class Student {
     private Integer incentivesType;
 
     //trình độ văn hoá
-    @Column(name = "education_level", columnDefinition="VARCHAR(45)" )
+    @Column(name = "education_level", columnDefinition = "VARCHAR(45)")
     private String educationLevel;
 
     //thành phần gia đình
@@ -133,28 +133,28 @@ public class Student {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "year_class_id",columnDefinition="CHAR(6)")
+    @Column(name = "year_class_id", columnDefinition = "CHAR(6)")
     private String yearClassId;
 
-    @Column(name = "status", columnDefinition="INT" )
+    @Column(name = "status", columnDefinition = "INT")
     private Integer status;
 
     //số báo danh
-    @Column(name = "enroll_id", columnDefinition="Char(15)" )
+    @Column(name = "enroll_id", columnDefinition = "Char(15)")
     private String enrollId;
 
     //hình thức xét tuyển Admission
-    @Column(name = "admission_type", columnDefinition="INT" )
+    @Column(name = "admission_type", columnDefinition = "INT")
     private Integer admissionType;
 
     //CTDT theo đuổi
-    @Column(name="education_program_id", columnDefinition = "CHAR(11)")
+    @Column(name = "education_program_id", columnDefinition = "CHAR(11)")
     private String educationProgramId;
 
     @Column(name = "created_date", columnDefinition = "DATE")
     private LocalDate createdDate;
 
-    public StudentDTO toDTO(){
+    public StudentDTO toDTO() {
         StudentDTO student = new StudentDTO();
         student.setStudentId(this.studentId);
         student.setFullName(this.fullName);

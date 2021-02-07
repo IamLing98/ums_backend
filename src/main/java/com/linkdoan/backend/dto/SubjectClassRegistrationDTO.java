@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,4 +24,6 @@ public class SubjectClassRegistrationDTO {
     private Integer autoSubmit;
 
     private Long scheduleId;
+
+    private Long progressSubmitted;
 }

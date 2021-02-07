@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Data
-@Table(name="branch_selection_pool")
+@Table(name = "branch_selection_pool")
 @Entity
 
 public class BranchSelectionPool {

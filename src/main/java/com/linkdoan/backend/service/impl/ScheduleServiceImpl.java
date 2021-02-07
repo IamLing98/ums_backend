@@ -9,19 +9,31 @@ import com.linkdoan.backend.dto.SubjectClassDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Room;
-import com.linkdoan.backend.model.ScheduleSubjectClass;
-import com.linkdoan.backend.model.SubjectClassRegistration;
+import com.linkdoan.backend.model.SubjectClass;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
-import java.time.LocalDate;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Vector;
 
 @Service
+@Transactional
+        (
+                propagation = Propagation.REQUIRED,
+                readOnly = false,
+                rollbackFor = Throwable.class
+        )
 public class ScheduleServiceImpl implements ScheduleService {
 
     @Autowired
@@ -55,18 +67,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     RoomRepository roomRepository;
 
     @Autowired
-    ScheduleRepository scheduleRepository;
-
-    @Autowired
-    ScheduleSubjectClassRepository scheduleSubjectClassRepository;
-
-    @Autowired
     SubjectClassRegistrationRepository subjectClassRegistrationRepository;
-
-    @Override
-    public List<com.linkdoan.backend.model.Schedule> getSchedule(String termId) {
-        return scheduleRepository.findAllByTermId(termId);
-    }
 
     @Override
     public String initData(String termId) throws Exception {
@@ -180,34 +181,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     }
 
-    @Override
-    public List<Map<String, Object>> getScheduleInfo(Long id) {
-        Optional<com.linkdoan.backend.model.Schedule> scheduleOptional = scheduleRepository.findById(id);
-        if (scheduleOptional.isPresent()) {
-            List<Object[]> subjectClassInfoObject = scheduleRepository.getScheduleListObject(id);
-            List<Map<String, Object>> subjectClassObjectMapList = new ArrayList<>();
-            String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
-                    "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
-                    "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
-                    "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
-                    "fullName", "employeeId", "departmentName", "subjectType", "status"};
-            for (Object[] objectArray : subjectClassInfoObject) {
-                Map<String, Object> stringObjectMap = new HashMap<>();
-                for (int i = 0; i < 23; i++) {
-                    stringObjectMap.put(stringList[i], objectArray[i]);
-                }
-                Long currentOfSubmittingNumber = scheduleRepository.countSubmittedNumberBySubjectClassId(objectArray[9].toString());
-                stringObjectMap.put("currentOfSubmittingNumber", currentOfSubmittingNumber);
-                subjectClassObjectMapList.add(stringObjectMap);
-            }
-            System.out.println("subjectClassInfoObject: " +
-                    subjectClassInfoObject.size());
-
-            return subjectClassObjectMapList;
-        }
-        return null;
-    }
-
     public String create(String termId, InputFromFile inputFromFile) throws Exception {
         GA ga = new GA(80, 10, 1, 2000, inputFromFile);
         System.out.println("processing....");
@@ -216,24 +189,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         long end = System.currentTimeMillis();
         double time = (double) (end - start) / 1000;
         Schedule schedule = ga.getBestOfBest();
-//
-//        lbCrossover.setText("Crossover           : " + ga.getCrossoverProbability() + " %");
-//        lbMutation.setText("Mutation              : " + ga.getMutationProbability() + " %");
-//        lbPopSize.setText("Population Size  : " + ga.getPopSize());
-//
-//        tfFitness.setText(Double.toString(ga.getBestOfBest().getFitness()));
-//        tfGeneration.setText(Integer.toString(generation));
-//        tfTime.setText(Double.toString(time));
-//        cbPhong.setEnabled(true);
-        ViewExcel excel = new ViewExcel(schedule);
-        excel.writeFileExcel();
 
-        //call service and save schedule
-        com.linkdoan.backend.model.Schedule schedule1 = new com.linkdoan.backend.model.Schedule();
-        schedule1.setTermId(termId);
-        schedule1.setCreatedDate(LocalDate.now());
-        schedule1.setIsActive(0);
-        com.linkdoan.backend.model.Schedule savedSchedule = scheduleRepository.save(schedule1);
         //get all slots of schedule from GA
         Vector<ArrayList<CourseClass>> slots = schedule.getSlots();
         ArrayList<com.linkdoan.backend.GAScheduleModel.Room> roomArrayList = inputFromFile.getRoomList();
@@ -250,39 +206,40 @@ public class ScheduleServiceImpl implements ScheduleService {
                 for (int k = 0; k < 10; k++) {
                     int currentVal = i * DAY_HOURS + k + j * DAY_HOURS * ROOM_NUM;
                     if (slots.get(currentVal).size() > 0) {
-                        ScheduleSubjectClass scheduleSubjectClass = new ScheduleSubjectClass();
-                        String roomId = roomArrayList.get(j).getName();
                         String subjectClassId = slots.get(currentVal).get(0).getSubjectClassId();
-                        Integer dayOfWeek = i + 1;
-                        Integer hourOfDay = k + 1;
-                        scheduleSubjectClass.setScheduleId(savedSchedule.getId());
-                        scheduleSubjectClass.setRoomId(roomId);
-                        scheduleSubjectClass.setSubjectClassId(subjectClassId);
-                        scheduleSubjectClass.setDayOfWeek(dayOfWeek);
-                        scheduleSubjectClass.setHourOfDay(hourOfDay);
-                        scheduleSubjectClass.setTermId(termId);
-                        scheduleSubjectClass.setMaxOfSubmittingNumber(slots.get(currentVal).get(0).getNumberOfSeats());
-                        scheduleSubjectClass.setCurrentOfSubmittingNumber(0);
-                        scheduleSubjectClass.setStatus(0);
-                        scheduleSubjectClass.setSubjectId(slots.get(currentVal).get(0).getCourse().getId());
-                        //kiem tra xem truoc do co la null hoặc cùng subject class k
-                        if (currentVal < 1) {
-                            scheduleSubjectClassRepository.save(scheduleSubjectClass);
-                        } else {
-                            if (slots.get(currentVal - 1).size() < 1) {
-//                          for(int s = 0 ; s < slots.get(currentVal).size() ; s++){
-                                System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
-                                System.out.println("Class id: " + slots.get(currentVal).get(0).getSubjectClassId());
-                                System.out.println("Course name: " + slots.get(currentVal).get(0).getCourse().getName());
-                                System.out.println("Course id: " + slots.get(currentVal).get(0).getCourse().getId());
-                                scheduleSubjectClassRepository.save(scheduleSubjectClass);
-                            } else {
-                                if (slots.get(currentVal).get(0).getSubjectClassId().equals(slots.get(currentVal - 1).get(0).getSubjectClassId()) == false) {
+                        if (subjectClassId != null && !subjectClassId.equals("")) {
+                            Optional<SubjectClass> subjectClassOptional = subjectClassRepository.findById(subjectClassId);
+                            if (subjectClassOptional.isPresent()) {
+                                SubjectClass subjectClass = subjectClassOptional.get();
+                                String roomId = roomArrayList.get(j).getName();
+                                Integer dayOfWeek = i + 1;
+                                Integer hourOfDay = k + 1;
+//                                subjectClass.setRoomId(roomId);
+//                                subjectClass.setDayOfWeek(dayOfWeek);
+//                                subjectClass.setHourOfDay(hourOfDay);
+                                //kiem tra xem truoc do co la null hoặc cùng subject class k
+                                if (currentVal < 1) {
                                     System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
                                     System.out.println("Class id: " + slots.get(currentVal).get(0).getSubjectClassId());
                                     System.out.println("Course name: " + slots.get(currentVal).get(0).getCourse().getName());
                                     System.out.println("Course id: " + slots.get(currentVal).get(0).getCourse().getId());
-                                    scheduleSubjectClassRepository.save(scheduleSubjectClass);
+                                    subjectClassRepository.updateTimeTable(subjectClassId, roomId, dayOfWeek, hourOfDay);
+                                } else {
+                                    if (slots.get(currentVal - 1).size() < 1) {
+                                        System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
+                                        System.out.println("Class id: " + slots.get(currentVal).get(0).getSubjectClassId());
+                                        System.out.println("Course name: " + slots.get(currentVal).get(0).getCourse().getName());
+                                        System.out.println("Course id: " + slots.get(currentVal).get(0).getCourse().getId());
+                                        subjectClassRepository.updateTimeTable(subjectClassId, roomId, dayOfWeek, hourOfDay);
+                                    } else {
+                                        if (slots.get(currentVal).get(0).getSubjectClassId().equals(slots.get(currentVal - 1).get(0).getSubjectClassId()) == false) {
+                                            System.out.println("Room: " + roomArrayList.get(j).getName() + " Day: " + i + " Hour: " + (k + 1));
+                                            System.out.println("Class id: " + slots.get(currentVal).get(0).getSubjectClassId());
+                                            System.out.println("Course name: " + slots.get(currentVal).get(0).getCourse().getName());
+                                            System.out.println("Course id: " + slots.get(currentVal).get(0).getCourse().getId());
+                                            subjectClassRepository.updateTimeTable(subjectClassId, roomId, dayOfWeek, hourOfDay);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -290,27 +247,18 @@ public class ScheduleServiceImpl implements ScheduleService {
                 }
             }
         }
+//
+//        lbCrossover.setText("Crossover           : " + ga.getCrossoverProbability() + " %");
+//        lbMutation.setText("Mutation              : " + ga.getMutationProbability() + " %");
+//        lbPopSize.setText("Population Size  : " + ga.getPopSize());
+//
+//        tfFitness.setText(Double.toString(ga.getBestOfBest().getFitness()));
+//        tfGeneration.setText(Integer.toString(generation));
+//        tfTime.setText(Double.toString(time));
+//        cbPhong.setEnabled(true);
+        ViewExcel excel = new ViewExcel(schedule);
+        excel.writeFileExcel();
         return excel.getFileName();
     }
 
-    @Override
-    public int update(String termId, Long scheduleId) {
-        return 0;
-    }
-
-    @Override
-    public int delete(String termId, Long scheduleId) {
-        int count = 0;
-        Optional<com.linkdoan.backend.model.Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
-        List<ScheduleSubjectClass> scheduleSubjectClassList = scheduleSubjectClassRepository.findAllByScheduleId(scheduleId);
-        for (ScheduleSubjectClass scheduleSubjectClass : scheduleSubjectClassList) {
-            scheduleSubjectClassRepository.delete(scheduleSubjectClass);
-        }
-        if (scheduleOptional.isPresent()) {
-            com.linkdoan.backend.model.Schedule schedule = scheduleOptional.get();
-            scheduleRepository.delete(schedule);
-            count++;
-        }
-        return count;
-    }
 }

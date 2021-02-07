@@ -1,9 +1,7 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.TermDTO;
-import com.linkdoan.backend.model.Schedule;
 import com.linkdoan.backend.model.Term;
-import com.linkdoan.backend.repository.ScheduleRepository;
 import com.linkdoan.backend.repository.TermRepository;
 import com.linkdoan.backend.service.SubjectClassRegistrationService;
 import com.linkdoan.backend.service.SubjectRegistrationService;
@@ -27,9 +25,6 @@ public class TermServiceImpl implements TermService {
     SubjectRegistrationService subjectRegistrationService;
 
     @Autowired
-    ScheduleRepository scheduleRepository;
-
-    @Autowired
     SubjectClassRegistrationService subjectClassRegistrationService;
 
 
@@ -47,17 +42,11 @@ public class TermServiceImpl implements TermService {
     @Override
     public TermDTO getDetail(String termId) {
         Optional<Term> termOptional = termRepository.findFirstById(termId);
-        if(termOptional.isPresent()){
+        if (termOptional.isPresent()) {
             Term term = termOptional.get();
             TermDTO termDTO = term.toDTO();
-            Optional<Schedule> scheduleOptional = scheduleRepository.findFirstByTermIdAndIsActive(termId,1);
-            if(scheduleOptional.isPresent()){
-                Schedule schedule = scheduleOptional.get();
-                termDTO.setActiveSchedule(schedule.getId());
-            }
             return termDTO;
-        }
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "kHONG TON TAI TERM NAY!!!");
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "kHONG TON TAI TERM NAY!!!");
     }
 
     @Override
@@ -79,47 +68,38 @@ public class TermServiceImpl implements TermService {
             Term term = termOptional.get();
             String actionType = termDTO.getActionType();
             switch (actionType) {
-                    case "SSON":
+                case "SSON":
                     if (term.getProgress() == 11) {
                         term.setProgress(12);
                         term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
+                        term.setStatus(1);
                         termRepository.save(term);
                         subjectRegistrationService.subjectSubmitForNewStudent(termId);
                         return 1;
-                    }break;
+                    }
+                    break;
                 case "SSOFF":
                     if (term.getProgress() == 12) {
                         term.setProgress(13);
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         termRepository.save(term);
                         return 1;
-                    } break;
+                    }
+                    break;
                 case "SCRON":
                     if (term.getProgress() == 13) {
-                        Optional<Schedule> scheduleOptional = scheduleRepository.findById(termDTO.getActiveSchedule());
-                        if (scheduleOptional.isPresent()) {
-                            Schedule schedule = scheduleOptional.get();
-                            if (schedule.getTermId().equals(term.getId())) {
-                                term.setProgress(21);
-                                term.setSubjectClassSubmittingStartDate(termDTO.getSubjectClassSubmittingStartDate());
-                                term.setSubjectCLassSubmittingEndDate(termDTO.getSubjectCLassSubmittingEndDate());
-                                schedule.setIsActive(1);
-                                termRepository.save(term);
-                                System.out.println("Save term");
-                                scheduleRepository.save(schedule);
-                                System.out.println("Active schedule: " +  termDTO.getActiveSchedule());
-                                subjectClassRegistrationService.subjectClassSubmitForNewStudent(termId,termDTO.getActiveSchedule());
-                                return 1;
-                            } else {
-//                                throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Mã thời khoá biểu không hợp lệ!!!");
-                            }
-                        } else {
-//                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Mã thời khoá biểu không hợp lệ!!!");
-                        }
+                        term.setProgress(21);
+                        term.setSubjectClassSubmittingStartDate(termDTO.getSubjectClassSubmittingStartDate());
+                        term.setSubjectCLassSubmittingEndDate(termDTO.getSubjectCLassSubmittingEndDate());
+                        term.setStatus(2);
+                        subjectClassRegistrationService.subjectClassSubmitForNewStudent(termId);
+                        termRepository.save(term);
+                        return 1;
                     } else {
-//                        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Không đúng tiến trình");
-                    }break;
+//                        throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Mã thời khoá biểu không hợp lệ!!!");
+                    }
+                    break;
                 case "SCROFF":
                     if (term.getProgress() == 21) {
                         term.setProgress(22);

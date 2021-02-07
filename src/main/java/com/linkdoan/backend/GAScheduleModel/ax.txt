@@ -65,28 +65,18 @@
 #end
 
 #course
-	id = 0000701
-	name = Tiếng Anh cơ bản (GE 1)
-#end
-
-#course
-	id = 0000702
-	name = Tiếng Anh cơ bản (GE 2)
-#end
-
-#course
 	id = 0000703
 	name = Tiếng Anh cơ bản (GE 3)
 #end
 
 #course
-	id = 0221501
-	name = Kỹ năng lập kế hoạch và tổ chức
+	id = 0000704
+	name = Tiếng Anh cơ bản (GE 4) 
 #end
 
 #course
-	id = 0221801
-	name = Nhập môn công nghệ thông tin 
+	id = 0221501
+	name = Kỹ năng lập kế hoạch và tổ chức
 #end
 
 #room
@@ -127,49 +117,49 @@
 #group
 	id = 1
 	name = no name
-	size = 90
+	size = 70
 #end
 
 #group
 	id = 2
 	name = no name
-	size = 90
+	size = 70
 #end
 
 #group
 	id = 3
 	name = no name
-	size = 60
+	size = 70
 #end
 
 #group
 	id = 4
 	name = no name
-	size = 60
+	size = 70
 #end
 
 #group
 	id = 5
 	name = no name
-	size = 60
+	size = 70
 #end
 
 #group
 	id = 6
 	name = no name
-	size = 60
+	size = 30
 #end
 
 #group
 	id = 7
 	name = no name
-	size = 60
+	size = 30
 #end
 
 #group
 	id = 8
 	name = no name
-	size = 60
+	size = 30
 #end
 
 #group
@@ -226,42 +216,6 @@
 	size = 30
 #end
 
-#group
-	id = 18
-	name = no name
-	size = 30
-#end
-
-#group
-	id = 19
-	name = no name
-	size = 30
-#end
-
-#group
-	id = 20
-	name = no name
-	size = 30
-#end
-
-#group
-	id = 21
-	name = no name
-	size = 30
-#end
-
-#group
-	id = 22
-	name = no name
-	size = 30
-#end
-
-#group
-	id = 23
-	name = no name
-	size = 30
-#end
-
 #class
 	id = 1
 	professor = ID000
@@ -272,7 +226,7 @@
 #end
 #class
 	id = 2
-	professor = ID002
+	professor = ID000
 	course = 0000310
 	duration = 3
 	group = 2
@@ -312,7 +266,7 @@
 #end
 #class
 	id = 7
-	professor = ID002
+	professor = ID000
 	course = 0000511
 	duration = 2
 	group = 7
@@ -320,7 +274,7 @@
 #end
 #class
 	id = 8
-	professor = ID004
+	professor = ID000
 	course = 0000511
 	duration = 2
 	group = 8
@@ -329,122 +283,72 @@
 #class
 	id = 9
 	professor = ID000
-	course = 0000701
-	duration = 3
+	course = 0000703
+	duration = 2
 	group = 9
-	subjectClassId = 2020200007010
+	subjectClassId = 2020200007030
 #end
 #class
 	id = 10
-	professor = ID000
-	course = 0000701
-	duration = 3
+	professor = ID002
+	course = 0000703
+	duration = 2
 	group = 10
-	subjectClassId = 2020200007011
+	subjectClassId = 2020200007031
 #end
 #class
 	id = 11
-	professor = ID000
-	course = 0000702
+	professor = ID002
+	course = 0000703
 	duration = 2
 	group = 11
-	subjectClassId = 2020200007020
+	subjectClassId = 2020200007032
 #end
 #class
 	id = 12
 	professor = ID002
-	course = 0000702
+	course = 0000704
 	duration = 2
 	group = 12
-	subjectClassId = 2020200007021
+	subjectClassId = 2020200007040
 #end
 #class
 	id = 13
-	professor = ID004
-	course = 0000702
+	professor = ID000
+	course = 0000704
 	duration = 2
 	group = 13
-	subjectClassId = 2020200007022
+	subjectClassId = 2020200007041
 #end
 #class
 	id = 14
-	professor = ID000
-	course = 0000702
+	professor = ID002
+	course = 0000704
 	duration = 2
 	group = 14
-	subjectClassId = 2020200007023
+	subjectClassId = 2020200007042
 #end
 #class
 	id = 15
-	professor = ID002
-	course = 0000702
+	professor = ID008
+	course = 0221501
 	duration = 2
 	group = 15
-	subjectClassId = 2020200007024
+	subjectClassId = 2020202215010
 #end
 #class
 	id = 16
-	professor = ID004
-	course = 0000702
+	professor = ID002
+	course = 0221501
 	duration = 2
 	group = 16
-	subjectClassId = 2020200007025
+	subjectClassId = 2020202215011
 #end
 #class
 	id = 17
 	professor = ID000
-	course = 0000703
+	course = 0221501
 	duration = 2
 	group = 17
-	subjectClassId = 2020200007030
-#end
-#class
-	id = 18
-	professor = ID002
-	course = 0000703
-	duration = 2
-	group = 18
-	subjectClassId = 2020200007031
-#end
-#class
-	id = 19
-	professor = ID000
-	course = 0221501
-	duration = 2
-	group = 19
-	subjectClassId = 2020202215010
-#end
-#class
-	id = 20
-	professor = ID000
-	course = 0221501
-	duration = 2
-	group = 20
-	subjectClassId = 2020202215011
-#end
-#class
-	id = 21
-	professor = ID008
-	course = 0221501
-	duration = 2
-	group = 21
 	subjectClassId = 2020202215012
-#end
-#class
-	id = 22
-	professor = ID000
-	course = 0221801
-	duration = 3
-	group = 22
-	subjectClassId = 2020202218010
-	lab = true
-#end
-#class
-	id = 23
-	professor = ID000
-	course = 0221801
-	duration = 3
-	group = 23
-	subjectClassId = 2020202218011
-	lab = true
 #end

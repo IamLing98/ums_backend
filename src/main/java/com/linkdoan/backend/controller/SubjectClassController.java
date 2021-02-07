@@ -21,7 +21,7 @@ public class SubjectClassController {
     }
 
     @RequestMapping(value = "/subjectClasses/getDetail/{subjectClassId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getDetail( @PathVariable("subjectClassId") String subjectClassId)
+    public ResponseEntity<?> getDetail(@PathVariable("subjectClassId") String subjectClassId)
             throws Exception {
         return new ResponseEntity<>(subjectClassService.getDetail(subjectClassId), HttpStatus.OK);
     }

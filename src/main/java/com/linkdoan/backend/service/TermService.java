@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TermService {
 
-    public List<TermDTO> getAll(Integer year, Integer term );
+    public List<TermDTO> getAll(Integer year, Integer term);
 
     public TermDTO getDetail(String termId);
 

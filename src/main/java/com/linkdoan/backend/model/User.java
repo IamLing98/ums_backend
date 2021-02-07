@@ -11,12 +11,12 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 @Data
-@BatchSize(size=10)
+@BatchSize(size = 10)
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "users_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_generator")
     @SequenceGenerator(name = "users_sequence", sequenceName = "user_quence")
-    @Column(name = "user_id" )
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "username")

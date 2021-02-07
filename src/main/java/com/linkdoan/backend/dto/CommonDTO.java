@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class CommonDTO   {
+public class CommonDTO {
     private String id;
     private String label;
 }

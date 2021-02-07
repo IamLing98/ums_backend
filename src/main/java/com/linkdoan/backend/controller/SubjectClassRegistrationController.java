@@ -1,4 +1,5 @@
 package com.linkdoan.backend.controller;
+
 import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
 import com.linkdoan.backend.service.SubjectClassRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class SubjectClassRegistrationController {
     SubjectClassRegistrationService subjectClassRegistrationService;
 
     @RequestMapping(value = "/subjectClassRegistration/{termId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getListSubmitted(@PathVariable("termId") String termId , SecurityContextHolder request)
+    public ResponseEntity<?> getListSubmitted(@PathVariable("termId") String termId, SecurityContextHolder request)
             throws Exception {
         String studentId = request.getContext().getAuthentication().getName();
         System.out.println(studentId);
@@ -34,6 +35,6 @@ public class SubjectClassRegistrationController {
             throws Exception {
         String studentId = request.getContext().getAuthentication().getName();
         System.out.println(studentId);
-        return new ResponseEntity<>(subjectClassRegistrationService.delete(studentId, subjectClassId,scheduleId), HttpStatus.OK);
+        return new ResponseEntity<>(subjectClassRegistrationService.delete(studentId, subjectClassId, scheduleId), HttpStatus.OK);
     }
 }

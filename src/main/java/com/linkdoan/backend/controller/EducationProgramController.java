@@ -14,33 +14,33 @@ import java.util.List;
 public class EducationProgramController {
 
     @Autowired
-    EducationProgramServiceImpl educationProgramServiceImpl ;
+    EducationProgramServiceImpl educationProgramServiceImpl;
 
     @Autowired
     RoleRepository roleRepository;
 
     @RequestMapping(value = "/education-programs", method = RequestMethod.GET)
-    public ResponseEntity<?> getAll(@RequestParam (name = "educationProgramId", required = false) String educationProgramId,@RequestParam (name = "branchId", required = false) String branchId) throws Exception {
-        List<EducationProgramDTO> rs = educationProgramServiceImpl.getAllProgram(branchId,educationProgramId);
+    public ResponseEntity<?> getAll(@RequestParam(name = "educationProgramId", required = false) String educationProgramId, @RequestParam(name = "branchId", required = false) String branchId) throws Exception {
+        List<EducationProgramDTO> rs = educationProgramServiceImpl.getAllProgram(branchId, educationProgramId);
         return new ResponseEntity<>(rs, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/education-programs/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getDetail(@PathVariable ("id") String educationProgramId) throws Exception {
+    public ResponseEntity<?> getDetail(@PathVariable("id") String educationProgramId) throws Exception {
         return new ResponseEntity<>(educationProgramServiceImpl.getDetail(educationProgramId), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/education-programs",method = RequestMethod.POST)
+    @RequestMapping(value = "/education-programs", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody EducationProgramDTO educationProgramDTO) throws Exception {
         return new ResponseEntity<>(educationProgramServiceImpl.create(educationProgramDTO), HttpStatus.OK);
     }
 
-    @PutMapping(value="/education-programs/{id}")
-    public ResponseEntity<?> update (@PathVariable("id") String id,  @RequestBody EducationProgramDTO educationProgramDTO) throws Exception {
-        return new ResponseEntity<>(educationProgramServiceImpl.update(id,educationProgramDTO), HttpStatus.OK);
+    @PutMapping(value = "/education-programs/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody EducationProgramDTO educationProgramDTO) throws Exception {
+        return new ResponseEntity<>(educationProgramServiceImpl.update(id, educationProgramDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/education-program/{id}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/education-program/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable String id) throws Exception {
         if (educationProgramServiceImpl.delete(id) == false)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

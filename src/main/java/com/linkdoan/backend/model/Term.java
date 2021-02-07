@@ -24,37 +24,37 @@ public class Term {
     @Column(name = "term")
     private Long term;
 
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
 
-    @Column(name="progress")
+    @Column(name = "progress")
     private Integer progress;
 
-    @Column(name="created_date")
+    @Column(name = "created_date")
     private LocalDate createdDate;
 
-    @Column(name="term_end_date")
+    @Column(name = "term_end_date")
     private LocalDate termEndDate;
 
-    @Column(name="subject_submitting_start_date")
+    @Column(name = "subject_submitting_start_date")
     private LocalDate subjectSubmittingStartDate;
 
-    @Column(name="subject_submitting_end_date")
+    @Column(name = "subject_submitting_end_date")
     private LocalDate subjectSubmittingEndDate;
 
-    @Column(name="subject_class_submitting_start_date")
+    @Column(name = "subject_class_submitting_start_date")
     private LocalDate subjectClassSubmittingStartDate;
 
-    @Column(name="subject_class_submitting_end_date")
+    @Column(name = "subject_class_submitting_end_date")
     private LocalDate subjectCLassSubmittingEndDate;
 
-    @Column(name="editSubmittingStartDate")
+    @Column(name = "editSubmittingStartDate")
     private LocalDate editSubmittingStartDate;
 
-    @Column(name="editSubmittingEndDate")
+    @Column(name = "editSubmittingEndDate")
     private LocalDate editSubmittingEndDate;
 
-    public TermDTO toDTO(){
+    public TermDTO toDTO() {
         TermDTO termDTO = new TermDTO();
         termDTO.setId(this.id);
         termDTO.setStatus(this.status);

@@ -43,15 +43,15 @@ public class InputFromFile {
         readFile();
     }
 
-    public InputFromFile(){
+    public InputFromFile() {
 
     }
 
-    public void setScanner(Scanner sc){
+    public void setScanner(Scanner sc) {
         this.sc = sc;
     }
 
-    public  Room getRoomById(int id) {
+    public Room getRoomById(int id) {
         for (Room r : roomList) {
             if (r.getId() == id) {
                 return r;
@@ -89,7 +89,7 @@ public class InputFromFile {
         profList.add(i);
     }
 
-    private  void readStudentsGroup() {
+    private void readStudentsGroup() {
         /**
          * @status: done
          */

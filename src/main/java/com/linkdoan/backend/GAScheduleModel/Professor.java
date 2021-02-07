@@ -1,24 +1,24 @@
 package com.linkdoan.backend.GAScheduleModel;
+
 import java.util.ArrayList;
 
 /**
- *
  * @author KING
  */
 public class Professor {
     private String id;
     private String name;
-    private final ArrayList < CourseClass > courseClasses;
+    private final ArrayList<CourseClass> courseClasses;
 
     public Professor() {
         name = new String();
-        courseClasses = new ArrayList() ;
+        courseClasses = new ArrayList();
     }
 
     public Professor(String id, String name) {
         this.id = id;
         this.name = name;
-        courseClasses = new ArrayList() ;
+        courseClasses = new ArrayList();
     }
 
 
@@ -43,7 +43,7 @@ public class Professor {
         return courseClasses;
     }
 
-    public void addCourseClass(CourseClass courseClass){
+    public void addCourseClass(CourseClass courseClass) {
         courseClasses.add(courseClass);
     }
 

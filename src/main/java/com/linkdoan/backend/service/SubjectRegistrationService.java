@@ -3,11 +3,10 @@ package com.linkdoan.backend.service;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
 import org.springframework.context.annotation.ComponentScan;
-
 import java.util.List;
 import java.util.Map;
 
-@ComponentScan(basePackages= {"com.linkdoan.backend.*"})
+@ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface SubjectRegistrationService {
 
     //admin role

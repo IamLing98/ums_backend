@@ -39,9 +39,7 @@ public class TermDTO {
 
     private String actionType;
 
-    private Long activeSchedule;
-
-    public Term toModel(){
+    public Term toModel() {
         Term term = new Term();
         term.setId(this.id);
         term.setStatus(this.status);

@@ -12,22 +12,22 @@ public class SubjectRegistration {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_Sequence")
     @SequenceGenerator(name = "id_Sequence", sequenceName = "ORACLE_DB_SEQ_ID")
     private Long id;
 
-    @Column(name = "student_id", columnDefinition="CHAR(9)")
+    @Column(name = "student_id", columnDefinition = "CHAR(9)")
     private String studentId;
 
     @Column(name = "subject_id", columnDefinition = "CHAR(9)")
     private String subjectId;
 
-    @Column(name = "term_id",columnDefinition = "CHAR(6)")
+    @Column(name = "term_id", columnDefinition = "CHAR(6)")
     private String termId;
 
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name="auto_submit", columnDefinition = "INT")
+    @Column(name = "auto_submit", columnDefinition = "INT")
     private Integer autoSubmit;
 }

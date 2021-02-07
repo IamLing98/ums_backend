@@ -35,7 +35,7 @@ public class StudentsController {
     }
 
     @RequestMapping(value = "/students/{studentId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getDetails(@PathVariable("studentId" )String studentId) throws Exception {
+    public ResponseEntity<?> getDetails(@PathVariable("studentId") String studentId) throws Exception {
         return new ResponseEntity<>(studentService.getDetail(studentId), HttpStatus.OK);
     }
 
@@ -44,13 +44,13 @@ public class StudentsController {
         return new ResponseEntity<>(studentService.create(studentDTOList), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/students" )
-    public ResponseEntity<?> update( @RequestBody List<StudentDTO> studentDTOList) throws Exception {
+    @PutMapping(value = "/students")
+    public ResponseEntity<?> update(@RequestBody List<StudentDTO> studentDTOList) throws Exception {
         return new ResponseEntity<>(studentService.update(studentDTOList), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/students" )
-    public ResponseEntity<?> delete( @RequestParam("ids") List<String> ids) throws Exception {
+    @DeleteMapping(value = "/students")
+    public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids) throws Exception {
         return new ResponseEntity<>(studentService.delete(ids), HttpStatus.OK);
     }
 

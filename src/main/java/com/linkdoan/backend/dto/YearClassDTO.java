@@ -23,7 +23,7 @@ public class YearClassDTO {
 
     private Integer educationProgramLevel;
 
-    private Integer educationProgramType = 1 ;
+    private Integer educationProgramType = 1;
 
     private String teacherId;
 
@@ -56,7 +56,7 @@ public class YearClassDTO {
         this.departmentName = departmentName;
     }
 
-    public YearClassDTO(String yearClss){
+    public YearClassDTO(String yearClss) {
         this.classId = yearClss;
     }
 

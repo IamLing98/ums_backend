@@ -74,7 +74,7 @@ public class SubjectServiceImpl implements SubjectService {
                 }
             }
             return subjectListMap;
-        } else if (actionType.equals("SCS")  ) {
+        } else if (actionType.equals("SCS")) {
             System.out.println("SCS");
             List<Object[]> subjectObjectList = subjectRepository.getAll();
             List<Map<String, Object>> subjectListMap = new ArrayList<>();

@@ -53,32 +53,35 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 //    Page<StudentDTO> findAllByClassId(@Param("classId") String classId , Pageable pageable);
 
     //find all student by current term
-    @Query(value = "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId,  student.yearClassId, student.educationProgramId, yearClass.currentTerm) " +
-            " FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
-            "WHERE (yearClass.currentTerm = :termIndex) "
+    @Query(value =
+            "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId,  student.yearClassId, student.educationProgramId, yearClass.currentTerm) " +
+                    " FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
+                    "WHERE (yearClass.currentTerm = :termIndex) "
     )
     List<StudentDTO> findAllStudentHasTermEqualsTermIndex(@Param("termIndex") Integer termIndex);
 
-    @Query(value = "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, department.departmentId, " +
-            "department.departmentName, student.yearClassId, yearClass.className, yearClass.startYear, yearClass.endYear, yearClass.courseNumber) " +
-            "FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
-            "INNER JOIN Department department ON yearClass.departmentId = department.departmentId "
+    @Query(value =
+            "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, department.departmentId, " +
+                    "department.departmentName, student.yearClassId, yearClass.className, yearClass.startYear, yearClass.endYear, yearClass.courseNumber) " +
+                    "FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
+                    "INNER JOIN Department department ON yearClass.departmentId = department.departmentId "
     )
     List<StudentDTO> getAllStudent();
 
-    @Query(value = "SELECT new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, student.sex, student.dateBirth, " +
-            "student.nickName, student.homeTown, student.nationality, student.bornPlace, student.permanentResidence, student.ethnic, " +
-            "student.religion, student.enrollmentArea, student.priorityType, student.incentivesType, student.familyElement, student.CYUStartDate, " +
-            "student.CPStartDate, student.identityNumber, student.identityCreatedDate, student.identityCreatedPlace, student.bankNumber, student.email, " +
-            "student.phoneNumber, student.fatherName, student.fatherDateBirth, student.fatherWork, student.motherName, student.motherDateBirth, " +
-            "student.motherWork, student.contactAddress, student.note, student.avatar, yearClass.departmentId, department.departmentName, " +
-            "student.yearClassId, yearClass.className, br.branchId, br.branchName, yearClass.courseNumber, student.status, student.enrollId, " +
-            "student.admissionType, yearClass.startYear, yearClass.endYear, student.educationProgramId, yearClass.currentTerm) " +
-            "FROM Student student INNER JOIN YearClass yearClass ON student.yearClassId = yearClass.classId " +
-            "INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
-            "INNER JOIN EducationProgram ed ON student.educationProgramId = ed.educationProgramId " +
-            "INNER JOIN Branch br ON ed.branchId = br.branchId " +
-            "WHERE student.studentId = :studentId"
+    @Query(value =
+            "SELECT new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, student.sex, student.dateBirth, " +
+                    "student.nickName, student.homeTown, student.nationality, student.bornPlace, student.permanentResidence, student.ethnic, " +
+                    "student.religion, student.enrollmentArea, student.priorityType, student.incentivesType, student.familyElement, student.CYUStartDate, " +
+                    "student.CPStartDate, student.identityNumber, student.identityCreatedDate, student.identityCreatedPlace, student.bankNumber, student.email, " +
+                    "student.phoneNumber, student.fatherName, student.fatherDateBirth, student.fatherWork, student.motherName, student.motherDateBirth, " +
+                    "student.motherWork, student.contactAddress, student.note, student.avatar, yearClass.departmentId, department.departmentName, " +
+                    "student.yearClassId, yearClass.className, br.branchId, br.branchName, yearClass.courseNumber, student.status, student.enrollId, " +
+                    "student.admissionType, yearClass.startYear, yearClass.endYear, student.educationProgramId, yearClass.currentTerm) " +
+                    "FROM Student student INNER JOIN YearClass yearClass ON student.yearClassId = yearClass.classId " +
+                    "INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
+                    "INNER JOIN EducationProgram ed ON student.educationProgramId = ed.educationProgramId " +
+                    "INNER JOIN Branch br ON ed.branchId = br.branchId " +
+                    "WHERE student.studentId = :studentId"
     )
     StudentDTO getDetail(@Param("studentId") String studentId);
 }

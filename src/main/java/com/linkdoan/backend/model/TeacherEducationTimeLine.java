@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Table(name="teacher_time_line")
+@Table(name = "teacher_time_line")
 @Entity
 public class TeacherEducationTimeLine {
 
@@ -14,19 +14,19 @@ public class TeacherEducationTimeLine {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer teacherTimeLineId;
 
-    @Column(name="teacher_id")
+    @Column(name = "teacher_id")
     private String teacherId;
 
-    @Column(name="graduation_year")
+    @Column(name = "graduation_year")
     private String graduationYear;
 
-    @Column(name="education_level")
+    @Column(name = "education_level")
     private Integer educationLevel;
 
-    @Column(name="branch_name")
+    @Column(name = "branch_name")
     private String banchName;
 
-    @Column(name="educationPlace")
+    @Column(name = "educationPlace")
     private String educationPlace;
 
 

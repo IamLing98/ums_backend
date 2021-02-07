@@ -13,7 +13,6 @@ import java.util.List;
 public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegistration, Long> {
 
     //for admin
-
     @Query(value =
             "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName, subject.eachSubject, " +
                     "subject.theoryNumber, subject.exerciseNumber, subject.discussNumber, subject.selfLearningNumber, subject.practiceNumber, subject.subjectForLevel) " +
@@ -24,7 +23,8 @@ public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegi
 
     @Query(value =
             "SELECT subject.subjectId, subject.subjectName , count(subject.subjectId), subject.discussNumber, subject.exerciseNumber, " +
-                    "subject.practiceNumber, subject.selfLearningNumber, subject.theoryNumber, department.departmentName,subject.subjectType " +
+                    "subject.practiceNumber, subject.selfLearningNumber, subject.theoryNumber, department.departmentName,subject.subjectType, " +
+                    "subject.eachSubject, subject.discussNumber, subject.subjectForLevel " +
                     "FROM  Subject subject " +
                     "Inner join EducationProgramSubject educationProgramSubject on subject.subjectId = educationProgramSubject.subjectId " +
                     "inner join EducationProgram  educationProgram on educationProgram.educationProgramId = educationProgramSubject.educationProgramId " +
@@ -59,6 +59,4 @@ public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegi
     List<SubjectRegistration> findAllByTermIdAndAutoSubmit(String termId, Integer autoSubmit);
 
     SubjectRegistration findFirstByStudentIdAndSubjectIdAndTermId(String studentId, String subjectId, String termId);
-
-    Long deleteByStudentIdAndSubjectIdAndTermId(String studentId, String subjectId, String termId);
 }

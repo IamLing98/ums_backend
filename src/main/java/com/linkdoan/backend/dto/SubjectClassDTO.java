@@ -31,7 +31,7 @@ public class SubjectClassDTO {
 
     private Integer type;
 
-    public SubjectClass toModel(){
+    public SubjectClass toModel() {
         SubjectClass sj = new SubjectClass();
         sj.setSubjectClassId(this.subjectClassId);
         sj.setTermId(this.termId);
@@ -47,7 +47,7 @@ public class SubjectClassDTO {
         return sj;
     }
 
-    public SubjectClassDTO( ) {
+    public SubjectClassDTO() {
     }
 
     public SubjectClassDTO(String subjectClassId, String subjectId, String termId, String teacherId, Integer numberOfSeats,

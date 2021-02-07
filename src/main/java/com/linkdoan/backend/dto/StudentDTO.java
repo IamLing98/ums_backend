@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-public class StudentDTO  {
+public class StudentDTO {
     private String studentId;
 
     private String fullName;
@@ -122,7 +122,7 @@ public class StudentDTO  {
 
     private LocalDate createdDate;
 
-    public Student toModel()  {
+    public Student toModel() {
         Student student = new Student();
         student.setStudentId(this.studentId);
         student.setFullName(this.fullName);
@@ -171,7 +171,7 @@ public class StudentDTO  {
         this.courseNumber = courseNumber;
     }
 
-    public StudentDTO(String studentId, String yearClassId, String educationProgramId, Integer currentTerm){
+    public StudentDTO(String studentId, String yearClassId, String educationProgramId, Integer currentTerm) {
         this.studentId = studentId;
         this.yearClassId = yearClassId;
         this.educationProgramId = educationProgramId;

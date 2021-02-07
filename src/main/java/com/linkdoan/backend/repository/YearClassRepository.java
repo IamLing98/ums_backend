@@ -9,12 +9,13 @@ import java.util.List;
 
 public interface YearClassRepository extends JpaRepository<YearClass, String> {
 
-    @Query(value = "SELECT new com.linkdoan.backend.dto.YearClassDTO(yearClass.classId, yearClass.className, yearClass.totalMember, " +
-            "yearClass.startYear, yearClass.endYear, yearClass.courseNumber , yearClass.educationProgramLevel, " +
-            "yearClass.educationProgramType, yearClass.teacherId, employee.fullName, yearClass.currentTerm, yearClass.departmentId, " +
-            "department.departmentName)  " +
-            "FROM YearClass  yearClass INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
-            "LEFT JOIN Employee employee ON yearClass.teacherId = employee.employeeId"
+    @Query(value =
+            "SELECT new com.linkdoan.backend.dto.YearClassDTO(yearClass.classId, yearClass.className, yearClass.totalMember, " +
+                    "yearClass.startYear, yearClass.endYear, yearClass.courseNumber , yearClass.educationProgramLevel, " +
+                    "yearClass.educationProgramType, yearClass.teacherId, employee.fullName, yearClass.currentTerm, yearClass.departmentId, " +
+                    "department.departmentName)  " +
+                    "FROM YearClass  yearClass INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
+                    "LEFT JOIN Employee employee ON yearClass.teacherId = employee.employeeId"
     )
     List<YearClassDTO> getAll();
 

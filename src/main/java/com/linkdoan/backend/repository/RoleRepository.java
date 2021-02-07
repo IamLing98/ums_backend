@@ -7,9 +7,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RoleRepository extends JpaRepository<Role,  Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    @Query(value = "SELECT r  FROM Role  r, UserRole ur  WHERE (ur.userId =:userId AND ur.roleId = r.roleId )"
+    @Query(value =
+            "SELECT r  FROM Role  r, UserRole ur  WHERE (ur.userId =:userId AND ur.roleId = r.roleId )"
     )
     List<Role> findAllRoles(@Param("userId") Long userId);
 }

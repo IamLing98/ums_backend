@@ -16,10 +16,10 @@ public class EducationProgramSubjectController {
     EducationProgramSubjectService educationProgramSubjectService;
 
     @RequestMapping(value = "/education-program-subject", method = RequestMethod.GET)
-    public ResponseEntity<?> getListSubject(@RequestParam(name="educationProgramId", required = true) String educationProgramId,
-                                            @RequestParam(name="in", required = true) boolean isIn
-                                            ) throws Exception {
-        return new ResponseEntity<>(educationProgramSubjectService.getListSubjectCorrectWithEP(educationProgramId,isIn), HttpStatus.OK);
+    public ResponseEntity<?> getListSubject(@RequestParam(name = "educationProgramId", required = true) String educationProgramId,
+                                            @RequestParam(name = "in", required = true) boolean isIn
+    ) throws Exception {
+        return new ResponseEntity<>(educationProgramSubjectService.getListSubjectCorrectWithEP(educationProgramId, isIn), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/education-program-subject", method = RequestMethod.POST)
@@ -36,8 +36,8 @@ public class EducationProgramSubjectController {
 
 
     @RequestMapping(value = "/education-program-subject/{educationProgramId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> delete(@PathVariable("educationProgramId") String educationProgramId,  @RequestParam("ids") List<Long> ids) throws Exception {
-        return new ResponseEntity<>(educationProgramSubjectService.delete(educationProgramId,ids), HttpStatus.OK);
+    public ResponseEntity<?> delete(@PathVariable("educationProgramId") String educationProgramId, @RequestParam("ids") List<Long> ids) throws Exception {
+        return new ResponseEntity<>(educationProgramSubjectService.delete(educationProgramId, ids), HttpStatus.OK);
     }
 
 }

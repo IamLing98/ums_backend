@@ -19,10 +19,10 @@ public class UserRoleDTO {
 
     private String description;
 
-    public UserRole toModel(){
+    public UserRole toModel() {
         UserRole userRole = new UserRole();
 //        userRole.setRoleId(roleId);
 //        userRole.setUserId(userId);
-        return  userRole;
+        return userRole;
     }
 }

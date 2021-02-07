@@ -7,6 +7,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UnAuthorizedException extends RuntimeException{
+public class UnAuthorizedException extends RuntimeException {
     private String errorMessage;
 }

@@ -15,12 +15,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.*;
 
 @Service
+@Transactional
+        (
+                propagation = Propagation.REQUIRED,
+                readOnly = false,
+                rollbackFor = Throwable.class
+        )
 public class SubjectRegistrationServiceImpl implements SubjectRegistrationService {
 
     @Autowired
@@ -60,33 +68,31 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
                 detail.put("theoryNumber", object[7]);
                 detail.put("departmentName", object[8]);
                 detail.put("subjectType", object[9]);
-                if(currentSubjectSubmit != null && !currentSubjectSubmit.isEmpty()){
+                detail.put("eachSubject", object[10]);
+                if (currentSubjectSubmit != null && !currentSubjectSubmit.isEmpty()) {
                     Object[] hasPeopleSubmitted = currentSubjectSubmit.stream().filter(entry -> entry[0].toString().equals(object[0].toString())).findFirst().orElse(null);
-                    if(hasPeopleSubmitted != null){
+                    if (hasPeopleSubmitted != null) {
                         detail.put("totalSubmit", hasPeopleSubmitted[2]);
-                    }
-                    else{
+                    } else {
                         detail.put("totalSubmit", 0);
                     }
-                }else  detail.put("totalSubmit", 0);
-                if(autoSubjectSubmit != null && !autoSubjectSubmit.isEmpty()){
+                } else detail.put("totalSubmit", 0);
+                if (autoSubjectSubmit != null && !autoSubjectSubmit.isEmpty()) {
                     Object[] hasAutoSubmitted = autoSubjectSubmit.stream().filter(entry -> entry[0].toString().equals(object[0].toString())).findFirst().orElse(null);
-                    if(hasAutoSubmitted != null){
+                    if (hasAutoSubmitted != null) {
                         detail.put("autoSubmit", hasAutoSubmitted[2]);
-                    }
-                    else{
+                    } else {
                         detail.put("autoSubmit", 0);
                     }
-                }else detail.put("autoSubmit", 0);
-                if(totalSubjectClassOpened != null && !totalSubjectClassOpened.isEmpty()){
+                } else detail.put("autoSubmit", 0);
+                if (totalSubjectClassOpened != null && !totalSubjectClassOpened.isEmpty()) {
                     Object[] subjectClassObject = totalSubjectClassOpened.stream().filter(entry -> entry[0].toString().equals(object[0].toString())).findFirst().orElse(null);
-                    if(subjectClassObject != null){
+                    if (subjectClassObject != null) {
                         detail.put("totalSubjectClassOpened", subjectClassObject[2]);
-                    }
-                    else{
+                    } else {
                         detail.put("totalSubjectClassOpened", 0);
                     }
-                }else detail.put("totalSubjectClassOpened", 0);
+                } else detail.put("totalSubjectClassOpened", 0);
 
                 rs.add(detail);
             }
@@ -104,16 +110,16 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
         List<StudentDTO> studentDTOList = studentRepository.findAllStudentHasTermEqualsTermIndex(termIndex);
         System.out.println("list student has term is one:" + studentDTOList.size());
         List<SubjectDTO> subjectList = new ArrayList<>();
-        LocalDate lt  = LocalDate.now();
+        LocalDate lt = LocalDate.now();
         int studentListSize = studentDTOList.size();
-        for(int j = 0 ; j < studentListSize; j++){
+        for (int j = 0; j < studentListSize; j++) {
             StudentDTO studentDTO = studentDTOList.get(j);
-             subjectList = subjectRepository.findAllByEducationProgramIdAndTerm(studentDTO.getEducationProgramId(),studentDTO.getCurrentTerm() + 1);
-             int subjectListSize = subjectList.size();
-             for(int i = 0 ; i < subjectListSize; i++){
-                 SubjectRegistrationDTO subjectRegistrationDTO = new SubjectRegistrationDTO(studentDTO.getStudentId(), subjectList.get(i).getSubjectId(), termId, lt, 1  );
-                 subjectRegistrationRepository.save(subjectRegistrationDTO.toSubjectRegistrationModel());
-             }
+            subjectList = subjectRepository.findAllByEducationProgramIdAndTerm(studentDTO.getEducationProgramId(), studentDTO.getCurrentTerm() + 1);
+            int subjectListSize = subjectList.size();
+            for (int i = 0; i < subjectListSize; i++) {
+                SubjectRegistrationDTO subjectRegistrationDTO = new SubjectRegistrationDTO(studentDTO.getStudentId(), subjectList.get(i).getSubjectId(), termId, lt, 1);
+                subjectRegistrationRepository.save(subjectRegistrationDTO.toSubjectRegistrationModel());
+            }
         }
         return true;
     }
@@ -127,7 +133,7 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
             Optional<Subject> subjectOptional = subjectRepository.findById(subjectRegistrationDTO.getSubjectId());
             if (term.isPresent() && subjectOptional.isPresent()) {
                 SubjectRegistration registrationOptional = subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), subjectRegistrationDTO.getTermId());
-                if(registrationOptional == null){
+                if (registrationOptional == null) {
                     SubjectRegistration subjectRegistration = new SubjectRegistration();
                     subjectRegistration.setStudentId(studentId);
                     subjectRegistration.setTermId(subjectRegistrationDTO.getTermId());
@@ -136,9 +142,9 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
                     subjectRegistration.setDate(LocalDate.now());
                     subjectRegistrationRepository.save(subjectRegistration);
                     return true;
-                }else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại");
-            }else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Không hợp lệ");
-        }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Sinh vien khong ton tai");
+                } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại");
+            } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không hợp lệ");
+        } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Sinh vien khong ton tai");
     }
 
     @Override

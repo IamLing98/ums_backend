@@ -91,7 +91,7 @@ public class EducationProgramServiceImpl implements EducationProgramService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại!!!");
         EducationProgram educationProgram = educationProgramDTO.toModel();
         educationProgram.setEducationProgramStatus(2);
-        for(int i = 1 ; i <= educationProgramDTO.getTotalTerm(); i++){
+        for (int i = 1; i <= educationProgramDTO.getTotalTerm(); i++) {
             GroupStudent groupStudent = new GroupStudent();
             groupStudent.setEducationProgramId(educationProgramDTO.getEducationProgramId());
             groupStudent.setTerm(i);

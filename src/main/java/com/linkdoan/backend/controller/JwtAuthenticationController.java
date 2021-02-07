@@ -38,7 +38,7 @@ public class JwtAuthenticationController {
     private UserRepository userRepository;
 
     @Autowired
-    UserService userService ;
+    UserService userService;
     //@Autowired
     //private JwtUserDetailsService userDetailsService;
     private UserDetailsService userDetailsService;

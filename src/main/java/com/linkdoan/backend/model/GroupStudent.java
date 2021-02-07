@@ -4,18 +4,18 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Table(name="group_student")
+@Table(name = "group_student")
 @Entity
 @Data
 public class GroupStudent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="group_id")
+    @Column(name = "group_id")
     private Long groupId;
 
-    @Column(name="education_program_id")
+    @Column(name = "education_program_id")
     private String educationProgramId;
 
-    @Column(name="term")
+    @Column(name = "term")
     private Integer term;
 }

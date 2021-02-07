@@ -7,11 +7,11 @@ import lombok.Data;
 public class RoomDTO {
     private String roomId;
 
-    private  Integer numberOfSeats;
+    private Integer numberOfSeats;
 
-    private  Integer isLab;
+    private Integer isLab;
 
-    public Room toModel(){
+    public Room toModel() {
         Room room = new Room();
         room.setIsLab(this.isLab);
         room.setNumberOfSeats(this.numberOfSeats);

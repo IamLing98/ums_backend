@@ -13,7 +13,7 @@ public interface StudentService {
 
     StudentDTO getDetail(String studentId);
 
-    List<StudentDTO>  update(List<StudentDTO> studentDTOS) throws IOException;
+    List<StudentDTO> update(List<StudentDTO> studentDTOS) throws IOException;
 
     int create(List<StudentDTO> studentDTOS);
 

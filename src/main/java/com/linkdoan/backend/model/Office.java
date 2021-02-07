@@ -1,4 +1,5 @@
 package com.linkdoan.backend.model;
+
 import lombok.Data;
 
 import javax.persistence.Column;

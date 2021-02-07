@@ -18,7 +18,8 @@ public class RoleDTO {
 
     @AdjHistory(field = "description")
     private String description;
-    public Role toModel(){
+
+    public Role toModel() {
         Role role = new Role();
         role.setRoleId(roleId);
         role.setRoleName(roleName);

@@ -95,6 +95,7 @@ public abstract class SystemDTO {
     public void setKeySearch2(String keySearch2) {
         this.keySearch2 = keySearch2;
     }
+
     public String getKeySearch3() {
         return keySearch3;
     }

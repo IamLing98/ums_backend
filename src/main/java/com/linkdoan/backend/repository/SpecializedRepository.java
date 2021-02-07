@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpecializedRepository extends JpaRepository<Specialized, String> {
 
-    @Query(value = "SELECT Specialized.*  FROM Specialized   WHERE (:specialized_id is null or :specialized_id =''  or specialized_id = :specialized_id)"
+    @Query(value =
+            "SELECT Specialized.*  FROM Specialized   WHERE (:specialized_id is null or :specialized_id =''  or specialized_id = :specialized_id)"
             + "and (:department_id is null or :department_id =\"\" or department_id =  :department_id)"
             + "ORDER BY specialized_id ASC ",
             countQuery = "SELECT count(*) FROM Specialized WHERE (:specialized_id is null or :specialized_id =''  or specialized_id = :specialized_id)"

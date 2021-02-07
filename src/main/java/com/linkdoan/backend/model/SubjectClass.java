@@ -9,47 +9,62 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
-@Table(name="subject_class")
+@Table(name = "subject_class")
 @Entity
 @Data
 public class SubjectClass {
     @Id
-    @Column(name="subject_class_id", columnDefinition = "CHAR(14)")
+    @Column(name = "subject_class_id", columnDefinition = "CHAR(14)", unique = true)
     private String subjectClassId;
 
-    @Column(name="subject_id")
+    @Column(name = "subject_id")
     private String subjectId;
 
-    @Column(name="termId")
+    @Column(name = "termId")
     private String termId;
 
-    @Column(name="teacher_id")
+    @Column(name = "teacher_id")
     private String teacherId;
 
-    @Column(name="number_of_seats")
+    @Column(name = "number_of_seats")
     private Integer numberOfSeats;
 
-    @Column(name="is_require_lab", columnDefinition = "INT")
+    @Column(name = "is_require_lab", columnDefinition = "INT")
     private Integer isRequireLab;
 
-    @Column(name="created_date", columnDefinition = "DATE")
+    @Column(name = "created_date", columnDefinition = "DATE")
     private LocalDate createdDate;
 
-    @Column(name="group_id", columnDefinition = "INT")
+    @Column(name = "group_id", columnDefinition = "INT")
     private Integer groupId;
 
-    @Column(name="duration", columnDefinition = "INT")
+    @Column(name = "duration", columnDefinition = "INT")
     private Integer duration;
 
     //LOẠI LỚP HỌC PHẦN(LỚP CHÍNHH HAY LỚP TÁCH)
-    @Column(name="type", columnDefinition = "INT")
+    @Column(name = "type", columnDefinition = "INT")
     private Integer type;
 
     //LỚP HỌC ĐƯỢC TÁCH RA
-    @Column(name="main_subject_classId", columnDefinition = "CHAR(14)")
+    @Column(name = "main_subject_classId", columnDefinition = "CHAR(14)")
     private String mainSubjectClassId;
 
-    public SubjectClassDTO toDTO(){
+    @Column(name = "room_id")
+    private String roomId;
+
+    @Column(name = "day_of_week")
+    private Integer dayOfWeek;
+
+    @Column(name = "hour_of_day")
+    private Integer hourOfDay;
+
+    @Column(name = "current_of_submitting_number")
+    private Integer currentOfSubmittingNumber = 0;
+
+    @Column(name = "status")
+    private Integer status = 0;
+
+    public SubjectClassDTO toDTO() {
         SubjectClassDTO sj = new SubjectClassDTO();
         sj.setSubjectClassId(this.subjectClassId);
         sj.setTermId(this.termId);

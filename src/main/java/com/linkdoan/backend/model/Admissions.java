@@ -7,14 +7,14 @@ import java.sql.Date;
 
 
 @Entity
-@Table(name="admissions")
+@Table(name = "admissions")
 @Data
 public class Admissions {
 
     @Id
     @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator="native"
+            strategy = GenerationType.AUTO,
+            generator = "native"
     )
     @Column(name = "admissions_id", unique = true)
     private Long admissionsId;
@@ -25,12 +25,12 @@ public class Admissions {
     @Column(name = "start_date")
     private Date startDate;
 
-    @Column(name="end_date")
+    @Column(name = "end_date")
     private Date endDate;
 
-    @Column(name="admission_limit")
+    @Column(name = "admission_limit")
     private Integer admissionLimit;
 
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
 }

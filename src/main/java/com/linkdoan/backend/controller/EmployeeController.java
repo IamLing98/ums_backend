@@ -20,7 +20,7 @@ public class EmployeeController {
                                     @RequestParam(name = "departmentId", required = false) String departmentId,
                                     @RequestParam(name = "type", required = false) Integer type) throws Exception {
         // Pageable pageable = PageRequest.of(employeeDTO.getPage(), employeeDTO.getPageSize());
-        return new ResponseEntity<>(employeeService.findBy(employeeId, departmentId,  type), HttpStatus.OK);
+        return new ResponseEntity<>(employeeService.findBy(employeeId, departmentId, type), HttpStatus.OK);
     }
 
 }

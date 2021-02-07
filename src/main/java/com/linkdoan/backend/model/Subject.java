@@ -34,19 +34,19 @@ public class Subject {
     @Column(name = "self_learning_number")
     private Integer selfLearningNumber;
 
-    @Column(name="practice_number")
+    @Column(name = "practice_number")
     private Integer practiceNumber;
 
-    @Column(name="subject_for_level")
+    @Column(name = "subject_for_level")
     private Integer subjectForLevel;
 
-    @Column(name="subject_type")
+    @Column(name = "subject_type")
     private Integer subjectType;
 
-    @Column(name="department_id", columnDefinition = "CHAR(7)")
+    @Column(name = "department_id", columnDefinition = "CHAR(7)")
     private String departmentId;
 
-    public SubjectDTO toDTO(){
+    public SubjectDTO toDTO() {
         SubjectDTO subjectDTO = new SubjectDTO();
         subjectDTO.setSubjectId(this.subjectId);
         subjectDTO.setSubjectName(this.subjectName);

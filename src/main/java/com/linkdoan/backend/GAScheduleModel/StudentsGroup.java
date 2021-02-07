@@ -7,7 +7,7 @@ public class StudentsGroup {
     private int id;
     private String name;
     private int numberOfStudents;
-    private ArrayList <CourseClass> courseClasses;
+    private ArrayList<CourseClass> courseClasses;
 
     public StudentsGroup() {
         name = new String();
@@ -55,7 +55,7 @@ public class StudentsGroup {
     }
 
 
-    public void addCourseClass ( CourseClass courseClass){
+    public void addCourseClass(CourseClass courseClass) {
         courseClasses.add(courseClass);
     }
 

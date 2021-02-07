@@ -16,16 +16,16 @@ public class TeacherWorkTimeLine {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer teacherWorkTimeLineId;
 
-    @Column(name="teacher_id")
+    @Column(name = "teacher_id")
     private String teacherId;
 
-    @Column(name="start_date")
+    @Column(name = "start_date")
     private LocalDate startDate;
 
-    @Column(name="end_date")
+    @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name="job")
+    @Column(name = "job")
     private String job;
 
 }

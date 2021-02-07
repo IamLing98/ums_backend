@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface PrerequisitesSubjectRepository extends JpaRepository<PrerequisitesSubject, Long> {
     Optional<PrerequisitesSubject> findFirstBySubjectIdAndAndPrerequisitesSubjectId(String subjectId, String prerequisitesSubjectId);
+
     List<PrerequisitesSubject> findAllBySubjectId(String subjectId);
 }

@@ -14,11 +14,11 @@ public class BranchServiceImpl implements BranchService {
     @Autowired
     BranchRepository branchRepository;
 
-    public  List<BranchDTO> getAllBranch(String departmentId) {
+    public List<BranchDTO> getAllBranch(String departmentId) {
         return branchRepository.findAllByDepartmentId(departmentId);
     }
 
-    public List<BranchDTO> findAllByDepartmentId(String departmentId){
-        return branchRepository.findAllByDepartmentId( departmentId);
+    public List<BranchDTO> findAllByDepartmentId(String departmentId) {
+        return branchRepository.findAllByDepartmentId(departmentId);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDTO extends SystemDTO  {
+public class SubjectDTO extends SystemDTO {
 
     private String subjectId;
 
@@ -35,7 +35,7 @@ public class SubjectDTO extends SystemDTO  {
 
     private String departmentId;
 
-    private List<String> preLearnSubjectList ;
+    private List<String> preLearnSubjectList;
 
     public SubjectDTO(String subjectId, String subjectName) {
         this.subjectId = subjectId;
@@ -68,7 +68,7 @@ public class SubjectDTO extends SystemDTO  {
     }
 
 
-    public Subject toModel(){
+    public Subject toModel() {
         Subject subject = new Subject();
         subject.setSubjectId(this.subjectId);
         subject.setSubjectName(this.subjectName);
@@ -83,9 +83,9 @@ public class SubjectDTO extends SystemDTO  {
         return subject;
     }
 
-    public List<PrerequisitesSubject> toPrerequisitesSubjectList(){
+    public List<PrerequisitesSubject> toPrerequisitesSubjectList() {
         List<PrerequisitesSubject> prerequisitesSubjectList = new ArrayList<>();
-        for(String  id : this.preLearnSubjectList){
+        for (String id : this.preLearnSubjectList) {
             PrerequisitesSubject prerequisitesSubject = new PrerequisitesSubject();
             prerequisitesSubject.setSubjectId(this.subjectId);
             prerequisitesSubject.setPrerequisitesSubjectId(id);
