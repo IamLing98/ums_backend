@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -66,15 +65,39 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    //    @Override
+//    protected void configure(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity.requiresChannel()
+//                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+//                .requiresSecure();
+//        // We don't need CSRF for this example
+//        httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf().disable()
+//                // dont authenticate this particular request
+//
+//                .authorizeRequests()
+//                .antMatchers(
+//                        "/authenticate",
+//                        "/v3/api-docs/**",
+//                        "/swagger-ui.html",
+//                        "/swagger-ui/**"
+//                )
+//                .permitAll()
+//                .antMatchers("/education-program/**", "/class/**", "/students/**")
+//                .hasAnyAuthority("PDT")
+//                // all other requests need to be authenticated
+//                .anyRequest().authenticated()
+//                .and()
+//                // make sure we use stateless session; session won't be used to
+//                // store user's state
+//                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        // Add a filter to validate the tokens with every request
+//        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//    }
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.requiresChannel()
-                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
-                .requiresSecure();
-        // We don't need CSRF for this example
-        httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf().disable()
-                // dont authenticate this particular request
-
+        httpSecurity
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
                         "/authenticate",

@@ -14,9 +14,8 @@ import java.util.Date;
 @BatchSize(size = 10)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_generator")
-    @SequenceGenerator(name = "users_sequence", sequenceName = "user_quence")
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @Column(name = "user_id", unique = true)
     private Long userId;
 
     @Column(name = "username")

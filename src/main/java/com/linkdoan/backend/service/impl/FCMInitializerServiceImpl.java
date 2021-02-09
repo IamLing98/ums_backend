@@ -24,8 +24,10 @@ public class FCMInitializerServiceImpl implements FCMInitializerService {
                     .setCredentials(GoogleCredentials.fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())).build();
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
+                System.out.println("Firebase application has been initialized");
             }
         } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -48,6 +48,7 @@ public class JwtAuthenticationController {
         //authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
+
                         authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()
                 )
