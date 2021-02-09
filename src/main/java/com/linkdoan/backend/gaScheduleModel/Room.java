@@ -1,4 +1,4 @@
-package com.linkdoan.backend.GAScheduleModel;
+package com.linkdoan.backend.gaScheduleModel;
 
 
 public class Room {

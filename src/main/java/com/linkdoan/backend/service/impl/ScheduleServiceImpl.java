@@ -1,10 +1,10 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.GAScheduleModel.CourseClass;
-import com.linkdoan.backend.GAScheduleModel.GA;
-import com.linkdoan.backend.GAScheduleModel.InputFromFile;
-import com.linkdoan.backend.GAScheduleModel.Schedule;
-import com.linkdoan.backend.View.ViewExcel;
+import com.linkdoan.backend.gaScheduleModel.CourseClass;
+import com.linkdoan.backend.gaScheduleModel.GA;
+import com.linkdoan.backend.gaScheduleModel.InputFromFile;
+import com.linkdoan.backend.gaScheduleModel.Schedule;
+import com.linkdoan.backend.io.ViewExcel;
 import com.linkdoan.backend.dto.SubjectClassDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.Employee;
@@ -192,7 +192,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         //get all slots of schedule from GA
         Vector<ArrayList<CourseClass>> slots = schedule.getSlots();
-        ArrayList<com.linkdoan.backend.GAScheduleModel.Room> roomArrayList = inputFromFile.getRoomList();
+        ArrayList<com.linkdoan.backend.gaScheduleModel.Room> roomArrayList = inputFromFile.getRoomList();
         for (int i = 0; i < roomArrayList.size(); i++) {
             System.out.println("Room name: " + roomArrayList.get(i).getName());
         }

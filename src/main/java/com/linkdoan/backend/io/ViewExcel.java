@@ -1,8 +1,8 @@
-package com.linkdoan.backend.View;
+package com.linkdoan.backend.io;
 
-import com.linkdoan.backend.GAScheduleModel.CourseClass;
-import com.linkdoan.backend.GAScheduleModel.InputFromFile;
-import com.linkdoan.backend.GAScheduleModel.Schedule;
+import com.linkdoan.backend.gaScheduleModel.CourseClass;
+import com.linkdoan.backend.gaScheduleModel.InputFromFile;
+import com.linkdoan.backend.gaScheduleModel.Schedule;
 import com.linkdoan.backend.service.impl.ScheduleServiceImpl;
 import jxl.Workbook;
 import jxl.write.Label;
