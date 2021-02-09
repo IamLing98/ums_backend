@@ -1,4 +1,4 @@
-# University Dashboard
+# University System
 
 ## About The Project
 
@@ -6,10 +6,9 @@ This is my final year project in my university. An university information manage
 
 ### Built With
  
-* [ReactJS](https://reactjs.org/)
-* [Antd](https://ant.design/)
-* [Redux](https://redux.js.org/)
-* [Webpack](https://webpack.js.org/)
+* [Spring](https://spring.io/)
+* [FCM](https://firebase.google.com/docs/cloud-messaging/)
+* [Websocket](https:) 
 
 <!-- GETTING STARTED -->
 ## Getting Started
