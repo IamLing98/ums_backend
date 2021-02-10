@@ -2,7 +2,6 @@ package com.linkdoan.backend.config;
 
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.security.Principal;
 import java.util.Date;
 
 
@@ -12,7 +13,7 @@ import java.util.Date;
 @Table(name = "users")
 @Data
 @BatchSize(size = 10)
-public class User {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name = "user_id", unique = true)

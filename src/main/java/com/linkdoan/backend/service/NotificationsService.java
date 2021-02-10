@@ -7,5 +7,7 @@ public interface NotificationsService {
 
     Map<String, Object> getAllNotifications(String userName);
 
+    int createNotification(Long senderId, List<Long> ids, String notificationTitle, String notificationData);
+
     int updateNotifications(List<Long> ids, String userName);
 }

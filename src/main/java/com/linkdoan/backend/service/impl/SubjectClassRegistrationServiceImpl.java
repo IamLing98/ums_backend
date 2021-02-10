@@ -1,6 +1,5 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.dto.SubjectClassDTO;
 import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
 import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;

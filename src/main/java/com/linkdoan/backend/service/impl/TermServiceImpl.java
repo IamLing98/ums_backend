@@ -2,16 +2,24 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.TermDTO;
 import com.linkdoan.backend.model.Term;
+import com.linkdoan.backend.repository.NotificationsRepository;
 import com.linkdoan.backend.repository.TermRepository;
+import com.linkdoan.backend.repository.UserRepository;
+import com.linkdoan.backend.service.NotificationsService;
 import com.linkdoan.backend.service.SubjectClassRegistrationService;
 import com.linkdoan.backend.service.SubjectRegistrationService;
 import com.linkdoan.backend.service.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +35,17 @@ public class TermServiceImpl implements TermService {
     @Autowired
     SubjectClassRegistrationService subjectClassRegistrationService;
 
+    @Autowired
+    NotificationsRepository notificationsRepository;
+
+    @Autowired
+    TaskScheduler taskScheduler;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    NotificationsService notificationsService;
 
     @Override
     public List<TermDTO> getAll(Integer year, Integer term) {
@@ -61,6 +80,30 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
+    int openSubjectSubmitting(Term term){
+        LocalDate startDate =  LocalDate.of(25,12,12 );
+        LocalDate endDate = LocalDate.of(25,12,13);
+        LocalDateTime startDateLocalDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateLocalDateTime = endDate.atStartOfDay();
+        long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long differenceBetweenTwoDate = endDateLocalDateTimeLillis - startDateLocalDateTimeMillis;
+        //create notification here
+        Long senderId = 3L;
+        List<Long> userList = userRepository.getUserIds();
+        if(userList != null){
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký học phần. <br/> Bắt đầu: "
+                    + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate() );
+        }
+
+        taskScheduler.scheduleWithFixedDelay( () -> {
+
+            System.out.println("ddONG DANG KY HOC PHAN");
+
+        }, new Date( System.currentTimeMillis() + (10000) ), Long.MAX_VALUE );
+        return 1;
+    }
+
     @Override
     public int update(String termId, TermDTO termDTO) {
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -75,7 +118,8 @@ public class TermServiceImpl implements TermService {
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         term.setStatus(1);
                         termRepository.save(term);
-                        subjectRegistrationService.subjectSubmitForNewStudent(termId);
+                        openSubjectSubmitting(term);
+//                        subjectRegistrationService.subjectSubmitForNewStudent(termId);
                         return 1;
                     }
                     break;

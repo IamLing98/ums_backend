@@ -26,7 +26,7 @@ public interface NotificationsRepository extends JpaRepository<Notifications, Lo
                     "FROM User sendUser INNER JOIN UserNotifications un ON sendUser.userId = un.senderId " +
                     "INNER JOIN Notifications n ON un.notificationId = n.id " +
                     "INNER JOIN User rUser ON un.receiverId = rUser.userId " +
-                    "WHERE un.receiverId = :userId"
+                    "WHERE un.receiverId = :userId ORDER BY un.createdDate DESC "
     )
     List<Object[]> getAllNotificationsOfUser(@Param("userId") Long userId);
 

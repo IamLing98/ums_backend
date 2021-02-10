@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TermController {
+
     @Autowired
     TermService termService;
 
@@ -34,7 +35,6 @@ public class TermController {
     @RequestMapping(value = "/terms/{termId}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("termId") String termId, @RequestBody TermDTO termDTO)
             throws Exception {
-        //        Example<Student> searchTerm = Example.of(new Student());
         return new ResponseEntity<>(termService.update(termId, termDTO), HttpStatus.OK);
     }
 

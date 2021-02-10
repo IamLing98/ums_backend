@@ -1,8 +1,11 @@
 package com.linkdoan.backend.service.impl;
 
+import com.linkdoan.backend.model.Notifications;
 import com.linkdoan.backend.model.User;
+import com.linkdoan.backend.model.UserNotifications;
 import com.linkdoan.backend.repository.NotificationsRepository;
 import com.linkdoan.backend.repository.UserRepository;
+import com.linkdoan.backend.repository.UsersNotificationsRepository;
 import com.linkdoan.backend.service.NotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +14,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Transactional
@@ -30,6 +31,9 @@ public class NotificationsServiceImpl implements NotificationsService {
 
     @Autowired
     NotificationsRepository notificationsRepository;
+
+    @Autowired
+    UsersNotificationsRepository usersNotificationsRepository;
 
     @Override
     public Map<String, Object> getAllNotifications(String userName) {
@@ -59,11 +63,38 @@ public class NotificationsServiceImpl implements NotificationsService {
     }
 
     @Override
-    public int updateNotifications(List<Long> ids, String userName) {
+    public int createNotification(Long senderId, List<Long> ids, String notificationTitle, String notificationData) {
         int count = 0 ;
+        LocalDateTime ldt = LocalDateTime.now();
+        Notifications notifications = new Notifications();
+        notifications.setData(notificationData);
+        notifications.setTitle(notificationTitle);
+        Notifications saved = notificationsRepository.save(notifications);
+        if(saved != null){
+            Long savedNotificationId = saved.getId();
+            for(Long id : ids){
+                Optional<UserNotifications> userNotificationsOptional = usersNotificationsRepository.findFirstBySenderIdAndReceiverIdAndNotificationId(senderId,id,savedNotificationId);
+                if(!userNotificationsOptional.isPresent()){
+                    UserNotifications userNotifications = new UserNotifications();
+                    userNotifications.setCreatedDate(ldt);
+                    userNotifications.setNotificationId(savedNotificationId);
+                    userNotifications.setSenderId(senderId);
+                    userNotifications.setReceiverId(id);
+                    userNotifications.setStatus(new Long(1));
+                    usersNotificationsRepository.save(userNotifications);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    @Override
+    public int updateNotifications(List<Long> ids, String userName) {
+        int count = 0;
         for (Long id : ids) {
             int updateNotification = notificationsRepository.setReadNotification(id);
-            if(updateNotification > 0 ) count++;
+            if (updateNotification > 0) count++;
         }
         return count;
     }
