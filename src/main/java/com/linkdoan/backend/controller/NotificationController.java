@@ -1,7 +1,5 @@
 package com.linkdoan.backend.controller;
 
-import com.linkdoan.backend.model.PnsRequest;
-import com.linkdoan.backend.service.FCMService;
 import com.linkdoan.backend.service.NotificationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,9 +12,6 @@ import java.util.List;
 
 @RestController
 public class NotificationController {
-    @Autowired
-    private FCMService fcmService;
-
     @Autowired
     private NotificationsService notificationsService;
 
@@ -34,8 +29,4 @@ public class NotificationController {
         return new ResponseEntity<>(notificationsService.updateNotifications(ids,request.getContext().getAuthentication().getName()), HttpStatus.OK);
     }
 
-    @PostMapping("/notification")
-    public String sendSampleNotification(@RequestBody PnsRequest pnsRequest) {
-        return fcmService.pushNotification(pnsRequest);
-    }
 }

@@ -12,7 +12,7 @@ public interface TermService {
 
     public int create(TermDTO termDTO);
 
-    public int update(String termId, TermDTO termDTO);
+    public int update(String termId, TermDTO termDTO, String userName);
 
     public int delete(String id);
 }

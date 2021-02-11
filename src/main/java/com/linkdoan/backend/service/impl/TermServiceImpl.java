@@ -2,6 +2,7 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.TermDTO;
 import com.linkdoan.backend.model.Term;
+import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.NotificationsRepository;
 import com.linkdoan.backend.repository.TermRepository;
 import com.linkdoan.backend.repository.UserRepository;
@@ -11,6 +12,7 @@ import com.linkdoan.backend.service.SubjectRegistrationService;
 import com.linkdoan.backend.service.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -47,6 +49,9 @@ public class TermServiceImpl implements TermService {
     @Autowired
     NotificationsService notificationsService;
 
+    @Autowired
+    SimpMessagingTemplate template;
+
     @Override
     public List<TermDTO> getAll(Integer year, Integer term) {
         List<Term> termList = termRepository.findAll();
@@ -80,9 +85,9 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
-    int openSubjectSubmitting(Term term){
-        LocalDate startDate =  LocalDate.of(25,12,12 );
-        LocalDate endDate = LocalDate.of(25,12,13);
+    int openSubjectSubmitting(Term term, String username) {
+        LocalDate startDate = LocalDate.of(25, 12, 12);
+        LocalDate endDate = LocalDate.of(25, 12, 13);
         LocalDateTime startDateLocalDateTime = startDate.atStartOfDay();
         LocalDateTime endDateLocalDateTime = endDate.atStartOfDay();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -91,21 +96,24 @@ public class TermServiceImpl implements TermService {
         //create notification here
         Long senderId = 3L;
         List<Long> userList = userRepository.getUserIds();
-        if(userList != null){
+        if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký học phần. <br/> Bắt đầu: "
-                    + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate() );
+                    + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate());
         }
 
-        taskScheduler.scheduleWithFixedDelay( () -> {
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            User user = new User();
+            user.setUsername("SSOFF");
+            notificationsService.createNotification(senderId, userList, "Đay la thong bao test", "<strong>Test thoi</strong>. <br/> Bắt đầu: "
+                    + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate());
+            template.convertAndSendToUser(username, "/queue/greetings", user);
 
-            System.out.println("ddONG DANG KY HOC PHAN");
-
-        }, new Date( System.currentTimeMillis() + (10000) ), Long.MAX_VALUE );
+        }, new Date(System.currentTimeMillis() + (10000)), Long.MAX_VALUE);
         return 1;
     }
 
     @Override
-    public int update(String termId, TermDTO termDTO) {
+    public int update(String termId, TermDTO termDTO, String username) {
         Optional<Term> termOptional = termRepository.findById(termId);
         if (termOptional.isPresent()) {
             Term term = termOptional.get();
@@ -118,7 +126,7 @@ public class TermServiceImpl implements TermService {
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         term.setStatus(1);
                         termRepository.save(term);
-                        openSubjectSubmitting(term);
+                        openSubjectSubmitting(term, username);
 //                        subjectRegistrationService.subjectSubmitForNewStudent(termId);
                         return 1;
                     }

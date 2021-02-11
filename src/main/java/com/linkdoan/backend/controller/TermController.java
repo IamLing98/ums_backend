@@ -5,6 +5,7 @@ import com.linkdoan.backend.service.TermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,9 +34,10 @@ public class TermController {
     }
 
     @RequestMapping(value = "/terms/{termId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("termId") String termId, @RequestBody TermDTO termDTO)
+    public ResponseEntity<?> update(@PathVariable("termId") String termId, @RequestBody TermDTO termDTO, SecurityContextHolder request)
             throws Exception {
-        return new ResponseEntity<>(termService.update(termId, termDTO), HttpStatus.OK);
+        String userName = request.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(termService.update(termId, termDTO,userName), HttpStatus.OK);
     }
 
     //    @CrossOrigin(origins = "http://localhost:3000")
