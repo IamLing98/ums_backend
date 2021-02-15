@@ -30,10 +30,10 @@ public class WebSocketController {
         this.template.convertAndSend("/topic/update", formattedDate);
     }
 
-    @MessageMapping("/greetings")
-    @SendToUser("/queue/greetings")
+    @MessageMapping("/notifications")
+    @SendToUser("/queue/notifications")
     public String reply(@Payload String message ) {
-        this.template.convertAndSendToUser("517100032", "/queue/greetings", "Hello " + "send from vandoan54 7");
+        this.template.convertAndSendToUser("517100032", "/queue/notifications", "Hello " + "send from vandoan547");
         return "Hello " + message;
     }
 }

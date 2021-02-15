@@ -14,7 +14,7 @@ public interface SubjectRegistrationService {
 
     List<Map<String, Object>> getSubmittingInfo(String termId);
 
-    List<SubjectDTO> getListSubjectSubmitted(String termId, String studentId);
+    Map<String, Object> getListSubjectSubmitted(String termId, String studentId);
 
     boolean subjectSubmitForNewStudent(String termId);
 

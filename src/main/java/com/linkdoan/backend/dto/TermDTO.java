@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -25,17 +26,17 @@ public class TermDTO {
 
     private LocalDate termEndDate;
 
-    private LocalDate subjectSubmittingStartDate;
+    private LocalDateTime subjectSubmittingStartDate;
 
-    private LocalDate subjectSubmittingEndDate;
+    private LocalDateTime subjectSubmittingEndDate;
 
-    private LocalDate subjectClassSubmittingStartDate;
+    private LocalDateTime subjectClassSubmittingStartDate;
 
-    private LocalDate subjectCLassSubmittingEndDate;
+    private LocalDateTime subjectCLassSubmittingEndDate;
 
-    private LocalDate editSubmittingStartDate;
+    private LocalDateTime editSubmittingStartDate;
 
-    private LocalDate editSubmittingEndDate;
+    private LocalDateTime editSubmittingEndDate;
 
     private String actionType;
 

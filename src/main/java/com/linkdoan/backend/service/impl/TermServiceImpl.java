@@ -1,8 +1,8 @@
 package com.linkdoan.backend.service.impl;
 
+import com.linkdoan.backend.dto.NotificationDTO;
 import com.linkdoan.backend.dto.TermDTO;
 import com.linkdoan.backend.model.Term;
-import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.NotificationsRepository;
 import com.linkdoan.backend.repository.TermRepository;
 import com.linkdoan.backend.repository.UserRepository;
@@ -17,9 +17,9 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -86,29 +86,50 @@ public class TermServiceImpl implements TermService {
     }
 
     int openSubjectSubmitting(Term term, String username) {
-        LocalDate startDate = LocalDate.of(25, 12, 12);
-        LocalDate endDate = LocalDate.of(25, 12, 13);
-        LocalDateTime startDateLocalDateTime = startDate.atStartOfDay();
-        LocalDateTime endDateLocalDateTime = endDate.atStartOfDay();
+        LocalDateTime startDateLocalDateTime = term.getSubjectSubmittingStartDate();
+        LocalDateTime endDateLocalDateTime = term.getSubjectSubmittingEndDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long differenceBetweenTwoDate = endDateLocalDateTimeLillis - startDateLocalDateTimeMillis;
-        //create notification here
         Long senderId = 3L;
         List<Long> userList = userRepository.getUserIds();
         if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký học phần. <br/> Bắt đầu: "
                     + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate());
         }
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(13);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã kết thúc đăng ký học phần");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SSOFF");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSend("/topic/notifications", notificationDTO);
+        }, new Date(System.currentTimeMillis() + 10000), Long.MAX_VALUE);
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(12);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã bắt đầu đăng ký học phần.");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SSON");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(startDateLocalDateTimeMillis), Long.MAX_VALUE);
 
         taskScheduler.scheduleWithFixedDelay(() -> {
-            User user = new User();
-            user.setUsername("SSOFF");
-            notificationsService.createNotification(senderId, userList, "Đay la thong bao test", "<strong>Test thoi</strong>. <br/> Bắt đầu: "
-                    + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate());
-            template.convertAndSendToUser(username, "/queue/greetings", user);
-
-        }, new Date(System.currentTimeMillis() + (10000)), Long.MAX_VALUE);
+            term.setProgress(13);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã kết thúc đăng ký học phần");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SSOFF");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(endDateLocalDateTimeLillis), Long.MAX_VALUE);
         return 1;
     }
 
@@ -122,8 +143,9 @@ public class TermServiceImpl implements TermService {
                 case "SSON":
                     if (term.getProgress() == 11) {
                         term.setProgress(12);
-                        term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
-                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
+                        //use truncated to fixed default time is 00:00:00
+                        term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate().truncatedTo(ChronoUnit.HOURS));
+                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate().truncatedTo(ChronoUnit.HOURS));
                         term.setStatus(1);
                         termRepository.save(term);
                         openSubjectSubmitting(term, username);

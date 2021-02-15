@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -21,14 +22,11 @@ public class SubjectClassRegistration {
     @Column(name = "subject_class_id", columnDefinition = "CHAR(14)")
     private String subjectClassId;
 
-    @Column(name = "subject_id", columnDefinition = "CHAR(14)")
-    private String subjectId;
-
     @Column(name = "term_id", columnDefinition = "CHAR(6)")
     private String termId;
 
-    @Column(name = "submitted_date")
-    private LocalDate submittedDate;
+    @Column(name = "submitted_date", columnDefinition = "DATETIME")
+    private LocalDateTime submittedDate;
 
     @Column(name = "auto_submit", columnDefinition = "INT")
     private Integer autoSubmit;

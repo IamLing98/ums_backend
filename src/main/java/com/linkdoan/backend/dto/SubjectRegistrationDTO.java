@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -20,7 +21,7 @@ public class SubjectRegistrationDTO {
 
     private String termId;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     private Integer autoSubmit;
 
@@ -34,14 +35,7 @@ public class SubjectRegistrationDTO {
         return subjectRegistration;
     }
 
-    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDate date) {
-        this.studentId = studentId;
-        this.subjectId = subjectId;
-        this.termId = termId;
-        this.date = date;
-    }
-
-    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDate date, Integer autoSubmit) {
+    public SubjectRegistrationDTO(String studentId, String subjectId, String termId, LocalDateTime date, Integer autoSubmit) {
         this.studentId = studentId;
         this.subjectId = subjectId;
         this.termId = termId;

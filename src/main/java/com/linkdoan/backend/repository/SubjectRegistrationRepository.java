@@ -3,6 +3,7 @@ package com.linkdoan.backend.repository;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.SubjectRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,14 +14,6 @@ import java.util.List;
 public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegistration, Long> {
 
     //for admin
-    @Query(value =
-            "SELECT new com.linkdoan.backend.dto.SubjectDTO(subject.subjectId, subject.subjectName, subject.eachSubject, " +
-                    "subject.theoryNumber, subject.exerciseNumber, subject.discussNumber, subject.selfLearningNumber, subject.practiceNumber, subject.subjectForLevel) " +
-                    "FROM SubjectRegistration subjectRegistration INNER JOIN Subject  subject ON subjectRegistration.subjectId = subject.subjectId " +
-                    "WHERE (subjectRegistration.studentId = :studentId AND subjectRegistration.termId = :termId ) "
-    )
-    List<SubjectDTO> getAllByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId);
-
     @Query(value =
             "SELECT subject.subjectId, subject.subjectName , count(subject.subjectId), subject.discussNumber, subject.exerciseNumber, " +
                     "subject.practiceNumber, subject.selfLearningNumber, subject.theoryNumber, department.departmentName,subject.subjectType, " +
@@ -59,4 +52,20 @@ public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegi
     List<SubjectRegistration> findAllByTermIdAndAutoSubmit(String termId, Integer autoSubmit);
 
     SubjectRegistration findFirstByStudentIdAndSubjectIdAndTermId(String studentId, String subjectId, String termId);
+
+    //for student role
+    @Query(value =
+            "SELECT sr.id, sr.termId, sr.studentId, sr.date, sr.autoSubmit, sr.subjectId ,s.subjectName, s.eachSubject " +
+                    "FROM SubjectRegistration sr " +
+                    "INNER JOIN Subject s ON sr.subjectId = s.subjectId " +
+                    "INNER JOIN Student st ON sr.studentId = st.studentId " +
+                    "WHERE sr.termId = :termId and sr.studentId = :studentId"
+    )
+    List<Object[]> getAllByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId);
+
+    @Modifying
+    @Query(value =
+            "DELETE FROM SubjectRegistration sr WHERE sr.studentId = :studentId and sr.subjectId = :subjectId and sr.termId = :termId"
+    )
+    int deleteSubjectSubmitted(@Param("studentId") String studentId, @Param("subjectId") String subjectId, @Param("termId") String termId);
 }

@@ -3,6 +3,7 @@ package com.linkdoan.backend.service.impl;
 import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
+import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.model.SubjectRegistration;
 import com.linkdoan.backend.model.Term;
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -110,7 +111,7 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
         List<StudentDTO> studentDTOList = studentRepository.findAllStudentHasTermEqualsTermIndex(termIndex);
         System.out.println("list student has term is one:" + studentDTOList.size());
         List<SubjectDTO> subjectList = new ArrayList<>();
-        LocalDate lt = LocalDate.now();
+        LocalDateTime lt = LocalDateTime.now();
         int studentListSize = studentDTOList.size();
         for (int j = 0; j < studentListSize; j++) {
             StudentDTO studentDTO = studentDTOList.get(j);
@@ -128,19 +129,35 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
     @Override
     public boolean addSubject(String studentId, SubjectRegistrationDTO subjectRegistrationDTO) {
         System.out.println("student id: " + studentId);
+        Integer totalEachSubjectNumber = 0;
+        List<Object[]> subjectSubmittedObjectArrayList = subjectRegistrationRepository.getAllByStudentIdAndTermId(studentId, subjectRegistrationDTO.getTermId());
+        if (subjectSubmittedObjectArrayList != null && !subjectSubmittedObjectArrayList.isEmpty()) {
+            for (Object[] subjecSubmittedObjectArray : subjectSubmittedObjectArrayList) {
+                totalEachSubjectNumber += (Integer) subjecSubmittedObjectArray[7];
+            }
+        }
         if (studentRepository.existsById(studentId)) {
-            Optional<Term> term = termRepository.findById(subjectRegistrationDTO.getTermId());
+            Optional<Term> termOptional = termRepository.findById(subjectRegistrationDTO.getTermId());
             Optional<Subject> subjectOptional = subjectRepository.findById(subjectRegistrationDTO.getSubjectId());
-            if (term.isPresent() && subjectOptional.isPresent()) {
+            if (termOptional.isPresent() && subjectOptional.isPresent()) {
+                Term term = termOptional.get();
                 SubjectRegistration registrationOptional = subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectRegistrationDTO.getSubjectId(), subjectRegistrationDTO.getTermId());
                 if (registrationOptional == null) {
+                    LocalDateTime ldt = LocalDateTime.now();
+                    System.out.println(ldt.toString());
+                    boolean isBefore = ldt.isBefore(term.getSubjectSubmittingEndDate());
+                    if (!isBefore)
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Đã kết thúc đăng ký học phần");
+                    Subject sj = subjectOptional.get();
                     SubjectRegistration subjectRegistration = new SubjectRegistration();
                     subjectRegistration.setStudentId(studentId);
                     subjectRegistration.setTermId(subjectRegistrationDTO.getTermId());
                     subjectRegistration.setSubjectId(subjectRegistrationDTO.getSubjectId());
                     subjectRegistration.setAutoSubmit(0);
-                    subjectRegistration.setDate(LocalDate.now());
-                    subjectRegistrationRepository.save(subjectRegistration);
+                    subjectRegistration.setDate(ldt);
+                    if (totalEachSubjectNumber + sj.getEachSubject() < 26)
+                        subjectRegistrationRepository.save(subjectRegistration);
+                    else throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Vượt quá 25 tin chỉ một kỳ");
                     return true;
                 } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại");
             } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không hợp lệ");
@@ -148,16 +165,39 @@ public class SubjectRegistrationServiceImpl implements SubjectRegistrationServic
     }
 
     @Override
-    public List<SubjectDTO> getListSubjectSubmitted(String termId, String studentId) {
-        return subjectRegistrationRepository.getAllByStudentIdAndTermId(studentId, termId);
+    public Map<String, Object> getListSubjectSubmitted(String termId, String studentId) {
+        String[] labels = {"id", "termId", "studentId", "date", "autoSubmit", "subjectId", "subjectName", "eachSubject",};
+        Optional<Student> studentOptional = studentRepository.findById(studentId);
+        if (studentOptional.isPresent()) {
+            Map<String, Object> studentMap = new HashMap<>();
+            Student student = studentOptional.get();
+            studentMap.put("student", student);
+            List<Object[]> subjectSubmittedObjectArrayList = subjectRegistrationRepository.getAllByStudentIdAndTermId(studentId, termId);
+            List<Map<String, Object>> rs = new ArrayList<>();
+            Integer numberSubjectSumitted = 0;
+            if (subjectSubmittedObjectArrayList != null && !subjectSubmittedObjectArrayList.isEmpty()) {
+                for (Object[] subjectSubmittedObjectArray : subjectSubmittedObjectArrayList) {
+                    Map<String, Object> subjectSubmittedMap = new HashMap<>();
+                    for (int i = 0; i < labels.length; i++) {
+                        subjectSubmittedMap.put(labels[i], subjectSubmittedObjectArray[i]);
+                    }
+                    numberSubjectSumitted += (Integer) subjectSubmittedObjectArray[7];
+                    rs.add(subjectSubmittedMap);
+                }
+            }
+            studentMap.put("listSubjectSubmitted", rs);
+            studentMap.put("totalSubmitted", numberSubjectSumitted);
+            return studentMap;
+        } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Lỗi xác thực");
     }
 
 
     @Override
     public int deleteSubject(String studentId, String subjectId, String termId) {
-        SubjectRegistration subjectRegistration = subjectRegistrationRepository.findFirstByStudentIdAndSubjectIdAndTermId(studentId, subjectId, termId);
-        if (subjectRegistration != null) subjectRegistrationRepository.delete(subjectRegistration);
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
-        return 0;
+        System.out.println("student: " + studentId);
+        int deletSubjectSubmitted = subjectRegistrationRepository.deleteSubjectSubmitted(studentId, subjectId, termId);
+        if (deletSubjectSubmitted > 0) {
+            return 1;
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
     }
 }

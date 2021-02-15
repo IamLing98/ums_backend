@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "term")
@@ -37,22 +38,22 @@ public class Term {
     private LocalDate termEndDate;
 
     @Column(name = "subject_submitting_start_date")
-    private LocalDate subjectSubmittingStartDate;
+    private LocalDateTime subjectSubmittingStartDate;
 
     @Column(name = "subject_submitting_end_date")
-    private LocalDate subjectSubmittingEndDate;
+    private LocalDateTime subjectSubmittingEndDate;
 
     @Column(name = "subject_class_submitting_start_date")
-    private LocalDate subjectClassSubmittingStartDate;
+    private LocalDateTime subjectClassSubmittingStartDate;
 
     @Column(name = "subject_class_submitting_end_date")
-    private LocalDate subjectCLassSubmittingEndDate;
+    private LocalDateTime subjectCLassSubmittingEndDate;
 
     @Column(name = "editSubmittingStartDate")
-    private LocalDate editSubmittingStartDate;
+    private LocalDateTime editSubmittingStartDate;
 
     @Column(name = "editSubmittingEndDate")
-    private LocalDate editSubmittingEndDate;
+    private LocalDateTime editSubmittingEndDate;
 
     public TermDTO toDTO() {
         TermDTO termDTO = new TermDTO();

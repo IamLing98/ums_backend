@@ -21,7 +21,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
         registry.addEndpoint("/socket")
                 .setAllowedOrigins("/*")
                 .setAllowedOrigins("*")
-                .setAllowedOrigins("http://localhost:3000")
+                .setAllowedOrigins("http://localhost:3000","http://localhost:3001")
                 .setHandshakeHandler(new CustomHandshakeHandler())
                 .addInterceptors(new CustomHandshakeInterceptor(jwtTokenUtil)).withSockJS();
 //				.setAllowedOrigins("http://localhost:3001")

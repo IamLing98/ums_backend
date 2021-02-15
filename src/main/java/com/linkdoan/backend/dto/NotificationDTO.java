@@ -12,4 +12,6 @@ public class NotificationDTO {
     String receiverUsername;
 
     String content;
+
+    Long type;
 }

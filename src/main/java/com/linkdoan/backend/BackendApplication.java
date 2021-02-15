@@ -15,8 +15,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 //@EnableConfigurationProperties({
 //        FileStorageProperties.class
@@ -34,15 +36,20 @@ public class BackendApplication extends SpringBootServletInitializer {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000","http://localhost:3001");
             }
         };
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        List<String> domainList = new ArrayList<>();
+        domainList.add("*");
+        domainList.add("http://localhost:3000");
+        domainList.add("http://localhost:3001");
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*")); // <-- you may change "*"
+//        configuration.setAllowedOrigins(Collections.singletonList("*")); // <-- you may change "*";
+        configuration.setAllowedOrigins(domainList); // <-- you may change "*"
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
 //        configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList(
