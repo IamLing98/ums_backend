@@ -75,6 +75,11 @@
 #end
 
 #course
+	id = 0221001
+	name = Phương pháp nghiên cứu khoa học
+#end
+
+#course
 	id = 0221501
 	name = Kỹ năng lập kế hoạch và tổ chức
 #end
@@ -216,6 +221,12 @@
 	size = 30
 #end
 
+#group
+	id = 18
+	name = no name
+	size = 30
+#end
+
 #class
 	id = 1
 	professor = ID000
@@ -330,25 +341,33 @@
 #end
 #class
 	id = 15
-	professor = ID008
-	course = 0221501
+	professor = ID000
+	course = 0221001
 	duration = 2
 	group = 15
-	subjectClassId = 2020202215010
+	subjectClassId = 2020202210010
 #end
 #class
 	id = 16
-	professor = ID002
-	course = 0221501
+	professor = ID000
+	course = 0221001
 	duration = 2
 	group = 16
-	subjectClassId = 2020202215011
+	subjectClassId = 2020202210011
 #end
 #class
 	id = 17
-	professor = ID000
+	professor = ID008
 	course = 0221501
 	duration = 2
 	group = 17
-	subjectClassId = 2020202215012
+	subjectClassId = 2020202215010
+#end
+#class
+	id = 18
+	professor = ID002
+	course = 0221501
+	duration = 2
+	group = 18
+	subjectClassId = 2020202215011
 #end

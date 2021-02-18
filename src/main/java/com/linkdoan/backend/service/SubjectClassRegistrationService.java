@@ -15,6 +15,8 @@ public interface SubjectClassRegistrationService {
 
     Map<String, Object>  getListSubmitted(String student, String termId);
 
+    int deleteAllSubmittingOfSubjectClass(String subjectCLassId, String termId, String actionType);
+
     boolean delete(String studentId, String subjectClassId, String scheduleId);
 
 }

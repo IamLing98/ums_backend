@@ -55,4 +55,5 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
             "UPDATE SubjectClass sc SET sc.roomId = :roomId, sc.dayOfWeek = :dayOfWeek, sc.hourOfDay = :hourOfDay WHERE sc.subjectClassId = :subjectClassId"
     )
     int updateTimeTable(@Param("subjectClassId") String subjectClassId, @Param("roomId") String roomId, @Param("dayOfWeek") Integer dayOfWeek, @Param("hourOfDay") Integer hourOfDay);
+
 }

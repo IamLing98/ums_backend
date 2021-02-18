@@ -32,16 +32,16 @@ public class SubjectClassController {
         return new ResponseEntity<>(subjectClassService.create(subjectClassDTOList), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subjectClasses/{subjectClassId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable("subjectClassId") String subjectClassId, @RequestBody SubjectClassDTO subjectClassDTO)
+    @RequestMapping(value = "/subjectClasses", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@RequestParam("actionType") String actionType, @RequestBody List<SubjectClassDTO> subjectClassDTOList)
             throws Exception {
-        return new ResponseEntity<>(subjectClassService.update(subjectClassId, subjectClassDTO), HttpStatus.OK);
+        return new ResponseEntity<>(subjectClassService.update(subjectClassDTOList, actionType), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/subjectClasses/{subjectClassId}")
-    public ResponseEntity<?> deleteTerm(@PathVariable("subjectClassId") String subjectClassId)
+    @DeleteMapping(value = "/subjectClasses")
+    public ResponseEntity<?> delete(@RequestParam ("ids") List<String> ids)
             throws Exception {
-        return new ResponseEntity<>(subjectClassService.delete(subjectClassId), HttpStatus.OK);
+        return new ResponseEntity<>(subjectClassService.delete(ids), HttpStatus.OK);
     }
 
 }

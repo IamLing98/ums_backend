@@ -1,4 +1,4 @@
-package com.linkdoan.backend.model;
+package com.linkdoan.backend.base;
 
 import java.security.Principal;
 

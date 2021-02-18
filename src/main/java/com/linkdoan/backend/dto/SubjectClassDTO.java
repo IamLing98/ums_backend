@@ -31,6 +31,8 @@ public class SubjectClassDTO {
 
     private Integer type;
 
+    private String actionType;
+
     public SubjectClass toModel() {
         SubjectClass sj = new SubjectClass();
         sj.setSubjectClassId(this.subjectClassId);

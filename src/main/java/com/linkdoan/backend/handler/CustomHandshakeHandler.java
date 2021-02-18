@@ -1,5 +1,5 @@
 package com.linkdoan.backend.handler;
-import com.linkdoan.backend.model.StompPrincipal;
+import com.linkdoan.backend.base.StompPrincipal;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;

@@ -15,17 +15,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
+        (
+                propagation = Propagation.REQUIRED,
+                readOnly = false,
+                rollbackFor = Throwable.class
+        )
 public class TermServiceImpl implements TermService {
 
     @Autowired
@@ -133,6 +140,94 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
+    int openSubjectClassSubmitting(Term term, String username) {
+        LocalDateTime startDateLocalDateTime = term.getSubjectClassSubmittingStartDate();
+        LocalDateTime endDateLocalDateTime = term.getSubjectClassSubmittingStartDate();
+        long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        Long senderId = 3L;
+        List<Long> userList = userRepository.getUserIds();
+        if (userList != null) {
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký lớp học phần. <br/> Bắt đầu: "
+                    + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
+        }
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(21);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã bắt đầu đăng ký lớp học phần.");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SCRON");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(startDateLocalDateTimeMillis), Long.MAX_VALUE);
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(22);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã kết thúc đăng ký lớp học phần");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SSOFF");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(endDateLocalDateTimeLillis), Long.MAX_VALUE);
+        return 1;
+    }
+
+    int openSubjectClassEditReg(Term term, String username){
+        LocalDateTime startDateLocalDateTime = term.getEditSubmittingStartDate();
+        LocalDateTime endDateLocalDateTime = term.getEditSubmittingEndDate();
+        long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        Long senderId = 3L;
+        List<Long> userList = userRepository.getUserIds();
+        if (userList != null) {
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký điều chỉnh. <br/> Bắt đầu: "
+                    + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
+        }
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(32);
+            term.setStatus(3);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã kết thúc đăng ký điều chỉnh");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SCREOFF");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(System.currentTimeMillis() + 5000), Long.MAX_VALUE);
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(31);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã bắt đầu đăng ký điều chỉnh.");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SCREON");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(startDateLocalDateTimeMillis), Long.MAX_VALUE);
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(32);
+            term.setStatus(3);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã kết thúc đăng ký điều chỉnh");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("SCREOFF");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(endDateLocalDateTimeLillis), Long.MAX_VALUE);
+        return 1;
+    }
     @Override
     public int update(String termId, TermDTO termDTO, String username) {
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -144,11 +239,18 @@ public class TermServiceImpl implements TermService {
                     if (term.getProgress() == 11) {
                         term.setProgress(12);
                         //use truncated to fixed default time is 00:00:00
-                        term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate().truncatedTo(ChronoUnit.HOURS));
-                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate().truncatedTo(ChronoUnit.HOURS));
+//                        term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate().truncatedTo(ChronoUnit.HOURS));
+//                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate().truncatedTo(ChronoUnit.HOURS));
+                        LocalDateTime startTime = termDTO.getSubjectSubmittingStartDate();
+                        LocalDateTime endTime = termDTO.getSubjectSubmittingEndDate();
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        if (startTime.isBefore(ldtNow) || endTime.isBefore(ldtNow) || endTime.isBefore(startTime))
+                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Thời gian không hợp lệ");
+                        term.setSubjectSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
+                        term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         term.setStatus(1);
                         termRepository.save(term);
-                        openSubjectSubmitting(term, username);
+//                        openSubjectSubmitting(term, username);
 //                        subjectRegistrationService.subjectSubmitForNewStudent(termId);
                         return 1;
                     }
@@ -164,9 +266,15 @@ public class TermServiceImpl implements TermService {
                 case "SCRON":
                     if (term.getProgress() == 13) {
                         term.setProgress(21);
+                        LocalDateTime startTime = termDTO.getSubjectClassSubmittingStartDate();
+                        LocalDateTime endTime = termDTO.getSubjectCLassSubmittingEndDate();
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        if (startTime.isBefore(ldtNow) || endTime.isBefore(ldtNow) || endTime.isBefore(startTime))
+                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Thời gian không hợp lệ");
                         term.setSubjectClassSubmittingStartDate(termDTO.getSubjectClassSubmittingStartDate());
                         term.setSubjectCLassSubmittingEndDate(termDTO.getSubjectCLassSubmittingEndDate());
                         term.setStatus(2);
+                        openSubjectClassSubmitting(term, username);
                         subjectClassRegistrationService.subjectClassSubmitForNewStudent(termId);
                         termRepository.save(term);
                         return 1;
@@ -186,8 +294,14 @@ public class TermServiceImpl implements TermService {
                 case "SCREON":
                     if (term.getProgress() == 22) {
                         term.setProgress(31);
-                        term.setEditSubmittingStartDate(termDTO.getSubjectSubmittingStartDate());
+                        LocalDateTime startTime = termDTO.getEditSubmittingStartDate();
+                        LocalDateTime endTime = termDTO.getEditSubmittingEndDate();
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        if (startTime.isBefore(ldtNow) || endTime.isBefore(ldtNow) || endTime.isBefore(startTime))
+                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Thời gian không hợp lệ");
+                        term.setEditSubmittingStartDate(termDTO.getEditSubmittingStartDate());
                         term.setEditSubmittingEndDate(termDTO.getEditSubmittingEndDate());
+                        openSubjectClassEditReg(term, username);
                         termRepository.save(term);
                         return 1;
                     } else {

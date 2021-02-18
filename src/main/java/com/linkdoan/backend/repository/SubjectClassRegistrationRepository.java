@@ -20,6 +20,8 @@ public interface SubjectClassRegistrationRepository extends JpaRepository<Subjec
     )
     List<Object[]> getListSubmittedByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId);
 
+    //get list submitted by subjectClassId and TermId
+    List<SubjectClassRegistration> findAllBySubjectClassIdAndTermId(String subjectClassId, String termid);
 
     //check exist
 

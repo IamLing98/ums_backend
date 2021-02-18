@@ -17,11 +17,11 @@ import java.util.*;
 
 @Service
 @Transactional
-        (
-                propagation = Propagation.REQUIRED,
-                readOnly = false,
-                rollbackFor = Throwable.class
-        )
+(
+        propagation = Propagation.REQUIRED,
+        readOnly = false,
+        rollbackFor = Throwable.class
+)
 public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistrationService {
 
     @Autowired
@@ -44,47 +44,89 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
     @Autowired
     TermRepository termRepository;
 
-    //admin role
+    /** start
+     *
+     * @function for admin role
+     *
+     *
+     */
     @Override
     public boolean subjectClassSubmitForNewStudent(String termId) {
+        //get list student who submitted
         List<SubjectRegistration> subjectRegistrationList = subjectRegistrationRepository.findAllByTermIdAndAutoSubmit(termId, 1);
         LocalDateTime timeNow = LocalDateTime.now();
         for (SubjectRegistration subjectRegistration : subjectRegistrationList) {
-            List<SubjectClass> subjectClassList = subjectClassRepository.findAllByTermIdAndSubjectId(termId, subjectRegistration.getSubjectId());
+            String studentId = subjectRegistration.getStudentId();
+            String subjectId = subjectRegistration.getSubjectId();
+            List<SubjectClass> subjectClassList = subjectClassRepository.findAllByTermIdAndSubjectId(termId, subjectId);
+            System.out.println("so luong lop hoc phan: " + subjectClassList.size());
             boolean submitted = false;
             for (SubjectClass subjectClass : subjectClassList) {
-                if (!submitted) {
-                    if (subjectClass.getCurrentOfSubmittingNumber() < subjectClass.getNumberOfSeats()) {
-                        SubjectClassRegistration subjectClassRegistration = new SubjectClassRegistration();
-                        subjectClassRegistration.setSubmittedDate(timeNow);
-                        subjectClassRegistration.setTermId(termId);
-                        subjectClassRegistration.setSubjectClassId(subjectClass.getSubjectClassId());
-                        subjectClassRegistration.setStudentId(subjectRegistration.getStudentId());
-                        subjectClassRegistration.setAutoSubmit(1);
-                        subjectClassRegistration.setProgressSubmitted(new Long(21));
-                        subjectClassRegistration.setStatus(1);
-                        subjectClassRegistrationRepository.save(subjectClassRegistration);
-                        subjectClass.setCurrentOfSubmittingNumber(subjectClass.getCurrentOfSubmittingNumber() + 1);
-                        subjectClassRepository.save(subjectClass);
-                        submitted = true;
-                    }
+                if (subjectClass.getCurrentOfSubmittingNumber() < subjectClass.getNumberOfSeats()) {
+                    SubjectClassRegistration subjectClassRegistration = new SubjectClassRegistration();
+                    subjectClassRegistration.setSubmittedDate(timeNow);
+                    subjectClassRegistration.setTermId(termId);
+                    subjectClassRegistration.setSubjectClassId(subjectClass.getSubjectClassId());
+                    subjectClassRegistration.setStudentId(studentId);
+                    subjectClassRegistration.setAutoSubmit(1);
+                    subjectClassRegistration.setProgressSubmitted(21);
+                    subjectClassRegistration.setStatus(1);
+                    subjectClassRegistrationRepository.save(subjectClassRegistration);
+                    subjectClass.setCurrentOfSubmittingNumber(subjectClass.getCurrentOfSubmittingNumber() + 1);
+                    subjectClassRepository.save(subjectClass);
+                    submitted = true;
+                    System.out.println("Submitted");
+                    break;
                 }
             }
-            if (!submitted)
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm được lớp phù hợp cho sinh viên: " + subjectRegistration.getStudentId() + "- " + subjectRegistration.getSubjectId());
+//            if (submitted == false) {
+//                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm được lớp phù hợp cho sinh viên có mã số: " + subjectRegistration.getStudentId() + "Mã môn học: " + subjectRegistration.getSubjectId());
+//            }
         }
         return false;
     }
 
-    /*
-        Student Role
+    //delete subject class sumitting of deleted subjectclass
+
+    @Override
+    public int deleteAllSubmittingOfSubjectClass(String subjectClassId, String termId, String actionType) {
+        List<SubjectClassRegistration> subjectClassRegistrationList = subjectClassRegistrationRepository.findAllBySubjectClassIdAndTermId(subjectClassId, termId);
+        int count = 0;
+        if (subjectClassRegistrationList != null && !subjectClassRegistrationList.isEmpty()) {
+            if (actionType.equals("OFF")) {
+                for (SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList) {
+                    subjectClassRegistration.setStatus(0);
+                    subjectClassRegistrationRepository.save(subjectClassRegistration);
+                    count++;
+                }
+            } else if (actionType.equals("DELETE")) {
+                for (SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList) {
+                    subjectClassRegistrationRepository.delete(subjectClassRegistration);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    /**  end
+     *
+     * @function for admin role
+     *
+     *
      */
 
+
+    /** start
+     *
+     * @function for student role
+     *
+     *
+     */
     @Override
     public Map<String, Object> getListSubmitted(String studentId, String termId) {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         Map<String, Object> rs = new HashMap<>();
-        int count  = 0 ;
+        int count = 0;
         if (studentOptional.isPresent()) {
             Student student = studentOptional.get();
             rs.put("student", student);
@@ -98,7 +140,7 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
                     subjectClassObject.put(labels[i], subjectClassObjectArray[i]);
                 }
                 subjectClassList.add(subjectClassObject);
-                count += (Integer)subjectClassObjectArray[9];
+                if ((Integer) subjectClassObjectArray[6] == 1) count += (Integer) subjectClassObjectArray[9];
             }
             rs.put("listSubjectClass", subjectClassList);
             rs.put("totalSubjectClass", count);
@@ -126,15 +168,16 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
                         throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Lớp học phần đã đầy");
                     SubjectClassRegistration subjectClassRegistration = new SubjectClassRegistration();
                     subjectClassRegistration.setStatus(1);
-                    subjectClassRegistration.setProgressSubmitted(21L);
+                    subjectClassRegistration.setProgressSubmitted(term.getProgress());
                     subjectClassRegistration.setSubmittedDate(ldt);
                     subjectClassRegistration.setTermId(term.getId());
                     subjectClassRegistration.setAutoSubmit(0);
                     subjectClassRegistration.setSubjectClassId(subjectClassRegistrationDTO.getSubjectClassId());
                     subjectClassRegistration.setStudentId(studentId);
                     Optional<SubjectClassRegistration> subjectClassRegistrationOptional =
-                            subjectClassRegistrationRepository.findFirstBySubjectClassIdAndStudentIdAndTermId(subjectClassRegistrationDTO.getSubjectClassId(),studentId, term.getId());
-                    if(subjectClassRegistrationOptional.isPresent()) throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã dăng ký");
+                            subjectClassRegistrationRepository.findFirstBySubjectClassIdAndStudentIdAndTermId(subjectClassRegistrationDTO.getSubjectClassId(), studentId, term.getId());
+                    if (subjectClassRegistrationOptional.isPresent())
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã dăng ký");
                     subjectClassRegistrationRepository.save(subjectClassRegistration);
                     subjectClass.setCurrentOfSubmittingNumber(subjectClass.getCurrentOfSubmittingNumber() + 1);
                     subjectClassRepository.save(subjectClass);
@@ -147,8 +190,8 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
 
     @Override
     public boolean delete(String studentId, String subjectClassId, String termId) {
-        Optional<SubjectClassRegistration> subjectClassRegistrationOptional = subjectClassRegistrationRepository.findFirstBySubjectClassIdAndStudentIdAndTermId(subjectClassId,studentId,termId);
-        if(subjectClassRegistrationOptional.isPresent()){
+        Optional<SubjectClassRegistration> subjectClassRegistrationOptional = subjectClassRegistrationRepository.findFirstBySubjectClassIdAndStudentIdAndTermId(subjectClassId, studentId, termId);
+        if (subjectClassRegistrationOptional.isPresent()) {
             SubjectClassRegistration subjectClassRegistration = subjectClassRegistrationOptional.get();
             Optional<SubjectClass> subjectClassOptional = subjectClassRepository.findById(subjectClassId);
             SubjectClass subjectClass = subjectClassOptional.get();
@@ -156,7 +199,13 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
             subjectClassRegistrationRepository.delete(subjectClassRegistration);
             subjectClassRepository.save(subjectClass);
             return true;
-        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Chưa đăng ký!!!");
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Chưa đăng ký!!!");
     }
+    /** end
+     *
+     * @function for student role
+     *
+     *
+     */
 
 }

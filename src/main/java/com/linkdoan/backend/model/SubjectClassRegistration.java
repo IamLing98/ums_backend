@@ -57,6 +57,6 @@ public class SubjectClassRegistration {
 
     //progress when submit
     @Column(name = "progress_submitted", columnDefinition = "INT")
-    private Long progressSubmitted;
+    private Integer progressSubmitted;
 
 }

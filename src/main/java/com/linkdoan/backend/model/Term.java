@@ -55,6 +55,9 @@ public class Term {
     @Column(name = "editSubmittingEndDate")
     private LocalDateTime editSubmittingEndDate;
 
+    @Column(name="term_type")
+    private Integer termType;
+
     public TermDTO toDTO() {
         TermDTO termDTO = new TermDTO();
         termDTO.setId(this.id);

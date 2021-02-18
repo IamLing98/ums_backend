@@ -14,8 +14,8 @@ public interface SubjectClassService {
 
     List<SubjectClass> create(List<SubjectClassDTO> subjectDTO);
 
-    int update(String subjectClassId, SubjectClassDTO subjectDTO);
+    int update(List<SubjectClassDTO> subjectClassDTOList, String actionType);
 
-    boolean delete(String subjectClassDTOList);
+    int delete(List<String > ids);
 
 }
