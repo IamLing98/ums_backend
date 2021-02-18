@@ -10,9 +10,6 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
 
-/**
- * @author - Evgeniy Grechishnikov
- */
 public class CustomHandshakeInterceptor implements HandshakeInterceptor {
 
     private JwtTokenUtil jwtTokenUtil;
