@@ -3,6 +3,7 @@ package com.linkdoan.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -22,4 +23,7 @@ public class StudentsFeeCategories {
 
     @Column(name="is_paid")
     private Integer isPaid = 0;
+
+    @Column(name="transaction_date", columnDefinition = "DATETIME")
+    private LocalDateTime transactionDate ;
 }

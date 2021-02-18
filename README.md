@@ -1,4 +1,4 @@
-# University System
+# University Management System
 
 ## About The Project
 
@@ -18,7 +18,7 @@ This is my final year project in my university. An university information manage
 # build with gradle
 gradlew clean build
 
-# serve with hot reload at localhost:8080
+# run with gradle
 gradlew bootRun
  
 ``` 
