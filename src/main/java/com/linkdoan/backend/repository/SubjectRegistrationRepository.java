@@ -1,6 +1,5 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.model.SubjectRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

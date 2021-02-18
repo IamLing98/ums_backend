@@ -1,6 +1,5 @@
 package com.linkdoan.backend.service;
 
-import com.linkdoan.backend.dto.SubjectDTO;
 import com.linkdoan.backend.dto.SubjectRegistrationDTO;
 import org.springframework.context.annotation.ComponentScan;
 

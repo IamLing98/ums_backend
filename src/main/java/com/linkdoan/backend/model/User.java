@@ -5,7 +5,6 @@ import lombok.Data;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
-import java.security.Principal;
 import java.util.Date;
 
 

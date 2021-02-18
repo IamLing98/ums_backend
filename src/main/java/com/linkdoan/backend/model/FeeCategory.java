@@ -1,7 +1,6 @@
 package com.linkdoan.backend.model;
 
 import lombok.Data;
-import lombok.Generated;
 
 import javax.persistence.*;
 

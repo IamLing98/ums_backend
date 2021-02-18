@@ -3,7 +3,6 @@ package com.linkdoan.backend.service;
 import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
 import com.linkdoan.backend.model.SubjectClassRegistration;
 
-import java.util.List;
 import java.util.Map;
 
 public interface SubjectClassRegistrationService {
