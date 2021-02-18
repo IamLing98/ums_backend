@@ -1,6 +1,5 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.base.anotation.AdjHistory;
 import com.linkdoan.backend.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRoleDTO {
+
     private Long roleId;
 
-    @AdjHistory(field = "userId")
     private Long userId;
 
     private String roleName;

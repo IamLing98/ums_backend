@@ -3,10 +3,9 @@
  * VIETTEL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package com.linkdoan.backend.util;
-
-import com.linkdoan.backend.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -98,15 +97,15 @@ public class ValidateUtils {
         }
     }
 
-    public static void checkRequire(String param, String messKey, String messParam) {
+    public static void checkRequire(String param, String messKey, String messParam) throws IOException {
         if (StringUtils.isEmpty(param)) {
-            throw new BusinessException(MessageUtils.getMessage(messKey, messParam));
+            throw new IOException(MessageUtils.getMessage(messKey, messParam));
         }
     }
 
-    public static void checkMaxlength(String param, String messKey, String messParam, int maxLength) {
+    public static void checkMaxlength(String param, String messKey, String messParam, int maxLength) throws IOException {
         if (param.length() > maxLength) {
-            throw new BusinessException(MessageUtils.getMessage(messKey, messParam, maxLength));
+            throw new IOException(MessageUtils.getMessage(messKey, messParam, maxLength));
         }
     }
 }

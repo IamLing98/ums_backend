@@ -1,7 +1,6 @@
 package com.linkdoan.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.linkdoan.backend.base.anotation.AdjHistory;
 import com.linkdoan.backend.model.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,32 +14,23 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
     @NotNull
-    @AdjHistory(field = "userId")
     private Long userId;
 
     @NotNull
-    @AdjHistory(field = "username")
     private String username;
 
-    @AdjHistory(field = "password")
     private String password;
 
-    @AdjHistory(field = "createdAt")
     private Date createdAt;
 
-    @AdjHistory(field = "updatedAt")
     private Date updatedAt;
 
-    @AdjHistory(field = "email")
     private String email;
 
-    @AdjHistory(field = "isActive")
     private int isActive;
 
-    @AdjHistory(field = "isEmailVerified")
     private int isEmailVerified;
 
-    @AdjHistory(field = "ownerId")
     private String ownerId;
 
     private List<RoleDTO> roles;

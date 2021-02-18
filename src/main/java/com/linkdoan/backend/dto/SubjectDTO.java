@@ -1,6 +1,5 @@
 package com.linkdoan.backend.dto;
-
-import com.linkdoan.backend.base.dto.SystemDTO;
+import com.linkdoan.backend.base.dto.BaseDTO;
 import com.linkdoan.backend.model.PrerequisitesSubject;
 import com.linkdoan.backend.model.Subject;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectDTO extends SystemDTO {
+public class SubjectDTO extends BaseDTO {
 
     private String subjectId;
 
