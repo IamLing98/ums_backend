@@ -31,5 +31,5 @@ public class StudentsFeeCategories {
     private LocalDateTime transactionDate ;
 
     @Column(name="value")
-    private Double value;
+    private Long value;
 }

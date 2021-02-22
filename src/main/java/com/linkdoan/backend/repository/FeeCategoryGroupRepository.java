@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface FeeCategoryGroupRepository extends JpaRepository<FeeCategoryGroup, Long> {
 
-    List<FeeCategoryGroup> findAllByFeeCategoryGroupType(Integer type);
+    List<FeeCategoryGroup> findAllByFeeCategoryGroupTypeAndRole(Integer feeCategoryGroupType, String role);
 
 }

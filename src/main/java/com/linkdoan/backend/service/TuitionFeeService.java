@@ -9,7 +9,7 @@ public interface TuitionFeeService {
 
     List<Map<String, Object>> getStudentList();
 
-    Map<String, Object> getFeeInfoOfStudent(String studentId);
+    Map<String, Object> getFeeInfoOfStudent(String studentId, String termId);
 
     List<?> debug();
 }

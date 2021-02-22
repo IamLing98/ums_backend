@@ -24,4 +24,7 @@ public class FeeCategoryGroup {
     @Column(name="fee_category_group_type_ABN")
     private String feeCategoryGroupTypeABN;
 
+    @Column(name="fee_category_group_role")
+    private String role;
+
 }

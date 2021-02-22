@@ -19,6 +19,6 @@ public interface FeeCategoriesRepository extends JpaRepository<FeeCategory, Long
     List<StudentDTO> getAllStudent();
 
 
-    List<FeeCategory> findAllByFeeCategoryGroupId(Long groupTypeId);
+    List<FeeCategory> findAllByFeeCategoryGroupId(Long feeCategoryGroupId);
 
 }

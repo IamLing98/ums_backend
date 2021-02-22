@@ -12,18 +12,18 @@ public class TuitionFeeController {
     @Autowired
     TuitionFeeService tuitionFeeService;
 
-    @GetMapping(value="/tuitionFee")
-    public ResponseEntity<?> getListStudent(@RequestParam(name = "termId") String termId){
+    @GetMapping(value = "/tuitionFee")
+    public ResponseEntity<?> getListStudent(@RequestParam(name = "termId") String termId) {
         return new ResponseEntity<>(tuitionFeeService.getStudentList(), HttpStatus.OK);
     }
 
-    @GetMapping(value="/tuitionFee/{studentId}")
-    public ResponseEntity<?> getFeeInfoOfStudentInTerm(@PathVariable("studentId") String studentId){
-        return new ResponseEntity<>(tuitionFeeService.getStudentList(), HttpStatus.OK);
+    @GetMapping(value = "/tuitionFee/{termId}/{studentId}")
+    public ResponseEntity<?> getFeeInfoOfStudentInTerm(@PathVariable("termId") String termId, @PathVariable("studentId") String studentId) {
+        return new ResponseEntity<>(tuitionFeeService.getFeeInfoOfStudent(studentId, termId), HttpStatus.OK);
     }
 
-    @PutMapping(value="/tuitionFee/{studentId}")
-    public ResponseEntity<?> editFeeInfoOfStudentInTerm(@PathVariable("studentId") String studentId){
+    @PutMapping(value = "/tuitionFee/{studentId}")
+    public ResponseEntity<?> editFeeInfoOfStudentInTerm(@PathVariable("studentId") String studentId) {
         return new ResponseEntity<>(tuitionFeeService.getStudentList(), HttpStatus.OK);
     }
 }
