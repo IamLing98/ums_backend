@@ -1,12 +1,12 @@
 package com.linkdoan.backend.service;
 
-import com.linkdoan.backend.model.FeeCategory;
+import com.linkdoan.backend.model.FeeCategoryGroup;
 
 import java.util.List;
 
 public interface FeeCategoriesService {
 
-    List<FeeCategory> getAll();
+    List<FeeCategoryGroup> getAll();
 
 
 }

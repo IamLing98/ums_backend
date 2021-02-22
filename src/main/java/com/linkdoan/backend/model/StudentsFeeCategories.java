@@ -18,6 +18,9 @@ public class StudentsFeeCategories {
     @Column(name="student_id")
     private String studentId;
 
+    @Column(name="term_id")
+    private String termId;
+
     @Column(name="fee_categories_id")
     private Long feeCategoriesId;
 
@@ -26,4 +29,7 @@ public class StudentsFeeCategories {
 
     @Column(name="transaction_date", columnDefinition = "DATETIME")
     private LocalDateTime transactionDate ;
+
+    @Column(name="value")
+    private Double value;
 }

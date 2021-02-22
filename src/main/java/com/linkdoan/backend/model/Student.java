@@ -154,6 +154,10 @@ public class Student {
     @Column(name = "created_date", columnDefinition = "DATE")
     private LocalDate createdDate;
 
+    //learningStatus, 0 = is New, 1 = learing, 2 = final
+    @Column(name="learning_status")
+    private Integer learningStatus;
+
     public StudentDTO toDTO() {
         StudentDTO student = new StudentDTO();
         student.setStudentId(this.studentId);

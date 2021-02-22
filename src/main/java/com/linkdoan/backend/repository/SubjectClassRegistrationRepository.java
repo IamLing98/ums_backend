@@ -1,5 +1,6 @@
 package com.linkdoan.backend.repository;
 
+import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.model.SubjectClassRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,11 +15,24 @@ public interface SubjectClassRegistrationRepository extends JpaRepository<Subjec
     //get list submitted of student
     @Query(value =
             "SELECT scr.id, scr.autoSubmit, scr.studentId, scr.subjectClassId, scr.submittedDate, scr.termId, scr.status, scr.progressSubmitted, " +
-                    "s.subjectName, s.eachSubject, s.subjectId, sc.roomId, sc.duration, sc.dayOfWeek, sc.hourOfDay " +
-                    "FROM SubjectClassRegistration scr INNER JOIN SubjectClass sc ON scr.subjectClassId = sc.subjectClassId " +
-                    "INNER JOIN Subject s ON sc.subjectId = s.subjectId "
+                    "s.subjectName, s.eachSubject, s.subjectId, sc.roomId, sc.duration, sc.dayOfWeek, sc.hourOfDay, yc.classId, yc.currentTerm " +
+                    "FROM SubjectClassRegistration scr " +
+                    "INNER JOIN SubjectClass sc ON scr.subjectClassId = sc.subjectClassId " +
+                    "INNER JOIN Subject s ON sc.subjectId = s.subjectId " +
+                    "INNER JOIN Student student ON scr.studentId = student.studentId " +
+                    "INNER JOIN YearClass yc ON student.yearClassId = yc.classId " +
+                    "WHERE scr.studentId = :studentId and scr.termId = :termId"
     )
     List<Object[]> getListSubmittedByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId);
+
+    //get list submitted subject of student
+    @Query(value =
+            "SELECT DISTINCT(sj) " +
+                    "FROM SubjectClassRegistration scr INNER JOIN SubjectClass sc ON scr.subjectClassId = sc.subjectClassId " +
+                    "INNER JOIN Subject sj ON sc.subjectId = sj.subjectId " +
+                    "WHERE scr.studentId = :studentId AND scr.termId = :termId and scr.status = 1"
+    )
+    List<Subject> getListSubmittedSubjectOfStudentInTerm(@Param("studentId") String studentId, @Param("termId") String termId);
 
     //get list submitted by subjectClassId and TermId
     List<SubjectClassRegistration> findAllBySubjectClassIdAndTermId(String subjectClassId, String termid);

@@ -177,7 +177,7 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
-    int openSubjectClassEditReg(Term term, String username){
+    int openSubjectClassEditReg(Term term, String username) {
         LocalDateTime startDateLocalDateTime = term.getEditSubmittingStartDate();
         LocalDateTime endDateLocalDateTime = term.getEditSubmittingEndDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -228,6 +228,7 @@ public class TermServiceImpl implements TermService {
         }, new Date(endDateLocalDateTimeLillis), Long.MAX_VALUE);
         return 1;
     }
+
     @Override
     public int update(String termId, TermDTO termDTO, String username) {
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -250,8 +251,8 @@ public class TermServiceImpl implements TermService {
                         term.setSubjectSubmittingEndDate(termDTO.getSubjectSubmittingEndDate());
                         term.setStatus(1);
                         termRepository.save(term);
-//                        openSubjectSubmitting(term, username);
-//                        subjectRegistrationService.subjectSubmitForNewStudent(termId);
+                        openSubjectSubmitting(term, username);
+                        subjectRegistrationService.subjectSubmitForNewStudent(termId);
                         return 1;
                     }
                     break;

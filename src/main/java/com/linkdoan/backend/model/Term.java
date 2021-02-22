@@ -58,6 +58,18 @@ public class Term {
     @Column(name="term_type")
     private Integer termType;
 
+    @Column(name="each_subject_fee")
+    private Double eachSubjectFee;
+
+    @Column(name="multiple_number")
+    private Double multipleNumber;
+
+    @Column(name="first_exam_fee")
+    private Double firstExamFee;
+
+    @Column(name="second_exam_fee")
+    private Double secondExamFee;
+
     public TermDTO toDTO() {
         TermDTO termDTO = new TermDTO();
         termDTO.setId(this.id);
