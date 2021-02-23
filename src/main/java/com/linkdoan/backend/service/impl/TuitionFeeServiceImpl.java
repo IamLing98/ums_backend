@@ -5,6 +5,7 @@ import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.TuitionFeeService;
 import com.linkdoan.backend.util.FeeCategoryABNConstants;
+import com.linkdoan.backend.util.MoneyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -165,6 +166,8 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
                 feeCategoryGroupMapList.add(feeCategoryGroupMap);
             }
             rs.put("totalFee", totalFee);
+            MoneyUtil moneyUtil = new MoneyUtil();
+            rs.put("totalFeeText", moneyUtil.readNum(totalFee.toString()));
             rs.put("feeCategoryGroupList", feeCategoryGroupMapList);
         }
 

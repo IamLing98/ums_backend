@@ -35,9 +35,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
+//
+//    // https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.xdocreport.document -> will delete
+//    implementation group: 'fr.opensagres.xdocreport', name: 'fr.opensagres.xdocreport.document', version: '2.0.2'
 
-    // https://mvnrepository.com/artifact/fr.opensagres.xdocreport/fr.opensagres.xdocreport.document
-    implementation group: 'fr.opensagres.xdocreport', name: 'fr.opensagres.xdocreport.document', version: '2.0.2'
+// https://mvnrepository.com/artifact/org.docx4j/docx4j
+    implementation( group: 'org.docx4j', name: 'docx4j', version: '6.1.2'){
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
 
 
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
