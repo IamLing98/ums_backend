@@ -26,18 +26,6 @@ gradlew bootRun
 <!-- USAGE EXAMPLES -->
 ## Usage
  
-
-_Subject Management_ 
-![SubjectManagement](https://i.ibb.co/m9kRPDK/Capture.png)
-
-_Schedule Creator_ 
-![Schedule Creator](https://i.ibb.co/28qzp6B/Capture.png) 
-
-_Student Management_ 
-![Student Management](https://i.ibb.co/G0vMrfT/Capture.png) 
-
-_Education Programs Management_ 
-![Education Programs](https://i.ibb.co/rG001zH/Capture.png) 
 <!-- CONTACT -->
 ## Contact
 
