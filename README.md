@@ -21,21 +21,22 @@ gradlew clean build
 # run with gradle
 gradlew bootRun
  
-``` 
+```  
 
-<!-- USAGE EXAMPLES -->
-## Usage
- 
-<!-- CONTACT -->
-## Contact
+<!-- REFERENCE  -->
+## Reference
+Admin Dashboard Link: [FE Side](https://github.com/lingdev1998/ums-admin-side)
 
-Doan Van Linh - [@https://www.facebook.com/linkfromthemid/](https://www.facebook.com/linkfromthemid/) - vandoan1029i@gmail.com
-
-Admin FE Side Link: [FE Side](https://github.com/lingdev1998/ums-admin-side)
-
-User FE Side Link: [FE Side](https://github.com/lingdev1998/ums-client-side)
+User UI Link: [FE Side](https://github.com/lingdev1998/ums-client-side)
 
 BE Side Link: [BE Side](https://github.com/lingdev1998/crm-springboot-j2ee)
+
+
+<!-- CONTACT -->
+## Contact
+Doan Van Linh - [@https://www.facebook.com/linkfromthemid/](https://www.facebook.com/linkfromthemid/) - vandoan1029i@gmail.com
+
+ 
 
 
 
