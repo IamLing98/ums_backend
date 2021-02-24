@@ -37,6 +37,9 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     EthnicRepository ethnicRepository;
 
+    @Autowired
+    FeeReasonRepository feeReasonRepository;
+
     @Override
     public List<CommonDTO> getAllCountry() {
         List<Country> countryList = countryRepository.findAll();
@@ -98,5 +101,10 @@ public class CommonServiceImpl implements CommonService {
             commonDTOList.add(ethnicList.get(i).toDTO());
         }
         return commonDTOList;
+    }
+
+    @Override
+    public List<FeeReason> getAllFeeReasons(Long type) {
+        return feeReasonRepository.findAllByReasonType(type);
     }
 }

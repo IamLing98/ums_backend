@@ -55,20 +55,33 @@ public class Term {
     @Column(name = "editSubmittingEndDate")
     private LocalDateTime editSubmittingEndDate;
 
-    @Column(name="term_type")
+    @Column(name = "term_type")
     private Integer termType;
 
-    @Column(name="each_subject_fee")
+    @Column(name = "each_subject_fee")
     private Double eachSubjectFee;
 
-    @Column(name="multiple_number")
+    @Column(name = "multiple_number")
     private Double multipleNumber;
 
-    @Column(name="first_exam_fee")
+    @Column(name = "first_exam_fee")
     private Double firstExamFee;
 
-    @Column(name="second_exam_fee")
+    @Column(name = "second_exam_fee")
     private Double secondExamFee;
+
+    @Column(name = "tuition_fee_start_date")
+    private LocalDateTime tuitionFeeStartDate;
+
+    @Column(name = "tuition_fee_end_date")
+    private LocalDateTime tuitionFeeEndDate;
+
+    @Column(name = "inFeeTotalValue")
+    private Integer inFeeTotalValue = 0;
+
+    @Column(name = "outFeeTotalValue")
+    private Integer outFeeTotalValue = 0;
+
 
     public TermDTO toDTO() {
         TermDTO termDTO = new TermDTO();

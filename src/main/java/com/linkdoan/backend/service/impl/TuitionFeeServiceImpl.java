@@ -120,10 +120,6 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
         return null;
     }
 
-    @Override
-    public List<Map<String, Object>> getStudentList() {
-        return null;
-    }
 
     @Override
     public Map<String, Object> getFeeInfoOfStudent(String studentId, String termId) {
@@ -170,7 +166,6 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
             rs.put("totalFeeText", moneyUtil.readNum(totalFee.toString()));
             rs.put("feeCategoryGroupList", feeCategoryGroupMapList);
         }
-
         return rs;
     }
 }

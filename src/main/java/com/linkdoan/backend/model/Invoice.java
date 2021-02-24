@@ -21,7 +21,10 @@ public class Invoice {
     @Column(name="invoice_created_date", columnDefinition = "DATETIME")
     private LocalDateTime invoiceCreatedDate;
 
-    @Column(name="creator_id", columnDefinition = "DATETIME")
+    @Column(name="term_id")
+    private String termId;
+
+    @Column(name="creator_id")
     private String creatorId;
 
     @Column(name="invoice_name")
@@ -29,5 +32,14 @@ public class Invoice {
 
     @Column(name="amount", columnDefinition = "DOUBLE")
     private Double amount;
+
+    @Column(name="reason_id")
+    private Long reasonId;
+
+    @Column(name="invoice_type")
+    private Integer invoiceType;
+
+    @Column(name="note")
+    private String note;
 
 }

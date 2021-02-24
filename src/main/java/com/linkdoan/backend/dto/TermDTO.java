@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -39,6 +40,23 @@ public class TermDTO {
     private LocalDateTime editSubmittingEndDate;
 
     private String actionType;
+
+    private Double eachSubjectFee;
+
+    private Double multipleNumber;
+
+    private Double firstExamFee;
+
+    private Double secondExamFee;
+
+    private LocalDateTime tuitionFeeStartDate;
+
+    private LocalDateTime tuitionFeeEndDate;
+
+    private Integer inFeeTotalValue = 0;
+
+    private Integer outFeeTotalValue = 0;
+
 
     public Term toModel() {
         Term term = new Term();

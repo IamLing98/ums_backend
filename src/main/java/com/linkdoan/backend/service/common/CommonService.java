@@ -1,6 +1,7 @@
 package com.linkdoan.backend.service.common;
 
 import com.linkdoan.backend.dto.CommonDTO;
+import com.linkdoan.backend.model.FeeReason;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface CommonService {
     List<CommonDTO> getAllNationality();
 
     List<CommonDTO> getAllEthnics();
+
+    List<FeeReason> getAllFeeReasons(Long type);
 }

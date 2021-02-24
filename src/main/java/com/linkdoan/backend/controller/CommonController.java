@@ -45,4 +45,9 @@ public class CommonController {
     public ResponseEntity getAllNationality() {
         return new ResponseEntity(commonService.getAllNationality(), HttpStatus.OK);
     }
+
+    @GetMapping("/feeReasons")
+    public ResponseEntity getAllFeeReasons(@RequestParam(name = "type", required = false) Long type) {
+        return new ResponseEntity(commonService.getAllFeeReasons(type), HttpStatus.OK);
+    }
 }

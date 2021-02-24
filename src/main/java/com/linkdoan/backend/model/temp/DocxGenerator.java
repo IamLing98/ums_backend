@@ -1,15 +1,19 @@
 package com.linkdoan.backend.model.temp;
 
 
+import org.apache.log4j.Level;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.docx4j.XmlUtils;
+import org.docx4j.convert.out.pdf.viaXSLFO.PdfSettings;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.wml.Document;
 import org.springframework.stereotype.Service;
-import org.docx4j.Docx4J;
+//import org.docx4j.Docx4J;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 
 @Service
@@ -33,12 +37,14 @@ public class DocxGenerator {
 
         String xml = XmlUtils.marshaltoString(documentPart.getJaxbElement(), true);
         Object obj = XmlUtils.unmarshallFromTemplate(xml, variables);
-
+        org.docx4j.convert.out.pdf.viaXSLFO.Conversion.log.setLevel(Level.OFF);
         documentPart.setJaxbElement((Document) obj);
-
-        File exportFile = new File("welcome.docx");
-        wordMLPackage.save(exportFile);
-        return exportFile.getName();
+        org.docx4j.convert.out.pdf.PdfConversion conversion = new org.docx4j.convert.out.pdf.viaXSLFO.Conversion(
+                wordMLPackage);
+        OutputStream exportFile = new FileOutputStream(new File("pdf.pdf"));
+        PdfSettings pdfSettings = new PdfSettings();
+        conversion.output(exportFile, pdfSettings);
+        return exportFile.toString();
     }
 
 }

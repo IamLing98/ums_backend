@@ -71,12 +71,11 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public TermDTO getDetail(String termId) {
+    public Term getDetail(String termId) {
         Optional<Term> termOptional = termRepository.findFirstById(termId);
         if (termOptional.isPresent()) {
             Term term = termOptional.get();
-            TermDTO termDTO = term.toDTO();
-            return termDTO;
+            return term;
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "kHONG TON TAI TERM NAY!!!");
     }
 
@@ -229,6 +228,42 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
+    int settingTuitionFee(Term term, String username) {
+        termRepository.save(term);
+        LocalDateTime startDateLocalDateTime = term.getEditSubmittingStartDate();
+        LocalDateTime endDateLocalDateTime = term.getEditSubmittingEndDate();
+        long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        Long senderId = 3L;
+        List<Long> userList = userRepository.getUserIds();
+        if (userList != null) {
+            notificationsService.createNotification(senderId, userList, "Phòng Tổng hợp", "Thời gian nộp học phí: "
+                    + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
+        }
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Phòng Tổng hợp", "Đã bắt đầu thu học phí");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("STFT");
+            notificationDTO.setSenderUsername(username);
+            notificationDTO.setType(1L);
+            template.convertAndSend("/queue/notifications", notificationDTO);
+        }, new Date(startDateLocalDateTimeMillis), Long.MAX_VALUE);
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(34);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã kết thúc thời gian nộp học phí");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("STFT");
+            notificationDTO.setSenderUsername(username);
+            notificationDTO.setType(1L);
+            template.convertAndSend("/queue/notifications", notificationDTO);
+        }, new Date(endDateLocalDateTimeLillis), Long.MAX_VALUE);
+        return 1;
+    }
+
     @Override
     public int update(String termId, TermDTO termDTO, String username) {
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -313,6 +348,23 @@ public class TermServiceImpl implements TermService {
                     if (term.getProgress() == 31) {
                         term.setProgress(32);
                         termRepository.save(term);
+                        return 1;
+                    } else {
+
+                    }
+                    break;
+                case "STFT":
+                    if (term.getProgress() == 32) {
+                        term.setProgress(33);
+                        LocalDateTime startTime = termDTO.getTuitionFeeStartDate();
+                        LocalDateTime endTime = termDTO.getTuitionFeeEndDate();
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        if (startTime.isBefore(ldtNow) || endTime.isBefore(ldtNow) || endTime.isBefore(startTime))
+                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Thời gian không hợp lệ");
+                        term.setTuitionFeeStartDate(startTime);
+                        term.setTuitionFeeEndDate(endTime);
+                        termRepository.save(term);
+//                        settingTuitionFee();
                         return 1;
                     } else {
 
