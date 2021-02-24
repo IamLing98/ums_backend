@@ -25,11 +25,11 @@ gradlew bootRun
 
 <!-- REFERENCE  -->
 ## Reference
-Admin Dashboard Link: [FE Side](https://github.com/lingdev1998/ums-admin-side)
+Admin Dashboard Link: [Admin](https://github.com/lingdev1998/ums-admin-side)
 
-User UI Link: [FE Side](https://github.com/lingdev1998/ums-client-side)
+User UI Link: [User UI](https://github.com/lingdev1998/ums-client-side)
 
-BE Side Link: [BE Side](https://github.com/lingdev1998/crm-springboot-j2ee)
+Backend Link: [Backend](https://github.com/lingdev1998/crm-springboot-j2ee)
 
 
 <!-- CONTACT -->
