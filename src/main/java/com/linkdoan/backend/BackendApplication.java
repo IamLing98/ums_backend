@@ -1,7 +1,9 @@
 package com.linkdoan.backend;
 
+import com.linkdoan.backend.config.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
@@ -20,9 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 
 
-//@EnableConfigurationProperties({
-//        FileStorageProperties.class
-//})
+@EnableConfigurationProperties({
+        FileStorageProperties.class
+})
 @SpringBootApplication
 @EnableScheduling
 public class BackendApplication extends SpringBootServletInitializer {
@@ -36,7 +38,7 @@ public class BackendApplication extends SpringBootServletInitializer {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("http://localhost:3000", "http://localhost:3001");
+                registry.addMapping("/**").allowedOrigins("*","http://localhost:3000", "http://localhost:3001");
             }
         };
     }

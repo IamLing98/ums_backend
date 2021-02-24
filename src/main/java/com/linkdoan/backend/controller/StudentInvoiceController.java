@@ -14,8 +14,8 @@ public class StudentInvoiceController {
     @Autowired
     StudentInvoiceService studentInvoiceService;
 
-    @GetMapping(value = "/studentInvoices/{termId}")
-    public ResponseEntity<?> getListStudentInvoices(@PathVariable("termId") String termId,
+    @GetMapping(value = "/studentInvoices")
+    public ResponseEntity<?> getListStudentInvoices(@RequestParam(name = "termId",required = false) String termId,
                                                     @RequestParam(name = "type", required = false) Integer type, SecurityContextHolder request) {
         return new ResponseEntity<>(studentInvoiceService.getAll(type, termId), HttpStatus.OK);
     }
@@ -24,6 +24,11 @@ public class StudentInvoiceController {
     public ResponseEntity<?> createNewStudentInvoices(@RequestBody StudentInvoiceDTO studentInvoiceDTO,
                                                       SecurityContextHolder request) {
         String userId = request.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(studentInvoiceService.createNewStudentInvoice(studentInvoiceDTO,userId), HttpStatus.OK);
+        return new ResponseEntity<>(studentInvoiceService.createNewStudentInvoice(studentInvoiceDTO, userId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/studentInvoices/{invoiceNo}")
+    public ResponseEntity<?> getInvoiceDetail(@PathVariable Long invoiceNo) {
+        return new ResponseEntity<>(studentInvoiceService.getDetail(invoiceNo), HttpStatus.OK);
     }
 }
