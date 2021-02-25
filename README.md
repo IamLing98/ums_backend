@@ -2,7 +2,7 @@
 
 ## About The Project
 
-This is my final year project in my university. An university information management system. 
+This is my final year project in my university. The university information management system. 
 
 ### Built With
  

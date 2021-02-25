@@ -1,12 +1,11 @@
 package com.linkdoan.backend.service.impl;
 
+import com.linkdoan.backend.dto.FeeCategoryDTO;
 import com.linkdoan.backend.dto.StudentInvoiceDTO;
 import com.linkdoan.backend.model.*;
-import com.linkdoan.backend.repository.InvoiceCategoryRepository;
-import com.linkdoan.backend.repository.StudentFeeTuitionRepository;
-import com.linkdoan.backend.repository.StudentInvoiceRepository;
-import com.linkdoan.backend.repository.TermRepository;
+import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.StudentInvoiceService;
+import com.linkdoan.backend.util.MoneyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,10 +26,10 @@ import java.util.*;
 public class StudentInvoiceServiceImpl implements StudentInvoiceService {
 
     @Autowired
-    StudentInvoiceRepository studentInvoiceRepository;
+    InvoiceRepository invoiceRepository;
 
     @Autowired
-    InvoiceCategoryRepository invoiceCategoryRepository;
+    InvoiceItemRepository invoiceItemRepository;
 
     @Autowired
     StudentFeeTuitionRepository studentFeeTuitionRepository;
@@ -38,12 +37,16 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
     @Autowired
     TermRepository termRepository;
 
+    @Autowired
+    StudentRepository studentRepository;
+
+
     @Override
     public List<Map<String, Object>> getAll(Integer type, String termId) {
         System.out.println("termId: " + termId);
         String[] labels = {"amount", "creatorId", "invoiceCreatedDate", "invoiceName", "invoiceNo", "invoiceType", "reasonId", "studentABN", "termId", "fullName", "reasonName", "note"};
         List<Map<String, Object>> rs = new ArrayList<>();
-        List<Object[]> studentInvoicesObjectArrayList = studentInvoiceRepository.getAllStudentInvoiceByType(type, termId);
+        List<Object[]> studentInvoicesObjectArrayList = invoiceRepository.getAllStudentInvoiceByType(type, termId);
         if (studentInvoicesObjectArrayList != null && !studentInvoicesObjectArrayList.isEmpty()) {
             for (Object[] studentInvoicesObjectArray : studentInvoicesObjectArrayList) {
                 Map<String, Object> studentInvoicesMap = new HashMap<>();
@@ -76,33 +79,36 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
         invoice.setInvoiceType(studentInvoiceDTO.getInvoiceType());
         invoice.setTermId(termId);
         invoice.setNote(studentInvoiceDTO.getNote());
-        if (invoice.getReasonId() == 1) {
-            invoice.setInvoiceName("Biên lai thu tiền");
+        if (invoice.getInvoiceType() == 1) {
+            invoice.setInvoiceName("Phiếu thu");
         }
-        Invoice savedInvoice = studentInvoiceRepository.save(invoice);
-        List<FeeCategory> feeCategoryList = studentInvoiceDTO.getFeeCategories();
-        List<InvoiceCategory> invoiceCategories = new ArrayList<>();
-        List<StudentsFeeCategories> studentsFeeCategoriesList = new ArrayList<>();
-        for (FeeCategory feeCategory : feeCategoryList) {
-            Optional<StudentsFeeCategories> studentsFeeCategoriesOptional = studentFeeTuitionRepository.findFirstByStudentIdAndTermIdAndFeeCategoriesId(studentId, termId, feeCategory.getId());
+        if (invoice.getInvoiceType() == 1) {
+            invoice.setInvoiceName("Phiếu  chi");
+        }
+        Invoice savedInvoice = invoiceRepository.save(invoice);
+        List<StudentsFeeCategory> studentsFeeCategories = studentInvoiceDTO.getStudentsFeeCategories();
+        List<InvoiceItem> invoiceCategories = new ArrayList<>();
+        List<StudentsFeeCategory> studentsFeeCategoryList = new ArrayList<>();
+        for (StudentsFeeCategory studentsFeeCategory : studentsFeeCategories) {
+            Optional<StudentsFeeCategory> studentsFeeCategoriesOptional = studentFeeTuitionRepository.findById(studentsFeeCategory.getId());
             if (studentsFeeCategoriesOptional.isPresent()) {
-                StudentsFeeCategories studentsFeeCategories = studentsFeeCategoriesOptional.get();
-                studentsFeeCategories.setIsPaid(1);
-                studentsFeeCategories.setTransactionDate(localDateTime);
-                studentsFeeCategoriesList.add(studentsFeeCategories);
+                StudentsFeeCategory studentsFeeCategoryChange = studentsFeeCategoriesOptional.get();
+                studentsFeeCategoryChange.setIsPaid(1);
+                studentsFeeCategoryChange.setTransactionDate(localDateTime);
+                studentsFeeCategoryList.add(studentsFeeCategoryChange);
             } else throw new ResponseStatusException(HttpStatus.CONFLICT, "Hoá đơn không hợp lệ!!!");
-            InvoiceCategory invoiceCategory = new InvoiceCategory();
-            invoiceCategory.setCategoryId(feeCategory.getId());
-            invoiceCategory.setInvoiceNo(savedInvoice.getInvoiceNo());
-            invoiceCategories.add(invoiceCategory);
+            InvoiceItem invoiceItem = new InvoiceItem();
+            invoiceItem.setStudentCategoryId(studentsFeeCategory.getId());
+            invoiceItem.setInvoiceNo(savedInvoice.getInvoiceNo());
+            invoiceCategories.add(invoiceItem);
         }
         if (savedInvoice.getInvoiceType() == 0) {
             term.setInFeeTotalValue(term.getInFeeTotalValue() + savedInvoice.getAmount().intValue());
         } else if (savedInvoice.getInvoiceType() == 1) {
             term.setOutFeeTotalValue(term.getOutFeeTotalValue() - savedInvoice.getAmount().intValue());
         }
-        studentFeeTuitionRepository.saveAll(studentsFeeCategoriesList);
-        invoiceCategoryRepository.saveAll(invoiceCategories);
+        studentFeeTuitionRepository.saveAll(studentsFeeCategoryList);
+        invoiceItemRepository.saveAll(invoiceCategories);
         return 1;
     }
 
@@ -117,8 +123,35 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
     }
 
     @Override
+    //get invoice detail
     public StudentInvoiceDTO getDetail(Long studentInvoiceId) {
-        return null;
+        StudentInvoiceDTO studentInvoiceDTO = new StudentInvoiceDTO();
+        Optional<Invoice> invoiceOptional = invoiceRepository.findById(studentInvoiceId);
+        if (!invoiceOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hoá đơn không tồn tại");
+        Invoice invoice = invoiceOptional.get();
+        Optional<Term> termOptional = termRepository.findById(invoice.getTermId());
+        if (!termOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hoá đơn không hợp lệ. Học kỳ không đúng!!!");
+        Term term = termOptional.get();
+        Optional<Student> studentOptional = studentRepository.findById(invoice.getStudentABN());
+        if (!studentOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hoá đơn không hợp lệ. Sinh viên không tồn tại");
+        Student student = studentOptional.get();
+        List<FeeCategoryDTO> studentFeeCategories = invoiceItemRepository.getListInvoiceItem(studentInvoiceId);
+        studentInvoiceDTO.setStudent(student);
+        studentInvoiceDTO.setItems(studentFeeCategories);
+        studentInvoiceDTO.setInvoiceNo(invoice.getInvoiceNo());
+        studentInvoiceDTO.setAmount(invoice.getAmount());
+        MoneyUtil moneyUtil = new MoneyUtil();
+        studentInvoiceDTO.setTextMoney(moneyUtil.readNum(String.valueOf(invoice.getAmount().intValue())));
+        studentInvoiceDTO.setCreatorId(invoice.getCreatorId());
+        studentInvoiceDTO.setInvoiceName(invoice.getInvoiceName());
+        studentInvoiceDTO.setReasonId(invoice.getReasonId());
+        studentInvoiceDTO.setTerm(term);
+        studentInvoiceDTO.setInvoiceType(invoice.getInvoiceType());
+        studentInvoiceDTO.setInvoiceCreatedDate(invoice.getInvoiceCreatedDate());
+        return studentInvoiceDTO;
     }
 
 

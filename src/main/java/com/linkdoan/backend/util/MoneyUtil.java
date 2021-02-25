@@ -28,7 +28,7 @@ public class MoneyUtil {
     public static final String [] number = {KHONG, MOT, HAI, BA,
             BON, NAM, SAU, BAY, TAM, CHIN};
     //Hàm chính đọc số
-    public static ArrayList<String> readNum(String a)
+    public static String readNum(String a)
     {
         ArrayList<String> kq = new ArrayList<String>();
 
@@ -71,8 +71,16 @@ public class MoneyUtil {
             List_Num.remove(0);
         }
 
-
-        return kq;
+        String rs = "";
+        if(kq.size() > 0){
+            for(int i = 0 ; i <kq.size(); i++){
+                rs+=kq.get(i) + " ";
+            }
+        }else{
+            rs += "Không";
+        }
+        rs += " đồng";
+        return rs;
     }
     public static ArrayList<String> read_3num(String a)
     {

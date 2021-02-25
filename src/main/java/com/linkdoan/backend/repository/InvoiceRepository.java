@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentInvoiceRepository extends JpaRepository<Invoice, Long> {
+public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
 
     @Query(
             value = "SELECT invoice.amount, invoice.creatorId, invoice.invoiceCreatedDate,invoice.invoiceName, invoice.invoiceNo, invoice.invoiceType, invoice.reasonId," +

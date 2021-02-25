@@ -1,6 +1,6 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.model.StudentsFeeCategories;
+import com.linkdoan.backend.model.StudentsFeeCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StudentFeeTuitionRepository extends JpaRepository<StudentsFeeCategories, Long> {
+public interface StudentFeeTuitionRepository extends JpaRepository<StudentsFeeCategory, Long> {
 
     @Query(value =
-            "SELECT FC.id, FC.feeCategoryName, FC.feeCategoryName, FC.frequency, SFC.isPaid, SFC.value " +
-                    "FROM StudentsFeeCategories  SFC INNER JOIN FeeCategory FC ON SFC.feeCategoriesId = FC.id " +
+            "SELECT FC.id, FC.feeCategoryName, FC.feeCategoryName, FC.frequency, SFC.isPaid, SFC.value, SFC.id " +
+                    "FROM StudentsFeeCategory  SFC INNER JOIN FeeCategory FC ON SFC.feeCategoriesId = FC.id " +
                     "INNER JOIN FeeCategoryGroup FCG ON FC.feeCategoryGroupId = FCG.id " +
                     "WHERE FCG.feeCategoryGroupType = 0 AND FCG.role = :role AND FCG.id = :feeCategoryGroupId AND SFC.studentId = :studentId and SFC.termId = :termId"
     )
@@ -23,5 +23,5 @@ public interface StudentFeeTuitionRepository extends JpaRepository<StudentsFeeCa
                                                                     @Param("feeCategoryGroupId") Long feeCategoryGroupId,
                                                                     @Param("role") String role);
 
-    Optional<StudentsFeeCategories> findFirstByStudentIdAndTermIdAndFeeCategoriesId(String studentId, String termId, Long feeCategoriesId);
+    Optional<StudentsFeeCategory> findFirstByStudentIdAndTermIdAndFeeCategoriesId(String studentId, String termId, Long feeCategoriesId);
 }

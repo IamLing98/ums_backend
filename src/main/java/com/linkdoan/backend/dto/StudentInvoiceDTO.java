@@ -2,12 +2,12 @@ package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.model.FeeCategory;
 import com.linkdoan.backend.model.Student;
+import com.linkdoan.backend.model.StudentsFeeCategory;
 import com.linkdoan.backend.model.Term;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,6 +28,8 @@ public class StudentInvoiceDTO {
 
     private Double amount;
 
+    private String textMoney;
+
     private Long reasonId;
 
     private Term term;
@@ -36,5 +38,7 @@ public class StudentInvoiceDTO {
 
     private String note;
 
-    private List<FeeCategory> feeCategories;
+    private List<StudentsFeeCategory> studentsFeeCategories;
+
+    private List<FeeCategoryDTO> items;
 }

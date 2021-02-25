@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("studentRepository")
 public interface StudentRepository extends JpaRepository<Student, String> {
 
 //    @Query(value = "SELECT new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, student.sex, department.departmentName, yearClass.classId, yearClass.className, branch.branchName, yearClass.courseNumber, student.status, yearClass.startYear, yearClass.endYear) " +

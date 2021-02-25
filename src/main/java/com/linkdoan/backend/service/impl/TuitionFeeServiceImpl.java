@@ -56,7 +56,7 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
         List<StudentDTO> studentDTOList = feeCategoriesRepository.getAllStudent();
         System.out.println("So luong sinh vien: " + studentDTOList.size());
         List<FeeCategoryGroup> feeCategoryGroupList = feeCategoryGroupRepository.findAllByFeeCategoryGroupTypeAndRole(0, FeeCategoryABNConstants.STUDENT_FEE_ROLE);
-        List<StudentsFeeCategories> studentsFeeCategoriesList = new ArrayList<>();
+        List<StudentsFeeCategory> studentsFeeCategoryList = new ArrayList<>();
         if (feeCategoryGroupList != null && !feeCategoryGroupList.isEmpty()) {
             for (StudentDTO student : studentDTOList) {
                 String studentId = student.getStudentId();
@@ -87,26 +87,26 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
                                 System.out.println("feeCategoryList size: " + feeCategoryList.size());
                                 for (FeeCategory feeCategory : feeCategoryList) {
                                     Double feeCategoryDoubleValue = feeCategory.getValue();
-                                    StudentsFeeCategories studentsFeeCategories = new StudentsFeeCategories();
-                                    studentsFeeCategories.setFeeCategoriesId(feeCategory.getId());
-                                    studentsFeeCategories.setStudentId(student.getStudentId());
-                                    studentsFeeCategories.setIsPaid(0);
-                                    studentsFeeCategories.setTermId(termId);
+                                    StudentsFeeCategory studentsFeeCategory = new StudentsFeeCategory();
+                                    studentsFeeCategory.setFeeCategoriesId(feeCategory.getId());
+                                    studentsFeeCategory.setStudentId(student.getStudentId());
+                                    studentsFeeCategory.setIsPaid(0);
+                                    studentsFeeCategory.setTermId(termId);
                                     if (feeCategory.getFrequency().equals(FeeCategoryABNConstants.ONCE)) {
                                         if (currentTerm == 0) {
-                                            studentsFeeCategories.setValue(feeCategoryDoubleValue.longValue());
-                                            studentsFeeCategoriesList.add(studentsFeeCategories);
+                                            studentsFeeCategory.setValue(feeCategoryDoubleValue.longValue());
+                                            studentsFeeCategoryList.add(studentsFeeCategory);
                                         }
                                     } else if (feeCategory.getFrequency().equals(FeeCategoryABNConstants.EVERY_YEAR)) {
                                         if (currentTerm % 2 == 0) {
-                                            studentsFeeCategories.setValue(feeCategoryDoubleValue.longValue());
-                                            studentsFeeCategoriesList.add(studentsFeeCategories);
+                                            studentsFeeCategory.setValue(feeCategoryDoubleValue.longValue());
+                                            studentsFeeCategoryList.add(studentsFeeCategory);
                                         }
                                     } else if (feeCategory.getFrequency().equals(FeeCategoryABNConstants.EVERY_TERM)) {
                                         if (feeCategory.getFeeCategoryABN().equals(FeeCategoryABNConstants.TUITION_FEE_ABN)) {
                                             System.out.println("Day la hoc phi: " + tuitionFeeValue.longValue());
-                                            studentsFeeCategories.setValue(tuitionFeeValue.longValue());
-                                            studentsFeeCategoriesList.add(studentsFeeCategories);
+                                            studentsFeeCategory.setValue(tuitionFeeValue.longValue());
+                                            studentsFeeCategoryList.add(studentsFeeCategory);
                                         }
                                     }
                                 }
@@ -115,7 +115,7 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
                     }
                 }
             }
-            studentFeeTuitionRepository.saveAll(studentsFeeCategoriesList);
+            studentFeeTuitionRepository.saveAll(studentsFeeCategoryList);
         } else System.out.println("feeCategoryList: isEmpty!!!");
         return null;
     }
@@ -123,7 +123,7 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
 
     @Override
     public Map<String, Object> getFeeInfoOfStudent(String studentId, String termId) {
-        String[] labels = {"id", "feeCategoryName", "feeCategoryName", "frequency", "isPaid", "value"};
+        String[] labels = {"feeCategoryId", "feeCategoryName", "feeCategoryName", "frequency", "isPaid", "value","id"};
         Map<String, Object> rs = new HashMap<>();
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         Optional<Term> termOptional = termRepository.findById(termId);

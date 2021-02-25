@@ -13,7 +13,9 @@ public class FeeCategoryDTO {
 
     private String feeCategoryName;
 
-    private Integer categoryType;
+    private String feeCategoryGroupName;
+
+    private String description;
 
     private Long value;
 }

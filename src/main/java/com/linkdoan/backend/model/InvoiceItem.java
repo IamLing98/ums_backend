@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name="invoice_category")
-public class InvoiceCategory {
+public class InvoiceItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,8 @@ public class InvoiceCategory {
     @Column(name="invoice_no")
     private Long invoiceNo;
 
-    @Column(name="category_id")
-    private Long categoryId;
+    @Column(name="student_category_id")
+    private Long studentCategoryId;
 
 
 
