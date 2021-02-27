@@ -24,12 +24,30 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
 
     //getDetail subjectClass
     @Query(value =
+            "SELECT subject.subjectId, subject.subjectName, subject.eachSubject, subject.departmentId, subject.theoryNumber, subject.selfLearningNumber, " +
+                    "subject.exerciseNumber, subject.discussNumber, subject.practiceNumber, subjectClass.subjectClassId, subjectClass.isRequireLab, " +
+                    "subjectClass.teacherId, subjectClass.duration, subjectClass.numberOfSeats, subjectClass.mainSubjectClassId, subjectClass.dayOfWeek, " +
+                    "subjectClass.hourOfDay, subjectClass.roomId, employee.fullName,   department.departmentName, subject.subjectType, subjectClass.status, " +
+                    "subjectClass.currentOfSubmittingNumber " +
+                    "FROM SubjectClass subjectClass INNER JOIN Subject subject ON subject.subjectId = subjectClass.subjectId " +
+                    "INNER JOIN Department department ON subject.departmentId = department.departmentId " +
+                    "LEFT JOIN Room room ON subjectClass.roomId = room.roomId " +
+                    "LEFT JOIN Employee employee ON subjectClass.teacherId = employee.employeeId   " +
+                    "WHERE subjectClass.subjectClassId = :subjectClassId  ORDER BY subjectClass.subjectClassId "
+    )
+    List<Object[]> getFirstSubjectClassBySubjectClassId(@Param("subjectClassId") String subjectClassId);
+
+    @Query(value =
             "SELECT scr.studentId, student.fullName, scr.diemBaiTap, scr.diemChuyenCan, scr.diemKiemTra, scr.diemThi, " +
-                    "scr.diemThiLai, scr.diemTrungBinh, scr.diemThangBon  " +
-                    "FROM SubjectClassRegistration scr INNER JOIN Student student ON scr.studentId = student.studentId " +
+                    "scr.diemThiLai, scr.diemTrungBinh, scr.diemThangBon, department.departmentId, department.departmentName, " +
+                    "yearClass.classId, yearClass.className , student.dateBirth, student.sex, scr.status, scr.rejectReason " +
+                    "FROM SubjectClassRegistration scr " +
+                    "INNER JOIN Student student ON scr.studentId = student.studentId " +
+                    "INNER JOIN YearClass yearClass ON student.yearClassId = yearClass.classId " +
+                    "INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
                     "WHERE scr.subjectClassId = :subjectClassId "
     )
-    List<Object[]> getSubjectClassDetails(@Param("subjectClassId") String subjectClassId);
+    List<Object[]> getListStudentOfSubjectClass(@Param("subjectClassId") String subjectClassId);
 
     //getObjectArraylist SubjectClass
     @Query(value =

@@ -2,15 +2,12 @@ package com.linkdoan.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.linkdoan.backend.model.User;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
-@Getter
-@Setter
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
     @NotNull
@@ -27,14 +24,13 @@ public class UserDTO {
 
     private String email;
 
-    private int isActive;
+    private Integer isActive;
 
-    private int isEmailVerified;
+    private Integer isEmailVerified;
 
     private String ownerId;
 
-    private List<RoleDTO> roles;
-
+    private RoleDTO roleDTO;
 
     public User toModel() {
         User user = new User();

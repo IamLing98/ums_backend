@@ -33,7 +33,8 @@ public interface EducationProgramRepository extends JpaRepository<EducationProgr
 
     @Query(value =
             "SELECT NEW com.linkdoan.backend.dto.EducationProgramDTO( ep.educationProgramId, ep.educationProgramName, ep.educationProgramLevel," +
-                    "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, department.departmentId, department.departmentName) " +
+                    "branch.branchId, ep.educationProgramType, ep.educationProgramStatus, branch.branchName ,ep.totalTerm, " +
+                    "department.departmentId, department.departmentName, ep.totalEachSubject) " +
                     "FROM EducationProgram  ep INNER JOIN Department department ON ep.departmentId = department.departmentId " +
                     "INNER JOIN Branch branch ON ep.branchId = branch.branchId " +
                     "WHERE ( ep.educationProgramId = :educationProgramId) "
@@ -43,7 +44,7 @@ public interface EducationProgramRepository extends JpaRepository<EducationProgr
     @Query(value =
             "SELECT subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber, " +
                     "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
-                    "subject.theoryNumber, department.departmentName, epd.term  " +
+                    "subject.theoryNumber, department.departmentName, epd.term " +
                     "FROM Subject subject  INNER JOIN Department department ON subject.departmentId = department.departmentId " +
                     "INNER JOIN EducationProgramSubject epd ON subject.subjectId = epd.subjectId " +
                     "WHERE ( epd.educationProgramId = :educationProgramId) "

@@ -1,6 +1,5 @@
 package com.linkdoan.backend.controller;
 
-import com.linkdoan.backend.model.temp.UserInformation;
 import com.linkdoan.backend.service.DocumentGenerationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,7 @@
 package com.linkdoan.backend.model;
 
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,11 +34,11 @@ public class SubjectClassRegistration {
     @Column(name = "status", columnDefinition = "INT")
     private Integer status;
 
-    @Column(name = "diem_bai_tap", columnDefinition = "INT")
-    private Integer diemBaiTap;
-
     @Column(name = "diem_chuyen_can", columnDefinition = "INT")
     private Integer diemChuyenCan;
+
+    @Column(name = "diem_bai_tap", columnDefinition = "INT")
+    private Integer diemBaiTap;
 
     @Column(name = "diem_kiem_tra", columnDefinition = "INT")
     private Integer diemKiemTra;
@@ -58,4 +59,13 @@ public class SubjectClassRegistration {
     @Column(name = "progress_submitted", columnDefinition = "INT")
     private Integer progressSubmitted;
 
+    //progress when submit
+    @Column(name = "is_pad", columnDefinition = "INT")
+    private Integer isPaid;
+
+    @Column(name="reject_reason")
+    private String rejectReason;
+
+    @Column(name="reject_date")
+    private LocalDateTime rejectDate;
 }

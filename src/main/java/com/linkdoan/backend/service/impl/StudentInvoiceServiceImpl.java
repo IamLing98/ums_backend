@@ -40,6 +40,9 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    SubjectClassRegistrationRepository subjectClassRegistrationRepository;
+
 
     @Override
     public List<Map<String, Object>> getAll(Integer type, String termId) {
@@ -79,7 +82,7 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
         invoice.setInvoiceType(studentInvoiceDTO.getInvoiceType());
         invoice.setTermId(termId);
         invoice.setNote(studentInvoiceDTO.getNote());
-        if (invoice.getInvoiceType() == 1) {
+        if (invoice.getInvoiceType() == 0) {
             invoice.setInvoiceName("Phiếu thu");
         }
         if (invoice.getInvoiceType() == 1) {
@@ -102,6 +105,11 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
             invoiceItem.setInvoiceNo(savedInvoice.getInvoiceNo());
             invoiceCategories.add(invoiceItem);
         }
+        List<SubjectClassRegistration> subjectClassRegistrationList = subjectClassRegistrationRepository.findAllByStudentIdAndTermIdAndStatus(studentId, termId,1);
+        for(SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList){
+            subjectClassRegistration.setIsPaid(1);
+        }
+        subjectClassRegistrationRepository.saveAll(subjectClassRegistrationList);
         if (savedInvoice.getInvoiceType() == 0) {
             term.setInFeeTotalValue(term.getInFeeTotalValue() + savedInvoice.getAmount().intValue());
         } else if (savedInvoice.getInvoiceType() == 1) {

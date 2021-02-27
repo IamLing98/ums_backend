@@ -3,10 +3,7 @@ package com.linkdoan.backend.model;
 import com.linkdoan.backend.dto.RoleDTO;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "role")
@@ -14,7 +11,7 @@ import javax.persistence.Table;
 public class Role {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", unique = true)
     private Long roleId;
 

@@ -10,7 +10,9 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
     @Query(value =
-            "SELECT r  FROM Role  r, UserRole ur  WHERE (ur.userId =:userId AND ur.roleId = r.roleId )"
+            "SELECT r  FROM User user " +
+                    "INNER JOIN Role  r ON user.roleId = r.roleId " +
+                    "WHERE user.userId =  :userId "
     )
     List<Role> findAllRoles(@Param("userId") Long userId);
 }

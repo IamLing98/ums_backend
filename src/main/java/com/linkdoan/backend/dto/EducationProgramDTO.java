@@ -29,6 +29,8 @@ public class EducationProgramDTO {
 
     private Integer totalTerm;
 
+    private Integer totalEachSubject;
+
     private String departmentId;
 
     private String departmentName;
@@ -62,5 +64,20 @@ public class EducationProgramDTO {
         this.totalTerm = totalTerm;
         this.departmentId = departmentId;
         this.departmentName = departmentName;
+    }
+    public EducationProgramDTO(String educationProgramId, String educationProgramName, Integer educationProgramLevel,
+                                    String branchId, Integer educationProgramType, Integer educationProgramStatus,
+                                    String branchName, Integer totalTerm, String departmentId, String departmentName, Integer totalEachSubject) {
+        this.educationProgramId = educationProgramId;
+        this.educationProgramName = educationProgramName;
+        this.educationProgramLevel = educationProgramLevel;
+        this.branchId = branchId;
+        this.educationProgramType = educationProgramType;
+        this.educationProgramStatus = educationProgramStatus;
+        this.branchName = branchName;
+        this.totalTerm = totalTerm;
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
+        this.totalEachSubject= totalEachSubject;
     }
 }

@@ -12,9 +12,9 @@ import java.util.Date;
 @Table(name = "users")
 @Data
 @BatchSize(size = 10)
-public class User  {
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", unique = true)
     private Long userId;
 
@@ -34,13 +34,16 @@ public class User  {
     private String email;
 
     @Column(name = "is_active")
-    private int isActive;
+    private Integer isActive;
 
     @Column(name = "is_email_verified")
-    private int isEmailVerified;
+    private Integer isEmailVerified;
 
     @Column(name = "owner_id")
     private String ownerId;
+
+    @Column(name = "role_id")
+    private Long roleId;
 
     public UserDTO toDto() {
         UserDTO userDTO = new UserDTO();

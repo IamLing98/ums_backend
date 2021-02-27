@@ -59,27 +59,38 @@ public class SubjectClassServiceImpl implements SubjectClassService {
 
     @Override
     public Map<String, Object> getDetail(String subjectClassId) {
-        List<Object[]> studentObjectList = subjectClassRepository.getSubjectClassDetails(subjectClassId);
-        List<Map<String, Object>> rs = new ArrayList<>();
-        Map<String, Object> newMap = new HashMap<>(2);
-        if (studentObjectList != null && !studentObjectList.isEmpty()) {
-            for (Object[] subjectClassObject : studentObjectList) {
-                Map<String, Object> studentMap = new HashMap<>(2);
-                studentMap = new HashMap<String, Object>();
-                studentMap.put("studentId", subjectClassObject[0]);
-                studentMap.put("fullName", subjectClassObject[1]);
-                studentMap.put("diemBaiTap", subjectClassObject[2]);
-                studentMap.put("diemChuyenCan", subjectClassObject[3]);
-                studentMap.put("diemKiemTra", subjectClassObject[4]);
-                studentMap.put("diemThi", subjectClassObject[5]);
-                studentMap.put("diemThiLai", subjectClassObject[6]);
-                studentMap.put("diemTrungBinh", subjectClassObject[7]);
-                studentMap.put("diemThangBon", subjectClassObject[8]);
-                rs.add(studentMap);
+        String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
+                "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
+                "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
+                "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
+                "fullName", "departmentName", "subjectType", "status", "currentOfSubmittingNumber"};
+        Map<String, Object> rs = new HashMap<>();
+        List<Object[]> subjectClassObjectArrayList = subjectClassRepository.getFirstSubjectClassBySubjectClassId(subjectClassId);
+        Object[] subjectClassObjectArray;
+        if (subjectClassObjectArrayList != null && !subjectClassObjectArrayList.isEmpty()) {
+            subjectClassObjectArray = subjectClassObjectArrayList.get(0);
+            for (int i = 0; i < stringList.length; i++) {
+                rs.put(stringList[i], subjectClassObjectArray[i]);
             }
-            newMap.put("studentList", rs);
-        }
-        return newMap;
+            List<Object[]> studentObjectList = subjectClassRepository.getListStudentOfSubjectClass(subjectClassId);
+            List<Map<String, Object>> studentMapStringObjectList = new ArrayList<>();
+            String[] studentLabels = {"studentId", "fullName", "diemBaiTap", "diemChuyenCan", "diemKiemTra",
+                    "diemThi", "diemThiLai", "diemTrungBinh", "diemThangBon", "departmentId", "departmentName",
+                    "classId", "className", "dateBirth", "sex","status", "rejectReason"};
+            if (studentObjectList != null && !studentObjectList.isEmpty()) {
+                for (Object[] subjectClassObject : studentObjectList) {
+                    Map<String, Object> studentMap = new HashMap<>(2);
+                    studentMap = new HashMap<String, Object>();
+                    for(int i = 0 ; i < studentLabels.length; i++){
+                        studentMap.put(studentLabels[i], subjectClassObject[i]);
+                    }
+                    studentMapStringObjectList.add(studentMap);
+                }
+            }
+            rs.put("studentList", studentMapStringObjectList);
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy lớp học này");
+
+        return rs;
     }
 
 

@@ -37,6 +37,9 @@ public class EducationProgram {
     @Column(name = "department_id", columnDefinition = "char(12)")
     private String departmentId;
 
+    @Column(name="total_each_subject")
+    private Integer totalEachSubject;
+
     public EducationProgramDTO toDTO() {
         EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
         educationProgramDTO.setBranchId(this.branchId);

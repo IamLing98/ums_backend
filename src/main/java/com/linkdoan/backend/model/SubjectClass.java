@@ -64,6 +64,9 @@ public class SubjectClass {
     @Column(name = "status")
     private Integer status = 0;
 
+    @Column(name = "current_week")
+    private Integer currentWeek = 0;
+
     public SubjectClassDTO toDTO() {
         SubjectClassDTO sj = new SubjectClassDTO();
         sj.setSubjectClassId(this.subjectClassId);

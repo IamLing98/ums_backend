@@ -106,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**","/downloadFile/**"
                 )
                 .permitAll()
-                .antMatchers("/education-program/**", "/class/**", "/students/**")
+                .antMatchers("/education-program/**", "/class/**")
                 .hasAnyAuthority("PDT")
                 // all other requests need to be authenticated
                 .anyRequest().authenticated()

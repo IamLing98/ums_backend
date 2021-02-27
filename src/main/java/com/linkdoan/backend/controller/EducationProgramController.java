@@ -25,6 +25,7 @@ public class EducationProgramController {
         return new ResponseEntity<>(rs, HttpStatus.OK);
     }
 
+
     @RequestMapping(value = "/education-programs/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getDetail(@PathVariable("id") String educationProgramId) throws Exception {
         return new ResponseEntity<>(educationProgramServiceImpl.getDetail(educationProgramId), HttpStatus.OK);
