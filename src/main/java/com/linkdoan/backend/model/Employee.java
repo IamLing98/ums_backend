@@ -49,8 +49,8 @@ public class Employee {
     @Column(name = "scientific_titles_get_year")
     private Integer scientificTitlesGetYear;
 
-    @Column(name = "employee_type")
-    private Integer employeeType;
+    @Column(name = "employee_type_id")
+    private Long employeeTypeId;
 
     @Column(name = "start_work")
     private LocalDate startWork;

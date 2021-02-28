@@ -34,7 +34,7 @@ public class EmployeeDTO {
 
     private Integer scientificTitlesGetYear;
 
-    private Integer employeeType;
+    private Long employeeTypeId;
 
     private LocalDate startWork;
 
@@ -58,7 +58,7 @@ public class EmployeeDTO {
         employee.setScientificTitles(scientificTitles);
         employee.setScientificTitlesGetYear(scientificTitlesGetYear);
         ;
-        employee.setEmployeeType(employeeType);
+        employee.setEmployeeTypeId(employeeTypeId);
         ;
         employee.setStartWork(startWork);
         employee.setAvatar(avatar);
@@ -69,7 +69,7 @@ public class EmployeeDTO {
 
     public EmployeeDTO(String employeeId, String fullName, LocalDate dateBirth, Integer sex, String placeBorn,
                        String contactAddress, String phoneNumber, String email, Integer degree, Integer degreeDetails,
-                       Integer scientificTitles, Integer scientificTitlesGetYear, Integer employeeType, LocalDate startWork,
+                       Integer scientificTitles, Integer scientificTitlesGetYear, Long employeeTypeId, LocalDate startWork,
                        String avatar, String departmentId) {
         this.employeeId = employeeId;
         this.fullName = fullName;
@@ -83,7 +83,7 @@ public class EmployeeDTO {
         this.degreeDetails = degreeDetails;
         this.scientificTitles = scientificTitles;
         this.scientificTitlesGetYear = scientificTitlesGetYear;
-        this.employeeType = employeeType;
+        this.employeeTypeId = employeeTypeId;
         this.startWork = startWork;
         this.avatar = avatar;
         this.departmentId = departmentId;

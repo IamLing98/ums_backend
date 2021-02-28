@@ -5,7 +5,6 @@ import com.linkdoan.backend.exception.FileStorageException;
 import com.linkdoan.backend.model.Template;
 import com.linkdoan.backend.repository.TemplateRepository;
 import com.linkdoan.backend.service.DocumentGenerationService;
-import com.linkdoan.backend.service.FilesStorageService;
 import org.apache.log4j.Level;
 import org.docx4j.XmlUtils;
 import org.docx4j.convert.out.pdf.viaXSLFO.PdfSettings;
@@ -24,9 +23,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Service

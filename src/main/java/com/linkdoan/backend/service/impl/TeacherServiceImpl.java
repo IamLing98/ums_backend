@@ -16,7 +16,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Employee> getAll() {
-        return teacherRepository.getAllByEmployeeType(1);
+        return teacherRepository.getAllByEmployeeTypeId(1L);
     }
 
     @Override

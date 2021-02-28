@@ -3,9 +3,9 @@ package com.linkdoan.backend.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.linkdoan.backend.model.User;
 import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.Map;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

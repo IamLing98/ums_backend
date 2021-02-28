@@ -3,9 +3,7 @@ package com.linkdoan.backend.service.impl;
 import com.linkdoan.backend.base.dto.CustomUserDetails;
 import com.linkdoan.backend.dto.RoleDTO;
 import com.linkdoan.backend.dto.UserDTO;
-import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Role;
-import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.User;
 import com.linkdoan.backend.repository.EmployeeRepository;
 import com.linkdoan.backend.repository.RoleRepository;
@@ -17,10 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Service()
 public class UserService implements UserDetailsService {

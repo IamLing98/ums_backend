@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface TeacherRepository extends JpaRepository<Employee, String> {
 
-    List<Employee> getAllByEmployeeType(Integer type);
+    List<Employee> getAllByEmployeeTypeId(Long typeId);
 
 }

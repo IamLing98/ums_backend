@@ -1,6 +1,5 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.model.FeeCategory;
 import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.StudentsFeeCategory;
 import com.linkdoan.backend.model.Term;

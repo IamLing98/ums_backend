@@ -1,7 +1,6 @@
 package com.linkdoan.backend.model;
 
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

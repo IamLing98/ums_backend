@@ -1,6 +1,4 @@
 package com.linkdoan.backend.controller;
-
-import com.linkdoan.backend.dto.FileDTO;
 import com.linkdoan.backend.model.UploadFileResponse;
 import com.linkdoan.backend.service.FilesStorageService;
 import org.slf4j.Logger;
