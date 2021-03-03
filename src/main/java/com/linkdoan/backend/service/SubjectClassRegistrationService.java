@@ -12,7 +12,7 @@ public interface SubjectClassRegistrationService {
 
     SubjectClassRegistration submit(String studentId, SubjectClassRegistrationDTO subjectClassRegistrationDTO);
 
-    Map<String, Object>  getListSubmitted(String student, String termId);
+    Map<String, Object>  getListSubmitted(String student, String termId, Integer status);
 
     int deleteAllSubmittingOfSubjectClass(String subjectCLassId, String termId, String actionType);
 

@@ -7,14 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
-@Table(name="office")
+@Table(name = "progress_type")
 @Entity
-public class Office {
-    @Id
-    @Column(name="id")
-    private String id;
+@Data
+public class ProgressType {
 
-    @Column(name="office_name")
-    private String officeName;
+    @Id
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "progress_name")
+    private String progressName;
 }

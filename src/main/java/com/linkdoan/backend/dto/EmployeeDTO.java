@@ -57,9 +57,6 @@ public class EmployeeDTO {
         employee.setDegreeDetails(degreeDetails);
         employee.setScientificTitles(scientificTitles);
         employee.setScientificTitlesGetYear(scientificTitlesGetYear);
-        ;
-        employee.setEmployeeTypeId(employeeTypeId);
-        ;
         employee.setStartWork(startWork);
         employee.setAvatar(avatar);
         employee.setDepartmentId(departmentId);

@@ -123,7 +123,7 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
      *
      */
     @Override
-    public Map<String, Object> getListSubmitted(String studentId, String termId) {
+    public Map<String, Object> getListSubmitted(String studentId, String termId, Integer status) {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         Map<String, Object> rs = new HashMap<>();
         int count = 0;
@@ -133,7 +133,7 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
             List<Map<String, Object>> subjectClassList = new ArrayList<>();
             String[] labels = {"id", "autoSubmit", "studentId", "subjectClassId", "submittedDate",
                     "termId", "status", "progressSubmitted", "subjectName", "eachSubject", "subjectId", "roomId", "duration", "dayOfWeek", "hourOfDay"};
-            List<Object[]> subjectClassObjectArrayList = subjectClassRegistrationRepository.getListSubmittedByStudentIdAndTermId(studentId, termId);
+            List<Object[]> subjectClassObjectArrayList = subjectClassRegistrationRepository.getListSubmittedByStudentIdAndTermId(studentId, termId, status);
             for (Object[] subjectClassObjectArray : subjectClassObjectArrayList) {
                 Map<String, Object> subjectClassObject = new HashMap<>();
                 for (int i = 0; i < labels.length; i++) {

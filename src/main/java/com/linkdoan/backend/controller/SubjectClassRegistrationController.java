@@ -15,11 +15,13 @@ public class SubjectClassRegistrationController {
     SubjectClassRegistrationService subjectClassRegistrationService;
 
     @RequestMapping(value = "/subjectClassRegistration/{termId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getListSubmitted(@PathVariable("termId") String termId, SecurityContextHolder request)
+    public ResponseEntity<?> getListSubmitted(@PathVariable("termId") String termId,
+                                              @RequestParam(name = "status", required = false) Integer status,
+                                              SecurityContextHolder request)
             throws Exception {
         String studentId = request.getContext().getAuthentication().getName();
         System.out.println(studentId);
-        return new ResponseEntity<>(subjectClassRegistrationService.getListSubmitted(studentId, termId), HttpStatus.OK);
+        return new ResponseEntity<>(subjectClassRegistrationService.getListSubmitted(studentId, termId,status), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjectClassRegistration", method = RequestMethod.POST)

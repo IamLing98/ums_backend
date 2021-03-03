@@ -5,6 +5,7 @@ import com.linkdoan.backend.model.SubjectClassRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,9 +22,11 @@ public interface SubjectClassRegistrationRepository extends JpaRepository<Subjec
                     "INNER JOIN Subject s ON sc.subjectId = s.subjectId " +
                     "INNER JOIN Student student ON scr.studentId = student.studentId " +
                     "INNER JOIN YearClass yc ON student.yearClassId = yc.classId " +
-                    "WHERE scr.studentId = :studentId and scr.termId = :termId"
+                    "WHERE scr.studentId = :studentId and scr.termId = :termId " +
+                    "AND scr.termId = :termId " +
+                    "AND (:status IS NULL OR scr.status = :status) "
     )
-    List<Object[]> getListSubmittedByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId);
+    List<Object[]> getListSubmittedByStudentIdAndTermId(@Param("studentId") String studentId, @Param("termId") String termId, @Param("status") Integer status);
 
     //get list submitted subject of student
     @Query(value =

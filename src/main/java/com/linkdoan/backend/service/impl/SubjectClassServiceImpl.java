@@ -43,7 +43,6 @@ public class SubjectClassServiceImpl implements SubjectClassService {
                 "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
                 "fullName", "departmentName", "subjectType", "status", "currentOfSubmittingNumber"};
         List<Object[]> subjectClassObjectArrayList = subjectClassRepository.getSubjectClassObjectArraylist(termId);
-        System.out.println("Size of subjectClassObjectArrayList: " + subjectClassObjectArrayList.size());
         List<Map<String, Object>> rs = new ArrayList<>();
         if (subjectClassObjectArrayList != null && !subjectClassObjectArrayList.isEmpty()) {
             for (Object[] subjectClassObjectArray : subjectClassObjectArrayList) {

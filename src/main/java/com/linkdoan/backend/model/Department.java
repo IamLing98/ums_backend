@@ -30,8 +30,8 @@ public class Department {
         DepartmentDTO departmentDTO = new DepartmentDTO();
         departmentDTO.setDepartmentId(this.departmentId);
         departmentDTO.setDepartmentName(this.departmentName);
-        departmentDTO.setDepartmentType(this.departmentType.toString());
-        departmentDTO.setStartYear(this.startYear.toString());
+        departmentDTO.setDepartmentType(this.departmentType );
+        departmentDTO.setStartYear(this.startYear );
         return departmentDTO;
     }
 
