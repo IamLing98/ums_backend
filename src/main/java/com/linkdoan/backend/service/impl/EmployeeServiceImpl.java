@@ -4,14 +4,14 @@ import com.linkdoan.backend.dto.EmployeeDTO;
 import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.repository.EmployeeRepository;
 import com.linkdoan.backend.service.EmployeeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityExistsException;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -19,27 +19,41 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
-
     @Override
-    public Employee createEmployee(EmployeeDTO employeeDTO) throws IOException {
-        if (employeeRepository.existsById(employeeDTO.getEmployeeId()) == true)
-            throw new EntityExistsException("Exist");
-        return employeeRepository.save(employeeDTO.toModel());
+    public EmployeeDTO getEmployeeDetail(String employeeId) {
+        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        if (!employeeOptional.isPresent()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        List<EmployeeDTO> employeeDTOList = employeeRepository.getDetail(employeeId);
+        if (employeeDTOList != null && !employeeDTOList.isEmpty()) {
+            EmployeeDTO rs = employeeDTOList.get(0);
+            if (rs != null) {
+                rs.setTeacherEducationTimeLineList(employeeRepository.getListEducationTimeline(rs.getEmployeeId()));
+                rs.setTeacherWorkTimeLineList(employeeRepository.getListWorkTimeline(rs.getEmployeeId()));
+                rs.setSubjectList(employeeRepository.getListSubject(rs.getEmployeeId()));
+            }
+            return rs;
+        } else return null;
     }
 
     @Override
-    public Employee updateEmployee(EmployeeDTO employeeDTO) throws IOException {
-        return null;
+    public List<EmployeeDTO> getAllEmployee(Long type) {
+        List<EmployeeDTO> rs = new ArrayList<>();
+        if (type != null && type == 1L) {
+            rs = employeeRepository.findAllTeacher();
+        } else {
+            rs = employeeRepository.findAllEmployee();
+        }
+
+        return rs;
     }
 
     @Override
-    public int deleteEmployee(EmployeeDTO employeeDTO) throws IOException {
+    public int updateEmployee(EmployeeDTO employeeDTO) {
         return 0;
     }
 
     @Override
-    public List<EmployeeDTO> findBy(String employeeId, String departmentId, Integer type) {
-        return employeeRepository.getAll(employeeId, departmentId, type);
+    public int deleteEmployee(String employeeId) {
+        return 0;
     }
 }

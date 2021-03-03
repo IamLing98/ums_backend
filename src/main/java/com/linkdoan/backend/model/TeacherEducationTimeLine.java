@@ -29,5 +29,11 @@ public class TeacherEducationTimeLine {
     @Column(name = "educationPlace")
     private String educationPlace;
 
+    @Column(name = "start")
+    private Integer start;
+
+    @Column(name = "end")
+    private Integer end;
+
 
 }

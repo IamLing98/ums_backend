@@ -6,14 +6,18 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface EmployeeService {
-    Employee createEmployee(EmployeeDTO employeeDTO) throws IOException;
 
-    Employee updateEmployee(EmployeeDTO employeeDTO) throws IOException;
+    EmployeeDTO getEmployeeDetail(String employeeId);
 
-    int deleteEmployee(EmployeeDTO employeeDTO) throws IOException;
+    List<EmployeeDTO> getAllEmployee(Long type);
 
-    List<EmployeeDTO> findBy(String employeeId, String departmentId, Integer type) throws IOException;
+    int updateEmployee(EmployeeDTO employeeDTO);
+
+    int deleteEmployee(String employeeId);
+
+
 }

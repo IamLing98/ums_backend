@@ -4,10 +4,7 @@ import com.linkdoan.backend.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class EmployeeController {
@@ -15,12 +12,28 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    public ResponseEntity<?> findBy(@RequestParam(name = "employeeId", required = false) String employeeId,
-                                    @RequestParam(name = "departmentId", required = false) String departmentId,
-                                    @RequestParam(name = "type", required = false) Integer type) throws Exception {
-        // Pageable pageable = PageRequest.of(employeeDTO.getPage(), employeeDTO.getPageSize());
-        return new ResponseEntity<>(employeeService.findBy(employeeId, departmentId, type), HttpStatus.OK);
+    @GetMapping(value = "/employee")
+    public ResponseEntity<?> getAllEmployee(@RequestParam(name = "type", required = false) Long type) {
+        return new ResponseEntity<>(employeeService.getAllEmployee(type), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/employee/{employeeId}")
+    public ResponseEntity<?> getDetail(@PathVariable("employeeId") String employeeId ) {
+        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/employee/{employeeId}")
+    public ResponseEntity<?> create(@PathVariable("employeeId") String employeeId ) {
+        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/employee/{employeeId}")
+    public ResponseEntity<?> update(@PathVariable("employeeId") String employeeId ) {
+        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/employee/{employeeId}")
+    public ResponseEntity<?> delete(@PathVariable("employeeId") String employeeId ) {
+        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    }
 }

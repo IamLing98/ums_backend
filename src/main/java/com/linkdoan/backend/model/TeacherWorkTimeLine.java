@@ -20,12 +20,15 @@ public class TeacherWorkTimeLine {
     private String teacherId;
 
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private Integer startDate;
 
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private Integer endDate;
 
     @Column(name = "job")
     private String job;
+
+    @Column(name="work_unit")
+    private String workUnit;
 
 }

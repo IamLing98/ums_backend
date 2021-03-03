@@ -67,5 +67,4 @@ public class Employee {
     @Column(name = "avatar")
     private String avatar;
 
-
 }
