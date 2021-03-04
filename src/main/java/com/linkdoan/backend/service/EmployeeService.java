@@ -15,7 +15,9 @@ public interface EmployeeService {
 
     List<EmployeeDTO> getAllEmployee(Long type);
 
-    int updateEmployee(EmployeeDTO employeeDTO);
+    int create(EmployeeDTO employeeDTO);
+
+    int updateEmployee(String employeeId,EmployeeDTO employeeDTO);
 
     int deleteEmployee(String employeeId);
 

@@ -24,7 +24,7 @@ public class TeacherEducationTimeLine {
     private Integer educationLevel;
 
     @Column(name = "branch_name")
-    private String banchName;
+    private String branchName;
 
     @Column(name = "educationPlace")
     private String educationPlace;

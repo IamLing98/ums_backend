@@ -75,7 +75,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
                     "student.motherWork, student.contactAddress, student.note, student.avatar, yearClass.departmentId, department.departmentName, " +
                     "student.yearClassId, yearClass.className, br.branchId, br.branchName, yearClass.courseNumber, student.status, student.enrollId, " +
                     "student.admissionType, yearClass.startYear, yearClass.endYear, student.educationProgramId, yearClass.currentTerm) " +
-                    "FROM Student student INNER JOIN YearClass yearClass ON student.yearClassId = yearClass.classId " +
+                    "FROM Student student " +
+                    "INNER JOIN YearClass yearClass ON student.yearClassId = yearClass.classId " +
                     "INNER JOIN Department department ON yearClass.departmentId = department.departmentId " +
                     "INNER JOIN EducationProgram ed ON student.educationProgramId = ed.educationProgramId " +
                     "INNER JOIN Branch br ON ed.branchId = br.branchId " +

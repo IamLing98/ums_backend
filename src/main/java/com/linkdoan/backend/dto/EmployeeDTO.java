@@ -7,15 +7,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @Data
 public class EmployeeDTO {
 
+
+    @Id
+    @Column(name = "employee_id", columnDefinition = "char(10)")
     private String employeeId;
 
-    private Department department;
+    private String departmentId;
 
     private Integer employeeDepartmentLevel;
 
@@ -49,18 +53,46 @@ public class EmployeeDTO {
 
     private String avatar;
 
+    private String ethnic;
+
+    private String bornPlace;
+
+    private String homeTown;
+
+    private String permanentResidence;
+
+    private String nationality;
+
+    private String religion;
+
+    private LocalDate CPStartDate;
+
+    private String identityNumber;
+
+    private LocalDate identityCreatedDate;
+
+    private String identityCreatedPlace;
+
+    private String bankNumber;
+
+    private Department department;
+
     private List<TeacherEducationTimeLine> teacherEducationTimeLineList;
 
     private List<TeacherWorkTimeLine> teacherWorkTimeLineList;
 
     private List<Subject>  subjectList;
 
-    public EmployeeDTO(String employeeId, Department department, Integer employeeDepartmentLevel, String officeId, Integer employeeOfficeLevel,
-                       String fullName, LocalDate dateBirth, Integer sex, String placeBorn, String contactAddress, String phoneNumber,
-                       String email, Integer degree, Integer degreeDetails, Integer scientificTitles, Integer scientificTitlesGetYear,
-                       LocalDate startWork, String avatar  ) {
+    public EmployeeDTO(String employeeId, String departmentId, Integer employeeDepartmentLevel, String officeId,
+                       Integer employeeOfficeLevel, String fullName, LocalDate dateBirth, Integer sex, String placeBorn,
+                       String contactAddress, String phoneNumber, String email, Integer degree, Integer degreeDetails,
+                       Integer scientificTitles, Integer scientificTitlesGetYear, LocalDate startWork, String avatar,
+                       String ethnic, String bornPlace, String homeTown, String permanentResidence, String nationality,
+                       String religion, LocalDate CPStartDate, String identityNumber, LocalDate identityCreatedDate,
+                       String identityCreatedPlace, String bankNumber, Department department)
+                        {
         this.employeeId = employeeId;
-        this.department = department;
+        this.departmentId = departmentId;
         this.employeeDepartmentLevel = employeeDepartmentLevel;
         this.officeId = officeId;
         this.employeeOfficeLevel = employeeOfficeLevel;
@@ -77,25 +109,54 @@ public class EmployeeDTO {
         this.scientificTitlesGetYear = scientificTitlesGetYear;
         this.startWork = startWork;
         this.avatar = avatar;
+        this.ethnic = ethnic;
+        this.bornPlace = bornPlace;
+        this.homeTown = homeTown;
+        this.permanentResidence = permanentResidence;
+        this.nationality = nationality;
+        this.religion = religion;
+        this.CPStartDate = CPStartDate;
+        this.identityNumber = identityNumber;
+        this.identityCreatedDate = identityCreatedDate;
+        this.identityCreatedPlace = identityCreatedPlace;
+        this.bankNumber = bankNumber;
+        this.department = department;
+        this.teacherEducationTimeLineList = teacherEducationTimeLineList;
+        this.teacherWorkTimeLineList = teacherWorkTimeLineList;
+        this.subjectList = subjectList;
     }
 
     public Employee toModel() {
-        Employee employee = new Employee();
-        employee.setEmployeeId(employeeId);
-        employee.setFullName(fullName);
-        employee.setDateBirth(dateBirth);
-        employee.setSex(sex);
-        employee.setPlaceBorn(placeBorn);
-        employee.setContactAddress(contactAddress);
-        employee.setPhoneNumber(phoneNumber);
-        employee.setEmail(email);
-        employee.setDegree(degree);
-        employee.setDegreeDetails(degreeDetails);
-        employee.setScientificTitles(scientificTitles);
-        employee.setScientificTitlesGetYear(scientificTitlesGetYear);
-        employee.setStartWork(startWork);
-        employee.setAvatar(avatar);
-        employee.setDepartmentId(department.getDepartmentId());
-        return employee;
+        Employee employeeDTO = new Employee();
+        employeeDTO.setEmployeeId(employeeId);
+        employeeDTO.setDepartmentId(departmentId);
+        employeeDTO.setEmployeeDepartmentLevel(employeeDepartmentLevel);
+        employeeDTO.setOfficeId(officeId);
+        employeeDTO.setEmployeeOfficeLevel(employeeOfficeLevel);
+        employeeDTO.setFullName(fullName);
+        employeeDTO.setDateBirth(dateBirth);
+        employeeDTO.setSex(sex);
+        employeeDTO.setPlaceBorn(placeBorn);
+        employeeDTO.setContactAddress(contactAddress);
+        employeeDTO.setPhoneNumber(phoneNumber);
+        employeeDTO.setEmail(email);
+        employeeDTO.setDegree(degree);
+        employeeDTO.setDegreeDetails(degreeDetails);
+        employeeDTO.setScientificTitles(scientificTitles);
+        employeeDTO.setScientificTitlesGetYear(scientificTitlesGetYear);
+        employeeDTO.setStartWork(startWork);
+        employeeDTO.setAvatar(avatar);
+        employeeDTO.setEthnic(ethnic);
+        employeeDTO.setBornPlace(bornPlace);
+        employeeDTO.setHomeTown(homeTown);
+        employeeDTO.setPermanentResidence(permanentResidence);
+        employeeDTO.setNationality(nationality);
+        employeeDTO.setReligion(religion);
+        employeeDTO.setCPStartDate(CPStartDate);
+        employeeDTO.setIdentityNumber(identityNumber);
+        employeeDTO.setIdentityCreatedDate(identityCreatedDate);
+        employeeDTO.setIdentityCreatedPlace(identityCreatedPlace);
+        employeeDTO.setBankNumber(bankNumber);
+        return employeeDTO;
     }
 }

@@ -17,11 +17,13 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
     @Query(
-            value = "SELECT new com.linkdoan.backend.dto.EmployeeDTO(employee.employeeId, department, " +
-                    "employee.employeeDepartmentLevel, employee.officeId, employee.employeeOfficeLevel, employee.fullName, " +
-                    "employee.dateBirth, employee.sex, employee.placeBorn, employee.contactAddress, employee.phoneNumber, " +
-                    "employee.email, employee.degree, employee.degreeDetails, employee.scientificTitles, employee.scientificTitlesGetYear," +
-                    "employee.startWork, employee.avatar) " +
+            value = "SELECT new com.linkdoan.backend.dto.EmployeeDTO(employee.employeeId, employee.departmentId, employee.employeeDepartmentLevel, " +
+                    "employee.officeId, employee.employeeOfficeLevel, employee.fullName, employee.dateBirth, employee.sex, employee.placeBorn, " +
+                    "employee.contactAddress, employee.phoneNumber, employee.email, employee.degree, employee.degreeDetails, " +
+                    "employee.scientificTitles, employee.scientificTitlesGetYear, employee.startWork, employee.avatar, " +
+                    "employee.ethnic, employee.bornPlace, employee.homeTown, employee.permanentResidence, employee.nationality, " +
+                    "employee.religion, employee.CPStartDate, employee.identityNumber, employee.identityCreatedDate, " +
+                    "employee.identityCreatedPlace, employee.bankNumber, department) " +
                     "FROM Employee employee INNER JOIN Department department ON employee.departmentId = department.departmentId "
     )
     List<EmployeeDTO> findAllTeacher();
@@ -51,11 +53,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
     List<TeacherWorkTimeLine> getListWorkTimeline(@Param("employeeId") String employeeId);
 
     @Query(
-            value = "SELECT new com.linkdoan.backend.dto.EmployeeDTO(employee.employeeId, department, " +
-                    "employee.employeeDepartmentLevel, employee.officeId, employee.employeeOfficeLevel, employee.fullName, " +
-                    "employee.dateBirth, employee.sex, employee.placeBorn, employee.contactAddress, employee.phoneNumber, " +
-                    "employee.email, employee.degree, employee.degreeDetails, employee.scientificTitles, employee.scientificTitlesGetYear," +
-                    "employee.startWork, employee.avatar) " +
+            value = "SELECT new com.linkdoan.backend.dto.EmployeeDTO(employee.employeeId, employee.departmentId, employee.employeeDepartmentLevel, " +
+                    "employee.officeId, employee.employeeOfficeLevel, employee.fullName, employee.dateBirth, employee.sex, employee.placeBorn, " +
+                    "employee.contactAddress, employee.phoneNumber, employee.email, employee.degree, employee.degreeDetails, " +
+                    "employee.scientificTitles, employee.scientificTitlesGetYear, employee.startWork, employee.avatar, " +
+                    "employee.ethnic, employee.bornPlace, employee.homeTown, employee.permanentResidence, employee.nationality, " +
+                    "employee.religion, employee.CPStartDate, employee.identityNumber, employee.identityCreatedDate, " +
+                    "employee.identityCreatedPlace, employee.bankNumber, department) " +
                     "FROM Employee employee LEFT JOIN Department department ON employee.departmentId = department.departmentId " +
                     "WHERE employee.employeeId = :employeeId "
     )
@@ -64,11 +68,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
 
     @Query(
-            value = "SELECT new com.linkdoan.backend.dto.EmployeeDTO(employee.employeeId, department, " +
-                    "employee.employeeDepartmentLevel, employee.officeId, employee.employeeOfficeLevel, employee.fullName, " +
-                    "employee.dateBirth, employee.sex, employee.placeBorn, employee.contactAddress, employee.phoneNumber, " +
-                    "employee.email, employee.degree, employee.degreeDetails, employee.scientificTitles, employee.scientificTitlesGetYear," +
-                    "employee.startWork, employee.avatar) " +
+            value = "SELECT new com.linkdoan.backend.dto.EmployeeDTO(employee.employeeId, employee.departmentId, employee.employeeDepartmentLevel, " +
+                    "employee.officeId, employee.employeeOfficeLevel, employee.fullName, employee.dateBirth, employee.sex, employee.placeBorn, " +
+                    "employee.contactAddress, employee.phoneNumber, employee.email, employee.degree, employee.degreeDetails, " +
+                    "employee.scientificTitles, employee.scientificTitlesGetYear, employee.startWork, employee.avatar, " +
+                    "employee.ethnic, employee.bornPlace, employee.homeTown, employee.permanentResidence, employee.nationality, " +
+                    "employee.religion, employee.CPStartDate, employee.identityNumber, employee.identityCreatedDate, " +
+                    "employee.identityCreatedPlace, employee.bankNumber, department) " +
                     "FROM Employee employee LEFT JOIN Department department ON employee.departmentId = department.departmentId "
     )
     List<EmployeeDTO> findAllEmployee();

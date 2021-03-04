@@ -1,5 +1,6 @@
 package com.linkdoan.backend.controller;
 
+import com.linkdoan.backend.dto.EmployeeDTO;
 import com.linkdoan.backend.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,22 +19,23 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/employee/{employeeId}")
-    public ResponseEntity<?> getDetail(@PathVariable("employeeId") String employeeId ) {
+    public ResponseEntity<?> getDetail(@PathVariable("employeeId") String employeeId) {
         return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/employee/{employeeId}")
-    public ResponseEntity<?> create(@PathVariable("employeeId") String employeeId ) {
-        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    @PostMapping(value = "/employee")
+    public ResponseEntity<?> create(@RequestBody EmployeeDTO employeeDTO) {
+        return new ResponseEntity<>(employeeService.create(employeeDTO), HttpStatus.OK);
     }
 
     @PutMapping(value = "/employee/{employeeId}")
-    public ResponseEntity<?> update(@PathVariable("employeeId") String employeeId ) {
-        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    public ResponseEntity<?> update(@PathVariable("employeeId") String employeeId,
+                                    @RequestBody EmployeeDTO employeeDTO) {
+        return new ResponseEntity<>(employeeService.updateEmployee(employeeId, employeeDTO), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/employee/{employeeId}")
-    public ResponseEntity<?> delete(@PathVariable("employeeId") String employeeId ) {
-        return new ResponseEntity<>(employeeService.getEmployeeDetail(employeeId), HttpStatus.OK);
+    public ResponseEntity<?> delete(@PathVariable("employeeId") String employeeId) {
+        return new ResponseEntity<>(employeeService.deleteEmployee(employeeId), HttpStatus.OK);
     }
 }
