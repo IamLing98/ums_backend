@@ -16,20 +16,20 @@ public interface EducationProgramSubjectRepository extends JpaRepository<Educati
 
     @Query(value =
             "SELECT distinct subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber, " +
-            "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
-            "subject.theoryNumber, department.departmentName, epd.term, epd.id  " +
-            "FROM Subject subject  INNER JOIN Department department ON subject.departmentId = department.departmentId " +
-            "INNER JOIN EducationProgramSubject epd ON subject.subjectId = epd.subjectId " +
-            "WHERE epd.educationProgramId = :educationProgramId "
+                    "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
+                    "subject.theoryNumber, department.departmentName, epd.term, epd.id  " +
+                    "FROM Subject subject  INNER JOIN Department department ON subject.departmentId = department.departmentId " +
+                    "INNER JOIN EducationProgramSubject epd ON subject.subjectId = epd.subjectId " +
+                    "WHERE epd.educationProgramId = :educationProgramId "
     )
     List<Object[]> getCorrectListSubjectByEp(@Param("educationProgramId") String educationProgramId);
 
     @Query(value =
             "SELECT distinct  subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber, " +
-            "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
-            "subject.theoryNumber " +
-            "FROM Subject subject  " +
-            "WHERE  not subject.subjectId   in :listSubjectId "
+                    "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
+                    "subject.theoryNumber " +
+                    "FROM Subject subject  " +
+                    "WHERE  not subject.subjectId   in :listSubjectId "
     )
     List<Object[]> getListSubjectNotInEducation(@Param("listSubjectId") List<String> listSubjectId);
 }

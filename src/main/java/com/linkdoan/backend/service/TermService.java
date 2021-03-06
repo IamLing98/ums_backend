@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface TermService {
 
-    public List<TermDTO> getAll(Integer year, Integer term);
+    List<TermDTO> getAll(Integer year, Integer term);
 
-    public Term getDetail(String termId);
+    Term getDetail(String termId);
 
-    public int create(TermDTO termDTO);
+    int create(TermDTO termDTO);
 
-    public int update(String termId, TermDTO termDTO, String userName);
+    int update(String termId, TermDTO termDTO, String userName);
 
-    public int delete(String id);
+    int delete(String id);
 }

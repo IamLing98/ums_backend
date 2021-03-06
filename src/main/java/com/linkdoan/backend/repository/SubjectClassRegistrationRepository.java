@@ -5,7 +5,6 @@ import com.linkdoan.backend.model.SubjectClassRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,12 +15,14 @@ public interface SubjectClassRegistrationRepository extends JpaRepository<Subjec
     //get list submitted of student
     @Query(value =
             "SELECT scr.id, scr.autoSubmit, scr.studentId, scr.subjectClassId, scr.submittedDate, scr.termId, scr.status, scr.progressSubmitted, " +
-                    "s.subjectName, s.eachSubject, s.subjectId, sc.roomId, sc.duration, sc.dayOfWeek, sc.hourOfDay, yc.classId, yc.currentTerm " +
+                    "s.subjectName, s.eachSubject, s.subjectId, sc.roomId, sc.duration, sc.dayOfWeek, sc.hourOfDay, yc.classId, yc.currentTerm," +
+                    "sc.teacherId, employee.fullName  " +
                     "FROM SubjectClassRegistration scr " +
                     "INNER JOIN SubjectClass sc ON scr.subjectClassId = sc.subjectClassId " +
                     "INNER JOIN Subject s ON sc.subjectId = s.subjectId " +
                     "INNER JOIN Student student ON scr.studentId = student.studentId " +
                     "INNER JOIN YearClass yc ON student.yearClassId = yc.classId " +
+                    "LEFT JOIN Employee employee ON sc.teacherId = employee.employeeId " +
                     "WHERE scr.studentId = :studentId and scr.termId = :termId " +
                     "AND scr.termId = :termId " +
                     "AND (:status IS NULL OR scr.status = :status) "

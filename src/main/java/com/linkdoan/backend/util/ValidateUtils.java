@@ -3,6 +3,7 @@
  * VIETTEL PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 package com.linkdoan.backend.util;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -16,10 +17,7 @@ public class ValidateUtils {
     }
 
     public static boolean isInteger(String str) {
-        if (str == null || !str.matches("[0-9]+$")) {
-            return false;
-        }
-        return true;
+        return str != null && str.matches("[0-9]+$");
     }
 
     public static String validateKeySearch(String str) {
@@ -34,10 +32,7 @@ public class ValidateUtils {
         Matcher m = p.matcher(s.replaceAll(" ", ""));
         // boolean b = m.matches();
         boolean b = m.find();
-        if (b == true)
-            return false;
-        else
-            return true;
+        return b != true;
     }
 
     public static boolean getSpecialCharacterCountName(String s) {
@@ -48,20 +43,13 @@ public class ValidateUtils {
         Matcher m = p.matcher(s.replaceAll(" ", ""));
         // boolean b = m.matches();
         boolean b = m.find();
-        if (b == true)
-            return false;
-        else
-            return true;
+        return b != true;
     }
 
     public static boolean isStringInt(String s) {
         try {
             int a = Integer.parseInt(s);
-            if (a > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return a > 0;
         } catch (NumberFormatException ex) {
             return false;
         }

@@ -210,7 +210,7 @@ public class InputFromFile {
 
     private void readRoom() {
         String temp;
-        String temp_name = new String();
+        String temp_name = "";
         boolean temp_lab = false;
         int temp_size = 0;
         int temp_distance = 0;

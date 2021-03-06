@@ -63,7 +63,6 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public List<CommonDTO> getDistrictByProvinceCityId(String keySearch) {
         List<District> districtList = districtRepository.findAllByProvinceCityId(keySearch);
-        ;
         List<CommonDTO> commonDTOList = new ArrayList<>();
         for (int i = 0; i < districtList.size(); i++) {
             commonDTOList.add(districtList.get(i).toDTO());
@@ -74,7 +73,6 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public List<CommonDTO> getCommuneByDistrictId(String keySearch) {
         List<Commune> communeList = communeRepository.findAllByDistrictId(keySearch);
-        ;
         List<CommonDTO> commonDTOList = new ArrayList<>();
         for (int i = 0; i < communeList.size(); i++) {
             commonDTOList.add(communeList.get(i).toDTO());
@@ -95,7 +93,6 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public List<CommonDTO> getAllEthnics() {
         List<Ethnic> ethnicList = ethnicRepository.findAll();
-        ;
         List<CommonDTO> commonDTOList = new ArrayList<>();
         for (int i = 0; i < ethnicList.size(); i++) {
             commonDTOList.add(ethnicList.get(i).toDTO());

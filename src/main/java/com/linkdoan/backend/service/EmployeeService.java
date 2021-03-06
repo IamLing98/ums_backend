@@ -1,12 +1,9 @@
 package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.EmployeeDTO;
-import com.linkdoan.backend.model.Employee;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface EmployeeService {
@@ -17,7 +14,7 @@ public interface EmployeeService {
 
     int create(EmployeeDTO employeeDTO);
 
-    int updateEmployee(String employeeId,EmployeeDTO employeeDTO);
+    int updateEmployee(String employeeId, EmployeeDTO employeeDTO);
 
     int deleteEmployee(String employeeId);
 

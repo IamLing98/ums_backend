@@ -6,11 +6,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="users_notification")
+@Table(name = "users_notification")
 @Data
 public class UserNotifications {
     @Id
-    @Column(name="id", unique = true)
+    @Column(name = "id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
@@ -20,12 +20,12 @@ public class UserNotifications {
     @Column(name = "receiver_id")
     private Long receiverId;
 
-    @Column(name="status", columnDefinition = "INT")
+    @Column(name = "status", columnDefinition = "INT")
     private Long status;
 
-    @Column(name="notification_id")
+    @Column(name = "notification_id")
     Long notificationId;
 
-    @Column(name="created_date", columnDefinition = "DATETIME")
+    @Column(name = "created_date", columnDefinition = "DATETIME")
     LocalDateTime createdDate;
 }

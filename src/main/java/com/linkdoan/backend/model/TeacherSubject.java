@@ -5,18 +5,18 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Table(name="teacher_subject")
+@Table(name = "teacher_subject")
 @Entity
 public class TeacherSubject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="teacher_id")
+    @Column(name = "teacher_id")
     private String teacherId;
 
-    @Column(name="subject_id")
+    @Column(name = "subject_id")
     private String subjectId;
 }

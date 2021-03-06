@@ -62,9 +62,9 @@ public class SubjectClassRegistration {
     @Column(name = "is_pad", columnDefinition = "INT")
     private Integer isPaid;
 
-    @Column(name="reject_reason")
+    @Column(name = "reject_reason")
     private String rejectReason;
 
-    @Column(name="reject_date")
+    @Column(name = "reject_date")
     private LocalDateTime rejectDate;
 }

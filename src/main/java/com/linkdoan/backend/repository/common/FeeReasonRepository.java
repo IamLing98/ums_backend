@@ -11,7 +11,7 @@ import java.util.List;
 public interface FeeReasonRepository extends JpaRepository<FeeReason, Long> {
 
     @Query(
-            value= "SELECT feeReason FROM FeeReason feeReason WHERE :type IS NULL OR feeReason.reasonType = :type "
+            value = "SELECT feeReason FROM FeeReason feeReason WHERE :type IS NULL OR feeReason.reasonType = :type "
     )
     List<FeeReason> findAllByReasonType(Long type);
 }

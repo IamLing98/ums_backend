@@ -4,7 +4,6 @@ package com.linkdoan.backend.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @Table(name = "teacher_work_timeline")
@@ -28,7 +27,7 @@ public class TeacherWorkTimeLine {
     @Column(name = "job")
     private String job;
 
-    @Column(name="work_unit")
+    @Column(name = "work_unit")
     private String workUnit;
 
 }

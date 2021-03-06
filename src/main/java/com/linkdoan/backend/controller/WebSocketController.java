@@ -32,7 +32,7 @@ public class WebSocketController {
 
     @MessageMapping("/notifications")
     @SendToUser("/queue/notifications")
-    public String reply(@Payload String message ) {
+    public String reply(@Payload String message) {
         this.template.convertAndSendToUser("517100032", "/queue/notifications", "Hello " + "send from vandoan547");
         return "Hello " + message;
     }

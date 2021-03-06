@@ -5,17 +5,17 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Table(name="template")
+@Table(name = "template")
 @Entity
 public class Template {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name="pathName")
+    @Column(name = "pathName")
     private String pathName;
 }

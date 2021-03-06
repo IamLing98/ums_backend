@@ -10,7 +10,7 @@ public class StudentsGroup {
     private ArrayList<CourseClass> courseClasses;
 
     public StudentsGroup() {
-        name = new String();
+        name = "";
         courseClasses = new ArrayList();
     }
 

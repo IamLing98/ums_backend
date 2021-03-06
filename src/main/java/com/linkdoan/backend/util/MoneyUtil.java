@@ -25,11 +25,11 @@ public class MoneyUtil {
     public static final String TY = "tỷ";
 
 
-    public static final String [] number = {KHONG, MOT, HAI, BA,
+    public static final String[] number = {KHONG, MOT, HAI, BA,
             BON, NAM, SAU, BAY, TAM, CHIN};
+
     //Hàm chính đọc số
-    public static String readNum(String a)
-    {
+    public static String readNum(String a) {
         ArrayList<String> kq = new ArrayList<String>();
 
 
@@ -37,11 +37,9 @@ public class MoneyUtil {
         ArrayList<String> List_Num = Split(a, 3);
 
 
-        while (List_Num.size() != 0)
-        {
+        while (List_Num.size() != 0) {
             //Xét 3 số đầu tiên của chuổi (số đầu tiên của List_Num)
-            switch (List_Num.size() % 3)
-            {
+            switch (List_Num.size() % 3) {
                 //3 số đó thuộc hàng trăm
                 case 1:
                     kq.addAll(read_3num(List_Num.get(0)));
@@ -49,7 +47,7 @@ public class MoneyUtil {
                 // 3 số đó thuộc hàng nghìn
                 case 2:
                     ArrayList<String> nghin = read_3num(List_Num.get(0));
-                    if(!nghin.isEmpty()){
+                    if (!nghin.isEmpty()) {
                         kq.addAll(nghin);
                         kq.add(NGHIN);
                     }
@@ -57,7 +55,7 @@ public class MoneyUtil {
                 //3 số đó thuộc hàng triệu
                 case 0:
                     ArrayList<String> trieu = read_3num(List_Num.get(0));
-                    if(!trieu.isEmpty()) {
+                    if (!trieu.isEmpty()) {
                         kq.addAll(trieu);
                         kq.add(TRIEU);
                     }
@@ -72,44 +70,53 @@ public class MoneyUtil {
         }
 
         String rs = "";
-        if(kq.size() > 0){
-            for(int i = 0 ; i <kq.size(); i++){
-                rs+=kq.get(i) + " ";
+        if (kq.size() > 0) {
+            for (int i = 0; i < kq.size(); i++) {
+                rs += kq.get(i) + " ";
             }
-        }else{
+        } else {
             rs += "Không";
         }
         rs += " đồng";
         return rs;
     }
-    public static ArrayList<String> read_3num(String a)
-    {
+
+    public static ArrayList<String> read_3num(String a) {
         ArrayList<String> kq = new ArrayList<String>();
         int num = -1;
-        try{ num = Integer.parseInt(a); } catch(Exception ex){}
+        try {
+            num = Integer.parseInt(a);
+        } catch (Exception ex) {
+        }
         if (num == 0) return kq;
 
 
-
-
         int hang_tram = -1;
-        try{ hang_tram = Integer.parseInt(a.substring(0, 1)); } catch(Exception ex){}
+        try {
+            hang_tram = Integer.parseInt(a.substring(0, 1));
+        } catch (Exception ex) {
+        }
         int hang_chuc = -1;
-        try{ hang_chuc = Integer.parseInt(a.substring(1, 2)); } catch(Exception ex){}
+        try {
+            hang_chuc = Integer.parseInt(a.substring(1, 2));
+        } catch (Exception ex) {
+        }
         int hang_dv = -1;
-        try{ hang_dv = Integer.parseInt(a.substring(2, 3)); } catch(Exception ex){}
+        try {
+            hang_dv = Integer.parseInt(a.substring(2, 3));
+        } catch (Exception ex) {
+        }
 
 
         //xét hàng trăm
-        if (hang_tram != -1){
+        if (hang_tram != -1) {
             kq.add(number[hang_tram]);
             kq.add(TRAM);
         }
 
 
         //xét hàng chục
-        switch (hang_chuc)
-        {
+        switch (hang_chuc) {
             case -1:
                 break;
             case 1:
@@ -126,8 +133,7 @@ public class MoneyUtil {
 
 
         //xét hàng đơn vị
-        switch (hang_dv)
-        {
+        switch (hang_dv) {
             case -1:
                 break;
             case 1:
@@ -148,7 +154,9 @@ public class MoneyUtil {
                 break;
         }
         return kq;
-    } public static ArrayList<String> Split(String str, int chunkSize)    {
+    }
+
+    public static ArrayList<String> Split(String str, int chunkSize) {
         int du = str.length() % chunkSize;
         //Nếu độ dài chuổi không phải bội số của chunkSize thì thêm # vào trước cho đủ.
         if (du != 0)

@@ -105,8 +105,8 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
             invoiceItem.setInvoiceNo(savedInvoice.getInvoiceNo());
             invoiceCategories.add(invoiceItem);
         }
-        List<SubjectClassRegistration> subjectClassRegistrationList = subjectClassRegistrationRepository.findAllByStudentIdAndTermIdAndStatus(studentId, termId,1);
-        for(SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList){
+        List<SubjectClassRegistration> subjectClassRegistrationList = subjectClassRegistrationRepository.findAllByStudentIdAndTermIdAndStatus(studentId, termId, 1);
+        for (SubjectClassRegistration subjectClassRegistration : subjectClassRegistrationList) {
             subjectClassRegistration.setIsPaid(1);
         }
         subjectClassRegistrationRepository.saveAll(subjectClassRegistrationList);
@@ -152,7 +152,7 @@ public class StudentInvoiceServiceImpl implements StudentInvoiceService {
         studentInvoiceDTO.setInvoiceNo(invoice.getInvoiceNo());
         studentInvoiceDTO.setAmount(invoice.getAmount());
         MoneyUtil moneyUtil = new MoneyUtil();
-        studentInvoiceDTO.setTextMoney(moneyUtil.readNum(String.valueOf(invoice.getAmount().intValue())));
+        studentInvoiceDTO.setTextMoney(MoneyUtil.readNum(String.valueOf(invoice.getAmount().intValue())));
         studentInvoiceDTO.setCreatorId(invoice.getCreatorId());
         studentInvoiceDTO.setInvoiceName(invoice.getInvoiceName());
         studentInvoiceDTO.setReasonId(invoice.getReasonId());

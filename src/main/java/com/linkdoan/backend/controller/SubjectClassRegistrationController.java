@@ -19,15 +19,15 @@ public class SubjectClassRegistrationController {
                                               @RequestParam(name = "status", required = false) Integer status,
                                               SecurityContextHolder request)
             throws Exception {
-        String studentId = request.getContext().getAuthentication().getName();
+        String studentId = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println(studentId);
-        return new ResponseEntity<>(subjectClassRegistrationService.getListSubmitted(studentId, termId,status), HttpStatus.OK);
+        return new ResponseEntity<>(subjectClassRegistrationService.getListSubmitted(studentId, termId, status), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjectClassRegistration", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody SubjectClassRegistrationDTO subjectClassRegistrationDTO, SecurityContextHolder request)
             throws Exception {
-        String studentId = request.getContext().getAuthentication().getName();
+        String studentId = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println(studentId);
         return new ResponseEntity<>(subjectClassRegistrationService.submit(studentId, subjectClassRegistrationDTO), HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class SubjectClassRegistrationController {
     @RequestMapping(value = "/subjectClassRegistration/{subjectClassId}/{termId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("termId") String termId, @PathVariable("subjectClassId") String subjectClassId, SecurityContextHolder request)
             throws Exception {
-        String studentId = request.getContext().getAuthentication().getName();
+        String studentId = SecurityContextHolder.getContext().getAuthentication().getName();
         System.out.println(studentId);
         return new ResponseEntity<>(subjectClassRegistrationService.delete(studentId, subjectClassId, termId), HttpStatus.OK);
     }

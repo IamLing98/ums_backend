@@ -36,8 +36,8 @@ public class TermController {
     @RequestMapping(value = "/terms/{termId}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@PathVariable("termId") String termId, @RequestBody TermDTO termDTO, SecurityContextHolder request)
             throws Exception {
-        String userName = request.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(termService.update(termId, termDTO,userName), HttpStatus.OK);
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(termService.update(termId, termDTO, userName), HttpStatus.OK);
     }
 
     //    @CrossOrigin(origins = "http://localhost:3000")

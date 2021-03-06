@@ -1,15 +1,21 @@
 package com.linkdoan.backend.dto;
 
+import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.model.SubjectClass;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 @Data
 public class SubjectClassDTO {
+
     private String subjectClassId;
 
     private String subjectId;
+
+    private Subject subject;
 
     private String termId;
 
@@ -21,17 +27,50 @@ public class SubjectClassDTO {
 
     private LocalDate createdDate;
 
-    private Integer duration;
-
     private Integer groupId;
 
-    private String mainSubjectClassId;
-
-    private Integer subjectType;
+    private Integer duration;
 
     private Integer type;
 
-    private String actionType;
+    private String mainSubjectClassId;
+
+    private String roomId;
+
+    private Integer dayOfWeek;
+
+    private Integer hourOfDay;
+
+    private Integer currentOfSubmittingNumber = 0;
+
+    private Integer status = 0;
+
+    private Integer currentWeek = 0;
+
+    private List<Map<String, Object>> studentList;
+
+    public SubjectClassDTO(String subjectClassId, String subjectId, String termId, String teacherId,
+                           Integer numberOfSeats, Integer isRequireLab, LocalDate createdDate, Integer groupId,
+                           Integer duration, Integer type, String mainSubjectClassId, String roomId, Integer dayOfWeek,
+                           Integer hourOfDay, Integer currentOfSubmittingNumber, Integer status, Integer currentWeek) {
+        this.subjectClassId = subjectClassId;
+        this.subjectId = subjectId;
+        this.termId = termId;
+        this.teacherId = teacherId;
+        this.numberOfSeats = numberOfSeats;
+        this.isRequireLab = isRequireLab;
+        this.createdDate = createdDate;
+        this.groupId = groupId;
+        this.duration = duration;
+        this.type = type;
+        this.mainSubjectClassId = mainSubjectClassId;
+        this.roomId = roomId;
+        this.dayOfWeek = dayOfWeek;
+        this.hourOfDay = hourOfDay;
+        this.currentOfSubmittingNumber = currentOfSubmittingNumber;
+        this.status = status;
+        this.currentWeek = currentWeek;
+    }
 
     public SubjectClass toModel() {
         SubjectClass sj = new SubjectClass();

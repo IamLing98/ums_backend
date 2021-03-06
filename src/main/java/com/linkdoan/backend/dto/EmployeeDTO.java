@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -81,7 +80,7 @@ public class EmployeeDTO {
 
     private List<TeacherWorkTimeLine> teacherWorkTimeLineList;
 
-    private List<Subject>  subjectList;
+    private List<Subject> subjectList;
 
     public EmployeeDTO(String employeeId, String departmentId, Integer employeeDepartmentLevel, String officeId,
                        Integer employeeOfficeLevel, String fullName, LocalDate dateBirth, Integer sex, String placeBorn,
@@ -89,8 +88,7 @@ public class EmployeeDTO {
                        Integer scientificTitles, Integer scientificTitlesGetYear, LocalDate startWork, String avatar,
                        String ethnic, String bornPlace, String homeTown, String permanentResidence, String nationality,
                        String religion, LocalDate CPStartDate, String identityNumber, LocalDate identityCreatedDate,
-                       String identityCreatedPlace, String bankNumber, Department department)
-                        {
+                       String identityCreatedPlace, String bankNumber, Department department) {
         this.employeeId = employeeId;
         this.departmentId = departmentId;
         this.employeeDepartmentLevel = employeeDepartmentLevel;

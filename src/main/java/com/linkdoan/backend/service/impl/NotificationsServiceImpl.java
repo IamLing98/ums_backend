@@ -64,17 +64,17 @@ public class NotificationsServiceImpl implements NotificationsService {
 
     @Override
     public int createNotification(Long senderId, List<Long> ids, String notificationTitle, String notificationData) {
-        int count = 0 ;
+        int count = 0;
         LocalDateTime ldt = LocalDateTime.now();
         Notifications notifications = new Notifications();
         notifications.setData(notificationData);
         notifications.setTitle(notificationTitle);
         Notifications saved = notificationsRepository.save(notifications);
-        if(saved != null){
+        if (saved != null) {
             Long savedNotificationId = saved.getId();
-            for(Long id : ids){
-                Optional<UserNotifications> userNotificationsOptional = usersNotificationsRepository.findFirstBySenderIdAndReceiverIdAndNotificationId(senderId,id,savedNotificationId);
-                if(!userNotificationsOptional.isPresent()){
+            for (Long id : ids) {
+                Optional<UserNotifications> userNotificationsOptional = usersNotificationsRepository.findFirstBySenderIdAndReceiverIdAndNotificationId(senderId, id, savedNotificationId);
+                if (!userNotificationsOptional.isPresent()) {
                     UserNotifications userNotifications = new UserNotifications();
                     userNotifications.setCreatedDate(ldt);
                     userNotifications.setNotificationId(savedNotificationId);

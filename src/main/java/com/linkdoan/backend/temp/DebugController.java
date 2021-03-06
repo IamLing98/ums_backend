@@ -1,5 +1,6 @@
-package com.linkdoan.backend.controller;
+package com.linkdoan.backend.temp;
 
+import com.linkdoan.backend.repository.SubjectClassRepository;
 import com.linkdoan.backend.service.TuitionFeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,11 @@ public class DebugController {
     @Autowired
     TuitionFeeService tuitionFeeService;
 
+    @Autowired
+    SubjectClassRepository scheduleService;
+
     @GetMapping(value = "/debug")
-    public ResponseEntity<?> debug(){
-        return new ResponseEntity<>(tuitionFeeService.debug(), HttpStatus.OK);
+    public ResponseEntity<?> debug() {
+        return new ResponseEntity<>("TestExcel2.test()", HttpStatus.OK);
     }
 }

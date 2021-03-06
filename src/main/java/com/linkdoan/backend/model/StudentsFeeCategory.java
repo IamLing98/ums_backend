@@ -7,29 +7,29 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name="student_fee_categories")
+@Table(name = "student_fee_categories")
 public class StudentsFeeCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="student_id")
+    @Column(name = "student_id")
     private String studentId;
 
-    @Column(name="term_id")
+    @Column(name = "term_id")
     private String termId;
 
-    @Column(name="fee_categories_id")
+    @Column(name = "fee_categories_id")
     private Long feeCategoriesId;
 
-    @Column(name="is_paid")
+    @Column(name = "is_paid")
     private Integer isPaid = 0;
 
-    @Column(name="transaction_date", columnDefinition = "DATETIME")
-    private LocalDateTime transactionDate ;
+    @Column(name = "transaction_date", columnDefinition = "DATETIME")
+    private LocalDateTime transactionDate;
 
-    @Column(name="value")
+    @Column(name = "value")
     private Long value;
 }

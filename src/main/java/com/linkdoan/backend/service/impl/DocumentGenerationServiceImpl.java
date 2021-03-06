@@ -1,7 +1,10 @@
 package com.linkdoan.backend.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.linkdoan.backend.config.FileStorageProperties;
 import com.linkdoan.backend.exception.FileStorageException;
+import com.linkdoan.backend.io.ExcelWrite;
+import com.linkdoan.backend.model.SheetData;
 import com.linkdoan.backend.model.Template;
 import com.linkdoan.backend.repository.TemplateRepository;
 import com.linkdoan.backend.service.DocumentGenerationService;
@@ -16,15 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DocumentGenerationServiceImpl implements DocumentGenerationService {
@@ -46,7 +45,7 @@ public class DocumentGenerationServiceImpl implements DocumentGenerationService 
         }
     }
 
-    public String generatePdfFileByType(HashMap<String, String> variables,  String templateName) throws Exception {
+    public String generatePdfFileByType(HashMap<String, String> variables, String templateName) throws Exception {
 
         InputStream templateInputStream = this.getClass().getClassLoader().getResourceAsStream(templateName + ".docx");
 
@@ -68,11 +67,42 @@ public class DocumentGenerationServiceImpl implements DocumentGenerationService 
     }
 
     @Override
-    public String generateFile(HashMap<String, String> variables, Long id) throws Exception {
+    public String generatePdfFile(HashMap<String, String> variables, Long id) throws Exception {
         Optional<Template> templateOptional = templateRepository.findById(id);
-        if(!templateOptional.isPresent()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy template này");
+        if (!templateOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy template này");
         Template template = templateOptional.get();
         String templateName = template.getPathName();
         return generatePdfFileByType(variables, templateName);
+
     }
+
+    private String generateExcelFileById(HashMap<String, Object> variables, String templateName) throws Exception {
+        ObjectMapper oMapper = new ObjectMapper();
+        Map<String, Object> map = oMapper.convertValue(variables.get("map"), Map.class);
+        List<Object> objectList = oMapper.convertValue(variables.get("list"), ArrayList.class);
+        System.out.println(objectList);
+        SheetData sheetData = new SheetData(map, objectList, "Sheet1");
+
+        Path targetLocation = this.fileStorageLocation.resolve(templateName);
+        File output = new File(targetLocation.toString());
+        OutputStream exportFile = new FileOutputStream(output);
+
+        try {
+            ExcelWrite.writeData(templateName, exportFile, sheetData);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return output.getName();
+    }
+
+    @Override
+    public String generateExcelFile(HashMap<String, Object> variables, Long id) throws Exception {
+        Optional<Template> templateOptional = templateRepository.findById(id);
+        if (!templateOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy template này");
+        return generateExcelFileById(variables, templateOptional.get().getPathName() + ".xlsx");
+    }
+
 }

@@ -123,7 +123,7 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
 
     @Override
     public Map<String, Object> getFeeInfoOfStudent(String studentId, String termId) {
-        String[] labels = {"feeCategoryId", "feeCategoryName", "feeCategoryName", "frequency", "isPaid", "value","id"};
+        String[] labels = {"feeCategoryId", "feeCategoryName", "feeCategoryName", "frequency", "isPaid", "value", "id"};
         Map<String, Object> rs = new HashMap<>();
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -163,7 +163,7 @@ public class TuitionFeeServiceImpl implements TuitionFeeService {
             }
             rs.put("totalFee", totalFee);
             MoneyUtil moneyUtil = new MoneyUtil();
-            rs.put("totalFeeText", moneyUtil.readNum(totalFee.toString()));
+            rs.put("totalFeeText", MoneyUtil.readNum(totalFee.toString()));
             rs.put("feeCategoryGroupList", feeCategoryGroupMapList);
         }
         return rs;

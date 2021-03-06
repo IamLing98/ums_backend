@@ -75,12 +75,12 @@ public class SubjectClassServiceImpl implements SubjectClassService {
             List<Map<String, Object>> studentMapStringObjectList = new ArrayList<>();
             String[] studentLabels = {"studentId", "fullName", "diemBaiTap", "diemChuyenCan", "diemKiemTra",
                     "diemThi", "diemThiLai", "diemTrungBinh", "diemThangBon", "departmentId", "departmentName",
-                    "classId", "className", "dateBirth", "sex","status", "rejectReason"};
+                    "classId", "className", "dateBirth", "sex", "status", "rejectReason"};
             if (studentObjectList != null && !studentObjectList.isEmpty()) {
                 for (Object[] subjectClassObject : studentObjectList) {
                     Map<String, Object> studentMap = new HashMap<>(2);
                     studentMap = new HashMap<String, Object>();
-                    for(int i = 0 ; i < studentLabels.length; i++){
+                    for (int i = 0; i < studentLabels.length; i++) {
                         studentMap.put(studentLabels[i], subjectClassObject[i]);
                     }
                     studentMapStringObjectList.add(studentMap);

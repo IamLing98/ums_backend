@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CustomHandshakeInterceptor implements HandshakeInterceptor {
 
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public CustomHandshakeInterceptor(JwtTokenUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
@@ -23,7 +23,7 @@ public class CustomHandshakeInterceptor implements HandshakeInterceptor {
         try {
             String accessToken = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest().getParameter("access_token");
             String login = jwtTokenUtil.getUsernameFromToken(accessToken);
-            System.out.println("login: "+ login);
+            System.out.println("login: " + login);
             map.put("login", login);
             return true;
         } catch (Exception e) {

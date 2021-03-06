@@ -17,11 +17,11 @@ import java.util.*;
 
 @Service
 @Transactional
-(
-        propagation = Propagation.REQUIRED,
-        readOnly = false,
-        rollbackFor = Throwable.class
-)
+        (
+                propagation = Propagation.REQUIRED,
+                readOnly = false,
+                rollbackFor = Throwable.class
+        )
 public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistrationService {
 
     @Autowired
@@ -44,11 +44,10 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
     @Autowired
     TermRepository termRepository;
 
-    /** start
+    /**
+     * start
      *
      * @function for admin role
-     *
-     *
      */
     @Override
     public boolean subjectClassSubmitForNewStudent(String termId) {
@@ -116,11 +115,10 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
      */
 
 
-    /** start
+    /**
+     * start
      *
      * @function for student role
-     *
-     *
      */
     @Override
     public Map<String, Object> getListSubmitted(String studentId, String termId, Integer status) {
@@ -132,7 +130,8 @@ public class SubjectClassRegistrationServiceImpl implements SubjectClassRegistra
             rs.put("student", student);
             List<Map<String, Object>> subjectClassList = new ArrayList<>();
             String[] labels = {"id", "autoSubmit", "studentId", "subjectClassId", "submittedDate",
-                    "termId", "status", "progressSubmitted", "subjectName", "eachSubject", "subjectId", "roomId", "duration", "dayOfWeek", "hourOfDay"};
+                    "termId", "status", "progressSubmitted", "subjectName", "eachSubject", "subjectId", "roomId", "duration", "dayOfWeek",
+                    "hourOfDay", "yearClassId", "yearClassCurrentTerm", "teacherId", "teacherName"};
             List<Object[]> subjectClassObjectArrayList = subjectClassRegistrationRepository.getListSubmittedByStudentIdAndTermId(studentId, termId, status);
             for (Object[] subjectClassObjectArray : subjectClassObjectArrayList) {
                 Map<String, Object> subjectClassObject = new HashMap<>();

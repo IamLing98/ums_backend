@@ -23,7 +23,7 @@ import java.util.Optional;
 @Service("classService")
 public class ClassServiceImpl implements ClassService {
 
-    private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Autowired
     private YearClassRepository yearClassRepository;

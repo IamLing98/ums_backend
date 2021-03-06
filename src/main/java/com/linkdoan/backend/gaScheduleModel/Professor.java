@@ -11,7 +11,7 @@ public class Professor {
     private final ArrayList<CourseClass> courseClasses;
 
     public Professor() {
-        name = new String();
+        name = "";
         courseClasses = new ArrayList();
     }
 

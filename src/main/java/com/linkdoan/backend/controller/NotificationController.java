@@ -22,14 +22,14 @@ public class NotificationController {
     public ResponseEntity<?> getAllNotifications(SecurityContextHolder request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(auth.getDetails());
-        return new ResponseEntity<>(notificationsService.getAllNotifications(request.getContext().getAuthentication().getName()), HttpStatus.OK);
+        return new ResponseEntity<>(notificationsService.getAllNotifications(SecurityContextHolder.getContext().getAuthentication().getName()), HttpStatus.OK);
     }
 
-    @PutMapping(value="/notifications")
+    @PutMapping(value = "/notifications")
     public ResponseEntity<?> editNotification(@RequestBody List<Long> ids, SecurityContextHolder request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println(auth.getDetails());
-        return new ResponseEntity<>(notificationsService.updateNotifications(ids,request.getContext().getAuthentication().getName()), HttpStatus.OK);
+        return new ResponseEntity<>(notificationsService.updateNotifications(ids, SecurityContextHolder.getContext().getAuthentication().getName()), HttpStatus.OK);
     }
 
 }

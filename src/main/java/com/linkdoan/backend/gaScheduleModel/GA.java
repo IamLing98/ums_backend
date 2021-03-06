@@ -14,7 +14,7 @@ public class GA {
     private final ArrayList<Schedule> population;           //Quan the ban dau
     private final ArrayList<Schedule> nextPopulation;       //Quan the sau
     private ArrayList<Double> rulet;                           //Banh xe Rulet ung vi vi tri xac suat cua tung ca the trong quan the
-    private InputFromFile inputFromFile;
+    private final InputFromFile inputFromFile;
 
     public GA(int crossoverProbability, int mutationProbability, double desiredFitness, int popSize, InputFromFile inputFromFile) {
         this.crossoverProbability = crossoverProbability;

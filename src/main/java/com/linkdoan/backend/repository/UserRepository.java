@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
-    @Query(value=
+    @Query(value =
             "SELECT user.userId FROM User user")
     List<Long> getUserIds();
 

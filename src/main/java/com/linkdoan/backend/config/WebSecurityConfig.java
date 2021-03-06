@@ -103,7 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/authenticate",
                         "/v3/api-docs/**",
                         "/swagger-ui.html",
-                        "/swagger-ui/**","/downloadFile/**"
+                        "/swagger-ui/**", "/downloadFile/**"
                 )
                 .permitAll()
                 .antMatchers("/education-program/**", "/class/**")

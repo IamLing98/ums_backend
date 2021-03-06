@@ -74,4 +74,15 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
     )
     int updateTimeTable(@Param("subjectClassId") String subjectClassId, @Param("roomId") String roomId, @Param("dayOfWeek") Integer dayOfWeek, @Param("hourOfDay") Integer hourOfDay);
 
+
+    //techer getList subjectClass
+    @Query(
+            value = "SELECT new com.linkdoan.backend.dto.SubjectClassDTO(SC.subjectClassId, SC.subjectId,  " +
+                    "SC.termId, SC.teacherId, SC.numberOfSeats, SC.isRequireLab, SC.createdDate, " +
+                    "SC.groupId, SC.duration, SC.type, SC.mainSubjectClassId, SC.roomId, SC.dayOfWeek, " +
+                    "SC.hourOfDay, SC.currentOfSubmittingNumber, SC.status, SC.currentWeek) " +
+                    "FROM SubjectClass SC " +
+                    "WHERE SC.termId = :termId AND SC.teacherId = :teacherId AND SC.status = :status"
+    )
+    List<SubjectClassDTO> getTeacherSchedule(@Param("teacherId") String teacherId, @Param("termId") String termId, @Param("status") Integer status);
 }

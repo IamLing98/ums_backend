@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class FileStorageServiceImpl  implements FilesStorageService {
+public class FileStorageServiceImpl implements FilesStorageService {
     private final Path fileStorageLocation;
 
     @Autowired

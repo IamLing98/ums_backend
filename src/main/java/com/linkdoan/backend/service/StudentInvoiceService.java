@@ -15,5 +15,5 @@ public interface StudentInvoiceService {
 
     int deleteStudentInvoice(List<Long> ids);
 
-    StudentInvoiceDTO getDetail(Long studentInvoiceId );
+    StudentInvoiceDTO getDetail(Long studentInvoiceId);
 }

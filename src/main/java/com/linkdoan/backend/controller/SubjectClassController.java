@@ -39,7 +39,7 @@ public class SubjectClassController {
     }
 
     @DeleteMapping(value = "/subjectClasses")
-    public ResponseEntity<?> delete(@RequestParam ("ids") List<String> ids)
+    public ResponseEntity<?> delete(@RequestParam("ids") List<String> ids)
             throws Exception {
         return new ResponseEntity<>(subjectClassService.delete(ids), HttpStatus.OK);
     }

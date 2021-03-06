@@ -8,11 +8,11 @@ import java.util.Map;
 public interface SubjectClassRegistrationService {
 
     //admin role
-    boolean subjectClassSubmitForNewStudent(String termId );
+    boolean subjectClassSubmitForNewStudent(String termId);
 
     SubjectClassRegistration submit(String studentId, SubjectClassRegistrationDTO subjectClassRegistrationDTO);
 
-    Map<String, Object>  getListSubmitted(String student, String termId, Integer status);
+    Map<String, Object> getListSubmitted(String student, String termId, Integer status);
 
     int deleteAllSubmittingOfSubjectClass(String subjectCLassId, String termId, String actionType);
 

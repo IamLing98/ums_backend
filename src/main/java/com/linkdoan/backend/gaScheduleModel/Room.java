@@ -8,7 +8,7 @@ public class Room {
     private String name;
     private boolean lab = false;
     private int numberOfSeats;
-    private int distance;
+    private final int distance;
 
     public Room(String name, boolean lab, int numberOfSeats, int distance) {
         this.name = name;

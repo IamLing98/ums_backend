@@ -26,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
 
     private static final String STUDENT = "Student";
 
-    private static Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Qualifier("studentRepository")
     @Autowired

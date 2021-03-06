@@ -13,8 +13,8 @@ public class FeeCategoriesController {
     @Autowired
     FeeCategoriesService feeCategoriesService;
 
-    @GetMapping(value="/feeCategories")
-    public ResponseEntity<?> getAll(){
+    @GetMapping(value = "/feeCategories")
+    public ResponseEntity<?> getAll() {
         return new ResponseEntity<>(feeCategoriesService.getAll(), HttpStatus.OK);
     }
 

@@ -80,21 +80,21 @@ public class EmployeeServiceImpl implements EmployeeService {
                 teacherSubject.setTeacherId(employeeId);
                 teacherSubject.setSubjectId(subject.getSubjectId());
                 return teacherSubject;
-            }).collect(Collectors.toCollection(ArrayList<TeacherSubject>::new));
+            }).collect(Collectors.toCollection(ArrayList::new));
             teacherSubjectRepository.saveAll(teacherSubjectList);
         }
         if (employeeDTO.getTeacherWorkTimeLineList() != null) {
             List<TeacherWorkTimeLine> teacherWorkTimeLines = employeeDTO.getTeacherWorkTimeLineList().stream().map(teacherWorkTimeLine -> {
                 teacherWorkTimeLine.setTeacherId(employeeId);
                 return teacherWorkTimeLine;
-            }).collect(Collectors.toCollection(ArrayList<TeacherWorkTimeLine>::new));
+            }).collect(Collectors.toCollection(ArrayList::new));
             teacherWorkTimelineRepository.saveAll(teacherWorkTimeLines);
         }
         if (employeeDTO.getTeacherEducationTimeLineList() != null) {
             List<TeacherEducationTimeLine> teacherEducationTimeLines = employeeDTO.getTeacherEducationTimeLineList().stream().map(teacherEducationTimeLine -> {
                 teacherEducationTimeLine.setTeacherId(employeeId);
                 return teacherEducationTimeLine;
-            }).collect(Collectors.toCollection(ArrayList<TeacherEducationTimeLine>::new));
+            }).collect(Collectors.toCollection(ArrayList::new));
             teacherEducationTimelineRepository.saveAll(teacherEducationTimeLines);
         }
         return 1;
@@ -116,21 +116,21 @@ public class EmployeeServiceImpl implements EmployeeService {
                 teacherSubject.setTeacherId(employeeId);
                 teacherSubject.setSubjectId(subject.getSubjectId());
                 return teacherSubject;
-            }).collect(Collectors.toCollection(ArrayList<TeacherSubject>::new));
+            }).collect(Collectors.toCollection(ArrayList::new));
             teacherSubjectRepository.saveAll(teacherSubjectList);
         }
         if (employeeDTO.getTeacherWorkTimeLineList() != null) {
             List<TeacherWorkTimeLine> teacherWorkTimeLines = employeeDTO.getTeacherWorkTimeLineList().stream().map(teacherWorkTimeLine -> {
                 teacherWorkTimeLine.setTeacherId(employeeId);
                 return teacherWorkTimeLine;
-            }).collect(Collectors.toCollection(ArrayList<TeacherWorkTimeLine>::new));
+            }).collect(Collectors.toCollection(ArrayList::new));
             teacherWorkTimelineRepository.saveAll(teacherWorkTimeLines);
         }
         if (employeeDTO.getTeacherEducationTimeLineList() != null) {
             List<TeacherEducationTimeLine> teacherEducationTimeLines = employeeDTO.getTeacherEducationTimeLineList().stream().map(teacherEducationTimeLine -> {
                 teacherEducationTimeLine.setTeacherId(employeeId);
                 return teacherEducationTimeLine;
-            }).collect(Collectors.toCollection(ArrayList<TeacherEducationTimeLine>::new));
+            }).collect(Collectors.toCollection(ArrayList::new));
             teacherEducationTimelineRepository.saveAll(teacherEducationTimeLines);
         }
         return 1;

@@ -6,20 +6,19 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="invoice_category")
+@Table(name = "invoice_category")
 public class InvoiceItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="invoice_no")
+    @Column(name = "invoice_no")
     private Long invoiceNo;
 
-    @Column(name="student_category_id")
+    @Column(name = "student_category_id")
     private Long studentCategoryId;
-
 
 
 }

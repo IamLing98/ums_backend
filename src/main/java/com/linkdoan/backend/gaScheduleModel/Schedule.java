@@ -24,7 +24,7 @@ public class Schedule {
 
     private Vector<Boolean> criteria = new Vector<>();
 
-    private InputFromFile inputFromFile;
+    private final InputFromFile inputFromFile;
 
     public Schedule(InputFromFile inputFromFile) {
         slots = new Vector();
@@ -86,9 +86,9 @@ public class Schedule {
         //Duyet cac phan tu cua HashMap
         ArrayList<CourseClass> listClass = inputFromFile.getClassList();
         for (int i = 0; i < listClass.size(); i++) {
-            CourseClass cc = (CourseClass) listClass.get(i);
+            CourseClass cc = listClass.get(i);
             int duration = cc.getDuration();
-            int possion = (int) classes.get(i);
+            int possion = classes.get(i);
             //Duyet cac tiet cua lop tu tiet bat dau den het thoi gian hoc cua lop
             for (int j = 0; j < duration; j++) {
                 slots.get(possion + j).add(cc);
@@ -219,13 +219,13 @@ public class Schedule {
 
         ArrayList<CourseClass> listClass = this.inputFromFile.getClassList();
         for (int x = 0; x < listClass.size(); x++) {
-            int p = (int) classes.get(x);
+            int p = classes.get(x);
             int day = p / daySize;
             int time = p % daySize;
             int room = time / DAY_HOURS;
             time = time % DAY_HOURS;
 
-            CourseClass cc = (CourseClass) listClass.get(x);
+            CourseClass cc = listClass.get(x);
             int dur = cc.getDuration();
 
             //Kiem tra phong trong (+1)

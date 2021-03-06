@@ -50,7 +50,7 @@ public class HibernateRepository<E, K extends Serializable> {
     }
 
     public E find(K key) {
-        return (E) currentSession().get(daoType, key);
+        return currentSession().get(daoType, key);
     }
 
     public E findByFiled(String property, Object value) {

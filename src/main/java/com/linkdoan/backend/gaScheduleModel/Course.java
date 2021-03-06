@@ -6,7 +6,7 @@ public class Course {
     private String name;
 
     public Course() {
-        name = new String();
+        name = "";
     }
 
     public Course(String id, String name) {

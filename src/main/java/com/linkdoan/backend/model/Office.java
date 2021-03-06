@@ -8,13 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Table(name="office")
+@Table(name = "office")
 @Entity
 public class Office {
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private String id;
 
-    @Column(name="office_name")
+    @Column(name = "office_name")
     private String officeName;
 }

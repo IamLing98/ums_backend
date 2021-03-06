@@ -4,10 +4,10 @@ import com.linkdoan.backend.dto.EmployeeDTO;
 import com.linkdoan.backend.util.StringPrefixedSequenceIdGenerator;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import org.hibernate.annotations.Parameter;
 
 @Entity
 @Data

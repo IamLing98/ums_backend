@@ -16,6 +16,6 @@ public interface SubjectClassService {
 
     int update(List<SubjectClassDTO> subjectClassDTOList, String actionType);
 
-    int delete(List<String > ids);
+    int delete(List<String> ids);
 
 }

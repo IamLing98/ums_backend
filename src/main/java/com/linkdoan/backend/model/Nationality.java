@@ -22,7 +22,7 @@ public class Nationality {
     public CommonDTO toDTO() {
         CommonDTO commonDTO = new CommonDTO();
         commonDTO.setId(this.nationalityId.toString());
-        commonDTO.setLabel(this.nationalityName.toString());
+        commonDTO.setLabel(this.nationalityName);
         return commonDTO;
     }
 }

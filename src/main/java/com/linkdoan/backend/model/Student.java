@@ -155,7 +155,7 @@ public class Student {
     private LocalDate createdDate;
 
     //learningStatus, 0 = is New, 1 = learing, 2 = final
-    @Column(name="learning_status")
+    @Column(name = "learning_status")
     private Integer learningStatus;
 
     public StudentDTO toDTO() {

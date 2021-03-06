@@ -6,30 +6,30 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="insuarance_type")
+@Table(name = "insuarance_type")
 public class InsuranceType {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="insurance_type_name")
+    @Column(name = "insurance_type_name")
     private String insuranceTypeName;
 
-    @Column(name="value_type")
+    @Column(name = "value_type")
     private Integer value_type;
 
-    @Column(name="person_real_value")
+    @Column(name = "person_real_value")
     private Double personRealValue;
 
-    @Column(name="enterprise_real_value")
+    @Column(name = "enterprise_real_value")
     private Double enterpriseRealValue;
 
-    @Column(name="person_coefficient_value")
+    @Column(name = "person_coefficient_value")
     private Double personCoefficientValue;
 
-    @Column(name="enterprise_coefficient_value")
+    @Column(name = "enterprise_coefficient_value")
     private Double enterpriseCoefficientValue;
 
 }

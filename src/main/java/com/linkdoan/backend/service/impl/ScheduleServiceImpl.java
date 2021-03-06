@@ -7,25 +7,23 @@ import com.linkdoan.backend.gaScheduleModel.GA;
 import com.linkdoan.backend.gaScheduleModel.InputFromFile;
 import com.linkdoan.backend.gaScheduleModel.Schedule;
 import com.linkdoan.backend.io.ViewExcel;
-import com.linkdoan.backend.model.Employee;
-import com.linkdoan.backend.model.Room;
-import com.linkdoan.backend.model.SubjectClass;
+import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Vector;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 @Transactional
@@ -69,12 +67,15 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     SubjectClassRegistrationRepository subjectClassRegistrationRepository;
 
+    @Autowired
+    TermRepository termRepository;
+
     @Override
     public String initData(String termId) throws Exception {
         InputFromFile inputFromFile = null;
         try {
             OutputStreamWriter writer = new OutputStreamWriter(
-                    new FileOutputStream("src//main//java//com//linkdoan//backend//GAScheduleModel//ax.txt"), "UTF-8");
+                    new FileOutputStream("src//main//java//com//linkdoan//backend//GAScheduleModel//ax.txt"), StandardCharsets.UTF_8);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
             System.out.println("----------GET LIST TEACHER----------");
             List<Employee> employeeList = employeeRepository.findAll();
@@ -259,6 +260,41 @@ public class ScheduleServiceImpl implements ScheduleService {
         ViewExcel excel = new ViewExcel(schedule);
         excel.writeFileExcel();
         return excel.getFileName();
+    }
+
+
+    @Override
+    public List<SubjectClassDTO> getSchedule(String teacherId, String termId) {
+        Optional<Employee> employeeOptional = employeeRepository.findById(teacherId);
+        Optional<Term> termOptional = termRepository.findById(termId);
+        if (!employeeOptional.isPresent() || !termOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Khong tim thay term or giang vien");
+        List<SubjectClassDTO> subjectClassList = subjectClassRepository.getTeacherSchedule(teacherId, termId, 1);
+        if (subjectClassList != null && !subjectClassList.isEmpty()) {
+            subjectClassList.stream().forEach(subjectClassDTO -> {
+                Optional<Subject> subjectOptional = subjectRepository.findById(subjectClassDTO.getSubjectId());
+                if (subjectOptional.isPresent()) {
+                    subjectClassDTO.setSubject(subjectOptional.get());
+                }
+                List<Object[]> studentObjectArrayList = subjectClassRepository.getListStudentOfSubjectClass(subjectClassDTO.getSubjectClassId());
+                List<Map<String, Object>> studentMapStringObjectList = new ArrayList<>();
+                String[] studentLabels = {"studentId", "fullName", "diemBaiTap", "diemChuyenCan", "diemKiemTra",
+                        "diemThi", "diemThiLai", "diemTrungBinh", "diemThangBon", "departmentId", "departmentName",
+                        "classId", "className", "dateBirth", "sex", "status", "rejectReason"};
+                if (studentObjectArrayList != null && !studentObjectArrayList.isEmpty()) {
+                    for (Object[] subjectClassObject : studentObjectArrayList) {
+                        Map<String, Object> studentMap = new HashMap<>(2);
+                        studentMap = new HashMap<String, Object>();
+                        for (int i = 0; i < studentLabels.length; i++) {
+                            studentMap.put(studentLabels[i], subjectClassObject[i]);
+                        }
+                        studentMapStringObjectList.add(studentMap);
+                    }
+                }
+                subjectClassDTO.setStudentList(studentMapStringObjectList);
+            });
+        }
+        return subjectClassList;
     }
 
 }
