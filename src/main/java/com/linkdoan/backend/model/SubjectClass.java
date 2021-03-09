@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name = "subject_class")
 @Entity
@@ -66,6 +67,12 @@ public class SubjectClass {
 
     @Column(name = "current_week")
     private Integer currentWeek = 0;
+
+    @Column(name="has_grade")
+    private Integer hasGrade = 0;
+
+    @Column(name="grade_import_time")
+    private LocalDateTime gradeImportTime;
 
     public SubjectClassDTO toDTO() {
         SubjectClassDTO sj = new SubjectClassDTO();

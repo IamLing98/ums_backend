@@ -8,5 +8,4 @@ public interface FeeCategoriesService {
 
     List<FeeCategoryGroup> getAll();
 
-
 }

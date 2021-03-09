@@ -80,8 +80,10 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
             value = "SELECT new com.linkdoan.backend.dto.SubjectClassDTO(SC.subjectClassId, SC.subjectId,  " +
                     "SC.termId, SC.teacherId, SC.numberOfSeats, SC.isRequireLab, SC.createdDate, " +
                     "SC.groupId, SC.duration, SC.type, SC.mainSubjectClassId, SC.roomId, SC.dayOfWeek, " +
-                    "SC.hourOfDay, SC.currentOfSubmittingNumber, SC.status, SC.currentWeek) " +
+                    "SC.hourOfDay, SC.currentOfSubmittingNumber, SC.status, SC.currentWeek, employee.fullName, term, SC.hasGrade, SC.gradeImportTime) " +
                     "FROM SubjectClass SC " +
+                    "INNER JOIN Employee employee ON SC.teacherId = employee.employeeId " +
+                    "INNER JOIN Term term ON SC.termId = term.id " +
                     "WHERE SC.termId = :termId AND SC.teacherId = :teacherId AND SC.status = :status"
     )
     List<SubjectClassDTO> getTeacherSchedule(@Param("teacherId") String teacherId, @Param("termId") String termId, @Param("status") Integer status);

@@ -7,6 +7,7 @@ import java.util.List;
 
 @ComponentScan(basePackages = {"com.linkdoan.backend.*"})
 public interface RoomService {
+
     List<RoomDTO> getAll();
 
     int create(RoomDTO roomDTO);

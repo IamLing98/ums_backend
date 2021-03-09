@@ -1,5 +1,6 @@
 package com.linkdoan.backend.dto;
 
+import com.linkdoan.backend.base.dto.FileDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectClassRegistrationDTO {
+public class SubjectClassRegistrationDTO extends FileDTO {
 
     private Long id;
 

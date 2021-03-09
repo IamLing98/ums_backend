@@ -5,6 +5,7 @@ import com.linkdoan.backend.service.SubjectClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,10 +33,23 @@ public class SubjectClassController {
         return new ResponseEntity<>(subjectClassService.create(subjectClassDTOList), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/subjectClasses", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@RequestParam("actionType") String actionType, @RequestBody List<SubjectClassDTO> subjectClassDTOList)
+    @RequestMapping(value = "/subjectClasses/{subjectClassId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateOne(@PathVariable("subjectClassId") String subjectClassId,
+                                       @RequestParam("actionType") String actionType,
+                                       @RequestBody SubjectClassDTO subjectClassDTOList,
+                                       SecurityContextHolder securityContextHolder)
             throws Exception {
-        return new ResponseEntity<>(subjectClassService.update(subjectClassDTOList, actionType), HttpStatus.OK);
+        String username = securityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(subjectClassService.updateOne(subjectClassId,subjectClassDTOList, actionType, username), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/subjectClasses", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@RequestParam("actionType") String actionType,
+                                    @RequestBody List<SubjectClassDTO> subjectClassDTOList,
+                                    SecurityContextHolder securityContextHolder)
+            throws Exception {
+        String username = securityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(subjectClassService.update(subjectClassDTOList, actionType, username), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/subjectClasses")

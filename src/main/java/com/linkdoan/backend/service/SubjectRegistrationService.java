@@ -10,7 +10,6 @@ import java.util.Map;
 public interface SubjectRegistrationService {
 
     //admin role
-
     List<Map<String, Object>> getSubmittingInfo(String termId);
 
     Map<String, Object> getListSubjectSubmitted(String termId, String studentId);

@@ -1,5 +1,7 @@
 package com.linkdoan.backend.model;
 
+import com.poiji.annotation.ExcelCell;
+import com.poiji.annotation.ExcelRow;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,12 +11,17 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "subject_class_registration")
 public class SubjectClassRegistration {
+
+    @ExcelRow
+    private int rowIndex;
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subject_class_reg_sequence")
     @SequenceGenerator(name = "subject_class_reg_sequence", sequenceName = "ORACLE_DB_SEQ_ID")
     private Long id;
 
+    @ExcelCell(1)
     @Column(name = "student_id", columnDefinition = "CHAR(9)")
     private String studentId;
 
@@ -33,18 +40,23 @@ public class SubjectClassRegistration {
     @Column(name = "status", columnDefinition = "INT")
     private Integer status;
 
+    @ExcelCell(23)
     @Column(name = "diem_chuyen_can", columnDefinition = "INT")
     private Integer diemChuyenCan;
 
+    @ExcelCell(24)
     @Column(name = "diem_bai_tap", columnDefinition = "INT")
     private Integer diemBaiTap;
 
+    @ExcelCell(25)
     @Column(name = "diem_kiem_tra", columnDefinition = "INT")
     private Integer diemKiemTra;
 
+    @ExcelCell(26)
     @Column(name = "diem_thi", columnDefinition = "INT")
     private Integer diemThi;
 
+    @ExcelCell(27)
     @Column(name = "diem_thi_lai", columnDefinition = "INT")
     private Integer diemThiLai;
 

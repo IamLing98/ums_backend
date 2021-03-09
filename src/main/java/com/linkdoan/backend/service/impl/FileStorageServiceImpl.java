@@ -33,6 +33,22 @@ public class FileStorageServiceImpl implements FilesStorageService {
         }
     }
 
+    @Override
+    public Path getPathFile(String fileName) {
+        Path pathFile = fileStorageLocation.resolve(fileName).normalize();
+        return pathFile;
+    }
+
+    @Override
+    public String getPostfix(String path) {
+        if (path == null || "".equals(path.trim())) {
+            return "";
+        }
+        if (path.contains(".")) {
+            return path.substring(path.lastIndexOf(".") + 1, path.length());
+        }
+        return "";
+    }
 
     public String storeFile(MultipartFile file) {
         // Normalize file name
