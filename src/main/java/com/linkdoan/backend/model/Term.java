@@ -70,11 +70,23 @@ public class Term {
     @Column(name = "second_exam_fee")
     private Double secondExamFee;
 
+    //ngay thu hoc phi
     @Column(name = "tuition_fee_start_date")
     private LocalDateTime tuitionFeeStartDate;
 
     @Column(name = "tuition_fee_end_date")
     private LocalDateTime tuitionFeeEndDate;
+
+    //ngay nhap diem
+    @Column(name = "input_grade_start_date")
+    private LocalDateTime inputGradeStartDate;
+
+    @Column(name = "input_grade_end_date")
+    private LocalDateTime inputGradeEndDate;
+
+    //ngay chot diem
+    @Column(name = "result_created_date")
+    private LocalDateTime resultCreatedDate;
 
     @Column(name = "inFeeTotalValue")
     private Integer inFeeTotalValue = 0;

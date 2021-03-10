@@ -59,11 +59,10 @@ public class SubjectClassServiceImpl implements SubjectClassService {
 
     @Override
     public List<Map<String, Object>> getAll(String termId) {
-        String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
-                "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
-                "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
-                "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
-                "fullName", "departmentName", "subjectType", "status", "currentOfSubmittingNumber"};
+        String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId", "theoryNumber", "selfLearningNumber",
+                "exerciseNumber", "discussNumber", "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
+                "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId", "fullName", "departmentName", "subjectType",
+                "status", "currentOfSubmittingNumber"};
         List<Object[]> subjectClassObjectArrayList = subjectClassRepository.getSubjectClassObjectArraylist(termId);
         List<Map<String, Object>> rs = new ArrayList<>();
         if (subjectClassObjectArrayList != null && !subjectClassObjectArrayList.isEmpty()) {
@@ -80,9 +79,8 @@ public class SubjectClassServiceImpl implements SubjectClassService {
 
     @Override
     public Map<String, Object> getDetail(String subjectClassId) {
-        String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId",
-                "theoryNumber", "selfLearningNumber", "exerciseNumber", "discussNumber",
-                "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
+        String[] stringList = {"subjectId", "subjectName", "eachSubject", "departmentId", "theoryNumber", "selfLearningNumber",
+                "exerciseNumber", "discussNumber", "practiceNumber", "subjectClassId", "isRequireLab", "teacherId", "duration",
                 "numberOfSeats", "mainSubjectClassId", "dayOfWeek", "hourOfDay", "roomId",
                 "fullName", "departmentName", "subjectType", "status", "currentOfSubmittingNumber"};
         Map<String, Object> rs = new HashMap<>();
@@ -95,9 +93,9 @@ public class SubjectClassServiceImpl implements SubjectClassService {
             }
             List<Object[]> studentObjectList = subjectClassRepository.getListStudentOfSubjectClass(subjectClassId);
             List<Map<String, Object>> studentMapStringObjectList = new ArrayList<>();
-            String[] studentLabels = {"studentId", "fullName", "diemBaiTap", "diemChuyenCan", "diemKiemTra",
-                    "diemThi", "diemThiLai", "diemTrungBinh", "diemThangBon", "departmentId", "departmentName",
-                    "classId", "className", "dateBirth", "sex", "status", "rejectReason"};
+            String[] studentLabels = {"studentId", "fullName", "diemBaiTap", "diemChuyenCan", "diemKiemTra", "diemThi",
+                    "diemThiLai", "diemTrungBinh", "diemThangBon", "departmentId", "departmentName", "classId", "className",
+                    "dateBirth", "sex", "status", "rejectReason"};
             if (studentObjectList != null && !studentObjectList.isEmpty()) {
                 for (Object[] subjectClassObject : studentObjectList) {
                     Map<String, Object> studentMap = new HashMap<>(2);
@@ -113,7 +111,6 @@ public class SubjectClassServiceImpl implements SubjectClassService {
 
         return rs;
     }
-
 
     @Override
     public List<SubjectClass> create(List<SubjectClassDTO> subjectClassDTOList) {
@@ -164,7 +161,8 @@ public class SubjectClassServiceImpl implements SubjectClassService {
                     throw new FileStorageException("Định dạng file không đúng");
                 InputStream inputFile = new FileInputStream(filePath.toString());
                 PoijiOptions options = PoijiOptions.PoijiOptionsBuilder.settings(5).addListDelimiter(";").build();
-                List<SubjectClassRegistration> subjectClassFileList = Poiji.fromExcel(inputFile, PoijiExcelType.XLSX, SubjectClassRegistration.class, options);
+                List<SubjectClassRegistration> subjectClassFileList = Poiji
+                        .fromExcel(inputFile, PoijiExcelType.XLSX, SubjectClassRegistration.class, options);
                 subjectClassFileList.forEach(subjectClassRegistration -> System.out.println(subjectClassRegistration));
                 List<SubjectClassRegistration> newList = subjectClassFileList
                         .stream()
@@ -213,10 +211,7 @@ public class SubjectClassServiceImpl implements SubjectClassService {
                         if (!(postfix.equals(".xls") || postfix.equals(".xlsx")))
                             throw new FileStorageException("Định dạng file không đúng");
                         InputStream inputFile = new FileInputStream(filePath.toString());
-
-
                     }
-
                 } else {
                     subjectClassDTO.setTeacherId(subjectClassDTO.getTeacherId());
                     subjectClassDTO.setIsRequireLab(subjectClassDTO.getIsRequireLab());

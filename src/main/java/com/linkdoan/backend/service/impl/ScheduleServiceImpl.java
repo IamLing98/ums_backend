@@ -12,6 +12,7 @@ import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
+@Scope("prototype")
 @Transactional
         (
                 propagation = Propagation.REQUIRED,

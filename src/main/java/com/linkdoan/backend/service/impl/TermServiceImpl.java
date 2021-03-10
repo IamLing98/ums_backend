@@ -370,6 +370,27 @@ public class TermServiceImpl implements TermService {
 
                     }
                     break;
+                case "STGGR":
+                    //start time for input student grade
+                    if (term.getProgress() == 34) {
+                        term.setProgress(35);
+                        LocalDateTime startTime = termDTO.getTuitionFeeStartDate();
+                        LocalDateTime endTime = termDTO.getTuitionFeeEndDate();
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        if (startTime.isBefore(ldtNow) || endTime.isBefore(ldtNow) || endTime.isBefore(startTime))
+                            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Thời gian không hợp lệ");
+                        term.setInputGradeStartDate(startTime);
+                        term.setInputGradeEndDate(endTime);
+                        termRepository.save(term);
+                    }
+
+                case "GETRESULT":
+                    if (term.getProgress() == 36) {
+                        term.setProgress(37);
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        term.setResultCreatedDate(ldtNow);
+                        termRepository.save(term);
+                    }
                 default:
             }
         }
