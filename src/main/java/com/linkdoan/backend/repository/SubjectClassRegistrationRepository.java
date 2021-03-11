@@ -46,4 +46,6 @@ public interface SubjectClassRegistrationRepository extends JpaRepository<Subjec
     Optional<SubjectClassRegistration> findFirstBySubjectClassIdAndStudentIdAndTermId(String subjectClassId, String studentId, String termId);
 
     List<SubjectClassRegistration> findAllByStudentIdAndTermIdAndStatus(String studentId, String termId, Integer status);
+
+    List<SubjectClassRegistration> findAllByTermIdAndStatus(String termId, Integer status);
 }

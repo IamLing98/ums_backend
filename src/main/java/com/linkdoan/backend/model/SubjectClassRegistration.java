@@ -42,26 +42,26 @@ public class SubjectClassRegistration {
 
     @ExcelCell(23)
     @Column(name = "diem_chuyen_can", columnDefinition = "INT")
-    private Integer diemChuyenCan;
+    private Double diemChuyenCan;
 
     @ExcelCell(24)
     @Column(name = "diem_bai_tap", columnDefinition = "INT")
-    private Integer diemBaiTap;
+    private Double diemBaiTap;
 
     @ExcelCell(25)
     @Column(name = "diem_kiem_tra", columnDefinition = "INT")
-    private Integer diemKiemTra;
+    private Double diemKiemTra;
 
     @ExcelCell(26)
     @Column(name = "diem_thi", columnDefinition = "INT")
-    private Integer diemThi;
+    private Double diemThi;
 
     @ExcelCell(27)
     @Column(name = "diem_thi_lai", columnDefinition = "INT")
-    private Integer diemThiLai;
+    private Double diemThiLai;
 
     @Column(name = "diem_trung_binh", columnDefinition = "INT")
-    private Integer diemTrungBinh;
+    private Double diemTrungBinh;
 
     @Column(name = "diem_thang_bon", columnDefinition = "CHAR(2)")
     private String diemThangBon;

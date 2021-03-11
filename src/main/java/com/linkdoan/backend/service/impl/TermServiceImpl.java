@@ -6,10 +6,7 @@ import com.linkdoan.backend.model.Term;
 import com.linkdoan.backend.repository.NotificationsRepository;
 import com.linkdoan.backend.repository.TermRepository;
 import com.linkdoan.backend.repository.UserRepository;
-import com.linkdoan.backend.service.NotificationsService;
-import com.linkdoan.backend.service.SubjectClassRegistrationService;
-import com.linkdoan.backend.service.SubjectRegistrationService;
-import com.linkdoan.backend.service.TermService;
+import com.linkdoan.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -58,6 +55,9 @@ public class TermServiceImpl implements TermService {
 
     @Autowired
     SimpMessagingTemplate template;
+
+    @Autowired
+    ResultService resultService;
 
     @Override
     public List<TermDTO> getAll(Integer year, Integer term) {
@@ -264,6 +264,56 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
+    int openInputGrade(Term term, String username) {
+        LocalDateTime startDateLocalDateTime = term.getInputGradeStartDate();
+        LocalDateTime endDateLocalDateTime = term.getInputGradeEndDate();
+        long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        Long senderId = 3L;
+        List<Long> userList = userRepository.getUserIds();
+        if (userList != null) {
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở nhập điểm. <br/> Bắt đầu: "
+                    + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
+        }
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(36);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã đóng nhập điểm");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("STGGR");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(System.currentTimeMillis() + 5000), Long.MAX_VALUE);
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(35);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở nhập điểm.");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("STGGR");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(startDateLocalDateTimeMillis), Long.MAX_VALUE);
+
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            term.setProgress(36);
+            termRepository.save(term);
+            notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã đóng nhập điểm");
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setContent("STGGR");
+            notificationDTO.setSenderUsername("system");
+            notificationDTO.setType(1L);
+            notificationDTO.setReceiverUsername(username);
+            template.convertAndSendToUser(username, "/queue/notifications", notificationDTO);
+        }, new Date(endDateLocalDateTimeLillis), Long.MAX_VALUE);
+        return 1;
+    }
+
     @Override
     public int update(String termId, TermDTO termDTO, String username) {
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -374,8 +424,8 @@ public class TermServiceImpl implements TermService {
                     //start time for input student grade
                     if (term.getProgress() == 34) {
                         term.setProgress(35);
-                        LocalDateTime startTime = termDTO.getTuitionFeeStartDate();
-                        LocalDateTime endTime = termDTO.getTuitionFeeEndDate();
+                        LocalDateTime startTime = termDTO.getInputGradeStartDate();
+                        LocalDateTime endTime = termDTO.getInputGradeEndDate();
                         LocalDateTime ldtNow = LocalDateTime.now();
                         if (startTime.isBefore(ldtNow) || endTime.isBefore(ldtNow) || endTime.isBefore(startTime))
                             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Thời gian không hợp lệ");
@@ -390,6 +440,7 @@ public class TermServiceImpl implements TermService {
                         LocalDateTime ldtNow = LocalDateTime.now();
                         term.setResultCreatedDate(ldtNow);
                         termRepository.save(term);
+                        resultService.calculatorResult(termId);
                     }
                 default:
             }

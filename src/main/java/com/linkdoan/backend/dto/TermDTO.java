@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -55,6 +56,10 @@ public class TermDTO {
     private Integer inFeeTotalValue = 0;
 
     private Integer outFeeTotalValue = 0;
+
+    private LocalDateTime inputGradeStartDate;
+
+    private LocalDateTime inputGradeEndDate;
 
 
     public Term toModel() {
