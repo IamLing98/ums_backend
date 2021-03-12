@@ -1,6 +1,7 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.model.Student;
+import com.linkdoan.backend.model.StudentSubject;
 import com.linkdoan.backend.model.YearClass;
 import lombok.AllArgsConstructor;
 import lombok.Data;

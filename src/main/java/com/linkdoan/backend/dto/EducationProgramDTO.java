@@ -1,6 +1,7 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.model.EducationProgram;
+import com.linkdoan.backend.model.StudentSubject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,8 @@ public class EducationProgramDTO {
     private String departmentName;
 
     private List<?> subjectList = new ArrayList<>();
+
+    List<StudentSubjectDTO> studentSubjects = new ArrayList<>();;
 
     public EducationProgram toModel() {
         EducationProgram educationProgram = new EducationProgram();

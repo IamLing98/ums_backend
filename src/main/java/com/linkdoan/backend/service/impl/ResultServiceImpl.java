@@ -1,9 +1,6 @@
 package com.linkdoan.backend.service.impl;
 
-import com.linkdoan.backend.dto.ResultDTO;
-import com.linkdoan.backend.dto.StudentResult;
-import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
-import com.linkdoan.backend.dto.TermResult;
+import com.linkdoan.backend.dto.*;
 import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.EducationProgramService;
@@ -59,6 +56,9 @@ public class ResultServiceImpl implements ResultService {
 
     @Autowired
     StudentSubjectRepository studentSubjectRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     /**
      * Find rank of student in term
@@ -145,13 +145,17 @@ public class ResultServiceImpl implements ResultService {
                             String diemChu = (String) stringObjectMap.get("diemChu");
                             subjectClassRegistration.setDiemThangBon(diemThangBon);
                             subjectClassRegistration.setDiemChu(diemChu);
-                            Optional<StudentSubject> studentSubjectOptional = studentSubjectRepository.findFirstByStudentIdAndEducationProgramId(studentId, educationProgramId);
-                            if (studentSubjectOptional.isPresent()) {
-                                StudentSubject studentSubject = studentSubjectOptional.get();
-                                studentSubject.setDiemTrungBinh(perSubject);
-                                studentSubject.setDiemThangBon(diemThangBon);
-                                studentSubject.setDiemChu(diemChu);
-                                studentSubjectList.add(studentSubject);
+                            Optional<Subject> subjectOptional = subjectClassRegistrationRepository.findFirstBySubjectClassId(subjectClassRegistration.getSubjectClassId());
+                            if (subjectOptional.isPresent()) {
+                                String subjectId = subjectOptional.get().getSubjectId();
+                                Optional<StudentSubject> studentSubjectOptional = studentSubjectRepository.findFirstByStudentIdAndEducationProgramIdAndSubjectId(studentId, educationProgramId, subjectId);
+                                if (studentSubjectOptional.isPresent()) {
+                                    StudentSubject studentSubject = studentSubjectOptional.get();
+                                    studentSubject.setDiemTrungBinh(perSubject);
+                                    studentSubject.setDiemThangBon(diemThangBon);
+                                    studentSubject.setDiemChu(diemChu);
+                                    studentSubjectList.add(studentSubject);
+                                }
                             }
                             return subjectClassRegistration;
                         }).collect(Collectors.toList());
@@ -191,7 +195,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public List<ResultDTO> getResult(String termId, Integer rank) {
+    public List<ResultDTO> getResult(String termId) {
         List<TermStudent> termStudentList = resultRepository.findAllByTermId(termId);
         List<ResultDTO> resultDTOList = new ArrayList<>();
         if (termStudentList != null) {
@@ -200,6 +204,17 @@ public class ResultServiceImpl implements ResultService {
                 Optional<Student> studentOptional = studentRepository.findById(termStudent.getStudentId());
                 if (studentOptional.isPresent()) {
                     Student student = studentOptional.get();
+                    String yearClassId = student.getYearClassId();
+                    Optional<YearClass> yearClassOptional = yearClassRepository.findById(yearClassId);
+                    if (yearClassOptional.isPresent()) {
+                        YearClass yearClass = yearClassOptional.get();
+                        String departmentId = yearClass.getDepartmentId();
+                        Optional<Department> departmentOptional = departmentRepository.findById(departmentId);
+                        if (departmentOptional.isPresent()) {
+                            resultDTO.setDepartment(departmentOptional.get());
+                        }
+                        resultDTO.setYearClass(yearClassOptional.get());
+                    }
                     resultDTO.setStudentId(student.getStudentId());
                     resultDTO.setStudent(student);
                 }
@@ -224,7 +239,10 @@ public class ResultServiceImpl implements ResultService {
             Student student = studentOptional.get();
             studentResult.setStudent(student);
             studentResult.setYearClass(getYearClass(student.getYearClassId()));
-            studentResult.setEducationProgramDTO(educationProgramService.getDetail(student.getEducationProgramId()));
+            EducationProgramDTO educationProgramDTO = educationProgramService.getDetail((student.getEducationProgramId()));
+            List<StudentSubjectDTO> studentSubjectDTOS = studentSubjectRepository.findAllByStudentIdAndEducationProgramId(studentId, educationProgramDTO.getEducationProgramId());
+            educationProgramDTO.setStudentSubjects(studentSubjectDTOS);
+            studentResult.setEducationProgramDTO(educationProgramDTO);
             List<TermStudent> termStudentList = resultRepository.findAllByStudentId(studentId);
             System.out.println("termStudentList size: " + termStudentList.size());
             List<TermResult> termResultList = new ArrayList<>();

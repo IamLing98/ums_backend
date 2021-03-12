@@ -87,4 +87,6 @@ public interface SubjectClassRepository extends JpaRepository<SubjectClass, Stri
                     "WHERE SC.termId = :termId AND SC.teacherId = :teacherId AND SC.status = :status"
     )
     List<SubjectClassDTO> getTeacherSchedule(@Param("teacherId") String teacherId, @Param("termId") String termId, @Param("status") Integer status);
+
+
 }

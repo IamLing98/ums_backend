@@ -16,9 +16,9 @@ public class ResultController {
     ResultService resultService;
 
     @GetMapping(value = "/results")
-    public ResponseEntity<?> getResult(@RequestParam(name = "termId") String termId,
-                                       @RequestParam(name = "rank") Integer rank) {
-        return new ResponseEntity(resultService.getResult(termId, rank), HttpStatus.OK);
+    public ResponseEntity<?> getResult(@RequestParam(name = "termId") String termId
+                                      ) {
+        return new ResponseEntity(resultService.getResult(termId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/results/details/{studentId}")

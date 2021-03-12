@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ResultService {
 
-    List<ResultDTO> getResult(String termId, Integer rank);
+    List<ResultDTO> getResult(String termId);
 
     StudentResult getDetail(String studentId);
 

@@ -1,7 +1,9 @@
 package com.linkdoan.backend.dto;
 
+import com.linkdoan.backend.model.Department;
 import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.TermStudent;
+import com.linkdoan.backend.model.YearClass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,10 @@ public class ResultDTO {
     Integer diemRenLuyen;
 
     Integer rank;
+
+    YearClass yearClass;
+
+    Department department;
 
     public TermStudent toModel() {
         TermStudent termStudent = new TermStudent();
