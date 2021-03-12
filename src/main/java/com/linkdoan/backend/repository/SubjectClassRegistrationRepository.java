@@ -48,4 +48,12 @@ public interface SubjectClassRegistrationRepository extends JpaRepository<Subjec
     List<SubjectClassRegistration> findAllByStudentIdAndTermIdAndStatus(String studentId, String termId, Integer status);
 
     List<SubjectClassRegistration> findAllByTermIdAndStatus(String termId, Integer status);
+
+    @Query(
+            value="SELECT subject " +
+                    "FROM SubjectClassRegistration SCR INNER JOIN SubjectClass SC ON SCR.subjectClassId = SC.subjectClassId " +
+                    "INNER JOIN Subject subject ON SC.subjectId = subject.subjectId " +
+                    "WHERE SCR.id = :id AND SCR.status = :status"
+    )
+    Optional<Subject> getSubjectBySubjectRegId(@Param("id") Long id,@Param("status") Integer status);
 }

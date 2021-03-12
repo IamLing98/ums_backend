@@ -1,5 +1,6 @@
 package com.linkdoan.backend.model;
 
+import com.linkdoan.backend.dto.SubjectClassRegistrationDTO;
 import com.poiji.annotation.ExcelCell;
 import com.poiji.annotation.ExcelRow;
 import lombok.Data;
@@ -63,8 +64,11 @@ public class SubjectClassRegistration {
     @Column(name = "diem_trung_binh", columnDefinition = "INT")
     private Double diemTrungBinh;
 
-    @Column(name = "diem_thang_bon", columnDefinition = "CHAR(2)")
-    private String diemThangBon;
+    @Column(name = "diem_thang_bon")
+    private Double diemThangBon;
+
+    @Column(name = "diem_chu", columnDefinition = "CHAR(2)")
+    private String diemChu;
 
     //progress when submit
     @Column(name = "progress_submitted", columnDefinition = "INT")
@@ -79,4 +83,28 @@ public class SubjectClassRegistration {
 
     @Column(name = "reject_date")
     private LocalDateTime rejectDate;
+
+    public SubjectClassRegistrationDTO toDTO(){
+        SubjectClassRegistrationDTO subjectClassRegistrationDTO = new SubjectClassRegistrationDTO();
+        subjectClassRegistrationDTO.setId(id);
+        subjectClassRegistrationDTO.setStudentId(studentId);
+        subjectClassRegistrationDTO.setSubjectClassId(subjectClassId);
+        subjectClassRegistrationDTO.setTermId(termId);
+        subjectClassRegistrationDTO.setSubmittedDate(submittedDate);
+        subjectClassRegistrationDTO.setAutoSubmit(autoSubmit);
+        subjectClassRegistrationDTO.setStatus(status);
+        subjectClassRegistrationDTO.setDiemChuyenCan(diemChuyenCan);
+        subjectClassRegistrationDTO.setDiemBaiTap(diemBaiTap);
+        subjectClassRegistrationDTO.setDiemKiemTra(diemKiemTra);
+        subjectClassRegistrationDTO.setDiemThi(diemThi);
+        subjectClassRegistrationDTO.setDiemThiLai(diemThiLai);
+        subjectClassRegistrationDTO.setDiemTrungBinh(diemTrungBinh);
+        subjectClassRegistrationDTO.setDiemThangBon(diemThangBon);
+        subjectClassRegistrationDTO.setDiemChu(diemChu);
+        subjectClassRegistrationDTO.setProgressSubmitted(progressSubmitted);
+        subjectClassRegistrationDTO.setIsPaid(isPaid);
+        subjectClassRegistrationDTO.setRejectReason(rejectReason);
+        subjectClassRegistrationDTO.setRejectDate(rejectDate);
+        return subjectClassRegistrationDTO;
+    }
 }

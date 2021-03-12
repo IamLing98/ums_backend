@@ -1,10 +1,7 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.StudentDTO;
-import com.linkdoan.backend.model.Department;
-import com.linkdoan.backend.model.EducationProgram;
-import com.linkdoan.backend.model.Student;
-import com.linkdoan.backend.model.YearClass;
+import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.model.primaryKey.DepartmentCourseNextVal;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.StudentService;
@@ -18,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +46,13 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private DepartmentCourseNextValRepository departmentCourseNextValRepository;
 
+    @Qualifier("subjectRepository")
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private StudentSubjectRepository studentSubjectRepository;
+
     @Override
     public List<StudentDTO> findBy(Integer page, Integer pageSize, String studentId, Integer startYear, String classId, String departmentId) throws IOException {
 //        if(page == null) page = 0;
@@ -74,12 +79,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int create(List<StudentDTO> studentDTOS) {
         int count = 0;
+
+        List<Student> studentList = new ArrayList<>();
+
+        List<StudentSubject> studentSubjectList = new ArrayList<>();
+
         for (StudentDTO studentDTO : studentDTOS) {
             Optional<Department> departmentOptional = departmentRepository.findById(studentDTO.getDepartmentId());
             Optional<EducationProgram> educationProgramOptional = educationProgramRepository.findById(studentDTO.getEducationProgramId());
             if (departmentOptional.isPresent() && educationProgramOptional.isPresent()) {
                 Department department = departmentOptional.get();
                 EducationProgram educationProgram = educationProgramOptional.get();
+                String educationProgramId = educationProgram.getEducationProgramId();
                 Integer courseNumber;
                 if (studentDTO.getCourseNumber() != null) {
                     courseNumber = studentDTO.getCourseNumber();
@@ -110,12 +121,23 @@ public class StudentServiceImpl implements StudentService {
                 studentDTO.setStudentId(studentId);
                 studentDTO.setCreatedDate(LocalDate.now());
                 Student student = studentDTO.toModel();
-                studentRepository.save(student);
+                studentList.add(student);
+                //find list subject add to student
+                List<Subject> subjectList = subjectRepository.findAllByEducationProgramId(educationProgramId);
+                subjectList.stream().forEach(subject -> {
+                    StudentSubject studentSubject = new StudentSubject();
+                    studentSubject.setEducationProgramId(educationProgramId);
+                    studentSubject.setStudentId(studentId);
+                    studentSubject.setSubjectId(subject.getSubjectId());
+                    studentSubjectList.add(studentSubject);
+                });
                 departmentCourseNextValOptional.setNextClassValue(departmentCourseNextValOptional.getNextStudentValue() + 1);
                 departmentCourseNextValRepository.save(departmentCourseNextValOptional);
                 count++;
             }
         }
+        studentSubjectRepository.saveAll(studentSubjectList);
+        studentRepository.saveAll(studentList);
         return count;
     }
 

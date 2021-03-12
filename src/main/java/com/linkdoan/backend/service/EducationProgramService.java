@@ -1,10 +1,13 @@
 package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.EducationProgramDTO;
+import com.linkdoan.backend.model.EducationProgram;
 
 import java.util.List;
 
 public interface EducationProgramService {
+
+    EducationProgramDTO getDetailWithResult(String educationProgramId);
 
     List<EducationProgramDTO> getAllProgram(String branchId, String educationProgramId);
 

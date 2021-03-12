@@ -51,5 +51,12 @@ public interface EducationProgramRepository extends JpaRepository<EducationProgr
     )
     List<Object[]> getCorrectListSubjectByEp(@Param("educationProgramId") String educationProgramId);
 
+    @Query(value =
+            "SELECT subject " +
+                    "FROM EducationProgram EP INNER JOIN EducationProgramSubject EPS ON EP.educationProgramId = EPS.educationProgramId " +
+                    "INNER JOIN Subject subject ON EPS.subjectId = subject.subjectId " +
+                    "LEFT JOIN SubjectClassRegistration "
+    )
+    List<Object[]> getCorrectListSubjectByEpWithResult(@Param("educationProgramId") String educationProgramId);
 
 }

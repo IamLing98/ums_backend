@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
-@Scope("request")
+@Scope("prototype")
 @Transactional
         (
                 propagation = Propagation.REQUIRED,

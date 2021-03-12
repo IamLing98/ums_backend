@@ -14,6 +14,8 @@ public interface ResultRepository extends JpaRepository<TermStudent, Long> {
 
     List<TermStudent> findAllByTermId(String termId);
 
+    List<TermStudent> findAllByStudentId(String studentId);
+
 }
 
 

@@ -1,7 +1,7 @@
 package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.ResultDTO;
-import com.linkdoan.backend.dto.TermDTO;
+import com.linkdoan.backend.dto.TermResult;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,6 +35,17 @@ public class TermStudent {
         ResultDTO resultDTO = new ResultDTO();
         resultDTO.setTermId(termId);
         resultDTO.setStudentId(studentId);
+        resultDTO.setGPA(GPA);
+        resultDTO.setId(id);
+        resultDTO.setRank(rank);
+        resultDTO.setDiemRenLuyen(diemRenLuyen);
+        return resultDTO;
+    }
+
+    public TermResult toTermResult(){
+        TermResult resultDTO = new TermResult();
+        resultDTO.setId(id);
+        resultDTO.setTermId(termId);
         resultDTO.setGPA(GPA);
         resultDTO.setId(id);
         resultDTO.setRank(rank);

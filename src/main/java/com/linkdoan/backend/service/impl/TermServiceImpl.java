@@ -2,10 +2,10 @@ package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.NotificationDTO;
 import com.linkdoan.backend.dto.TermDTO;
+import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.Term;
-import com.linkdoan.backend.repository.NotificationsRepository;
-import com.linkdoan.backend.repository.TermRepository;
-import com.linkdoan.backend.repository.UserRepository;
+import com.linkdoan.backend.model.TermStudent;
+import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -59,6 +60,12 @@ public class TermServiceImpl implements TermService {
     @Autowired
     ResultService resultService;
 
+    @Autowired
+    StudentRepository studentRepository;
+
+    @Autowired
+    ResultRepository resultRepository;
+
     @Override
     public List<TermDTO> getAll(Integer year, Integer term) {
         List<Term> termList = termRepository.findAll();
@@ -87,6 +94,15 @@ public class TermServiceImpl implements TermService {
         term.setId(termDTO.getYear().toString() + termDTO.getTerm().toString());
         term.setStatus(2);
         term.setProgress(11);
+        List<Student> studentList = studentRepository.findAll();
+        List<TermStudent> termStudentList = new ArrayList<>();
+        termStudentList = studentList.stream().map(student -> {
+            TermStudent termStudent = new TermStudent();
+            termStudent.setTermId(term.getId());
+            termStudent.setStudentId(student.getStudentId());
+            return termStudent;
+        }).collect(Collectors.toList());
+        resultRepository.saveAll(termStudentList);
         termRepository.save(term);
         return 1;
     }

@@ -36,6 +36,43 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     GroupRepository groupRepository;
 
     @Override
+    public EducationProgramDTO getDetailWithResult(String educationProgramId) {
+        if (!educationProgramRepository.findById(educationProgramId).isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
+        EducationProgramDTO educationProgramDTO = educationProgramRepository.getDetail(educationProgramId);
+        //getList Subject By EP
+        List<Object[]> subjectObjectList = educationProgramRepository.getCorrectListSubjectByEp(educationProgramId);
+        List<Map<String, Object>> subjectListMap = new ArrayList<>();
+        String[] labels = {"subjectId", "subjectName", "diemThangMuoi", "diemThangBon", "diemChu"};
+        if (!subjectObjectList.isEmpty()) {
+            for (Object[] object : subjectObjectList) {
+                Map<String, Object> subjectMap = new HashMap<>();
+                for (int i = 0; i < labels.length; i++) {
+                    subjectMap.put(labels[i], object[i]);
+                }
+                List<Object[]> preLearnSubjectList = subjectRepository.getPreviousLearnSubject(object[7] + "");
+                if (preLearnSubjectList != null && !preLearnSubjectList.isEmpty()) {
+                    List<Map<String, Object>> preLearnList = new ArrayList<>();
+                    for (Object[] preObject : preLearnSubjectList) {
+                        Map<String, Object> preObjectMap = new HashMap<>();
+                        preObjectMap.put("subjectId", preObject[0]);
+                        preObjectMap.put("subjectName", preObject[1]);
+                        preLearnList.add(preObjectMap);
+                    }
+                    subjectMap.put("preLearnSubjectList", preLearnList);
+                } else {
+                    subjectMap.put("preLearnSubjectList", new ArrayList<>());
+                }
+                subjectListMap.add(subjectMap);
+            }
+            //set Subject List
+            educationProgramDTO.setSubjectList(subjectListMap);
+        }
+        return educationProgramDTO;
+    }
+
+
+    @Override
     public EducationProgramDTO getDetail(String educationProgramId) {
         if (!educationProgramRepository.findById(educationProgramId).isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
