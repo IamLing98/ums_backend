@@ -1,11 +1,14 @@
 package com.linkdoan.backend.service.impl;
 
+import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.dto.YearClassDTO;
 import com.linkdoan.backend.model.Department;
+import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.YearClass;
 import com.linkdoan.backend.model.primaryKey.DepartmentCourseNextVal;
 import com.linkdoan.backend.repository.DepartmentCourseNextValRepository;
 import com.linkdoan.backend.repository.DepartmentRepository;
+import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.repository.YearClassRepository;
 import com.linkdoan.backend.service.ClassService;
 import org.slf4j.Logger;
@@ -17,8 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("classService")
 public class ClassServiceImpl implements ClassService {
@@ -33,10 +36,7 @@ public class ClassServiceImpl implements ClassService {
     private DepartmentRepository departmentRepository;
 
     @Autowired
-    private StudentServiceImpl studentService;
-
-    @Autowired
-    private EducationProgramServiceImpl educationProgramService;
+    StudentRepository studentRepository;
 
 
     @Override
@@ -46,8 +46,17 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<Map<String, Object>> getDetail(String id) {
-        return null;
+    public YearClassDTO getDetail(String id) {
+        Optional<YearClass> yearClassOptional = yearClassRepository.findById(id);
+        if (!yearClassOptional.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lớp không tồn tại");
+        YearClass yearClass = yearClassOptional.get();
+        YearClassDTO yearClassDTO = yearClass.toDTO();
+        List<Student> studentList = studentRepository.findAllByYearClassId(id);
+        List<StudentDTO> studentDTOS = studentList.stream().map(student -> student.toDTO()).collect(Collectors.toList());
+        yearClassDTO.setStudentDTOList(studentDTOS);
+        return yearClassDTO;
+
     }
 
     @Autowired

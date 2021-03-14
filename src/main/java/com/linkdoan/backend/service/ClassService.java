@@ -10,7 +10,7 @@ import java.util.Map;
 public interface ClassService {
     List<YearClassDTO> getAll();
 
-    List<Map<String, Object>> getDetail(String id);
+    YearClassDTO getDetail(String yearClassId);
 
     int create(YearClassDTO yearClassDTO);
 

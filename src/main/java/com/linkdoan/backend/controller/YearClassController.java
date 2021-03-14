@@ -18,6 +18,11 @@ public class YearClassController {
         return new ResponseEntity<>(classService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/yearClasses/{yearClassId}")
+    public ResponseEntity<?> getDetail() throws Exception {
+        return new ResponseEntity<>(classService.getAll(), HttpStatus.OK);
+    }
+
     @PostMapping("/yearClasses")
     public ResponseEntity<?> create(@RequestBody YearClassDTO yearClassDTO) throws Exception {
         return new ResponseEntity<>(classService.create(yearClassDTO), HttpStatus.OK);

@@ -83,4 +83,7 @@ public interface StudentRepository extends JpaRepository<Student, String> {
                     "WHERE student.studentId = :studentId"
     )
     StudentDTO getDetail(@Param("studentId") String studentId);
+
+
+    List<Student> findAllByYearClassId(String yearClassId);
 }

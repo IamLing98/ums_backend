@@ -4,6 +4,9 @@ import com.linkdoan.backend.model.YearClass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -35,7 +38,7 @@ public class YearClassDTO {
 
     private String departmentName;
 
-    //private List<StudentDTO> studentDTOList = new ArrayList<>();
+    private List<StudentDTO> studentDTOList = new ArrayList<>();
 
 
     public YearClassDTO(String classId, String className, Integer totalMember, Integer startYear, Integer endYear,
