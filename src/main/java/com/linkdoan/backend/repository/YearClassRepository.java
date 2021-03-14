@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface YearClassRepository extends JpaRepository<YearClass, String> {
 
@@ -18,5 +19,7 @@ public interface YearClassRepository extends JpaRepository<YearClass, String> {
                     "LEFT JOIN Employee employee ON yearClass.teacherId = employee.employeeId"
     )
     List<YearClassDTO> getAll();
+
+    Optional<YearClass> findFirstByTeacherId(String teacherId);
 
 }

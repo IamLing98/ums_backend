@@ -82,6 +82,8 @@ public class EmployeeDTO {
 
     private List<Subject> subjectList;
 
+    private YearClassDTO yearClassDTO;
+
     public EmployeeDTO(String employeeId, String departmentId, Integer employeeDepartmentLevel, String officeId,
                        Integer employeeOfficeLevel, String fullName, LocalDate dateBirth, Integer sex, String placeBorn,
                        String contactAddress, String phoneNumber, String email, Integer degree, Integer degreeDetails,

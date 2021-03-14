@@ -1,11 +1,10 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.EmployeeDTO;
+import com.linkdoan.backend.dto.StudentDTO;
+import com.linkdoan.backend.dto.YearClassDTO;
 import com.linkdoan.backend.model.*;
-import com.linkdoan.backend.repository.EmployeeRepository;
-import com.linkdoan.backend.repository.TeacherEducationTimelineRepository;
-import com.linkdoan.backend.repository.TeacherSubjectRepository;
-import com.linkdoan.backend.repository.TeacherWorkTimelineRepository;
+import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     TeacherSubjectRepository teacherSubjectRepository;
 
+    @Autowired
+    YearClassRepository yearClassRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
+
     @Override
     public EmployeeDTO getEmployeeDetail(String employeeId) {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
@@ -51,6 +56,15 @@ public class EmployeeServiceImpl implements EmployeeService {
                 rs.setTeacherEducationTimeLineList(employeeRepository.getListEducationTimeline(rs.getEmployeeId()));
                 rs.setTeacherWorkTimeLineList(employeeRepository.getListWorkTimeline(rs.getEmployeeId()));
                 rs.setSubjectList(employeeRepository.getListSubject(rs.getEmployeeId()));
+                Optional<YearClass> yearClassOptional = yearClassRepository.findFirstByTeacherId(rs.getEmployeeId());
+                if (yearClassOptional.isPresent()) {
+                    YearClass yearClass = yearClassOptional.get();
+                    YearClassDTO yearClassDTO = yearClass.toDTO();
+                    List<Student> studentList = studentRepository.findAllByYearClassId(yearClassDTO.getClassId());
+                    List<StudentDTO> studentDTOS = studentList.stream().map(student -> student.toDTO()).collect(Collectors.toList());
+                    yearClassDTO.setStudentDTOList(studentDTOS);
+                    rs.setYearClassDTO(yearClassDTO);
+                }
             }
             return rs;
         } else return null;

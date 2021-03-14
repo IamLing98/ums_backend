@@ -9,16 +9,19 @@ import com.linkdoan.backend.repository.EmployeeRepository;
 import com.linkdoan.backend.repository.RoleRepository;
 import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.repository.UserRepository;
+import com.linkdoan.backend.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service()
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, UserSevice {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,7 +34,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     StudentRepository studentRepository;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -57,4 +59,20 @@ public class UserService implements UserDetailsService {
         return userDTO;
     }
 
+    @Override
+    public UserDTO changePassword(UserDTO userDTO, String username) {
+        org.springframework.security.crypto.password.PasswordEncoder encoder
+                = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+        if (!userDTO.getUsername().equals(username))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Lỗi xác thực");
+        User user = userRepository.findByUsername(userDTO.getUsername());
+        System.out.println(encoder.matches(userDTO.getPassword(), user.getPassword()));
+        if (!encoder.matches(userDTO.getPassword(), user.getPassword()))
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Mật khẩu không đúng");
+        if (user != null) {
+            user.setPassword(encoder.encode(userDTO.getNewPassword()));
+            userRepository.save(user);
+            return user.toDto();
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+    }
 }
