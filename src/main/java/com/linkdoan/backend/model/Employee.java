@@ -80,7 +80,6 @@ public class Employee {
     @Column(name = "ethnic")
     private String ethnic;
 
-
     //nơi sinh
     @Column(name = "born_place", columnDefinition = "VARCHAR(45)")
     private String bornPlace;

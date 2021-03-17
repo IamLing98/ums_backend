@@ -50,4 +50,9 @@ public class CommonController {
     public ResponseEntity getAllFeeReasons(@RequestParam(name = "type", required = false) Long type) {
         return new ResponseEntity(commonService.getAllFeeReasons(type), HttpStatus.OK);
     }
+
+    @GetMapping("/employeeCoefficientLevel")
+    public ResponseEntity getAllEmployeeCoefficientLevel(@RequestParam(name = "employeeLevelId", required = false) Long employeeLevelId) {
+        return new ResponseEntity(commonService.getAllEmployeeCoefficientLevels(employeeLevelId), HttpStatus.OK);
+    }
 }

@@ -2,6 +2,7 @@ package com.linkdoan.backend.service.common.Impl;
 
 import com.linkdoan.backend.dto.CommonDTO;
 import com.linkdoan.backend.model.*;
+import com.linkdoan.backend.repository.EmployeeLevelRepository;
 import com.linkdoan.backend.repository.common.*;
 import com.linkdoan.backend.service.common.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     FeeReasonRepository feeReasonRepository;
+
+    @Autowired
+    EmployeeLevelRepository employeeLevelRepository;
 
     @Override
     public List<CommonDTO> getAllCountry() {
@@ -103,5 +107,10 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public List<FeeReason> getAllFeeReasons(Long type) {
         return feeReasonRepository.findAllByReasonType(type);
+    }
+
+    @Override
+    public List<EmployeeCoefficientLevel> getAllEmployeeCoefficientLevels(Long employeeLevelId) {
+        return employeeLevelRepository.findAllEmployeeCoefficientLevelByEmployeeLevelId(employeeLevelId);
     }
 }
