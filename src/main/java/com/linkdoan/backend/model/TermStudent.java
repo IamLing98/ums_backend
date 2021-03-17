@@ -42,7 +42,7 @@ public class TermStudent {
         return resultDTO;
     }
 
-    public TermResult toTermResult(){
+    public TermResult toTermResult() {
         TermResult resultDTO = new TermResult();
         resultDTO.setId(id);
         resultDTO.setTermId(termId);

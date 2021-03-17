@@ -1,24 +1,20 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.dto.SalaryTableDTO;
 import com.linkdoan.backend.model.EmployeeCoefficientLevel;
 import com.linkdoan.backend.model.SalaryTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface SalaryTableRepository extends JpaRepository<SalaryTable, Long> {
 
 
-
     @Query(
-            value="SELECT employeeCoefficientLevel " +
+            value = "SELECT employeeCoefficientLevel " +
                     "FROM  EmployeeCoefficientLevel employeeCoefficientLevel " +
                     "WHERE employeeCoefficientLevel.id = :employeeCoefficientLevelId "
     )
-    EmployeeCoefficientLevel findByEmployeeCoefficientLevelId(@Param("employeeCoefficientLevelId") Long employeeCoefficientLevelId );
+    EmployeeCoefficientLevel findByEmployeeCoefficientLevelId(@Param("employeeCoefficientLevelId") Long employeeCoefficientLevelId);
 
 
 }

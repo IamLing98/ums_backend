@@ -25,7 +25,7 @@ public class SalaryTable {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name="totalValue")
+    @Column(name = "totalValue")
     private Double totalValue;
 
     @Column(name = "status")

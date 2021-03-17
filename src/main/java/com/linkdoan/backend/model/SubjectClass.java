@@ -68,10 +68,10 @@ public class SubjectClass {
     @Column(name = "current_week")
     private Integer currentWeek = 0;
 
-    @Column(name="has_grade")
+    @Column(name = "has_grade")
     private Integer hasGrade = 0;
 
-    @Column(name="grade_import_time")
+    @Column(name = "grade_import_time")
     private LocalDateTime gradeImportTime;
 
     public SubjectClassDTO toDTO() {

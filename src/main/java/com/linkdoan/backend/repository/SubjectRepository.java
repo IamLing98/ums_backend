@@ -5,7 +5,6 @@ import com.linkdoan.backend.model.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -71,7 +70,7 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {
     List<Object[]> getAllEducationProgramSubjectIsIn(@Param("subjectId") String subjectId);
 
     @Query(
-            value="SELECT S " +
+            value = "SELECT S " +
                     "FROM EducationProgram EP INNER JOIN EducationProgramSubject EPS ON EP.educationProgramId = EPS.educationProgramId " +
                     "INNER JOIN Subject S ON EPS.subjectId = S.subjectId " +
                     "WHERE EPS.educationProgramId = :educationProgramId "

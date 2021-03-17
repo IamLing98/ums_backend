@@ -11,7 +11,7 @@ import java.util.List;
 public interface SalaryTableContractRepository extends JpaRepository<SalaryTableContract, Long> {
 
     @Query(
-            value="SELECT new com.linkdoan.backend.dto.SalaryTableContractDTO(STC.id, STC.salaryTableId, STC.contractId, STC.basicSalary, STC.willPaymentSalary, STC.description)" +
+            value = "SELECT new com.linkdoan.backend.dto.SalaryTableContractDTO(STC.id, STC.salaryTableId, STC.contractId, STC.basicSalary, STC.willPaymentSalary, STC.description)" +
                     "FROM SalaryTable ST INNER JOIN SalaryTableContract STC ON ST.id = STC.salaryTableId " +
                     "INNER JOIN Contract C ON STC.contractId = C.id "
     )

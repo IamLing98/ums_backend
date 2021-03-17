@@ -23,10 +23,10 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserDetails(username), HttpStatus.OK);
     }
 
-    @PutMapping(value="/users")
+    @PutMapping(value = "/users")
     public ResponseEntity<?> changePassword(@RequestBody UserDTO userDTO, SecurityContextHolder securityContextHolder) throws Exception {
-        String username = securityContextHolder.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(userService.changePassword(userDTO,username), HttpStatus.OK);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(userService.changePassword(userDTO, username), HttpStatus.OK);
     }
 
 }

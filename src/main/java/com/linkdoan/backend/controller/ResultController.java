@@ -17,12 +17,12 @@ public class ResultController {
 
     @GetMapping(value = "/results")
     public ResponseEntity<?> getResult(@RequestParam(name = "termId") String termId
-                                      ) {
+    ) {
         return new ResponseEntity(resultService.getResult(termId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/results/details/{studentId}")
-    public ResponseEntity<?> getStudentResultDetail(@PathVariable("studentId") String studentId ) {
+    public ResponseEntity<?> getStudentResultDetail(@PathVariable("studentId") String studentId) {
         return new ResponseEntity(resultService.getDetail(studentId), HttpStatus.OK);
     }
 }

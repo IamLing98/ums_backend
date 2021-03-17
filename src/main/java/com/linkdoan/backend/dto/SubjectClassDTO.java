@@ -6,7 +6,6 @@ import com.linkdoan.backend.model.SubjectClass;
 import com.linkdoan.backend.model.Term;
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

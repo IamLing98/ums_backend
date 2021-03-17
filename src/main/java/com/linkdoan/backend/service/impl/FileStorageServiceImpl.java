@@ -45,7 +45,7 @@ public class FileStorageServiceImpl implements FilesStorageService {
             return "";
         }
         if (path.contains(".")) {
-            return path.substring(path.lastIndexOf(".") + 1, path.length());
+            return path.substring(path.lastIndexOf(".") + 1);
         }
         return "";
     }

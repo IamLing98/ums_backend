@@ -6,15 +6,15 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="employee_level")
+@Table(name = "employee_level")
 public class EmployeeLevel {
 
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="employee_level_name")
+    @Column(name = "employee_level_name")
     private String employeeLevelName;
 
 }

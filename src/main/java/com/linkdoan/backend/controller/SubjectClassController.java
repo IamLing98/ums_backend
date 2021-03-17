@@ -39,8 +39,8 @@ public class SubjectClassController {
                                        @RequestBody SubjectClassDTO subjectClassDTOList,
                                        SecurityContextHolder securityContextHolder)
             throws Exception {
-        String username = securityContextHolder.getContext().getAuthentication().getName();
-        return new ResponseEntity<>(subjectClassService.updateOne(subjectClassId,subjectClassDTOList, actionType, username), HttpStatus.OK);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return new ResponseEntity<>(subjectClassService.updateOne(subjectClassId, subjectClassDTOList, actionType, username), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/subjectClasses", method = RequestMethod.PUT)
@@ -48,7 +48,7 @@ public class SubjectClassController {
                                     @RequestBody List<SubjectClassDTO> subjectClassDTOList,
                                     SecurityContextHolder securityContextHolder)
             throws Exception {
-        String username = securityContextHolder.getContext().getAuthentication().getName();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(subjectClassService.update(subjectClassDTOList, actionType, username), HttpStatus.OK);
     }
 

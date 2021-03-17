@@ -49,10 +49,10 @@ public class Contract {
     @Column(name = "note")
     private String note;
 
-    @Column(name="basic_salary")
+    @Column(name = "basic_salary")
     private Double basicSalary;
 
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
 
     public ContractDTO toDTO() {

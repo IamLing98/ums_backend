@@ -2,12 +2,10 @@ package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.base.dto.FileDTO;
 import com.linkdoan.backend.model.Subject;
-import com.poiji.annotation.ExcelCell;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

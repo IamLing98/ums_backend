@@ -23,7 +23,7 @@ public class SalaryTableContractDTO {
 
     private String description;
 
-    public SalaryTableContractDTO(Long id, Long salaryTableId, Long contractId,Double basicSalary, Double willPaymentSalary, String description) {
+    public SalaryTableContractDTO(Long id, Long salaryTableId, Long contractId, Double basicSalary, Double willPaymentSalary, String description) {
         this.id = id;
         this.salaryTableId = salaryTableId;
         this.contractId = contractId;

@@ -11,7 +11,7 @@ import java.util.List;
 public interface EmployeeLevelRepository extends JpaRepository<EmployeeLevel, Long> {
 
     @Query(
-            value="SELECT ECL " +
+            value = "SELECT ECL " +
                     "FROM EmployeeLevel EL INNER JOIN EmployeeCoefficientLevel ECL ON EL.id = ECL.employeeLevelId " +
                     "WHERE ECL.employeeLevelId = :employeeLevelId"
     )

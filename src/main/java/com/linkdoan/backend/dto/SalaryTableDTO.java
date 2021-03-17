@@ -1,6 +1,5 @@
 package com.linkdoan.backend.dto;
 
-import com.linkdoan.backend.model.Contract;
 import com.linkdoan.backend.model.SalaryTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;

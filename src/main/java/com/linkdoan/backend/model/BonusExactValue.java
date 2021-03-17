@@ -6,17 +6,17 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="bonus_exact_value")
+@Table(name = "bonus_exact_value")
 public class BonusExactValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="bonus_exact_name")
+    @Column(name = "bonus_exact_name")
     private String bonusExactName;
 
-    @Column(name="value")
+    @Column(name = "value")
     private Double value;
 }

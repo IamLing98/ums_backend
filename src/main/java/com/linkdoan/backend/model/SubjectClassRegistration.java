@@ -84,7 +84,7 @@ public class SubjectClassRegistration {
     @Column(name = "reject_date")
     private LocalDateTime rejectDate;
 
-    public SubjectClassRegistrationDTO toDTO(){
+    public SubjectClassRegistrationDTO toDTO() {
         SubjectClassRegistrationDTO subjectClassRegistrationDTO = new SubjectClassRegistrationDTO();
         subjectClassRegistrationDTO.setId(id);
         subjectClassRegistrationDTO.setStudentId(studentId);

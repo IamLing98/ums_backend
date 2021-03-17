@@ -1,6 +1,5 @@
 package com.linkdoan.backend.repository;
 
-import com.linkdoan.backend.model.Subject;
 import com.linkdoan.backend.model.SubjectRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface SubjectRegistrationRepository extends JpaRepository<SubjectRegistration, Long> {
