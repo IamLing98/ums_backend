@@ -1,6 +1,7 @@
 package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.StudentDTO;
+import com.poiji.annotation.ExcelCell;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,15 +17,21 @@ import java.time.LocalDate;
 public class Student {
     @Id
     @Size(min = 9, max = 9)
+    @ExcelCell(1)
     @Column(name = "student_id", unique = true, columnDefinition = "CHAR(9)")
     private String studentId;
 
+    @ExcelCell(4)
     @Column(name = "full_name", columnDefinition = "TEXT")
     private String fullName;
 
+    @ExcelCell(6)
+    private String sexText;
+    
     @Column(name = "sex")
     private Integer sex;
 
+    @ExcelCell(5)
     @Column(name = "date_birth")
     private LocalDate dateBirth;
 
@@ -133,6 +140,7 @@ public class Student {
     @Column(name = "avatar")
     private String avatar;
 
+    @ExcelCell(7)
     @Column(name = "year_class_id", columnDefinition = "CHAR(6)")
     private String yearClassId;
 
@@ -148,6 +156,9 @@ public class Student {
     private Integer admissionType;
 
     //CTDT theo đuổi
+    @ExcelCell(8)
+    private String educationProgramName;
+
     @Column(name = "education_program_id", columnDefinition = "CHAR(11)")
     private String educationProgramId;
 

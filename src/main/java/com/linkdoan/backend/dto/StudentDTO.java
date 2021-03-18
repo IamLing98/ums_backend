@@ -169,7 +169,8 @@ public class StudentDTO {
         this.yearClass = yearClass;
     }
 
-    public StudentDTO(String studentId, String fullName, String departmentId, String departmentName, String yearClassId, String yearClassName, Integer startYear, Integer endYear, Integer courseNumber) {
+    public StudentDTO(String studentId, String fullName, String departmentId, String departmentName,
+                      String yearClassId, String yearClassName, Integer startYear, Integer endYear, Integer courseNumber) {
         this.studentId = studentId;
         this.fullName = fullName;
         this.departmentId = departmentId;
@@ -181,6 +182,20 @@ public class StudentDTO {
         this.courseNumber = courseNumber;
     }
 
+    public StudentDTO(String studentId, String fullName, String departmentId, String departmentName,
+                      String yearClassId, String yearClassName, Integer startYear, Integer endYear, Integer courseNumber, LocalDate dateBirth) {
+        this.studentId = studentId;
+        this.fullName = fullName;
+        this.departmentId = departmentId;
+        this.departmentName = departmentName;
+        this.yearClassId = yearClassId;
+        this.yearClassName = yearClassName;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.courseNumber = courseNumber;
+        this.dateBirth = dateBirth;
+    }
+
     public StudentDTO(String studentId, String yearClassId, String educationProgramId, Integer currentTerm) {
         this.studentId = studentId;
         this.yearClassId = yearClassId;
@@ -188,7 +203,17 @@ public class StudentDTO {
         this.currentTerm = currentTerm;
     }
 
-    public StudentDTO(String studentId, String fullName, Integer sex, LocalDate dateBirth, String nickName, String homeTown, String nationality, String bornPlace, String permanentResidence, String ethnic, String religion, Integer enrollmentArea, Integer priorityType, Integer incentivesType, String familyElement, LocalDate CYUStartDate, LocalDate CPStartDate, String identityNumber, LocalDate identityCreatedDate, String identityCreatedPlace, String bankNumber, String email, String phoneNumber, String fatherName, Integer fatherDateBirth, String fatherWork, String motherName, Integer motherDateBirth, String motherWork, String contactAddress, String note, String avatar, String departmentId, String departmentName, String yearClassId, String yearClassName, String branchId, String branchName, Integer courseNumber, Integer status, String enrollId, Integer admissionType, Integer startYear, Integer endYear, String educationProgramId, Integer currentTerm) {
+    public StudentDTO(String studentId, String fullName, Integer sex, LocalDate dateBirth, String nickName,
+                      String homeTown, String nationality, String bornPlace, String permanentResidence,
+                      String ethnic, String religion, Integer enrollmentArea, Integer priorityType,
+                      Integer incentivesType, String familyElement, LocalDate CYUStartDate, LocalDate CPStartDate,
+                      String identityNumber, LocalDate identityCreatedDate, String identityCreatedPlace,
+                      String bankNumber, String email, String phoneNumber, String fatherName, Integer fatherDateBirth,
+                      String fatherWork, String motherName, Integer motherDateBirth, String motherWork,
+                      String contactAddress, String note, String avatar, String departmentId, String departmentName,
+                      String yearClassId, String yearClassName, String branchId, String branchName, Integer courseNumber,
+                      Integer status, String enrollId, Integer admissionType, Integer startYear, Integer endYear,
+                      String educationProgramId, Integer currentTerm) {
         this.studentId = studentId;
         this.fullName = fullName;
         this.sex = sex;

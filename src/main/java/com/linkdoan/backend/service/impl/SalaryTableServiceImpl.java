@@ -54,6 +54,7 @@ public class SalaryTableServiceImpl implements SalaryTableService {
 
     @Override
     public SalaryTableDTO create(SalaryTableDTO salaryTableDTO) {
+        salaryTableDTO.setStatus(0);
         SalaryTable salaryTable =
                 salaryTableRepository.save(salaryTableDTO.toModel());
         AtomicReference<Double> totalValueOfSalaryTable = new AtomicReference<>(0D);

@@ -3,13 +3,11 @@ package com.linkdoan.backend.service.impl;
 import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.dto.YearClassDTO;
 import com.linkdoan.backend.model.Department;
+import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.YearClass;
 import com.linkdoan.backend.model.primaryKey.DepartmentCourseNextVal;
-import com.linkdoan.backend.repository.DepartmentCourseNextValRepository;
-import com.linkdoan.backend.repository.DepartmentRepository;
-import com.linkdoan.backend.repository.StudentRepository;
-import com.linkdoan.backend.repository.YearClassRepository;
+import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.ClassService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +36,9 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+
 
     @Override
     public List<YearClassDTO> getAll() {
@@ -49,9 +50,8 @@ public class ClassServiceImpl implements ClassService {
     public YearClassDTO getDetail(String id) {
         Optional<YearClass> yearClassOptional = yearClassRepository.findById(id);
         if (!yearClassOptional.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lớp không tồn tại");
-        YearClass yearClass = yearClassOptional.get();
-        YearClassDTO yearClassDTO = yearClass.toDTO();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lớp không tồn tại"); 
+        YearClassDTO yearClassDTO = yearClassRepository.getById(id);
         List<Student> studentList = studentRepository.findAllByYearClassId(id);
         List<StudentDTO> studentDTOS = studentList.stream().map(student -> student.toDTO()).collect(Collectors.toList());
         yearClassDTO.setStudentDTOList(studentDTOS);

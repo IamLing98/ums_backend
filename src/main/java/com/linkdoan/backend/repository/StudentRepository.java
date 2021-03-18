@@ -60,7 +60,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 
     @Query(value =
             "SELECT distinct new com.linkdoan.backend.dto.StudentDTO(student.studentId, student.fullName, department.departmentId, " +
-                    "department.departmentName, student.yearClassId, yearClass.className, yearClass.startYear, yearClass.endYear, yearClass.courseNumber) " +
+                    "department.departmentName, student.yearClassId, yearClass.className, yearClass.startYear, yearClass.endYear, yearClass.courseNumber," +
+                    " student.dateBirth) " +
                     "FROM Student student inner join YearClass  yearClass on student.yearClassId = yearClass.classId " +
                     "INNER JOIN Department department ON yearClass.departmentId = department.departmentId "
     )

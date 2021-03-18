@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SalaryReportService {
 
-    List<SalaryTableContract> getAll();
+    List<SalaryTableContractDTO> getAll();
 
     SalaryTableContractDTO create(SalaryTableContractDTO salaryTableContractDTO);
 }

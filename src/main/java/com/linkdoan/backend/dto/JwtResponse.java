@@ -1,4 +1,4 @@
-package com.linkdoan.backend.model;
+package com.linkdoan.backend.dto;
 
 
 import com.linkdoan.backend.dto.UserDTO;

@@ -32,4 +32,6 @@ public interface EducationProgramSubjectRepository extends JpaRepository<Educati
                     "WHERE  not subject.subjectId   in :listSubjectId "
     )
     List<Object[]> getListSubjectNotInEducation(@Param("listSubjectId") List<String> listSubjectId);
+
+    List<EducationProgramSubject> findAllByEducationProgramId(String educationProgramId);
 }

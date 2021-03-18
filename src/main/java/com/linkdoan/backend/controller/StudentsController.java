@@ -1,5 +1,6 @@
 package com.linkdoan.backend.controller;
 
+import com.linkdoan.backend.base.dto.FileDTO;
 import com.linkdoan.backend.dto.StudentDTO;
 import com.linkdoan.backend.service.StudentService;
 import com.linkdoan.backend.service.impl.StudentServiceImpl;
@@ -11,16 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
-
 public class StudentsController {
 
-    private StudentService studentService;
-
     @Autowired
-    public void setStudentService(StudentServiceImpl studentService) {
-        this.studentService = studentService;
-    }
+    private StudentService studentService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ResponseEntity<?> findBy(@RequestParam(name = "page", required = false) Integer page,
@@ -38,6 +33,12 @@ public class StudentsController {
     public ResponseEntity<?> getDetails(@PathVariable("studentId") String studentId) throws Exception {
         return new ResponseEntity<>(studentService.getDetail(studentId), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/students/import")
+    public ResponseEntity<?> importStudents(@RequestBody FileDTO fileDTO) throws Exception {
+        return new ResponseEntity<>(studentService.importStudents(fileDTO), HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/students", method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody List<StudentDTO> studentDTOList) throws Exception {

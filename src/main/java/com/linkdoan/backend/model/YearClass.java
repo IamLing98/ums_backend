@@ -39,7 +39,7 @@ public class YearClass {
     @Column(name = "education_program_type", columnDefinition = "INT")
     private Integer educationProgramType = 1;
 
-    @Column(name = "teacher_id", columnDefinition = "CHAR(10)")
+    @Column(name = "teacher_id" )
     private String teacherId;
 
     //ky hoc hien tai

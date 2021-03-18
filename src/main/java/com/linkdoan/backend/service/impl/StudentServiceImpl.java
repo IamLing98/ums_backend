@@ -1,25 +1,46 @@
 package com.linkdoan.backend.service.impl;
 
+import com.linkdoan.backend.base.dto.FileDTO;
 import com.linkdoan.backend.dto.StudentDTO;
+import com.linkdoan.backend.exception.FileStorageException;
 import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.model.primaryKey.DepartmentCourseNextVal;
 import com.linkdoan.backend.repository.*;
+import com.linkdoan.backend.service.FilesStorageService;
 import com.linkdoan.backend.service.StudentService;
+import com.linkdoan.backend.util.FileTypeConstants;
+import com.poiji.bind.Poiji;
+import com.poiji.exception.PoijiExcelType;
+import com.poiji.option.PoijiOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("studentService")
+@Transactional
+        (
+                propagation = Propagation.REQUIRED,
+                readOnly = false,
+                rollbackFor = Throwable.class
+        )
 public class StudentServiceImpl implements StudentService {
 
     private static final String STUDENT = "Student";
@@ -52,6 +73,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentSubjectRepository studentSubjectRepository;
+
+    @Autowired
+    FilesStorageService fileStorageService;
 
     @Override
     public List<StudentDTO> findBy(Integer page, Integer pageSize, String studentId, Integer startYear, String classId, String departmentId) throws IOException {
@@ -194,6 +218,38 @@ public class StudentServiceImpl implements StudentService {
             } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sinh viên không tồn tại!!!" + id);
         }
         return count;
+    }
+
+    @Override
+    public List<StudentDTO> importStudents(FileDTO fileDTO) throws FileNotFoundException {
+        List<StudentDTO> studentDTOList;
+        String fileName = fileDTO.getFileName();
+        Path filePath = fileStorageService.getPathFile(fileName);
+        System.out.println("Path file: " + filePath.toString());
+        if (!Files.exists(filePath)) throw new FileNotFoundException("File không hợp lệ");
+        else {
+            String postfix = fileStorageService.getPostfix(filePath.toString());
+            System.out.println("Postfix: " + postfix);
+            if (!(postfix.equals(FileTypeConstants.SPREAD_SHEET_2003) || postfix.equals(FileTypeConstants.SPREAD_SHEET_2007)))
+                throw new FileStorageException("Định dạng file không đúng");
+            InputStream inputFile = new FileInputStream(filePath.toString());
+            PoijiOptions options = PoijiOptions.PoijiOptionsBuilder.settings(6).addListDelimiter(";").build();
+            List<Student> studentList = Poiji
+                    .fromExcel(inputFile, PoijiExcelType.XLSX, Student.class, options);
+            List<EducationProgram> educationProgramList = educationProgramRepository.findAllByEducationProgramType(1);
+            for (Student student : studentList) {
+                for (EducationProgram educationProgram : educationProgramList) {
+                    if (educationProgram.getEducationProgramName().equals(student.getEducationProgramName())) {
+                        student.setEducationProgramId(educationProgram.getEducationProgramId());
+                    }
+                }
+            }
+            System.out.println("student list");
+            System.out.println(studentList.get(0));
+            studentRepository.saveAll(studentList);
+            studentDTOList = studentList.stream().map(student -> student.toDTO()).collect(Collectors.toList());
+        }
+        return studentDTOList;
     }
 
 

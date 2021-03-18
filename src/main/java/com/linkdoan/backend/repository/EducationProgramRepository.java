@@ -59,4 +59,7 @@ public interface EducationProgramRepository extends JpaRepository<EducationProgr
     )
     List<Object[]> getCorrectListSubjectByEpWithResult(@Param("educationProgramId") String educationProgramId);
 
+
+    List<EducationProgram> findAllByEducationProgramType(Integer educationProgramType );
+
 }

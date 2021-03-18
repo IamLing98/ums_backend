@@ -1,5 +1,6 @@
 package com.linkdoan.backend.dto;
 
+import com.linkdoan.backend.base.dto.FileDTO;
 import com.linkdoan.backend.model.EducationProgram;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EducationProgramDTO {
+public class EducationProgramDTO extends FileDTO {
 
     private String educationProgramId;
 

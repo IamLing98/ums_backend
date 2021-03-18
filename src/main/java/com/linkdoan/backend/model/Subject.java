@@ -1,6 +1,8 @@
 package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.SubjectDTO;
+import com.poiji.annotation.ExcelCell;
+import com.poiji.annotation.ExcelRow;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "subject")
 public class Subject {
+
     @Id
     @Column(name = "subject_id", unique = true, length = 9)
     private String subjectId;

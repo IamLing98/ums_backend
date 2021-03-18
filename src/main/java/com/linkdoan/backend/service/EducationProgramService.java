@@ -2,6 +2,7 @@ package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.EducationProgramDTO;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface EducationProgramService {
@@ -10,7 +11,7 @@ public interface EducationProgramService {
 
     List<EducationProgramDTO> getAllProgram(String branchId, String educationProgramId);
 
-    EducationProgramDTO create(EducationProgramDTO educationProgramDTO);
+    EducationProgramDTO create(EducationProgramDTO educationProgramDTO) throws FileNotFoundException;
 
     EducationProgramDTO update(String id, EducationProgramDTO educationProgramDTO);
 

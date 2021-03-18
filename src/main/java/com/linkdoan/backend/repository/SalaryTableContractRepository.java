@@ -11,9 +11,19 @@ import java.util.List;
 public interface SalaryTableContractRepository extends JpaRepository<SalaryTableContract, Long> {
 
     @Query(
-            value = "SELECT new com.linkdoan.backend.dto.SalaryTableContractDTO(STC.id, STC.salaryTableId, STC.contractId, STC.basicSalary, STC.willPaymentSalary, STC.description)" +
+            value = "SELECT new com.linkdoan.backend.dto.SalaryTableContractDTO(STC.id, STC.salaryTableId, STC.contractId, STC.basicSalary," +
+                    " STC.willPaymentSalary, STC.description, STC.status)" +
+                    "FROM SalaryTable ST INNER JOIN SalaryTableContract STC ON ST.id = STC.salaryTableId " +
+                    "INNER JOIN Contract C ON STC.contractId = C.id " +
+                    "WHERE STC.salaryTableId = :salaryTableId "
+    )
+    List<SalaryTableContractDTO> getAllBySalaryTableId(@Param("salaryTableId") Long salaryTableId);
+
+    @Query(
+            value = "SELECT new com.linkdoan.backend.dto.SalaryTableContractDTO(STC.id, STC.salaryTableId, STC.contractId, STC.basicSalary," +
+                    " STC.willPaymentSalary, STC.description,ST,STC.status)" +
                     "FROM SalaryTable ST INNER JOIN SalaryTableContract STC ON ST.id = STC.salaryTableId " +
                     "INNER JOIN Contract C ON STC.contractId = C.id "
     )
-    List<SalaryTableContractDTO> getAllBySalaryTableId(@Param("salaryTableId") Long salaryTableId);
+    List<SalaryTableContractDTO> getAll();
 }

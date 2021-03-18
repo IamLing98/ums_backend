@@ -1,4 +1,4 @@
-package com.linkdoan.backend.model;
+package com.linkdoan.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

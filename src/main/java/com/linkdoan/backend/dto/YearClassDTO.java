@@ -1,5 +1,7 @@
 package com.linkdoan.backend.dto;
 
+import com.linkdoan.backend.model.Department;
+import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.YearClass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,9 +34,13 @@ public class YearClassDTO {
 
     private String teacherFullName;
 
+    private Employee employee;
+
     private Integer currentTerm = 1;
 
     private String departmentId;
+
+    private Department department;
 
     private String departmentName;
 
@@ -57,10 +63,6 @@ public class YearClassDTO {
         this.currentTerm = currentTerm;
         this.departmentId = departmentId;
         this.departmentName = departmentName;
-    }
-
-    public YearClassDTO(String yearClss) {
-        this.classId = yearClss;
     }
 
     public YearClass toModel() {

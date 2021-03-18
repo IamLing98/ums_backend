@@ -19,8 +19,8 @@ public class YearClassController {
     }
 
     @GetMapping("/yearClasses/{yearClassId}")
-    public ResponseEntity<?> getDetail() throws Exception {
-        return new ResponseEntity<>(classService.getAll(), HttpStatus.OK);
+    public ResponseEntity<?> getDetail(@PathVariable("yearClassId") String yearClassId) throws Exception {
+        return new ResponseEntity<>(classService.getDetail(yearClassId), HttpStatus.OK);
     }
 
     @PostMapping("/yearClasses")

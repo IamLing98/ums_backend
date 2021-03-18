@@ -1,22 +1,44 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.EducationProgramDTO;
+import com.linkdoan.backend.dto.EducationProgramSubjectDTO;
+import com.linkdoan.backend.exception.FileStorageException;
 import com.linkdoan.backend.model.EducationProgram;
+import com.linkdoan.backend.model.EducationProgramSubject;
 import com.linkdoan.backend.model.GroupStudent;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.EducationProgramService;
+import com.linkdoan.backend.service.FilesStorageService;
+import com.linkdoan.backend.util.FileTypeConstants;
+import com.poiji.bind.Poiji;
+import com.poiji.exception.PoijiExcelType;
+import com.poiji.option.PoijiOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
+        (
+                propagation = Propagation.REQUIRED,
+                readOnly = false,
+                rollbackFor = Throwable.class
+        )
 public class EducationProgramServiceImpl implements EducationProgramService {
 
     @Autowired
@@ -34,6 +56,9 @@ public class EducationProgramServiceImpl implements EducationProgramService {
 
     @Autowired
     GroupRepository groupRepository;
+
+    @Autowired
+    FilesStorageService filesStorageService;
 
     @Override
     public EducationProgramDTO getDetailWithResult(String educationProgramId) {
@@ -123,7 +148,7 @@ public class EducationProgramServiceImpl implements EducationProgramService {
     }
 
     @Override
-    public EducationProgramDTO create(EducationProgramDTO educationProgramDTO) {
+    public EducationProgramDTO create(EducationProgramDTO educationProgramDTO) throws FileNotFoundException {
         if (educationProgramRepository.findById(educationProgramDTO.getEducationProgramId()).isPresent())
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Đã tồn tại!!!");
         EducationProgram educationProgram = educationProgramDTO.toModel();
@@ -133,6 +158,30 @@ public class EducationProgramServiceImpl implements EducationProgramService {
             groupStudent.setEducationProgramId(educationProgramDTO.getEducationProgramId());
             groupStudent.setTerm(i);
             groupRepository.save(groupStudent);
+        }
+        String fileName = educationProgramDTO.getFileName();
+        Path filePath = filesStorageService.getPathFile(fileName);
+        System.out.println("Path file: " + filePath.toString());
+        if (!Files.exists(filePath)) throw new FileNotFoundException("File không hợp lệ");
+        else {
+            String postfix = filesStorageService.getPostfix(filePath.toString());
+            System.out.println("Postfix: " + postfix);
+            if (!(postfix.equals(FileTypeConstants.SPREAD_SHEET_2003) || postfix.equals(FileTypeConstants.SPREAD_SHEET_2007)))
+                throw new FileStorageException("Định dạng file không đúng");
+            InputStream inputFile = new FileInputStream(filePath.toString());
+            PoijiOptions options = PoijiOptions.PoijiOptionsBuilder.settings(3).addListDelimiter(";").build();
+            List<EducationProgramSubjectDTO> educationProgramSubjectList = Poiji
+                    .fromExcel(inputFile, PoijiExcelType.XLSX, EducationProgramSubjectDTO.class, options);
+            List<EducationProgramSubject> educationProgramList = educationProgramSubjectList.stream().map(educationProgramSubjectDTO -> {
+                EducationProgramSubject educationProgramSubject = new EducationProgramSubject();
+                educationProgramSubject.setEducationProgramId(educationProgram.getEducationProgramId());
+                educationProgramSubject.setSubjectId(educationProgramSubjectDTO.getSubjectId());
+                educationProgramSubject.setTerm(educationProgramSubjectDTO.getTerm());
+                return educationProgramSubject;
+            }).collect(Collectors.toList());
+            System.out.println("Danh sach hoc phan: ");
+            System.out.println(educationProgramList);
+            educationProgramSubjectRepository.saveAll(educationProgramList);
         }
         return educationProgramRepository.save(educationProgram).toDTO();
     }
@@ -151,6 +200,9 @@ public class EducationProgramServiceImpl implements EducationProgramService {
         if (!educationProgramRepository.findById(id).isPresent())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tồn tại!!!");
         groupRepository.deleteByEducationProgramId(id);
+        List<EducationProgramSubject> educationProgramSubjectList = educationProgramSubjectRepository.findAllByEducationProgramId(id);
+        if (educationProgramSubjectList != null)
+            educationProgramSubjectRepository.deleteAll(educationProgramSubjectList);
         educationProgramRepository.deleteById(id);
         return true;
     }
