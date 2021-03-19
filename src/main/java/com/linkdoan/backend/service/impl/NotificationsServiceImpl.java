@@ -39,12 +39,12 @@ public class NotificationsServiceImpl implements NotificationsService {
     public Map<String, Object> getAllNotifications(String userName) {
         User user = userRepository.findByUsername(userName);
         if (user != null) {
-            List<Object[]> notificationsObjectArrayList = notificationsRepository.getAllNotificationsOfUser(user.getUserId());
-            int notRead = notificationsRepository.getCountOfNotReadNoti(user.getUserId());
+            List<Object[]> notificationsObjectArrayList = notificationsRepository.getAllNotificationsOfUser(user.getUsername());
+            int notRead = notificationsRepository.getCountOfNotReadNoti(user.getUsername());
             String[] labels = {"senderId", "senderUsername", "seqId", "notificationId", "content", "status", "title", "createdDate"};
             Map<String, Object> notificationsObjectMap = new HashMap<>();
             notificationsObjectMap.put("userName", user.getUsername());
-            notificationsObjectMap.put("userId", user.getUserId());
+            notificationsObjectMap.put("userId", user.getUsername());
             notificationsObjectMap.put("notRead", notRead);
             List<Map<String, Object>> rs = new ArrayList<>();
             if (notificationsObjectArrayList != null && !notificationsObjectArrayList.isEmpty()) {
@@ -63,7 +63,7 @@ public class NotificationsServiceImpl implements NotificationsService {
     }
 
     @Override
-    public int createNotification(Long senderId, List<Long> ids, String notificationTitle, String notificationData) {
+    public int createNotification(String senderId, List<String> ids, String notificationTitle, String notificationData) {
         int count = 0;
         LocalDateTime ldt = LocalDateTime.now();
         Notifications notifications = new Notifications();
@@ -72,7 +72,7 @@ public class NotificationsServiceImpl implements NotificationsService {
         Notifications saved = notificationsRepository.save(notifications);
         if (saved != null) {
             Long savedNotificationId = saved.getId();
-            for (Long id : ids) {
+            for (String id : ids) {
                 Optional<UserNotifications> userNotificationsOptional = usersNotificationsRepository.findFirstBySenderIdAndReceiverIdAndNotificationId(senderId, id, savedNotificationId);
                 if (!userNotificationsOptional.isPresent()) {
                     UserNotifications userNotifications = new UserNotifications();

@@ -112,8 +112,8 @@ public class TermServiceImpl implements TermService {
         LocalDateTime endDateLocalDateTime = term.getSubjectSubmittingEndDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        Long senderId = 3L;
-        List<Long> userList = userRepository.getUserIds();
+        String senderId = "system";
+        List<String> userList = userRepository.getUserIds();
         if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký học phần. <br/> Bắt đầu: "
                     + term.getSubjectSubmittingStartDate() + " Kết thúc: " + term.getSubjectSubmittingEndDate());
@@ -160,8 +160,8 @@ public class TermServiceImpl implements TermService {
         LocalDateTime endDateLocalDateTime = term.getSubjectClassSubmittingStartDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        Long senderId = 3L;
-        List<Long> userList = userRepository.getUserIds();
+        String senderId = "system";
+        List<String> userList = userRepository.getUserIds();
         if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký lớp học phần. <br/> Bắt đầu: "
                     + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
@@ -197,8 +197,8 @@ public class TermServiceImpl implements TermService {
         LocalDateTime endDateLocalDateTime = term.getEditSubmittingEndDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        Long senderId = 3L;
-        List<Long> userList = userRepository.getUserIds();
+        String senderId = "system";
+        List<String> userList = userRepository.getUserIds();
         if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở đăng ký điều chỉnh. <br/> Bắt đầu: "
                     + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
@@ -250,8 +250,8 @@ public class TermServiceImpl implements TermService {
         LocalDateTime endDateLocalDateTime = term.getEditSubmittingEndDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        Long senderId = 3L;
-        List<Long> userList = userRepository.getUserIds();
+        String senderId = "system";
+        List<String> userList = userRepository.getUserIds();
         if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Phòng Tổng hợp", "Thời gian nộp học phí: "
                     + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);
@@ -285,8 +285,8 @@ public class TermServiceImpl implements TermService {
         LocalDateTime endDateLocalDateTime = term.getInputGradeEndDate();
         long startDateLocalDateTimeMillis = startDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long endDateLocalDateTimeLillis = endDateLocalDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        Long senderId = 3L;
-        List<Long> userList = userRepository.getUserIds();
+        String senderId = "system";
+        List<String> userList = userRepository.getUserIds();
         if (userList != null) {
             notificationsService.createNotification(senderId, userList, "Đào tạo", "Đã mở nhập điểm. <br/> Bắt đầu: "
                     + startDateLocalDateTime + " Kết thúc: " + endDateLocalDateTime);

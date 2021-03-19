@@ -13,12 +13,9 @@ import java.util.Date;
 @Data
 @BatchSize(size = 10)
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true)
-    private Long userId;
 
-    @Column(name = "username")
+    @Id
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
@@ -47,7 +44,6 @@ public class User {
 
     public UserDTO toDto() {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(userId);
         userDTO.setCreatedAt(createdAt);
         userDTO.setEmail(email);
         userDTO.setIsActive(isActive);

@@ -14,27 +14,27 @@ public interface NotificationsRepository extends JpaRepository<Notifications, Lo
 
     @Query(value =
             "SELECT COUNT(unn)  " +
-                    "FROM User sendUserr INNER JOIN UserNotifications unn ON sendUserr.userId = unn.senderId " +
+                    "FROM User sendUserr INNER JOIN UserNotifications unn ON sendUserr.username = unn.senderId " +
                     "INNER JOIN Notifications nn ON unn.notificationId = nn.id " +
-                    "INNER JOIN User rUserr ON unn.receiverId = rUserr.userId " +
-                    "WHERE unn.receiverId = :userId AND unn.status = 1  ")
-    int getCountOfNotReadNoti(@Param("userId") Long userId);
+                    "INNER JOIN User rUserr ON unn.receiverId = rUserr.username " +
+                    "WHERE unn.receiverId = :username AND unn.status = 1  ")
+    int getCountOfNotReadNoti(@Param("username") String username);
 
     //get All Notifications of user has user Id
     @Query(value =
             "SELECT un.senderId, sendUser.username,un.id, un.notificationId, n.data ,un.status, n.title, un.createdDate " +
-                    "FROM User sendUser INNER JOIN UserNotifications un ON sendUser.userId = un.senderId " +
+                    "FROM User sendUser INNER JOIN UserNotifications un ON sendUser.username = un.senderId " +
                     "INNER JOIN Notifications n ON un.notificationId = n.id " +
-                    "INNER JOIN User rUser ON un.receiverId = rUser.userId " +
+                    "INNER JOIN User rUser ON un.receiverId = rUser.username " +
                     "WHERE un.receiverId = :userId ORDER BY un.createdDate DESC "
     )
-    List<Object[]> getAllNotificationsOfUser(@Param("userId") Long userId);
+    List<Object[]> getAllNotificationsOfUser(@Param("username") String username);
 
     //set read for notification
 
     @Modifying
     @Query(value =
-            "UPDATE UserNotifications un SET un.status = 2 WHERE un.id = :unId "
+            "UPDATE UserNotifications un SET un.status = 2 WHERE un.id = :id "
     )
-    int setReadNotification(@Param("unId") Long unId);
+    int setReadNotification(@Param("id") Long id);
 }

@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@Service()
+@Service
 public class UserService implements UserDetailsService, UserSevice {
 
     @Autowired
@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService, UserSevice {
             throw new UsernameNotFoundException(username);
         }
         UserDTO userDTO = user.toDto();
-        List<Role> roleList = roleRepository.findAllRoles(user.getUserId());
+        List<Role> roleList = roleRepository.findAllRoles(user.getUsername());
         RoleDTO roleDTO = new RoleDTO();
         String[] employeeLabels;
         String[] studentLabels;

@@ -10,8 +10,6 @@ import java.util.Date;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserDTO {
-    @NotNull
-    private Long userId;
 
     @NotNull
     private String username;
@@ -36,7 +34,6 @@ public class UserDTO {
 
     public User toModel() {
         User user = new User();
-        user.setUserId(userId);
         user.setCreatedAt(createdAt);
         user.setEmail(email);
         user.setIsActive(isActive);

@@ -9,12 +9,12 @@ import java.util.List;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
 
     User findByUsername(String username);
 
     @Query(value =
             "SELECT user.userId FROM User user")
-    List<Long> getUserIds();
+    List<String> getUserIds();
 
 }
