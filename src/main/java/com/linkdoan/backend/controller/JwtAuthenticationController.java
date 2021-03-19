@@ -5,6 +5,7 @@ import com.linkdoan.backend.config.JwtTokenUtil;
 import com.linkdoan.backend.dto.UserDTO;
 import com.linkdoan.backend.dto.JwtRequest;
 import com.linkdoan.backend.dto.JwtResponse;
+import com.linkdoan.backend.repository.StudentRepository;
 import com.linkdoan.backend.repository.UserRepository;
 import com.linkdoan.backend.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class JwtAuthenticationController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-    @Qualifier("userRepository")
 
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 
@@ -48,7 +49,6 @@ public class JwtAuthenticationController {
         //authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-
                         authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()
                 )

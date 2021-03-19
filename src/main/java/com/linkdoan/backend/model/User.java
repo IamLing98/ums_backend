@@ -2,16 +2,15 @@ package com.linkdoan.backend.model;
 
 import com.linkdoan.backend.dto.UserDTO;
 import lombok.Data;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
 @Entity
 @Table(name = "users")
 @Data
-@BatchSize(size = 10)
 public class User {
 
     @Id
@@ -22,10 +21,10 @@ public class User {
     private String password;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "email")
     private String email;
