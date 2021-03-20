@@ -3,6 +3,7 @@ package com.linkdoan.backend.service.impl;
 import com.linkdoan.backend.base.dto.CustomUserDetails;
 import com.linkdoan.backend.dto.RoleDTO;
 import com.linkdoan.backend.dto.UserDTO;
+import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Role;
 import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.User;
@@ -115,6 +116,18 @@ public class UserService implements UserDetailsService, UserSevice {
     }
 
     @Override
+    public List<Employee> getAllTeacherHasNoAccount() {
+        List<Employee> employeeHasAccountList = userRepository.getAllEmployeeHasAccount();
+        System.out.println(employeeHasAccountList);
+        if (employeeHasAccountList != null) {
+            List<String> employeeIds = employeeHasAccountList.stream().map(employee -> employee.getEmployeeId()).collect(Collectors.toList());
+            System.out.println(employeeIds);
+            List<Employee> employeeHasNoAccountList = userRepository.getAllEmployeeHasNoAccount(employeeIds);
+            return employeeHasNoAccountList;
+        } else return employeeRepository.findAll();
+    }
+
+    @Override
     public List<UserDTO> create(List<UserDTO> userDTOS, String role) throws ExecutionException, InterruptedException {
         org.springframework.security.crypto.password.PasswordEncoder encoder
                 = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
@@ -136,6 +149,29 @@ public class UserService implements UserDetailsService, UserSevice {
                         user.setEmail(student.getEmail());
                         user.setUsername(userDTO.getUsername());
                         user.setRoleId(2L);
+                        return user;
+                    } else return null;
+                }
+                return null;
+            }).filter(user -> user != null).collect(Collectors.toList());
+            userRepository.saveAll(userList);
+        } else if (role.equals("GV")) {
+            List<User> userList = userDTOS.parallelStream().map(userDTO -> {
+                Optional<User> userOptional = userRepository.findById(userDTO.getUsername());
+                Optional<Employee> employeeOptional = employeeRepository.findById(userDTO.getUsername());
+                if (!userOptional.isPresent() && employeeOptional.isPresent()) {
+                    User user = new User();
+                    Employee employee = employeeOptional.get();
+                    if (employee.getDateBirth() != null) {
+                        String password = employee.getDateBirth().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+                        String encodePassword = encoder.encode(password);
+                        user.setPassword(encodePassword);
+                        user.setCreatedAt(localDateTime);
+                        user.setIsActive(1);
+                        user.setIsEmailVerified(1);
+                        user.setEmail(employee.getEmail());
+                        user.setUsername(userDTO.getUsername());
+                        user.setRoleId(3L);
                         return user;
                     } else return null;
                 }

@@ -17,7 +17,7 @@ public interface EducationProgramSubjectRepository extends JpaRepository<Educati
     @Query(value =
             "SELECT distinct subject.departmentId, subject.discussNumber, subject.eachSubject, subject.exerciseNumber, " +
                     "subject.practiceNumber, subject.selfLearningNumber, subject.subjectForLevel, subject.subjectId, subject.subjectName, " +
-                    "subject.theoryNumber, department.departmentName, epd.term, epd.id  " +
+                    "subject.theoryNumber, department.departmentName, epd.term, epd.id, epd.transactionType  " +
                     "FROM Subject subject  INNER JOIN Department department ON subject.departmentId = department.departmentId " +
                     "INNER JOIN EducationProgramSubject epd ON subject.subjectId = epd.subjectId " +
                     "WHERE epd.educationProgramId = :educationProgramId "

@@ -50,6 +50,7 @@ public class EducationProgramSubjectServiceImpl implements EducationProgramSubje
                     subjectMap.put("departmentName", object[10]);
                     subjectMap.put("term", object[11]);
                     subjectMap.put("id", object[12]);
+                    subjectMap.put("transactionType", object[13]);
                     List<Object[]> preLearnSubjectList = subjectRepository.getPreviousLearnSubject(object[7] + "");
                     if (preLearnSubjectList != null && !preLearnSubjectList.isEmpty()) {
                         List<Map<String, Object>> preLearnList = new ArrayList<>();

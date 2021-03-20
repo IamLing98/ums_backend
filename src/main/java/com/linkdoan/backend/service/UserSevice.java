@@ -1,6 +1,7 @@
 package com.linkdoan.backend.service;
 
 import com.linkdoan.backend.dto.UserDTO;
+import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Student;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface UserSevice {
     List<UserDTO> getAllUser(String role);
 
     List<Student> getAllStudentNotHasAccount();
+
+    List<Employee> getAllTeacherHasNoAccount();
 
     List<UserDTO> create(List<UserDTO> userDTOS, String role) throws ExecutionException, InterruptedException;
 

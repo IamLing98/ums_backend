@@ -35,6 +35,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getAllStudentNotHasAccount(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/users/teachers")
+    public ResponseEntity<?> getAllTeachers() throws Exception {
+        return new ResponseEntity<>(userService.getAllTeacherHasNoAccount(), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/users/create")
     public ResponseEntity<?> create(@RequestParam(value = "role") String role, @RequestBody List<UserDTO> userDTOS) throws Exception {
         System.out.println("userr DTOS Lít: " + userDTOS);

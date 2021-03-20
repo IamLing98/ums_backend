@@ -1,6 +1,7 @@
 package com.linkdoan.backend.repository;
 
 import com.linkdoan.backend.dto.UserDTO;
+import com.linkdoan.backend.model.Employee;
 import com.linkdoan.backend.model.Student;
 import com.linkdoan.backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,4 +40,17 @@ public interface UserRepository extends JpaRepository<User, String> {
                     "WHERE student.studentId NOT IN (:studentIdList)"
     )
     List<Student> getAllNotHasAccountStudentList(@Param("studentIdList") List<String> studentIdList);
+
+    @Query(value =
+            "SELECT employee " +
+                    "FROM User user INNER JOIN Employee employee ON user.username = employee.employeeId "
+    )
+    List<Employee> getAllEmployeeHasAccount();
+
+    @Query(value =
+            "SELECT employee " +
+                    "FROM Employee employee  " +
+                    "WHERE employee.employeeId NOT IN (:employeeIds)"
+    )
+    List<Employee> getAllEmployeeHasNoAccount(@Param("employeeIds") List<String> employeeIds);
 }

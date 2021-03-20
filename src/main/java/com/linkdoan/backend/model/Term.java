@@ -19,6 +19,9 @@ public class Term {
     @Column(name = "id")
     private String id;
 
+    @Column(name="school_year_id")
+    private String schoolYearId;
+
     @Column(name = "year")
     private Long year;
 
