@@ -1,10 +1,9 @@
 package com.linkdoan.backend.service.impl;
 
 import com.linkdoan.backend.dto.NotificationDTO;
+import com.linkdoan.backend.dto.StudentSubjectDTO;
 import com.linkdoan.backend.dto.TermDTO;
-import com.linkdoan.backend.model.Student;
-import com.linkdoan.backend.model.Term;
-import com.linkdoan.backend.model.TermStudent;
+import com.linkdoan.backend.model.*;
 import com.linkdoan.backend.repository.*;
 import com.linkdoan.backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +64,30 @@ public class TermServiceImpl implements TermService {
 
     @Autowired
     ResultRepository resultRepository;
+
+    @Autowired
+    StudentGraduationRepository studentGraduationRepository;
+
+    @Autowired
+    EducationProgramRepository educationProgramRepository;
+
+    private Integer getRank(Double GPA) {
+        if (GPA >= 3.6) {
+            return 1;
+
+        } else if (GPA < 3.6 && GPA >= 3.2) {
+            return 2;
+
+        } else if (GPA < 3.2 && GPA >= 2.5) {
+            return 3;
+
+        } else if (GPA < 2.5 && GPA >= 2.0) {
+            return 4;
+
+        } else {
+            return 5;
+        }
+    }
 
     @Override
     public List<TermDTO> getAll(Integer year, Integer term) {
@@ -330,6 +353,54 @@ public class TermServiceImpl implements TermService {
         return 1;
     }
 
+    private int createPredictGraduationList(Term term) {
+        List<Student> studentList = studentGraduationRepository.findAllStudents();
+        List<StudentGraduation> predictStudentGraduationList = new ArrayList<>();
+
+        studentList.parallelStream().forEach(student -> {
+            Optional<EducationProgram> educationProgramOptional = educationProgramRepository.findById(student.getEducationProgramId());
+            if (educationProgramOptional.isPresent()) {
+                EducationProgram educationProgram = educationProgramOptional.get();
+                Integer totalMustLearnSubject = educationProgram.getTotalMustLearnSubject();
+                Integer totalSelectLearnSubject = educationProgram.getTotalSelectLearnSubject();
+                Integer studentTotalMustLearnSubject = 0;
+                Integer studentTotalSelectLearnSubject = 0;
+                Double totalGrade = 0D;
+                Integer totalEachSubject = 0;
+                List<StudentSubjectDTO> subjectList = studentGraduationRepository.findAllSubjectGoodResult(student.getStudentId(), student.getEducationProgramId());
+                for (StudentSubjectDTO subject : subjectList) {
+                    EducationProgramSubject educationProgramSubject = studentGraduationRepository
+                            .findEducationProgramSubjectByEducationProgramIdAndSubjectId(subject.getSubjectId(), student.getEducationProgramId());
+                    if (educationProgramSubject != null && educationProgramSubject.getTransactionType() == 1)
+                        studentTotalMustLearnSubject += subject.getSubject().getEachSubject();
+                    else if (educationProgramSubject != null && educationProgramSubject.getTransactionType() == 0)
+                        studentTotalSelectLearnSubject += subject.getSubject().getEachSubject();
+                    totalEachSubject += subject.getSubject().getEachSubject();
+                    totalGrade += subject.getDiemTrungBinh() != null ? subject.getDiemTrungBinh() : 0;
+                }
+
+                if (studentTotalMustLearnSubject >= totalMustLearnSubject && studentTotalSelectLearnSubject >= totalSelectLearnSubject) {
+                    System.out.print("Tao moi mot sinh vien du kien: ");
+                    System.out.println(student);
+                    StudentGraduation studentGraduation = new StudentGraduation();
+                    studentGraduation.setEducationProgramId(educationProgram.getEducationProgramId());
+                    studentGraduation.setStatus(1);
+                    studentGraduation.setStudentId(student.getStudentId());
+                    studentGraduation.setTermId(term.getId());
+                    studentGraduation.setTotalEachSubject(totalEachSubject);
+                    Double CPA = totalGrade / totalEachSubject;
+                    studentGraduation.setCPA(CPA);
+                    studentGraduation.setRankValue(getRank(CPA));
+                    predictStudentGraduationList.add(studentGraduation);
+                }
+            }
+        });
+        if (predictStudentGraduationList != null) {
+            studentGraduationRepository.saveAll(predictStudentGraduationList);
+        }
+        return predictStudentGraduationList.size();
+    }
+
     @Override
     public int update(String termId, TermDTO termDTO, String username) {
         Optional<Term> termOptional = termRepository.findById(termId);
@@ -455,8 +526,16 @@ public class TermServiceImpl implements TermService {
                         term.setProgress(37);
                         LocalDateTime ldtNow = LocalDateTime.now();
                         term.setResultCreatedDate(ldtNow);
-                        termRepository.save(term);
                         resultService.calculatorResult(termId);
+                        termRepository.save(term);
+                    }
+                case "GETPREDICTGRADUATION":
+                    if (term.getProgress() == 37) {
+                        term.setProgress(38);
+                        LocalDateTime ldtNow = LocalDateTime.now();
+                        term.setResultCreatedDate(ldtNow);
+                        createPredictGraduationList(term);
+                        termRepository.save(term);
                     }
                 default:
             }

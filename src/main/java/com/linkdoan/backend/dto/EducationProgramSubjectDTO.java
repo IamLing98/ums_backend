@@ -1,6 +1,7 @@
 package com.linkdoan.backend.dto;
 
 import com.linkdoan.backend.model.EducationProgramSubject;
+import com.linkdoan.backend.model.Subject;
 import com.poiji.annotation.ExcelCell;
 import com.poiji.annotation.ExcelRow;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,8 @@ public class EducationProgramSubjectDTO {
 
     @ExcelCell(0)
     private String subjectId;
+
+    private Subject subject;
 
     private String educationProgramId;
 

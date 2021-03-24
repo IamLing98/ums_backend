@@ -40,6 +40,11 @@ public class EducationProgram {
     @Column(name = "total_each_subject")
     private Integer totalEachSubject;
 
+    @Column(name = "total_must_learn_subject")
+    private Integer totalMustLearnSubject;
+
+    @Column(name="total_select_learn_subject")
+    private Integer totalSelectLearnSubject;
     public EducationProgramDTO toDTO() {
         EducationProgramDTO educationProgramDTO = new EducationProgramDTO();
         educationProgramDTO.setBranchId(this.branchId);

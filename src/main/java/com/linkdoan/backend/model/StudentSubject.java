@@ -45,4 +45,5 @@ public class StudentSubject {
 
     @Column(name = "diem_chu", columnDefinition = "CHAR(2)")
     private String diemChu;
+
 }

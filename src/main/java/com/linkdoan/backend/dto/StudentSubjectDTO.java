@@ -1,5 +1,6 @@
 package com.linkdoan.backend.dto;
 
+import com.linkdoan.backend.model.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class StudentSubjectDTO {
     private String educationProgramId;
 
     private String subjectId;
+
+    private Subject subject;
 
     private String subjectName;
 
@@ -44,6 +47,23 @@ public class StudentSubjectDTO {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.eachSubject = eachSubject;
+        this.diemTrungBinh = diemTrungBinh;
+        this.diemThangBon = diemThangBon;
+        this.diemChu = diemChu;
+    }
+
+    public StudentSubjectDTO(Long id, String studentId, String educationProgramId, String subjectId, Subject subject, Integer eachSubject, Double diemChuyenCan, Double diemBaiTap, Double diemKiemTra, Double diemThi, Double diemThiLai, Double diemTrungBinh, Double diemThangBon, String diemChu) {
+        this.id = id;
+        this.studentId = studentId;
+        this.educationProgramId = educationProgramId;
+        this.subjectId = subjectId;
+        this.subject = subject;
+        this.eachSubject = eachSubject;
+        this.diemChuyenCan = diemChuyenCan;
+        this.diemBaiTap = diemBaiTap;
+        this.diemKiemTra = diemKiemTra;
+        this.diemThi = diemThi;
+        this.diemThiLai = diemThiLai;
         this.diemTrungBinh = diemTrungBinh;
         this.diemThangBon = diemThangBon;
         this.diemChu = diemChu;
